@@ -1,0 +1,26 @@
+{
+  "id": "T29",
+  "check": "A",
+  "control": "Project floor setting with Vertex AI integration in `INSPECT_AND_BLOCK`; `generateContent` with the T28 sample",
+  "scope": "projects/PROJECT_8",
+  "expected": "Response blocked: `blockReason: \"MODEL_ARMOR\"`, message starts \"Blocked by Floor Setting\"; HTTP status recorded",
+  "actual": "flagged prompt: http=200 MODEL_ARMOR block=1 floor message=0; benign control answered=1 (model gemini-3.5-flash, global)",
+  "verdict": "FAIL",
+  "tier": "Configured",
+  "reason": "blocked with blockReason MODEL_ARMOR but the message does not start with 'Blocked by Floor Setting' (http=200); finding",
+  "commands_file": "evidence/T29/run-7/command.txt",
+  "output_file": "evidence/T29/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-28T16:09:05Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/model-armor/model-armor-vertex-integration",
+    "https://docs.cloud.google.com/model-armor/configure-floor-settings",
+    "https://docs.cloud.google.com/model-armor/reference/rest/v1/FloorSetting"
+  ],
+  "script_commit": "eb3fbc9"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "T13",
+  "check": "Baseline (Reach)",
+  "control": "VPC-SC perimeter (dry-run control first, then enforced)",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)",
+  "actual": "stages setup/dryrun/outside-read/copy merged; copy: log violationReason observed exactly: RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T13/run-6/command.txt",
+  "output_file": "evidence/T13/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T05:53:13Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/overview",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/audit-logging",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/troubleshooting"
+  ],
+  "script_commit": "d306107"
+}

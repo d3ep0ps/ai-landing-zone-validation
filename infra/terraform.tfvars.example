@@ -1,0 +1,52 @@
+# Copy to terraform.tfvars (git-ignored). Placeholders only.
+org_id          = "ORG_ID"
+billing_account = "BILLING_ACCOUNT"
+prefix          = "PREFIX" # short and globally unique, max 14 chars
+quota_project   = "SEED_PROJECT_ID" # needs orgpolicy, accesscontextmanager, cloudresourcemanager APIs
+allowed_models  = ["publishers/google/models/ALLOWED_MODEL:predict"] # choose at apply time
+
+# Toggles (see README apply order)
+enable_t05_policy = false
+enable_t06_policy = false
+enable_t07_policy = false
+vpc_sc_enforced   = false
+log_bucket_locked = false
+
+# v1.1 T16 (Secure Web Proxy, paid ~USD 1.25/gateway-hour; enable, test, destroy same day)
+# swp_enabled         = false
+# swp_allowed_host    = "example.com"
+# swp_port            = 443
+# swp_job_subnet_cidr = "10.77.0.0/24"
+# swp_proxy_only_cidr = "10.77.2.0/23"
+# swp_gateway_address = "10.77.0.10"
+# swp_certificate_url = "projects/PROJECT_ID/locations/REGION/certificates/CERT_NAME" # optional; only if the gateway is rejected without one
+
+# v1.1 (all default off / empty; README "v1.1" section). New prefix required: old project IDs are
+# pending deletion and cannot be reused for 30 days, so change PREFIX above.
+enable_dc1_deny               = false
+dc1_approved_agent_principals = [] # principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER/locations/LOCATION/reasoningEngines/ID
+tooling_quota_project         = "" # in-perimeter project ID (DC2/T22)
+vpc_sc_agent_ingress_identities = [] # principal:// strings (DC2/T23)
+enable_dc3_build_bucket       = false
+dc3_build_service_accounts    = []
+enable_dc4_sink               = false
+enable_t25_binauthz           = false
+
+# v2 run-6 (all default off; README "v2"). ORG SCOPE items are marked: the human applies them alone.
+p2_import_existing_kms    = false # P2: import the existing key rings/keys (needs enable_dc3_build_bucket / enable_t25_binauthz)
+p2_create_key_versions    = false # P2 path B only: create new key versions (see README "v2 P2")
+enable_v2_model_armor     = false # A (T28): API + template lzv-ma-pi in the runtime project
+enable_v2_ma_folder_floor = false # A (T27): folder floor setting (needs enable_v2_model_armor)
+enable_v2_ma_vertex       = false # A (T29): project floor with Vertex AI INSPECT_AND_BLOCK (needs enable_v2_model_armor)
+enable_v2_ma_org_floor    = false # A (T38, ORG SCOPE): organization floor setting
+v2_ma_floor_enforce       = { folder = true, project = true, org = true } # per level; <level> = false is the rollback step
+enable_v2_psci            = false # C (T33, T34): needs swp_enabled = true
+v2_psci_subnet_cidr       = "10.77.4.0/28"
+t36_mode                  = "off" # D (T36, ORG SCOPE): off | dryrun | enforce
+t36_exception_project     = "outside" # outside | data
+enable_v2_folder_deny     = false # D (T37): folder deny policy, exception = dc1_approved_agent_principals
+# E (T39b): egress rule for an outside quota project; build selectors from the dry-run violation
+# vpc_sc_pipeline_egress = { quota_project_number = "SEED_PROJECT_NUMBER", permission_selectors = ["serviceusage.services.use"], method_selectors = [] }
+# v2 B (T30, T31b, T32): Agent Gateway; run tests/fixtures/gateway/setup.sh preflight first (EU availability unknown)
+enable_v2_gateway      = false # gateway, registry entries, IAP authz, image repo (README "v2 B")
+v2_gateway_model_armor = true  # T32: template, failOpen=false extension and policy (needs enable_v2_model_armor)

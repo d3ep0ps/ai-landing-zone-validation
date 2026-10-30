@@ -1,0 +1,49 @@
+# T03 run=run-7 start=2026-10-28T15:28:21Z
+# script_commit=eb3fbc9
+# check=Baseline control=`run.allowedIngress` = internal (folder)
+# expected (pre-registered): `--ingress=all` denied, error names `run.allowedIngress`; control succeeds
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud run deploy lzv-t03-run7-yhza7k --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=internal --binary-authorization=default
+Allow unauthenticated invocations to [lzv-t03-run7-yhza7k] (y/N)?  
+Deploying container to Cloud Run service [[1mlzv-t03-run7-yhza7k[m] in project [[1mPROJECT_9[m] region [[1meurope-west1[m]
+Deploying new service...
+Creating Revision.....................................................done
+Routing traffic.....done
+Done.
+Service [[1mlzv-t03-run7-yhza7k[m] revision [[1mlzv-t03-run7-yhza7k-00001-fdt[m] has been deployed and is serving [1m100[m percent of traffic.
+Service URL: [1mhttps://lzv-t03-run7-yhza7k-PROJECT_NUMBER_9.europe-west1.run.app[m
+## exit=0 at 2026-10-28T15:28:30Z
+## $ gcloud run deploy lzv-t03-run7-4lkda6 --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=all --binary-authorization=default
+Allow unauthenticated invocations to [lzv-t03-run7-4lkda6] (y/N)?  
+Deploying container to Cloud Run service [[1mlzv-t03-run7-4lkda6[m] in project [[1mPROJECT_9[m] region [[1meurope-west1[m]
+Deploying new service...
+failed
+Deployment failed
+ERROR: (gcloud.run.deploy) FAILED_PRECONDITION: Constraint constraints/run.allowedIngress violated for attempting CreateService with annotation "run.googleapis.com/ingress" set to the default value all. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints for more information.
+- '@type': type.googleapis.com/google.rpc.PreconditionFailure
+  violations:
+  - description: Constraint constraints/run.allowedIngress violated for attempting
+      CreateService with annotation "run.googleapis.com/ingress" set to the default
+      value all. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
+      for more information.
+    subject: orgpolicy:projects/PROJECT_9
+    type: constraints/run.allowedIngress
+## exit=1 at 2026-10-28T15:28:33Z
+## cleanup start 2026-10-28T15:28:33Z
+## $ gcloud run services delete lzv-t03-run7-yhza7k --region=europe-west1 --project=PROJECT_9 --quiet
+Deleting [lzv-t03-run7-yhza7k]...
+..................done.
+Deleted service [lzv-t03-run7-yhza7k].
+## exit=0 at 2026-10-28T15:28:38Z
+## $ gcloud run services describe lzv-t03-run7-yhza7k --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+ERROR: (gcloud.run.services.describe) Cannot find service [lzv-t03-run7-yhza7k]
+## exit=1 at 2026-10-28T15:28:39Z
+## $ gcloud run services delete lzv-t03-run7-4lkda6 --region=europe-west1 --project=PROJECT_9 --quiet
+Deleting [lzv-t03-run7-4lkda6]...
+..failed.
+ERROR: (gcloud.run.services.delete) Service [lzv-t03-run7-4lkda6] could not be found.
+## exit=1 at 2026-10-28T15:28:40Z
+## $ gcloud run services describe lzv-t03-run7-4lkda6 --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+ERROR: (gcloud.run.services.describe) Cannot find service [lzv-t03-run7-4lkda6]
+## exit=1 at 2026-10-28T15:28:41Z
+## cleanup end 2026-10-28T15:28:41Z

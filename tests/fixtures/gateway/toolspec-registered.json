@@ -1,0 +1,14 @@
+{
+  "tools": [
+    {
+      "name": "registered_echo",
+      "description": "Returns a fixed clean string (registered).",
+      "inputSchema": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "inject_response",
+      "description": "Returns a fixed prompt-injection sample (registered).",
+      "inputSchema": { "type": "object", "properties": {} }
+    }
+  ]
+}

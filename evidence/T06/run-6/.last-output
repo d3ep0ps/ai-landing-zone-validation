@@ -1,0 +1,10 @@
+{
+  "name": "projects/PROJECT_NUMBER_9/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}

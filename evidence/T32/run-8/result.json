@@ -1,0 +1,25 @@
+{
+  "id": "T32",
+  "check": "B",
+  "control": "MCP fixture returns the T28 injection sample; gateway Model Armor extension on responses, failOpen false",
+  "scope": "projects/PROJECT_8",
+  "expected": "Clean tool response passed",
+  "actual": "control: registered_echo (clean) answered (200); tool call failed for the agent (status=403 err=none); Model Armor finding logged",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T32/run-8/command.txt",
+  "output_file": "evidence/T32/run-8/output.txt",
+  "run_id": "run-8",
+  "timestamp_utc": "2026-10-30T06:43:49Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/model-armor/model-armor-agent-gateway-integration",
+    "https://codelabs.developers.google.com/cloudnet-agent-gateway"
+  ],
+  "script_commit": "beb7c58"
+}

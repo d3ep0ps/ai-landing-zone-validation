@@ -1,0 +1,26 @@
+{
+  "id": "T31R",
+  "check": "B",
+  "control": "Re-test of T31 part 1 (registry differential). Control: Allowed endpoint answered in `pre`; IAM state identical in `pre` and `post`",
+  "scope": "projects/PROJECT_8",
+  "expected": "`pre`: G's call to the unregistered model endpoint is refused (403) although IAM allows G; `post`: after only the registry changes, the same call is answered (200); B is refused by the IAM deny policy (\"due to an IAM deny policy\")",
+  "actual": "pre: (a) allowed: 200; (b) unregistered: 403; (c) B: permission_denied=1 phrase=1 answered=0; post: (d) after registering: 404 (registry entry age 645s); IAM identical: 1",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "stage post: (d) no 200 and no conclusive 403 (status=404, registry entry age 645s); ",
+  "commands_file": "evidence/T31R/run-9/command.txt",
+  "output_file": "evidence/T31R/run-9/output.txt",
+  "run_id": "run-9",
+  "timestamp_utc": "2026-10-30T12:26:34Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://codelabs.developers.google.com/cloudnet-agent-gateway",
+    "https://docs.cloud.google.com/iam/docs/deny-access",
+    "https://docs.cloud.google.com/iam/docs/permission-error-messages"
+  ],
+  "script_commit": "ed2746f"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "T18",
+  "check": "R2 / I3",
+  "control": "Agent-identity inference restricted by IAM deny policy (DC1)",
+  "scope": "projects/PROJECT_8",
+  "expected": "Before the deny policy: the non-approved agent's call succeeds. After it (wait 10 min): the non-approved agent's call refused with `PERMISSION_DENIED` (deny text is generic); the approved agent's identical call succeeds; `gcloud iam policies list --kind=denypolicies` shows the policy. Policy Analyzer is not used (allow policies only)",
+  "actual": "pre: non-approved agent B answered=1, approved agent A answered=1; post: agent B refused with PERMISSION_DENIED; approved agent A answered; policy listed=1, age=777s",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T18/run-4/command.txt",
+  "output_file": "evidence/T18/run-4/output.txt",
+  "run_id": "run-4",
+  "timestamp_utc": "2026-10-25T19:34:52Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/iam/docs/deny-access",
+    "https://docs.cloud.google.com/iam/docs/principal-identifiers",
+    "https://docs.cloud.google.com/iam/docs/permission-error-messages"
+  ],
+  "script_commit": "5bae843"
+}

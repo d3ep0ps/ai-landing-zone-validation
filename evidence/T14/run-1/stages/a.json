@@ -1,0 +1,6 @@
+{
+  "stage": "a",
+  "verdict": "INCONCLUSIVE",
+  "note": "A: no function response; query succeeded but no function response with status/error appeared (LLM may not have called the tool)",
+  "timestamp_utc": "2026-10-24T06:20:17Z"
+}

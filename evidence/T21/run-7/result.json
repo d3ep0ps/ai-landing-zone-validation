@@ -1,0 +1,25 @@
+{
+  "id": "T21",
+  "check": "Baseline",
+  "control": "DC3",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Build with the CMEK staging bucket succeeds; plain build refused (as in v1 T10)",
+  "actual": "CMEK-bucket build: exit 0 (PASS); plain build: exit 1, blocked by gcp.resourceLocations (PASS)",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T21/run-7/command.txt",
+  "output_file": "evidence/T21/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-28T16:08:36Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/build/docs/securing-builds/store-manage-build-logs",
+    "https://docs.cloud.google.com/kms/docs/cmek-org-policy"
+  ],
+  "script_commit": "eb3fbc9"
+}

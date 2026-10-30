@@ -1,0 +1,25 @@
+# T23 stage=pre run=run-6 start=2026-10-28T04:31:01Z
+# script_commit=f33f041
+# check=Reach control=DC2 (3): agent deployed before the project joins the perimeter, ingress rule for agent identities
+# expected (pre-registered): Per Google docs: A's fetch succeeds, B's fetch fails. That A's API calls work with the ingress rule is a prediction (undocumented); if they are still refused: INCONCLUSIVE with the violation reason
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T04:31:02Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T04:31:04Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T04:31:05Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t23","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T23 stage=post run=run-6 start=2026-10-28T06:11:14Z
+# script_commit=24e353d
+# check=Reach control=DC2 (3): agent deployed before the project joins the perimeter, ingress rule for agent identities
+# expected (pre-registered): Per Google docs: A's fetch succeeds, B's fetch fails. That A's API calls work with the ingress rule is a prediction (undocumented); if they are still refused: INCONCLUSIVE with the violation reason
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T06:11:15Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T06:11:54Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+## ABORT 2026-10-28T06:11:56Z: perimeter ingress policies do not contain the identity principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_13; set vpc_sc_agent_ingress_identities and wait 15 minutes
+# T23 stage=post run=run-6 start=2026-10-28T06:59:47Z
+# script_commit=38fac95
+# check=Reach control=DC2 (3): agent deployed before the project joins the perimeter, ingress rule for agent identities
+# expected (pre-registered): Per Google docs: A's fetch succeeds, B's fetch fails. That A's API calls work with the ingress rule is a prediction (undocumented); if they are still refused: INCONCLUSIVE with the violation reason
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T06:59:48Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T06:59:49Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T06:59:51Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t23","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-28T06:59:56Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_13:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t23","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

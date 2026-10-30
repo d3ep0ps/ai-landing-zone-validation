@@ -1,0 +1,6 @@
+{
+  "stage": "egress",
+  "verdict": "PASS",
+  "note": "T39b egress: single-stack full plan exit 2; enforced violations naming seed project=0; control by another identity refused",
+  "timestamp_utc": "2026-10-28T06:03:24Z"
+}

@@ -1,0 +1,6 @@
+{
+  "stage": "pre",
+  "verdict": "PASS",
+  "note": "pre: (a) allowed: 200; (b) unregistered: 403; (c) B: permission_denied=1 phrase=1 answered=0",
+  "timestamp_utc": "2026-10-30T12:15:02Z"
+}

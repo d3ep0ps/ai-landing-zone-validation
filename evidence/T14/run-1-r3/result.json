@@ -1,0 +1,25 @@
+{
+  "id": "T14",
+  "check": "Reach",
+  "control": "Managed runtime egress",
+  "scope": "folders/FOLDER_ID_2",
+  "expected": "A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure",
+  "actual": "A: function response status 200; B: tool result status= error=URLError: <urlopen error [Errno 101] Network is unreachable>",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T14/run-1-r3/command.txt",
+  "output_file": "evidence/T14/run-1-r3/output.txt",
+  "run_id": "run-1-r3",
+  "timestamp_utc": "2026-10-24T07:21:05Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vertex-ai/docs/general/vpc-service-controls",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/use-an-adk-agent",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/private-service-connect-interface"
+  ]
+}

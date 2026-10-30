@@ -1,0 +1,26 @@
+{
+  "id": "T31",
+  "check": "B",
+  "control": "E3 row T31b: agent behind the gateway, project deny policy (T18 form) with the agent as exception; call a model endpoint the gateway does not allow; control: Allowed endpoint answered",
+  "scope": "projects/PROJECT_8",
+  "expected": "Gateway refuses (403, `DENIED`) although IAM allows the agent; then the same call by a non-approved agent is refused by the IAM deny policy (\"due to an IAM deny policy\")",
+  "actual": "control: allowed endpoint answered (200); gateway: blocked endpoint: 403 and gateway DENIED log entry (IAM allows G: exception in the deny policy); non-approved agent B refused with PERMISSION_DENIED (phrase 'IAM deny policy' present=1)",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T31/run-9/command.txt",
+  "output_file": "evidence/T31/run-9/output.txt",
+  "run_id": "run-9",
+  "timestamp_utc": "2026-10-30T12:13:28Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://codelabs.developers.google.com/cloudnet-agent-gateway",
+    "https://docs.cloud.google.com/iam/docs/deny-access",
+    "https://docs.cloud.google.com/iam/docs/permission-error-messages"
+  ],
+  "script_commit": "ed2746f"
+}

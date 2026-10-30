@@ -1,0 +1,26 @@
+{
+  "id": "T36",
+  "check": "V2-D",
+  "control": "Organization-level policy: dry-run staging, inheritance to projects, a scoped exception project",
+  "scope": "organizations/ORG_ID",
+  "expected": "Dry run: create allowed, audit entry `dryRunResult=DENIED`, `liveResult=ALLOWED` (poll up to 30 min, else INCONCLUSIVE). Enforced: create refused in an inheriting test project",
+  "actual": "dryrun: create allowed; audit entry dryRunResult=DENIED liveResult=ALLOWED for lzv-t36-run7-uwuzw9 in PROJECT_10; inheriting project: create exit 1 (customConstraints/custom.lzvOrgTestBucketLabel.); exception project: create exit 0",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T36/run-7/command.txt",
+  "output_file": "evidence/T36/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-28T16:35:17Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/resource-manager/docs/organization-policy/dry-run-policy",
+    "https://docs.cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy",
+    "https://docs.cloud.google.com/resource-manager/docs/organization-policy/creating-managing-custom-constraints"
+  ],
+  "script_commit": "eb3fbc9"
+}

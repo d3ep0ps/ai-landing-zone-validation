@@ -1,0 +1,6 @@
+{
+  "stage": "copy",
+  "verdict": "PASS",
+  "note": "log violationReason observed exactly: RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER",
+  "timestamp_utc": "2026-10-28T05:53:13Z"
+}

@@ -1,0 +1,50 @@
+# T01 run=run-2 start=2026-10-25T04:37:38Z
+# check=I2 control=`iam.managed.disableServiceAccountKeyCreation` (managed constraint, not the legacy `iam.disableServiceAccountKeyCreation`) (folder)
+# expected (pre-registered): Denied with `FAILED_PRECONDITION`; error names the managed constraint or says "Key creation is not allowed"
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/iam.managed.disableServiceAccountKeyCreation --effective --project=PROJECT_7 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_4/policies/iam.managed.disableServiceAccountKeyCreation",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-25T04:37:39Z
+## note 2026-10-25T04:37:39Z: effective constraints/iam.managed.disableServiceAccountKeyCreation on PROJECT_7: enforce=true
+## $ gcloud iam service-accounts create lzv-t01-run2-4nf9ri --project=PROJECT_7 --display-name=lzv\ T01\ test\ SA
+Created service account [lzv-t01-run2-4nf9ri].
+Service account email: SA_3@PROJECT.iam.gserviceaccount.com
+## exit=0 at 2026-10-25T04:37:41Z
+## $ gcloud iam service-accounts keys create /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.BTiw1d/key.json --iam-account=SA_3@PROJECT.iam.gserviceaccount.com --project=PROJECT_7
+ERROR: (gcloud.iam.service-accounts.keys.create) FAILED_PRECONDITION: Operation denied by org policy on resource 'projects/-/serviceAccounts/SA_UNIQUE_ID_3': ["constraints/iam.managed.disableServiceAccountKeyCreation": "This constraint, when enforced, blocks service account key creation."].
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: iam.googleapis.com
+  metadata:
+    customConstraints: constraints/iam.managed.disableServiceAccountKeyCreation
+    resource: projects/-/serviceAccounts/SA_UNIQUE_ID_3
+  reason: CUSTOM_ORG_POLICY_VIOLATION
+## exit=1 at 2026-10-25T04:37:57Z
+## cleanup start 2026-10-25T04:37:57Z
+## $ gcloud iam service-accounts delete SA_3@PROJECT.iam.gserviceaccount.com --project=PROJECT_7
+You are about to delete service account 
+[SA_3@PROJECT.iam.gserviceaccount.com]
+
+Do you want to continue (Y/n)?  
+deleted service account [SA_3@PROJECT.iam.gserviceaccount.com]
+## exit=0 at 2026-10-25T04:37:59Z
+## $ gcloud iam service-accounts describe SA_3@PROJECT.iam.gserviceaccount.com --project=PROJECT_7
+displayName: lzv T01 test SA
+email: SA_3@PROJECT.iam.gserviceaccount.com
+etag: MDEwMjE5MjA=
+name: projects/PROJECT_7/serviceAccounts/SA_3@PROJECT.iam.gserviceaccount.com
+oauth2ClientId: 'SA_UNIQUE_ID_3'
+projectId: PROJECT_7
+uniqueId: 'SA_UNIQUE_ID_3'
+## exit=0 at 2026-10-25T04:38:00Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.BTiw1d
+## exit=0 at 2026-10-25T04:38:00Z
+## cleanup end 2026-10-25T04:38:00Z

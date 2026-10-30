@@ -1,0 +1,11 @@
+# T03 run=run-7 start=2026-10-28T15:28:21Z
+# script_commit=eb3fbc9
+# check=Baseline control=`run.allowedIngress` = internal (folder)
+# expected (pre-registered): `--ingress=all` denied, error names `run.allowedIngress`; control succeeds
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T15:28:21Z $ gcloud run deploy lzv-t03-run7-yhza7k --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=internal --binary-authorization=default
+2026-10-28T15:28:30Z $ gcloud run deploy lzv-t03-run7-4lkda6 --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=all --binary-authorization=default
+2026-10-28T15:28:33Z $ gcloud run services delete lzv-t03-run7-yhza7k --region=europe-west1 --project=PROJECT_9 --quiet
+2026-10-28T15:28:38Z $ gcloud run services describe lzv-t03-run7-yhza7k --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+2026-10-28T15:28:39Z $ gcloud run services delete lzv-t03-run7-4lkda6 --region=europe-west1 --project=PROJECT_9 --quiet
+2026-10-28T15:28:40Z $ gcloud run services describe lzv-t03-run7-4lkda6 --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'

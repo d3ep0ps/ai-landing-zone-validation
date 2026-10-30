@@ -1,0 +1,353 @@
+# T33 run=run-7 start=2026-10-29T12:03:10Z
+# script_commit=8baedc8
+# check=V2-C control=Agent Runtime with a PSC interface; internet only through Secure Web Proxy over the attachment
+# expected (pre-registered): example.com 200 through the proxy; non-allowed host refused on CONNECT (403) with `DENIED` in `gateway_requests`
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T12:03:10Z: no resources are created by this script (agent C, gateway and attachment are Terraform-managed); no cleanup_trap registered
+## note 2026-10-29T12:03:10Z: agent C fixed targets: allowed=example.com, denied=www.wikipedia.org (tests/fixtures/agent_c/agent.py)
+## $ gcloud network-services gateways describe lzv-swp --location=europe-west1 --project=PROJECT_8
+addresses:
+- 10.77.0.10
+createTime: '2026-10-29T11:52:14.663829463Z'
+description: Managed by Terraform.
+gatewaySecurityPolicy: projects/PROJECT_8/locations/europe-west1/gatewaySecurityPolicies/lzv-swp
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/gateways/lzv-swp
+network: projects/PROJECT_8/global/networks/lzv-swp-vpc
+ports:
+- 443
+selfLink: https://networkservices.googleapis.com/v1alpha1/projects/PROJECT_8/locations/europe-west1/gateways/lzv-swp
+subnetwork: projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-job
+type: SECURE_WEB_GATEWAY
+updateTime: '2026-10-29T11:52:23.288680641Z'
+## exit=0 at 2026-10-29T12:03:11Z
+## $ gcloud compute network-attachments describe lzv-psci --region=europe-west1 --project=PROJECT_8
+connectionEndpoints:
+- ipAddress: 10.77.4.2
+  projectIdOrNum: 'PROJECT_NUMBER_14'
+  status: ACCEPTED
+  subnetwork: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-psci
+- ipAddress: 10.77.4.3
+  projectIdOrNum: 'PROJECT_NUMBER_14'
+  status: ACCEPTED
+  subnetwork: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-psci
+connectionPreference: ACCEPT_AUTOMATIC
+creationTimestamp: '2026-10-29T04:52:12.508-07:00'
+description: 'v2 C: Agent Runtime PSC interface (T33, T34).'
+fingerprint: INVNHfvetfs=
+id: '7600395746597047683'
+kind: compute#networkAttachment
+name: lzv-psci
+network: https://www.googleapis.com/compute/v1/projects/PROJECT_8/global/networks/lzv-swp-vpc
+region: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1
+selfLink: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-psci
+subnetworks:
+- https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-psci
+## exit=0 at 2026-10-29T12:03:12Z
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "174daadafb85fca6",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-29T12:03:14Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "174daadafb85fca6",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_18"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_18"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-29T12:03:15Z
+## note 2026-10-29T12:03:15Z: guards ok: gateway lzv-swp, attachment lzv-psci, agent C projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_20, runtime project in enforced perimeter
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_222937", "args": {"via_proxy": true, "target": "allowed"}, "name": "fetch_probe"}, "thought_signature": "AY89a1_lkrC5oyF7iDo0KmFIjk1atw3TcExP89AYZix9B44O03B5iWkHwzokDbakbBVNdAGYbi1EVwpvvFaDkQJ5mZhQQqRhZyeE3IugFGp9uA8jSRyFgXmplqZKqYHozlFhpXCag65FznwU37n3uXljoT1QDQ7bF5K0IDhd3HhNSK0UyFCvB51AtRuzzmr9IZ9QlxtLeCeDPdb79KekzwecCncJLI6U2n2l9QgmQM9MpDw5bYI7EBEOIYSBFEULH2DYcL2-hIG2P1aTeRIzifOWyER4_PKYaYCd_MVwYtWruvXjixJ4rZbMo9-Br77FY2xNge69vntkZZRZ7BT2knj0EdoCcHom0uQjeseYsO6IyQ2bWIH8jC_AAnqes9AoqVeISbpaXt8L2ocJ0-y8Epqpa7SsuUhuwZ7PQqnj6ZqmFWQCrZaENr1rufV_7FYARvOxM9l-t7NIlbHEpN8fpy21nb35KETc-w=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 22, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 22}], "prompt_token_count": 242, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 242}], "thoughts_token_count": 78, "total_token_count": 342, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-894bb39f-e2b9-404d-bc50-062c5ab15b5a", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "long_running_tool_ids": [], "id": "e6dbf5e0-cccd-4a9e-a2f0-2b77b128bf0a", "timestamp": 1793275398.5930104}
+{"content": {"parts": [{"function_response": {"id": "call_222937", "name": "fetch_probe", "response": {"target": "allowed", "url": "https://example.com", "via_proxy": true, "status": 200, "error": null}}}], "role": "user"}, "invocation_id": "e-894bb39f-e2b9-404d-bc50-062c5ab15b5a", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "ace1dc71-91ff-44d2-861b-74db3ea92e3c", "timestamp": 1793275400.1388192}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"error\": null,\n  \"status\": 200,\n  \"target\": \"allowed\",\n  \"url\": \"https://example.com\",\n  \"via_proxy\": true\n}\n```", "thought_signature": "AY89a1-FIvtGS8Bu2yp9SSZnxj1K0m1uMBts_Q5U4Qmssy3tHUGR6Lrci_avhaBompD5leuHCItcC0hyhil2pa4Q3GxfpNkbUvwNtInbgvte1QsJxqy2lkzqy1ZEoFKrFhc9JP6-KTBlNJ8x4HwC1U2nnWDTqqqoGLh54tVj3dWhloo05GasykluZVAbEj4o9Djajya9K66qJj0t86Oj4t5RN38eipc7TKy1EYvnm3RBQ3gf8wvqQFaIcbnJnhrr1bHz_GOYWQcesM3Mti6D2XSpJJ1B-u04Boq4CS1kfiJJQkgTMCGwQhFEmC1lJLbwxFK2qG_Mcd_9SOCMZL7ZTmjvhXx0TCyQOYtHDE36fPs5gMTQzQR5CKZDXGc="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 53, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 53}], "prompt_token_count": 358, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 358}], "thoughts_token_count": 55, "total_token_count": 466, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-894bb39f-e2b9-404d-bc50-062c5ab15b5a", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "1c5ee270-b96e-4b2b-bb15-fcf59d2af50a", "timestamp": 1793275400.2146435}
+
+HTTP 200
+## exit=0 at 2026-10-29T12:03:22Z
+## note 2026-10-29T12:03:22Z: probe allowed via_proxy=true: http_rc=0 tool_result=1 status=200 error=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_265817", "args": {"target": "denied", "via_proxy": true}, "name": "fetch_probe"}, "thought_signature": "AY89a1-OMk8AtzTjeroztYI0HD2h35kF1clEog-oMEyXTDG4ooxuTaL8k5Zz8F-2JW0shOrankhuSkL8G34YGOPKCsVZBmf4-I4u-_ZtQXzKvEYl_G_cFB-n7htneb7CRNCQKahenVT1X55AR6E_uSim06GtytTdMis9PDaDTs1r8j4jw8KJL6kAbClhpVzMDcdzfSvgnslNiRgGJ_0Ba2q86xaCdJmCf3gD65lsW4uv9cHqE3c4VTNEcgtZgID8ji33VpFXHb03nJ61MAnnf9F-FlVGDA=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 23, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 23}], "prompt_token_count": 243, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 243}], "thoughts_token_count": 35, "total_token_count": 301, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-75d692c5-9d36-41ce-8b28-bcb01434d8e8", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "long_running_tool_ids": [], "id": "4782d63f-63f2-4cfd-95e1-db83de4a637e", "timestamp": 1793275404.4564142}
+{"content": {"parts": [{"function_response": {"id": "call_265817", "name": "fetch_probe", "response": {"target": "denied", "url": "https://www.wikipedia.org", "via_proxy": true, "status": null, "error": "ProxyError: HTTPSConnectionPool(host='www.wikipedia.org', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"}}}], "role": "user"}, "invocation_id": "e-75d692c5-9d36-41ce-8b28-bcb01434d8e8", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "63c27213-959c-4a9f-87c8-038eb27956b7", "timestamp": 1793275405.867832}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"target\": \"denied\",\n  \"url\": \"https://www.wikipedia.org\",\n  \"via_proxy\": true,\n  \"status\": null,\n  \"error\": \"ProxyError: HTTPSConnectionPool(host='www.wikipedia.org', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))\"\n}\n```", "thought_signature": "AY89a19izghhowboToS1xx6Wz1NW0Qkt2wPuhRazShwnvTs7oX2r9okaXc3pUfLqp6u7_Jx5N5Jg1e4SA48l8P5EFilfSa689TfQ1KkS4v4YTbg3aK1hzkFmcgdUkkuJ_cSuDLRT4hQ1VIP1h92M7c0SDwf5A9xyPanzW4Z7PmhsEcyTcbv07hc4Hyoc2Ox0v_aS4GG_PnWGBswnXDrEOXjjqnU="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 108, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 108}], "prompt_token_count": 371, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 371}], "thoughts_token_count": 17, "total_token_count": 496, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-75d692c5-9d36-41ce-8b28-bcb01434d8e8", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "a98269ce-5454-46c7-b309-0a98ba91511d", "timestamp": 1793275405.9368458}
+
+HTTP 200
+## exit=0 at 2026-10-29T12:03:27Z
+## note 2026-10-29T12:03:27Z: probe denied via_proxy=true: http_rc=0 tool_result=1 status=none error=ProxyError: HTTPSConnectionPool(host='www.wikipedia.org', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.enforcedGatewaySecurityPolicy.matchedRules.action=\"DENIED\"\ AND\ timestamp\>=\"2026-10-29T12:03:15Z\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-10-29T12:03:28Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.enforcedGatewaySecurityPolicy.matchedRules.action=\"DENIED\"\ AND\ timestamp\>=\"2026-10-29T12:03:15Z\" --project=PROJECT_8 --limit=5 --format=json
+[
+  {
+    "httpRequest": {
+      "latency": "0.005942s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "10.77.4.2:58384",
+      "requestMethod": "CONNECT",
+      "requestSize": "71",
+      "responseSize": "141",
+      "status": 403
+    },
+    "insertId": "1k3iupted6e3x",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "www.wikipedia.org:443",
+        "matchedRules": [
+          {
+            "action": "DENIED",
+            "name": "default_denied"
+          }
+        ]
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-10-29T12:03:36.118909249Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-swp",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/PROJECT_8/global/networks/lzv-swp-vpc",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-10-29T12:03:25.857982Z"
+  }
+]
+## exit=0 at 2026-10-29T12:03:59Z

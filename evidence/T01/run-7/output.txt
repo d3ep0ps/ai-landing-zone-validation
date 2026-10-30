@@ -1,0 +1,50 @@
+# T01 run=run-7 start=2026-10-28T15:27:27Z
+# script_commit=eb3fbc9
+# check=I2 control=`iam.managed.disableServiceAccountKeyCreation` (managed constraint, not the legacy `iam.disableServiceAccountKeyCreation`) (folder)
+# expected (pre-registered): Denied with `FAILED_PRECONDITION`; error names the managed constraint or says "Key creation is not allowed"
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/iam.managed.disableServiceAccountKeyCreation --effective --project=PROJECT_8 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_7/policies/iam.managed.disableServiceAccountKeyCreation",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-28T15:27:28Z
+## note 2026-10-28T15:27:28Z: effective constraints/iam.managed.disableServiceAccountKeyCreation on PROJECT_8: enforce=true
+## $ gcloud iam service-accounts create lzv-t01-run7-utqbwo --project=PROJECT_8 --display-name=lzv\ T01\ test\ SA
+Created service account [lzv-t01-run7-utqbwo].
+Service account email: SA_14@PROJECT.iam.gserviceaccount.com
+## exit=0 at 2026-10-28T15:27:30Z
+## $ gcloud iam service-accounts keys create /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.6BQFKf/key.json --iam-account=SA_14@PROJECT.iam.gserviceaccount.com --project=PROJECT_8
+ERROR: (gcloud.iam.service-accounts.keys.create) FAILED_PRECONDITION: Operation denied by org policy on resource 'projects/-/serviceAccounts/SA_UNIQUE_ID_8': ["constraints/iam.managed.disableServiceAccountKeyCreation": "This constraint, when enforced, blocks service account key creation."].
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: iam.googleapis.com
+  metadata:
+    customConstraints: constraints/iam.managed.disableServiceAccountKeyCreation
+    resource: projects/-/serviceAccounts/SA_UNIQUE_ID_8
+  reason: CUSTOM_ORG_POLICY_VIOLATION
+## exit=1 at 2026-10-28T15:27:46Z
+## cleanup start 2026-10-28T15:27:46Z
+## $ gcloud iam service-accounts delete SA_14@PROJECT.iam.gserviceaccount.com --project=PROJECT_8
+You are about to delete service account 
+[SA_14@PROJECT.iam.gserviceaccount.com]
+
+Do you want to continue (Y/n)?  
+deleted service account [SA_14@PROJECT.iam.gserviceaccount.com]
+## exit=0 at 2026-10-28T15:27:48Z
+## $ gcloud iam service-accounts describe SA_14@PROJECT.iam.gserviceaccount.com --project=PROJECT_8
+ERROR: (gcloud.iam.service-accounts.describe) PERMISSION_DENIED: Permission 'iam.serviceAccounts.get' denied on resource (or it may not exist). This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property.
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: iam.googleapis.com
+  metadata:
+    permission: iam.serviceAccounts.get
+  reason: IAM_PERMISSION_DENIED
+## exit=1 at 2026-10-28T15:27:49Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.6BQFKf
+## exit=0 at 2026-10-28T15:27:49Z
+## cleanup end 2026-10-28T15:27:49Z

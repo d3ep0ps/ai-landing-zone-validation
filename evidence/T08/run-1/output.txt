@@ -1,0 +1,15 @@
+# T08 run=run-1 start=2026-10-23T13:48:53Z
+# check=Baseline control=`gcp.resourceLocations` `in:eu-locations` (folder)
+# expected (pre-registered): Denied; error contains `violates constraint constraints/gcp.resourceLocations` (attribute by constraint name if T07 is also active)
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-23T13:48:53Z: stage guard ok: gcp.restrictNonCmekServices not set on the folder
+## $ gcloud storage buckets create gs://lzv-t08-run1-zgi3lh --location=us-central1 --project=PROJECT_4
+Creating gs://lzv-t08-run1-zgi3lh/...
+ERROR: (gcloud.storage.buckets.create) HTTPError 412: 'us-central1' violates constraint 'constraints/gcp.resourceLocations'
+## exit=1 at 2026-10-23T13:48:54Z
+## note 2026-10-23T13:48:54Z: constraints named in error: constraints/gcp.resourceLocations 
+## cleanup start 2026-10-23T13:48:54Z
+## $ if gcloud storage buckets describe gs://lzv-t08-run1-zgi3lh >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t08-run1-zgi3lh; fi; if gcloud storage buckets describe gs://lzv-t08-run1-zgi3lh >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi
+CLEANUP CHECK: bucket gone
+## exit=0 at 2026-10-23T13:48:57Z
+## cleanup end 2026-10-23T13:48:57Z

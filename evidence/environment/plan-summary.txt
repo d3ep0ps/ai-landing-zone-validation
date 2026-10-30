@@ -1,0 +1,45 @@
+# Phase 2 plan summary (2026-10-23, terraform plan by human; reviewed by Opus)
+Terraform 1.17.0, google/google-beta 8.8.0, Fabric be0d4b1
+Plan: 96 to add, 0 to change, 0 to destroy.
+
+## Resources by module and type
+   1 folder_ai_prod google_folder
+   1 folder_ai_prod google_org_policy_policy
+   1 folder_root google_folder
+   6 folder_root google_org_policy_policy
+   1 log_bucket google_logging_project_bucket_config
+   1 prj_data google_project
+   1 prj_data google_project_iam_member
+   6 prj_data google_project_service
+   1 prj_data google_project_service_identity
+   1 prj_logging google_project
+   6 prj_logging google_project_service
+   1 prj_mcp google_project
+   5 prj_mcp google_project_iam_member
+   9 prj_mcp google_project_service
+   3 prj_mcp google_project_service_identity
+   1 prj_outside google_project
+   5 prj_outside google_project_service
+   1 prj_runtime google_project
+  25 prj_runtime google_project_iam_member
+  12 prj_runtime google_project_service
+   5 prj_runtime google_project_service_identity
+   1 vpc_sc google_access_context_manager_access_policy
+   1 vpc_sc google_access_context_manager_service_perimeter
+   1 vpc_sc_org_policy google_access_context_manager_access_policy
+
+## Org policies (folder scope)
+module.folder_ai_prod.["vertexai.allowedModels"] + resource "google_org_policy_policy" "default" {
+module.folder_root.["gcp.resourceLocations"] + resource "google_org_policy_policy" "default" {
+module.folder_root.["iam.managed.disableServiceAccountKeyCreation"] + resource "google_org_policy_policy" "default" {
+module.folder_root.["run.allowedBinaryAuthorizationPolicies"] + resource "google_org_policy_policy" "default" {
+module.folder_root.["run.allowedIngress"] + resource "google_org_policy_policy" "default" {
+module.folder_root.["run.managed.requireInvokerIam"] + resource "google_org_policy_policy" "default" {
+module.folder_root.["storage.publicAccessPrevention"] + resource "google_org_policy_policy" "default" {
+
+## Review checks
+- org-level IAM resources: 0
+- org-level resources: folder fldr-lz-validation, 2 access policies (one empty org-level, one scoped to the folder)
+- perimeter: use_explicit_dry_run_spec=true, enforced status blocks: 0
+- log bucket: bucket_id        = "lzv-locked-logs" locked           = false retention_days   = 1 
+- project IAM: 31 grants, all to Google service agents (Fabric service-agents.yaml defaults); includes roles/aiplatform.user for the vertex-shtune service agent (record in T12 evidence)

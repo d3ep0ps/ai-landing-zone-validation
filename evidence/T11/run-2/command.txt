@@ -1,0 +1,6 @@
+# T11 run=run-2 start=2026-10-25T04:43:35Z
+# check=I1 control=Per-agent identity (module default `AGENT_IDENTITY`; platform default is a service account)
+# expected (pre-registered): Unique `principal://agents.global.org-…/…/reasoningEngines/ID`; no SA email
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-25T04:43:35Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra/agents output -json agent_a
+2026-10-25T04:43:35Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -H @- "https://${LZV_AGENT_REGION}-aiplatform.googleapis.com/v1beta1/${LZV_AGENT_ID}"

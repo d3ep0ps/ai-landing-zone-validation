@@ -1,0 +1,13 @@
+# T33 run=run-6 start=2026-10-28T08:49:19Z
+# script_commit=72162f7
+# check=V2-C control=Agent Runtime with a PSC interface; internet only through Secure Web Proxy over the attachment
+# expected (pre-registered): example.com 200 through the proxy; non-allowed host refused on CONNECT (403) with `DENIED` in `gateway_requests`
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T08:49:20Z $ gcloud network-services gateways describe lzv-swp --location=europe-west1 --project=PROJECT_8
+2026-10-28T08:49:21Z $ gcloud compute network-attachments describe lzv-psci --region=europe-west1 --project=PROJECT_8
+2026-10-28T08:49:22Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T08:49:23Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T08:49:25Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-28T08:49:31Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-28T08:49:36Z $ gcloud logging read logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.enforcedGatewaySecurityPolicy.matchedRules.action=\"DENIED\"\ AND\ timestamp\>=\"2026-10-28T08:49:25Z\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-28T08:50:07Z $ gcloud logging read logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.enforcedGatewaySecurityPolicy.matchedRules.action=\"DENIED\"\ AND\ timestamp\>=\"2026-10-28T08:49:25Z\" --project=PROJECT_8 --limit=5 --format=json

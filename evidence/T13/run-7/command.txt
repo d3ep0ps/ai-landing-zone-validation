@@ -1,0 +1,46 @@
+# T13 stage=setup run=run-7 start=2026-10-28T15:29:36Z
+# script_commit=eb3fbc9
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T15:29:36Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T15:29:38Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T15:29:39Z $ gcloud storage buckets create gs://lzv-t13a-run7-r5dhn6 --project=PROJECT_10 --location=europe-west1 --uniform-bucket-level-access
+2026-10-28T15:29:42Z $ gcloud storage buckets create gs://lzv-t13b-run7-1p2296 --project=PROJECT_11 --location=europe-west1 --uniform-bucket-level-access
+2026-10-28T15:29:44Z $ printf '%s\n' 'lzv-t13-fixture' | gcloud storage cp - gs://lzv-t13a-run7-r5dhn6/probe.txt
+# T13 stage=dryrun run=run-7 start=2026-10-28T15:29:49Z
+# script_commit=eb3fbc9
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T15:29:49Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T15:29:51Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T15:29:53Z $ gcloud storage cat gs://lzv-t13a-run7-r5dhn6/probe.txt
+2026-10-28T15:29:54Z $ gcloud storage cp gs://lzv-t13a-run7-r5dhn6/probe.txt gs://lzv-t13b-run7-1p2296/
+2026-10-28T15:29:56Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ protoPayload.metadata.dryRun=true --project=PROJECT_10 --freshness=1h --format=json
+# T13 stage=outside-read run=run-7 start=2026-10-29T05:13:53Z
+# script_commit=8baedc8
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T05:13:53Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-29T05:13:54Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-29T05:13:55Z $ gcloud storage cat gs://lzv-t13a-run7-r5dhn6/probe.txt
+2026-10-29T05:13:57Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"T1GodszL2dWTI4qjX_9He0AgIMoQmoOTIvW8Jc1nRBc_Fqchv-qZ_t0GvVV7-fZqIIT-lFgzlmOqjuOW\" --project=PROJECT_10 --freshness=1h --format=json
+2026-10-29T05:13:59Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"T1GodszL2dWTI4qjX_9He0AgIMoQmoOTIvW8Jc1nRBc_Fqchv-qZ_t0GvVV7-fZqIIT-lFgzlmOqjuOW\" --project=PROJECT_11 --freshness=1h --format=json
+2026-10-29T05:15:01Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"T1GodszL2dWTI4qjX_9He0AgIMoQmoOTIvW8Jc1nRBc_Fqchv-qZ_t0GvVV7-fZqIIT-lFgzlmOqjuOW\" --project=PROJECT_10 --freshness=1h --format=json
+# T13 stage=copy run=run-7 start=2026-10-29T05:38:13Z
+# script_commit=8baedc8
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T05:38:13Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-29T05:38:14Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-29T05:38:16Z $ gcloud storage cp gs://lzv-t13a-run7-r5dhn6/probe.txt gs://lzv-t13b-run7-1p2296/copied.txt --billing-project=PROJECT_10
+2026-10-29T05:38:18Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"OyrqhWg8y3DrdDqxsjjzMA-1GHTI4D3NmW1dspMaJp2vjCJubtFXTLGAJHGsd1NE-Dgme6tGBOWUQvE_\" --project=PROJECT_10 --freshness=1h --format=json
+2026-10-29T05:38:20Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"OyrqhWg8y3DrdDqxsjjzMA-1GHTI4D3NmW1dspMaJp2vjCJubtFXTLGAJHGsd1NE-Dgme6tGBOWUQvE_\" --project=PROJECT_11 --freshness=1h --format=json
+2026-10-29T05:39:22Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"OyrqhWg8y3DrdDqxsjjzMA-1GHTI4D3NmW1dspMaJp2vjCJubtFXTLGAJHGsd1NE-Dgme6tGBOWUQvE_\" --project=PROJECT_10 --freshness=1h --format=json
+2026-10-29T05:39:23Z $ gcloud storage rm --recursive gs://lzv-t13a-run7-r5dhn6 --billing-project=PROJECT_10
+2026-10-29T05:39:29Z $ gcloud storage rm --recursive gs://lzv-t13b-run7-1p2296
+2026-10-29T05:39:33Z $ gcloud storage buckets describe gs://lzv-t13b-run7-1p2296 --format='value(name)'
+2026-10-29T05:39:34Z $ gcloud storage buckets describe gs://lzv-t13a-run7-r5dhn6 --format='value(name)'

@@ -1,0 +1,21 @@
+{
+  "id": "T16",
+  "check": "Reach (optional)",
+  "control": "Secure Web Proxy + egress firewall",
+  "scope": "n/a",
+  "expected": "n/a",
+  "actual": "not tested: Deferred to v1.1 (2026-10-23, not researched in Phase 1)",
+  "verdict": "NOT_TESTED",
+  "tier": "Documented",
+  "reason": "Deferred to v1.1 (2026-10-23, not researched in Phase 1)",
+  "commands_file": "evidence/T16/run-1/command.txt",
+  "output_file": "evidence/T16/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-24T07:21:55Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": []
+}

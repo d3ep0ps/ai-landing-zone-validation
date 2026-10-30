@@ -1,0 +1,6 @@
+{
+  "stage": "enforced",
+  "verdict": "FAIL",
+  "note": "plan exit 1, read exit 0; plan refused by VPC-SC; violations naming tooling quota project=0",
+  "timestamp_utc": "2026-10-29T05:42:23Z"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "T15",
+  "check": "I6",
+  "control": "Locked log bucket",
+  "scope": "projects/PROJECT_4/locations/europe-west1/buckets/lzv-locked-logs",
+  "expected": "`locked: true`; change denied",
+  "actual": "locked=true, retentionDays before=1; update to 2 days -> PASS; retentionDays after=1",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T15/run-1/command.txt",
+  "output_file": "evidence/T15/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-23T13:55:19Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/logging/docs/buckets"
+  ]
+}

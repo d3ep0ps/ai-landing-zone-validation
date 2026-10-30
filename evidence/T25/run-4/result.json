@@ -1,0 +1,27 @@
+{
+  "id": "T25",
+  "check": "P3",
+  "control": "Binary Authorization image admission",
+  "scope": "projects/PROJECT_9",
+  "expected": "Unattested image refused (\"Service update rejected by Binary Authorization policy\" or \"is not authorized by policy\"); attested image deployed. Signing uses `gcloud beta`; the note is created via REST",
+  "actual": "unattested digest: exit 1 (is not authorized by policy); attested same digest: PASS (exit 0)",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T25/run-4/command.txt",
+  "output_file": "evidence/T25/run-4/output.txt",
+  "run_id": "run-4",
+  "timestamp_utc": "2026-10-25T18:49:01Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/binary-authorization/docs/run/configure-policy-cloud-run",
+    "https://docs.cloud.google.com/binary-authorization/docs/run/enabling-binauthz-cloud-run",
+    "https://docs.cloud.google.com/binary-authorization/docs/making-attestations",
+    "https://docs.cloud.google.com/binary-authorization/docs/creating-attestors-cli"
+  ],
+  "script_commit": "b09709b"
+}

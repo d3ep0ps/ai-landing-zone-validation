@@ -1,0 +1,26 @@
+{
+  "id": "T39",
+  "check": "V2-E",
+  "control": "T39: T22 single-stack failure | T39b: same call by another identity refused",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "T39: Both full plans exit 0 or 2; no VPC-SC violation names either quota project | T39b: Full plan succeeds",
+  "actual": "T39 split=PASS: T39 split: inside plan exit 2, outside plan exit 2; enforced violations since 2026-10-28T05:57:09Z naming inside quota project=0, outside=0 | T39b egress=PASS: T39b egress: single-stack full plan exit 2; enforced violations naming seed project=0; control by another identity refused",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T39/run-6/command.txt",
+  "output_file": "evidence/T39/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T06:03:24Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/ingress-egress-rules",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/audit-logging",
+    "https://docs.cloud.google.com/docs/quotas/quota-project"
+  ],
+  "script_commit": "d306107"
+}

@@ -1,0 +1,73 @@
+# T06 stage=before run=run-2 start=2026-10-25T04:39:10Z
+# check=I5 control=`discoveryengine.managed.disableCustomMcpServerConnector` (folder)
+# expected (pre-registered): Effective = enforced
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --folder=FOLDER_ID_2 --format=json --billing-project=PROJECT_6
+{
+  "name": "folders/FOLDER_ID_2/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-25T04:39:11Z
+## $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --project=PROJECT_5 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_2/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-25T04:39:12Z
+## note 2026-10-25T04:39:12Z: effective enforce: folder root=true; project mcp=true
+# T06 stage=after run=run-2 start=2026-10-25T05:01:14Z
+# check=I5 control=`discoveryengine.managed.disableCustomMcpServerConnector` (folder)
+# expected (pre-registered): Effective = enforced
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --folder=FOLDER_ID_2 --format=json --billing-project=PROJECT_6
+{
+  "etag": "COWS9tYGELiWpwE=-",
+  "name": "folders/FOLDER_ID_2/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "etag": "COWS9tYGELiWpwE=",
+    "rules": [
+      {
+        "enforce": true
+      }
+    ],
+    "updateTime": "2026-10-25T04:45:25.002739Z"
+  }
+}
+## exit=0 at 2026-10-25T05:01:14Z
+## $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --folder=FOLDER_ID_2 --format=json --billing-project=PROJECT_6
+{
+  "name": "folders/FOLDER_ID_2/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-25T05:01:15Z
+## $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --project=PROJECT_5 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_2/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-25T05:01:16Z
+## note 2026-10-25T05:01:16Z: effective enforce: folder root=true; project mcp=true

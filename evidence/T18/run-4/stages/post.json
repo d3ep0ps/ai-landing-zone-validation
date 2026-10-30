@@ -1,0 +1,6 @@
+{
+  "stage": "post",
+  "verdict": "PASS",
+  "note": "post: agent B refused with PERMISSION_DENIED; approved agent A answered",
+  "timestamp_utc": "2026-10-25T19:34:52Z"
+}

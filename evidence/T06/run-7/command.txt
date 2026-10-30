@@ -1,0 +1,15 @@
+# T06 stage=before run=run-7 start=2026-10-28T15:29:32Z
+# script_commit=eb3fbc9
+# check=I5 control=`discoveryengine.managed.disableCustomMcpServerConnector` (folder)
+# expected (pre-registered): Effective = enforced
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T15:29:32Z $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-28T15:29:33Z $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --project=PROJECT_9 --format=json --billing-project=PROJECT_6
+# T06 stage=after run=run-7 start=2026-10-28T16:03:28Z
+# script_commit=eb3fbc9
+# check=I5 control=`discoveryengine.managed.disableCustomMcpServerConnector` (folder)
+# expected (pre-registered): Effective = enforced
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T16:03:28Z $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-28T16:03:28Z $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-28T16:03:29Z $ gcloud org-policies describe constraints/discoveryengine.managed.disableCustomMcpServerConnector --effective --project=PROJECT_9 --format=json --billing-project=PROJECT_6

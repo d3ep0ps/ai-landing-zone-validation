@@ -1,0 +1,25 @@
+{
+  "id": "T17",
+  "check": "P3",
+  "control": "run.allowedBinaryAuthorizationPolicies = default (folder)",
+  "scope": "projects/PROJECT_5 (inherits folder policy)",
+  "expected": "Effective = `default`; deploy refused. Record whether the refusal names the org policy or a Binary Authorization admission rule",
+  "actual": "effective=default; deploy without --binary-authorization refused; control with default accepted; refusal names the org policy constraint run.allowedBinaryAuthorizationPolicies",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T17/run-1/command.txt",
+  "output_file": "evidence/T17/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-23T13:47:08Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/binary-authorization/docs/run/requiring-binauthz-cloud-run",
+    "https://docs.cloud.google.com/binary-authorization/docs/run/enabling-binauthz-cloud-run",
+    "https://docs.cloud.google.com/binary-authorization/docs/run/configure-policy-cloud-run"
+  ]
+}

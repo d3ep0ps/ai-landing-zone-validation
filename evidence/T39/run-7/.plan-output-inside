@@ -1,0 +1,34 @@
+[0m[1mdata.terraform_remote_state.main: Reading...[0m[0m
+[0m[1mdata.terraform_remote_state.main: Read complete after 0s[0m
+[0m[1mdata.google_project.inside["data"]: Reading...[0m[0m
+[0m[1mdata.google_project.inside["runtime"]: Reading...[0m[0m
+[0m[1mdata.google_storage_project_service_account.inside["data"]: Reading...[0m[0m
+[0m[1mdata.google_storage_project_service_account.inside["runtime"]: Reading...[0m[0m
+[0m[1mdata.google_project.inside["mcp"]: Reading...[0m[0m
+[0m[1mdata.google_storage_project_service_account.inside["mcp"]: Reading...[0m[0m
+[0m[1mdata.google_storage_project_service_account.inside["mcp"]: Read complete after 0s [id=service-PROJECT_NUMBER_9@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mdata.google_storage_project_service_account.inside["runtime"]: Read complete after 0s [id=service-PROJECT_NUMBER_7@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mdata.google_storage_project_service_account.inside["data"]: Read complete after 0s [id=service-PROJECT_NUMBER_8@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mdata.google_project.inside["mcp"]: Read complete after 2s [id=projects/PROJECT_9][0m
+[0m[1mdata.google_project.inside["data"]: Read complete after 2s [id=projects/PROJECT_10][0m
+[0m[1mdata.google_project.inside["runtime"]: Read complete after 2s [id=projects/PROJECT_8][0m
+
+Changes to Outputs:
+  [32m+[0m[0m inside_gcs_service_accounts = {
+      [32m+[0m[0m data    = "service-PROJECT_NUMBER_8@gs-project-accounts.iam.gserviceaccount.com"
+      [32m+[0m[0m mcp     = "service-PROJECT_NUMBER_9@gs-project-accounts.iam.gserviceaccount.com"
+      [32m+[0m[0m runtime = "service-PROJECT_NUMBER_7@gs-project-accounts.iam.gserviceaccount.com"
+    }
+  [32m+[0m[0m inside_projects             = {
+      [32m+[0m[0m data    = "PROJECT_NUMBER_8"
+      [32m+[0m[0m mcp     = "PROJECT_NUMBER_9"
+      [32m+[0m[0m runtime = "PROJECT_NUMBER_7"
+    }
+
+You can apply this plan to save these new output values to the Terraform
+state, without changing any real infrastructure.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

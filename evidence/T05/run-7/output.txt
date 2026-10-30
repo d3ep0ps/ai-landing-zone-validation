@@ -1,0 +1,44 @@
+# T05 run=run-7 start=2026-10-28T16:03:22Z
+# script_commit=eb3fbc9
+# check=New (R) control=`vertexai.configurableComputerUseToolSafetyPolicies` deny all (folder); not in the official constraint reference
+# expected (pre-registered): Policy effective = deny all. If the API does not know the constraint: NOT_TESTED + finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/vertexai.configurableComputerUseToolSafetyPolicies --effective --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+{
+  "name": "folders/FOLDER_ID_5/policies/vertexai.configurableComputerUseToolSafetyPolicies",
+  "spec": {
+    "rules": [
+      {
+        "denyAll": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-28T16:03:23Z
+## $ gcloud org-policies describe constraints/vertexai.configurableComputerUseToolSafetyPolicies --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+{
+  "etag": "COuxiNcGEOCUtS4=-",
+  "name": "folders/FOLDER_ID_5/policies/vertexai.configurableComputerUseToolSafetyPolicies",
+  "spec": {
+    "etag": "COuxiNcGEOCUtS4=",
+    "rules": [
+      {
+        "denyAll": true
+      }
+    ],
+    "updateTime": "2026-10-28T15:46:51.097340Z"
+  }
+}
+## exit=0 at 2026-10-28T16:03:24Z
+## $ gcloud org-policies describe constraints/vertexai.configurableComputerUseToolSafetyPolicies --effective --project=PROJECT_8 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_7/policies/vertexai.configurableComputerUseToolSafetyPolicies",
+  "spec": {
+    "rules": [
+      {
+        "denyAll": true
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-28T16:03:24Z

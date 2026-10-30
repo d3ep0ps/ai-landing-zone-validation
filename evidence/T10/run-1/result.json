@@ -1,0 +1,24 @@
+{
+  "id": "T10",
+  "check": "Baseline",
+  "control": "`gcp.restrictNonCmekServices` side effect",
+  "scope": "folders/FOLDER_ID_2",
+  "expected": "Fails; record exact error (proves article trap #4)",
+  "actual": "builds submit exited 1; bucket named in error: none",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "command failed (exit 1) without the verified signature: gcp\\.restrictNonCmekServices|customer-managed encryption key \\(CMEK\\).*required by an org policy",
+  "commands_file": "evidence/T10/run-1/command.txt",
+  "output_file": "evidence/T10/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-24T05:44:31Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/kms/docs/cmek-org-policy",
+    "https://docs.cloud.google.com/storage/docs/org-policy-constraints"
+  ]
+}

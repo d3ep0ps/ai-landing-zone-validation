@@ -1,0 +1,25 @@
+{
+  "id": "T19",
+  "check": "TS1",
+  "control": "IAM bindings added by the platform when one agent is deployed",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "The only added bindings are those on the pre-registered list (from v1: `roles/aiplatform.agentDefaultAccess` on the project principalSet). Any other added binding = finding",
+  "actual": "added=0 (expected binding present=0); extra=[none]; removed=[none]",
+  "verdict": "PASS",
+  "tier": "Configured",
+  "reason": "",
+  "commands_file": "evidence/T19/run-7/command.txt",
+  "output_file": "evidence/T19/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-29T04:36:16Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+    "https://docs.cloud.google.com/iam/docs/deny-access"
+  ],
+  "script_commit": "8baedc8"
+}

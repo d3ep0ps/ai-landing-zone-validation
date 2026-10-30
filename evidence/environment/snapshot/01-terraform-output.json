@@ -1,0 +1,52 @@
+{
+  "folder_ids": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "ai_prod": "string",
+        "root": "string"
+      }
+    ],
+    "value": {
+      "ai_prod": "folders/FOLDER_ID_1",
+      "root": "folders/FOLDER_ID_2"
+    }
+  },
+  "project_ids": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "data": "string",
+        "mcp": "string",
+        "outside": "string",
+        "runtime": "string"
+      }
+    ],
+    "value": {
+      "data": "PROJECT_4",
+      "mcp": "PROJECT_5",
+      "outside": "PROJECT_2",
+      "runtime": "PROJECT_7"
+    }
+  },
+  "project_numbers": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "data": "string",
+        "mcp": "string",
+        "outside": "string",
+        "runtime": "string"
+      }
+    ],
+    "value": {
+      "data": "PROJECT_NUMBER_1",
+      "mcp": "PROJECT_NUMBER_2",
+      "outside": "PROJECT_NUMBER_6",
+      "runtime": "PROJECT_NUMBER_4"
+    }
+  }
+}

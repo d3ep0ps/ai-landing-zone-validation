@@ -1,0 +1,28 @@
+# T39 stage=split run=run-6 start=2026-10-28T05:57:05Z
+# script_commit=d306107
+# check=V2-E control=Two Terraform roots split along the perimeter boundary (inside: in-perimeter quota project; outside: outside quota project); control: T22 single-stack failure
+# expected (pre-registered): Both full plans exit 0 or 2; no VPC-SC violation names either quota project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T05:57:07Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T05:57:08Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T05:57:09Z $ env GOOGLE_BILLING_PROJECT=PROJECT_10 USER_PROJECT_OVERRIDE=true terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-split/inside plan -input=false -lock=false -detailed-exitcode -var quota_project=PROJECT_10
+2026-10-28T05:57:12Z $ env GOOGLE_BILLING_PROJECT=PROJECT_6 USER_PROJECT_OVERRIDE=true terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-split/outside plan -input=false -lock=false -detailed-exitcode -var quota_project=PROJECT_6
+2026-10-28T05:59:14Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:57:09Z\" --project=PROJECT_10 --format=json
+2026-10-28T05:59:16Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:57:09Z\" --project=PROJECT_8 --format=json
+2026-10-28T05:59:17Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:57:09Z\" --project=PROJECT_9 --format=json
+2026-10-28T05:59:19Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:57:09Z\" --project=PROJECT_10 --format=json
+2026-10-28T05:59:20Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:57:09Z\" --project=PROJECT_8 --format=json
+2026-10-28T05:59:21Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:57:09Z\" --project=PROJECT_9 --format=json
+# T39 stage=egress run=run-6 start=2026-10-28T05:59:33Z
+# script_commit=d306107
+# check=V2-E control=T39b: single stack, quota project outside the perimeter, egress rule for the pipeline identity; control: same call by another identity refused
+# expected (pre-registered): Full plan succeeds
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T05:59:35Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T05:59:36Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T05:59:38Z $ env GOOGLE_BILLING_PROJECT=PROJECT_6 USER_PROJECT_OVERRIDE=true terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra plan -input=false -lock=false -detailed-exitcode -var quota_project=PROJECT_6
+2026-10-28T06:02:16Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:59:38Z\" --project=PROJECT_10 --format=json
+2026-10-28T06:02:18Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:59:38Z\" --project=PROJECT_8 --format=json
+2026-10-28T06:02:20Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ timestamp\>=\"2026-10-28T05:59:38Z\" --project=PROJECT_9 --format=json
+2026-10-28T06:02:21Z $ gcloud storage buckets list --project=PROJECT_10 --billing-project=PROJECT_6 --impersonate-service-account=SA_11@PROJECT.iam.gserviceaccount.com --format=value\(name\)
+2026-10-28T06:03:23Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ timestamp\>=\"2026-10-28T05:59:38Z\"\ NOT\ protoPayload.metadata.dryRun=true --project=PROJECT_10 --limit=50 --format=json

@@ -1,0 +1,18 @@
+# T14R stage=pre run=run-7 start=2026-10-29T04:36:51Z
+# script_commit=8baedc8
+# check=Reach control=Agent deployed before the project joins a perimeter
+# expected (pre-registered): pre: tool status 200; post (same agent, project now in the enforced perimeter): tool status 200 (docs: an agent deployed before the project joins a perimeter keeps internet access; article trap #7)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T04:36:52Z $ gcloud asset search-all-resources --scope=projects/PROJECT_NUMBER_7 --asset-types=aiplatform.googleapis.com/ReasoningEngine --format=json\(name\,createTime\) --billing-project=PROJECT_8
+2026-10-29T04:36:53Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-29T04:36:54Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-29T04:36:55Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14r","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T14R stage=post run=run-7 start=2026-10-29T05:32:43Z
+# script_commit=8baedc8
+# check=Reach control=Agent deployed before the project joins a perimeter
+# expected (pre-registered): pre: tool status 200; post (same agent, project now in the enforced perimeter): tool status 200 (docs: an agent deployed before the project joins a perimeter keeps internet access; article trap #7)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T05:32:44Z $ gcloud asset search-all-resources --scope=projects/PROJECT_NUMBER_7 --asset-types=aiplatform.googleapis.com/ReasoningEngine --format=json\(name\,createTime\) --billing-project=PROJECT_8
+2026-10-29T05:32:45Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-29T05:32:47Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-29T05:32:48Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14r","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

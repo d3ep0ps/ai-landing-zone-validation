@@ -1,0 +1,10 @@
+# T37 run=run-6 start=2026-10-28T07:57:20Z
+# script_commit=dfd646b
+# check=V2-D control=Folder-attached IAM deny policy for all agent identities of the organization trust domain, exception for one approved agent
+# expected (pre-registered): Agent B refused (`PERMISSION_DENIED`, deny-policy text); agent A answered
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T07:57:21Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-28T07:57:22Z $ gcloud iam policies get lzv-v2-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-28T07:57:24Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-28T07:57:25Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-28T07:57:27Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1

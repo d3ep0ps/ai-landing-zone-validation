@@ -1,0 +1,12 @@
+# T12 run=run-1 start=2026-10-24T06:18:03Z
+# check=R2 / I3 control=No direct inference, no broad grants
+# expected (pre-registered): No path found; no fleet grants. Limitation: allow policies only, direct bindings
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-24T06:18:03Z $ gcloud iam roles describe roles/aiplatform.user --format=json
+2026-10-24T06:18:04Z $ gcloud asset analyze-iam-policy --organization="$LZV_ORG" --identity="user:$(gcloud config get account)" --permissions=resourcemanager.folders.get --billing-project="$LZV_RT" --format=json
+2026-10-24T06:18:06Z $ gcloud asset analyze-iam-policy --organization=ORG_ID --identity=principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_1 --permissions=aiplatform.endpoints.predict --billing-project=PROJECT_7 --format=json
+2026-10-24T06:18:07Z $ gcloud asset analyze-iam-policy --organization=ORG_ID --identity=principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_1 --roles=roles/aiplatform.expressUser\,roles/aiplatform.user --billing-project=PROJECT_7 --format=json
+2026-10-24T06:18:08Z $ gcloud projects get-iam-policy PROJECT_7 --format=json
+2026-10-24T06:18:09Z $ gcloud resource-manager folders get-iam-policy FOLDER_ID_1 --format=json
+2026-10-24T06:18:11Z $ gcloud resource-manager folders get-iam-policy FOLDER_ID_2 --format=json
+2026-10-24T06:18:12Z $ gcloud organizations get-iam-policy ORG_ID --format=json

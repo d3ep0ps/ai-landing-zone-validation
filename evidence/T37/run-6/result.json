@@ -1,0 +1,26 @@
+{
+  "id": "T37",
+  "check": "V2-D",
+  "control": "Folder-attached IAM deny policy for all agent identities of the organization trust domain, exception for one approved agent",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Agent B refused (`PERMISSION_DENIED`, deny-policy text); agent A answered",
+  "actual": "agent B refused with PERMISSION_DENIED (deny-policy wording present: 1; text: ); approved agent A answered; folder policy listed, age=623s, project policy absent",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T37/run-6/command.txt",
+  "output_file": "evidence/T37/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T07:57:32Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/iam/docs/deny-access",
+    "https://docs.cloud.google.com/iam/docs/principal-identifiers",
+    "https://docs.cloud.google.com/iam/docs/deny-permissions-support"
+  ],
+  "script_commit": "dfd646b"
+}

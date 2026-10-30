@@ -1,0 +1,6 @@
+{
+  "stage": "enforce",
+  "verdict": "PASS",
+  "note": "enforce: inheriting project: create exit 1 (customConstraints/custom.lzvOrgTestBucketLabel.); exception project: create exit 0",
+  "timestamp_utc": "2026-10-28T16:35:17Z"
+}

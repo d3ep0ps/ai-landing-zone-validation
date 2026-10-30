@@ -1,0 +1,13 @@
+# T24 run=run-5 start=2026-10-26T21:56:01Z
+# script_commit=11dc4dd
+# check=I6 control=DC4
+# expected (pre-registered): The entry appears in the locked bucket within 15 min (writing to a locked bucket is not documented either way); retention change still refused
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-26T21:56:01Z $ gcloud logging sinks describe lzv-dc4-admin-activity --folder=FOLDER_ID_5 --format=json
+2026-10-26T21:56:02Z $ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_10 --format=json
+2026-10-26T21:56:03Z $ gcloud iam service-accounts create lzv-t24-probe-1793051763 --project=PROJECT_8
+2026-10-26T21:56:05Z $ gcloud logging read protoPayload.methodName=\"google.iam.admin.v1.CreateServiceAccount\"\ AND\ \"lzv-t24-probe-1793051763\" --bucket=lzv-locked-logs --location=europe-west1 --view=_AllLogs --project=PROJECT_10 --freshness=1h --limit=5 --format=json
+2026-10-26T21:57:06Z $ gcloud logging read protoPayload.methodName=\"google.iam.admin.v1.CreateServiceAccount\"\ AND\ \"lzv-t24-probe-1793051763\" --bucket=lzv-locked-logs --location=europe-west1 --view=_AllLogs --project=PROJECT_10 --freshness=1h --limit=5 --format=json
+2026-10-26T21:57:07Z $ gcloud logging buckets update lzv-locked-logs --location=europe-west1 --project=PROJECT_10 --retention-days=2
+2026-10-26T21:57:08Z $ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_10 --format=json
+2026-10-26T21:57:09Z $ if gcloud iam service-accounts describe SA_10@PROJECT.iam.gserviceaccount.com --project=PROJECT_8 >/dev/null 2>&1; then gcloud iam service-accounts delete SA_10@PROJECT.iam.gserviceaccount.com --project=PROJECT_8; fi; if gcloud iam service-accounts describe SA_10@PROJECT.iam.gserviceaccount.com --project=PROJECT_8 >/dev/null 2>&1; then echo 'CLEANUP CHECK: service account still exists'; else echo 'CLEANUP CHECK: service account gone'; fi

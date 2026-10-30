@@ -1,0 +1,92 @@
+[
+  {
+    "insertId": "1rtzbjbe36j43",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_7"
+        },
+        "principalEmail": "SA_11@PROJECT.iam.gserviceaccount.com",
+        "serviceAccountDelegationInfo": [
+          {
+            "firstPartyPrincipal": {
+              "principalEmail": "USER_1@example.com"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "egressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "source": "projects/PROJECT_NUMBER_8",
+            "sourceType": "Resource",
+            "targetResource": "projects/PROJECT_NUMBER_5",
+            "targetResourcePermissions": [
+              "serviceusage.services.use"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/PROJECT_NUMBER_5",
+          "projects/_"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER",
+        "vpcServiceControlsTroubleshootToken": "AbmW-qvjiqlHb22t9pAlBqilRO4Ro8g_mpjVxeAXvyBN6ieg5sdS2QyxYx9Iv_Ivmo6BcoBCqtilO21slcRWI3wxGpB4R5Q8BZSlRTQKUkkwZNsKLSfa33T00FB82RbAdemBpncDjNFZMqYsSv-uLhy4cYYSxWIskOFrzJTjUp2SwklMcjLktIgS6jC0Nk2kXIbh8K3Fla4fO7MP2FhnfpDJTAK_834vE4kZASlCGfxy8fQItavVHHZdVsv1KxBOMxMn5TacTDFSGZ7inta6zczavLSCmN9TVxst1rtFGnQfeDQANHiJiYhTLGYYXUc2X5zb2w5cZeosedHfbcVHuZ6Bb0ZpIOXf1_YFA64AmuACqBUYecdpng6-LGU_7k-Yc7xJZBjidgG58Sp4zEtEz7aw3FvR",
+        "vpcServiceControlsUniqueId": "xmFfXOp3Xp0dmO3TjvHb4IHKaa0h_9LxL7hKhAp4Rv_JKUjMxFUTFmK_x3AV0I_OMtj2mbV9YVcGwNB7"
+      },
+      "methodName": "google.storage.buckets.list",
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "xmFfXOp3Xp0dmO3TjvHb4IHKaa0h_9LxL7hKhAp4Rv_JKUjMxFUTFmK_x3AV0I_OMtj2mbV9YVcGwNB7",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "AbmW-qvjiqlHb22t9pAlBqilRO4Ro8g_mpjVxeAXvyBN6ieg5sdS2QyxYx9Iv_Ivmo6BcoBCqtilO21slcRWI3wxGpB4R5Q8BZSlRTQKUkkwZNsKLSfa33T00FB82RbAdemBpncDjNFZMqYsSv-uLhy4cYYSxWIskOFrzJTjUp2SwklMcjLktIgS6jC0Nk2kXIbh8K3Fla4fO7MP2FhnfpDJTAK_834vE4kZASlCGfxy8fQItavVHHZdVsv1KxBOMxMn5TacTDFSGZ7inta6zczavLSCmN9TVxst1rtFGnQfeDQANHiJiYhTLGYYXUc2X5zb2w5cZeosedHfbcVHuZ6Bb0ZpIOXf1_YFA64AmuACqBUYecdpng6-LGU_7k-Yc7xJZBjidgG58Sp4zEtEz7aw3FvR",
+              "uid": "xmFfXOp3Xp0dmO3TjvHb4IHKaa0h_9LxL7hKhAp4Rv_JKUjMxFUTFmK_x3AV0I_OMtj2mbV9YVcGwNB7"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: xmFfXOp3Xp0dmO3TjvHb4IHKaa0h_9LxL7hKhAp4Rv_JKUjMxFUTFmK_x3AV0I_OMtj2mbV9YVcGwNB7"
+      }
+    },
+    "receiveTimestamp": "2026-10-28T06:02:23.512498725Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.list",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-28T06:02:23.020749484Z"
+  }
+]

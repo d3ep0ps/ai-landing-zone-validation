@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(gcloud config list *)",
+      "Bash(gcloud config get *)",
+      "Bash(gcloud config configurations list *)",
+      "Bash(gcloud --version)",
+      "Bash(gcloud org-policies describe *)",
+      "Bash(gcloud org-policies list *)",
+      "Bash(gcloud projects describe *)",
+      "Bash(gcloud projects list *)",
+      "Bash(gcloud projects get-ancestors-iam-policy *)",
+      "Bash(gcloud resource-manager folders describe *)",
+      "Bash(gcloud resource-manager folders list *)",
+      "Bash(gcloud asset analyze-iam-policy *)",
+      "Bash(gcloud asset search-all-iam-policies *)",
+      "Bash(gcloud asset search-all-resources *)",
+      "Bash(gcloud access-context-manager perimeters describe *)",
+      "Bash(gcloud access-context-manager perimeters list *)",
+      "Bash(gcloud logging read *)",
+      "Bash(gcloud logging buckets describe *)",
+      "Bash(terraform fmt *)",
+      "Bash(terraform validate *)",
+      "Bash(terraform version)",
+      "Bash(bash -n *)",
+      "Bash(shellcheck *)",
+      "Bash(jq *)",
+      "Bash(python3 tools/redact.py *)",
+      "Bash(python3 tools/test_redact.py *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ],
+    "deny": [
+      "Bash(git push *)",
+      "Bash(gcloud organizations set-iam-policy *)",
+      "Bash(gcloud organizations add-iam-policy-binding *)",
+      "Bash(gcloud organizations remove-iam-policy-binding *)",
+      "Bash(gcloud projects delete *)",
+      "Bash(gcloud resource-manager folders delete *)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.lzv-redaction-map.json)"
+    ]
+  }
+}

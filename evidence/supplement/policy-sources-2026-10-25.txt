@@ -1,0 +1,33 @@
+# Supplement collected 2026-10-25T14:00:18Z, AFTER run 1 and run 2, environment at base (T05/T06/T07 toggle policies removed in Stage 4).
+# Purpose: show where each policy is set (org / folder / project), non-effective lists. Read-only.
+## $ gcloud org-policies list --organization=ORG
+CONSTRAINT                      LIST_POLICY  BOOLEAN_POLICY
+iam.allowedPolicyMemberDomains  SET          -
+exit=0
+## $ gcloud org-policies list --folder=ROOT_FOLDER
+gcp.resourceLocations
+run.allowedBinaryAuthorizationPolicies
+run.managed.requireInvokerIam
+storage.publicAccessPrevention
+iam.managed.disableServiceAccountKeyCreation
+run.allowedIngress
+exit=0
+## $ gcloud org-policies list --folder=AI_PROD_FOLDER
+vertexai.allowedModels
+exit=0
+## $ gcloud org-policies list --project=PROJECT_7
+exit=0
+## $ gcloud org-policies list --project=PROJECT_5
+exit=0
+## $ gcloud org-policies list --project=PROJECT_4
+exit=0
+## $ gcloud org-policies list --project=PROJECT_2
+exit=0
+## Terraform-managed folder policies (state, names only)
+ai_prod: vertexai.allowedModels
+root: gcp.resourceLocations
+root: iam.managed.disableServiceAccountKeyCreation
+root: run.allowedBinaryAuthorizationPolicies
+root: run.allowedIngress
+root: run.managed.requireInvokerIam
+root: storage.publicAccessPrevention

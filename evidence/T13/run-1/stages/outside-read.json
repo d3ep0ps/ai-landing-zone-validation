@@ -1,0 +1,6 @@
+{
+  "stage": "outside-read",
+  "verdict": "INCONCLUSIVE",
+  "note": "no enforced violation log entry found after 5 tries",
+  "timestamp_utc": "2026-10-24T06:48:05Z"
+}

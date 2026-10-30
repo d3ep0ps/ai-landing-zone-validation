@@ -1,0 +1,148 @@
+# T25 run=run-4 start=2026-10-25T18:47:38Z
+# script_commit=b09709b
+# check=P3 control=Binary Authorization image admission
+# expected (pre-registered): Unattested image refused ("Service update rejected by Binary Authorization policy" or "is not authorized by policy"); attested image deployed. Signing uses `gcloud beta`; the note is created via REST
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud container binauthz policy export --project=PROJECT_9
+defaultAdmissionRule:
+  enforcementMode: ENFORCED_BLOCK_AND_AUDIT_LOG
+  evaluationMode: REQUIRE_ATTESTATION
+  requireAttestationsBy:
+  - projects/PROJECT_9/attestors/lzv-attestor
+etag: '"876cmvsXg8ZV"'
+name: projects/PROJECT_9/policy
+updateTime: '2026-10-25T18:41:38.125311Z'
+## exit=0 at 2026-10-25T18:47:40Z
+## note 2026-10-25T18:47:40Z: guard ok: policy contains REQUIRE_ATTESTATION; attestor=lzv-attestor
+## $ gcloud artifacts repositories create lzv-t25-run4-uuwzsm --repository-format=docker --location=europe-west1 --project=PROJECT_9 --description=lzv\ t25\ temporary
+Create request issued for: [lzv-t25-run4-uuwzsm]
+Waiting for operation [projects/PROJECT_9/locations/europe-west1/operations/6f061973-1d39-41fc-9497-f292696460f3] to complete...
+..........................................................done.
+Created repository [lzv-t25-run4-uuwzsm].
+## exit=0 at 2026-10-25T18:47:52Z
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t25 --tag=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25 --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+Creating temporary archive of 1 file(s) totalling 209 bytes before compression.
+Uploading tarball of [/Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t25] to [gs://PROJECT_8-lzv-build-cmek/source/1792954073.200929-e3b61317f54e4e12b94c954ce05bb654.tgz]
+Created [https://cloudbuild.googleapis.com/v1/projects/PROJECT_9/locations/europe-west1/builds/16e514b0-1f65-461e-92dd-0d29e314c3b1].
+Logs are available at [ https://console.cloud.google.com/cloud-build/builds;region=europe-west1/16e514b0-1f65-461e-92dd-0d29e314c3b1?project=PROJECT_NUMBER_9 ].
+Waiting for build to complete. Polling interval: 1 second(s).
+----------------------------- REMOTE BUILD OUTPUT ------------------------------
+starting build "16e514b0-1f65-461e-92dd-0d29e314c3b1" using release legacy
+
+FETCHSOURCE
+Fetching storage object: gs://PROJECT_8-lzv-build-cmek/source/1792954073.200929-e3b61317f54e4e12b94c954ce05bb654.tgz#1792954073844230
+Copying gs://PROJECT_8-lzv-build-cmek/source/1792954073.200929-e3b61317f54e4e12b94c954ce05bb654.tgz#1792954073844230...
+/ [0 files][    0.0 B/  353.0 B]                                                / [1 files][  353.0 B/  353.0 B]                                                
+Operation completed over 1 objects/353.0 B.
+BUILD
+Already have image (with digest): gcr.io/cloud-builders/gcb-internal
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM us-docker.pkg.dev/cloudrun/container/hello
+latest: Pulling from cloudrun/container/hello
+441c8ee27304: Pulling fs layer
+1f3f30979062: Pulling fs layer
+3e286f9419b5: Pulling fs layer
+47d26a7b075f: Pulling fs layer
+441c8ee27304: Verifying Checksum
+441c8ee27304: Download complete
+3e286f9419b5: Verifying Checksum
+3e286f9419b5: Download complete
+441c8ee27304: Pull complete
+47d26a7b075f: Verifying Checksum
+47d26a7b075f: Download complete
+1f3f30979062: Verifying Checksum
+1f3f30979062: Download complete
+1f3f30979062: Pull complete
+3e286f9419b5: Pull complete
+47d26a7b075f: Pull complete
+Digest: sha256:efd04605322d5d1ce6b1fd3dfc63a9c1fb2b99c97194ec316c0df0fd8f5dcf01
+Status: Downloaded newer image for us-docker.pkg.dev/cloudrun/container/hello:latest
+ ---> 3825c932c911
+Step 2/2 : LABEL lzv.test="T25"
+ ---> Running in 121d3a674c0b
+Removing intermediate container 121d3a674c0b
+ ---> 210db97b5c8a
+Successfully built 210db97b5c8a
+Successfully tagged europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25
+PUSH
+Pushing europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25
+The push refers to repository [europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25]
+5254bcc634e1: Preparing
+db859033548e: Preparing
+2cc1911d1cd1: Preparing
+e5a7a7b66d98: Preparing
+5254bcc634e1: Pushed
+e5a7a7b66d98: Pushed
+db859033548e: Pushed
+2cc1911d1cd1: Pushed
+t25: digest: sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c size: 1152
+DONE
+--------------------------------------------------------------------------------
+ID                                    CREATE_TIME                DURATION  SOURCE                                                                                                      IMAGES                                                                           STATUS
+16e514b0-1f65-461e-92dd-0d29e314c3b1  2026-10-25T18:47:54+00:00  12S       gs://PROJECT_8-lzv-build-cmek/source/1792954073.200929-e3b61317f54e4e12b94c954ce05bb654.tgz  europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25  SUCCESS
+## exit=0 at 2026-10-25T18:48:09Z
+## $ gcloud artifacts docker images describe europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25 --project=PROJECT_9 --format=value\(image_summary.digest\)
+sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c
+## exit=0 at 2026-10-25T18:48:12Z
+## note 2026-10-25T18:48:12Z: image digest reference: europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c
+## $ gcloud run deploy lzv-t25-run4-cduwab --image=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+Deploying container to Cloud Run service [[1mlzv-t25-run4-cduwab[m] in project [[1mPROJECT_9[m] region [[1meurope-west1[m]
+Deploying new service...
+Creating Revision...........................................failed
+Deployment failed
+ERROR: (gcloud.run.deploy) Container image 'europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c' is not authorized by policy. 'europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c' : Image europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c denied by attestor projects/PROJECT_9/attestors/lzv-attestor: No attestations found that were valid and signed by a key trusted by the attestor
+
+## exit=1 at 2026-10-25T18:48:18Z
+## note 2026-10-25T18:48:18Z: attempt 1 (unattested): exit 1; signature: is not authorized by policy
+## $ gcloud beta container binauthz attestations sign-and-create --project=PROJECT_9 --artifact-url=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --attestor=lzv-attestor --attestor-project=PROJECT_9 --keyversion=projects/PROJECT_9/locations/europe-west1/keyRings/lzv-binauthz-keyring/cryptoKeys/lzv-attestor-key/cryptoKeyVersions/1
+## exit=0 at 2026-10-25T18:48:22Z
+## note 2026-10-25T18:48:22Z: attestation created; waiting 30 s for propagation
+## $ gcloud run deploy lzv-t25-run4-cduwab --image=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+Deploying container to Cloud Run service [[1mlzv-t25-run4-cduwab[m] in project [[1mPROJECT_9[m] region [[1meurope-west1[m]
+Deploying...
+Setting IAM Policy.................done
+Creating Revision..........................................done
+Routing traffic.....done
+Done.
+Service [[1mlzv-t25-run4-cduwab[m] revision [[1mlzv-t25-run4-cduwab-00002-p49[m] has been deployed and is serving [1m100[m percent of traffic.
+Service URL: [1mhttps://lzv-t25-run4-cduwab-PROJECT_NUMBER_9.europe-west1.run.app[m
+## exit=0 at 2026-10-25T18:49:01Z
+## cleanup start 2026-10-25T18:49:01Z
+## $ gcloud artifacts docker images delete europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --delete-tags
+Digests:
+- europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c
+
+Tags:
+- europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25
+
+This operation will delete the above resources.
+
+Do you want to continue (Y/n)?  
+Delete request issued.
+Waiting for operation [projects/PROJECT_9/locations/europe-west1/operations/95cf55de-be02-4296-b7de-86ed440a1ad5] to complete...
+.....done.
+## exit=0 at 2026-10-25T18:49:04Z
+## $ gcloud run services delete lzv-t25-run4-cduwab --region=europe-west1 --project=PROJECT_9 --quiet
+Deleting [lzv-t25-run4-cduwab]...
+...................done.
+Deleted service [lzv-t25-run4-cduwab].
+## exit=0 at 2026-10-25T18:49:08Z
+## $ gcloud run services describe lzv-t25-run4-cduwab --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+ERROR: (gcloud.run.services.describe) Cannot find service [lzv-t25-run4-cduwab]
+## exit=1 at 2026-10-25T18:49:10Z
+## $ gcloud artifacts repositories delete lzv-t25-run4-uuwzsm --location=europe-west1 --project=PROJECT_9
+You are about to delete repository [lzv-t25-run4-uuwzsm]
+
+Do you want to continue (Y/n)?  
+ERROR: (gcloud.artifacts.repositories.delete) This prompt could not be answered because you are not in an interactive session.  You can re-run the command with the --quiet flag to accept default answers for all prompts.
+## exit=1 at 2026-10-25T18:49:10Z
+## $ gcloud artifacts repositories describe lzv-t25-run4-uuwzsm --location=europe-west1 --project=PROJECT_9 --format='value(name)'
+Encryption: Google-managed key
+Repository Size: 5.573MB
+projects/PROJECT_9/locations/europe-west1/repositories/lzv-t25-run4-uuwzsm
+## exit=0 at 2026-10-25T18:49:11Z
+## cleanup end 2026-10-25T18:49:11Z

@@ -1,0 +1,73 @@
+# T21 run=run-7 start=2026-10-28T16:08:15Z
+# script_commit=eb3fbc9
+# check=Baseline control=DC3
+# expected (pre-registered): Build with the CMEK staging bucket succeeds; plain build refused (as in v1 T10)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T16:08:15Z: guard ok: folder policy deniedValues = ["storage.googleapis.com"]; CMEK bucket in use (name recorded in command.txt)
+## $ gcloud storage buckets describe gs://PROJECT_9_cloudbuild
+ERROR: (gcloud.storage.buckets.describe) gs://PROJECT_9_cloudbuild not found: 404.
+## exit=1 at 2026-10-28T16:08:17Z
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.tsnYdz --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.tsnYdz/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+Creating temporary archive of 1 file(s) totalling 54 bytes before compression.
+Uploading tarball of [/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.tsnYdz] to [gs://PROJECT_8-lzv-build-cmek/source/1793203699.906274-078e101653d0458ba5f59d59c788a17e.tgz]
+Created [https://cloudbuild.googleapis.com/v1/projects/PROJECT_9/locations/europe-west1/builds/54b87a52-6453-4d64-851a-279195109d9a].
+Logs are available at [ https://console.cloud.google.com/cloud-build/builds;region=europe-west1/54b87a52-6453-4d64-851a-279195109d9a?project=PROJECT_NUMBER_9 ].
+Waiting for build to complete. Polling interval: 1 second(s).
+----------------------------- REMOTE BUILD OUTPUT ------------------------------
+starting build "54b87a52-6453-4d64-851a-279195109d9a" using release legacy
+
+FETCHSOURCE
+Fetching storage object: gs://PROJECT_8-lzv-build-cmek/source/1793203699.906274-078e101653d0458ba5f59d59c788a17e.tgz#1793203700407072
+Copying gs://PROJECT_8-lzv-build-cmek/source/1793203699.906274-078e101653d0458ba5f59d59c788a17e.tgz#1793203700407072...
+/ [0 files][    0.0 B/  243.0 B]                                                / [1 files][  243.0 B/  243.0 B]                                                
+Operation completed over 1 objects/243.0 B.
+BUILD
+Pulling image: ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+edafa32f5d9e: Pulling fs layer
+f3f25b84a7d7: Pulling fs layer
+f3f25b84a7d7: Verifying Checksum
+f3f25b84a7d7: Download complete
+edafa32f5d9e: Verifying Checksum
+edafa32f5d9e: Download complete
+edafa32f5d9e: Pull complete
+f3f25b84a7d7: Pull complete
+Digest: sha256:0e73b71479e7bc5f006bca872e25c3cd680dc052a0116f90d63ae363537db0dd
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+lzv-t21
+PUSH
+DONE
+--------------------------------------------------------------------------------
+ID                                    CREATE_TIME                DURATION  SOURCE                                                                                                      IMAGES  STATUS
+54b87a52-6453-4d64-851a-279195109d9a  2026-10-28T16:08:20+00:00  10S       gs://PROJECT_8-lzv-build-cmek/source/1793203699.906274-078e101653d0458ba5f59d59c788a17e.tgz  -       SUCCESS
+## exit=0 at 2026-10-28T16:08:34Z
+## note 2026-10-28T16:08:34Z: build 1 (CMEK bucket): exit 0, verdict PASS
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.tsnYdz --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.tsnYdz/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1
+ERROR: (gcloud.builds.submit) HTTPError 412: 'us' violates constraint 'constraints/gcp.resourceLocations'
+## exit=1 at 2026-10-28T16:08:36Z
+## note 2026-10-28T16:08:36Z: build 2 (plain): exit 1, blocked by: gcp.resourceLocations
+## cleanup start 2026-10-28T16:08:36Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.tsnYdz
+## exit=0 at 2026-10-28T16:08:36Z
+## $ for b in $(gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.Es3v18); do echo "CLEANUP: deleting new bucket $b"; gcloud storage rm --recursive gs://$b; done; gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.Es3v18 && echo 'CLEANUP CHECK: new cloudbuild bucket still exists' || echo 'CLEANUP CHECK: no new cloudbuild buckets'
+CLEANUP CHECK: no new cloudbuild buckets
+## exit=0 at 2026-10-28T16:08:38Z
+## $ for o in $(gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.hJS4uW); do echo "CLEANUP: deleting new object $o"; gcloud storage rm $o; done; gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.hJS4uW && echo 'CLEANUP CHECK: new objects remain' || echo 'CLEANUP CHECK: no new objects'
+CLEANUP: deleting new object gs://PROJECT_8-lzv-build-cmek/logs/log-54b87a52-6453-4d64-851a-279195109d9a.txt
+Removing objects:
+  
+Removing gs://PROJECT_8-lzv-build-cmek/logs/log-54b87a52-6453-4d64-851a-279195109d9a.txt...
+.....
+CLEANUP: deleting new object gs://PROJECT_8-lzv-build-cmek/source/1793203699.906274-078e101653d0458ba5f59d59c788a17e.tgz
+Removing objects:
+  
+Removing gs://PROJECT_8-lzv-build-cmek/source/1793203699.906274-078e101653d0458ba5f59d59c788a17e.tgz...
+.....
+ERROR: (gcloud.storage.ls) One or more URLs matched no objects.
+CLEANUP CHECK: no new objects
+## exit=0 at 2026-10-28T16:08:45Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.Es3v18 /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.hJS4uW
+## exit=0 at 2026-10-28T16:08:45Z
+## cleanup end 2026-10-28T16:08:45Z

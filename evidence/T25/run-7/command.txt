@@ -1,0 +1,19 @@
+# T25 run=run-7 start=2026-10-28T18:30:51Z
+# script_commit=eb3fbc9
+# check=P3 control=Binary Authorization image admission
+# expected (pre-registered): Unattested image refused ("Service update rejected by Binary Authorization policy" or "is not authorized by policy"); attested image deployed. Signing uses `gcloud beta`; the note is created via REST
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T18:30:51Z $ gcloud container binauthz policy export --project=PROJECT_9
+2026-10-28T18:30:54Z $ gcloud artifacts repositories create lzv-t25-run7-ma53k4 --repository-format=docker --location=europe-west1 --project=PROJECT_9 --description=lzv\ t25\ temporary
+2026-10-28T18:30:59Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t25 --tag=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run7-ma53k4/lzv-t25:t25 --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+2026-10-28T18:31:15Z $ gcloud artifacts docker images describe europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run7-ma53k4/lzv-t25:t25 --project=PROJECT_9 --format=value\(image_summary.digest\)
+2026-10-28T18:31:18Z $ gcloud run deploy lzv-t25-run7-vtk9gd --image=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run7-ma53k4/lzv-t25@sha256:acf89d050c14081a3532eba1e79284fe34fe7f27b28180eabc4690f87e96cfe4 --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+2026-10-28T18:31:22Z $ gcloud beta container binauthz attestations sign-and-create --project=PROJECT_9 --artifact-url=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run7-ma53k4/lzv-t25@sha256:acf89d050c14081a3532eba1e79284fe34fe7f27b28180eabc4690f87e96cfe4 --attestor=lzv-attestor --attestor-project=PROJECT_9 --keyversion=projects/PROJECT_9/locations/europe-west1/keyRings/lzv-binauthz-keyring/cryptoKeys/lzv-attestor-key/cryptoKeyVersions/1
+2026-10-28T18:31:56Z $ gcloud run deploy lzv-t25-run7-vtk9gd --image=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run7-ma53k4/lzv-t25@sha256:acf89d050c14081a3532eba1e79284fe34fe7f27b28180eabc4690f87e96cfe4 --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+2026-10-28T18:32:04Z $ gcloud artifacts docker images delete europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run7-ma53k4/lzv-t25@sha256:acf89d050c14081a3532eba1e79284fe34fe7f27b28180eabc4690f87e96cfe4 --delete-tags
+2026-10-28T18:32:08Z $ gcloud run services delete lzv-t25-run7-vtk9gd --region=europe-west1 --project=PROJECT_9 --quiet
+2026-10-28T18:32:12Z $ gcloud run services describe lzv-t25-run7-vtk9gd --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+2026-10-28T18:32:13Z $ for o in $(gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t25-obj.S9I4zk); do echo "CLEANUP: deleting new object $o"; gcloud storage rm $o; done; gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t25-obj.S9I4zk || echo 'CLEANUP CHECK: no new objects'
+2026-10-28T18:32:19Z $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t25-obj.S9I4zk
+2026-10-28T18:32:19Z $ echo "HUMAN CLEANUP: gcloud artifacts repositories delete lzv-t25-run7-ma53k4 --location=europe-west1 --project=PROJECT_9"
+2026-10-28T18:32:19Z $ gcloud artifacts repositories describe lzv-t25-run7-ma53k4 --location=europe-west1 --project=PROJECT_9 --format='value(name)'

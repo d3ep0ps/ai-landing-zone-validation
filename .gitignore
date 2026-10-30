@@ -1,0 +1,18 @@
+PROGRESS.md
+scratch/
+vendor/
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+.claude/settings.local.json
+__pycache__/
+.lzv-redaction-map.json
+.lzv-redaction-config.json
+*.tfplan
+plan.bin
+*.bin
+infra/agents/build/
+
+# Raw run evidence: redacted in Phase 5 (2026-10-25); redact new runs before committing.

@@ -1,0 +1,10 @@
+# T32 run=run-9 start=2026-10-30T10:46:46Z
+# script_commit=ed2746f
+# check=B control=MCP fixture returns the T28 injection sample; gateway Model Armor extension on responses, failOpen false; control: Clean tool response passed
+# expected (pre-registered): Tool call fails for the agent (connection terminated); a Model Armor finding is logged
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-30T10:46:46Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-10-30T10:46:47Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-30T10:47:05Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-30T10:47:23Z $ gcloud logging read timestamp\>=\"2026-10-30T10:47:05Z\"\ AND\ logName=\"projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations\"\ AND\ jsonPayload.sanitizationResult.filterMatchState=\"MATCH_FOUND\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-30T10:47:54Z $ gcloud logging read timestamp\>=\"2026-10-30T10:47:05Z\"\ AND\ logName=\"projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations\"\ AND\ jsonPayload.sanitizationResult.filterMatchState=\"MATCH_FOUND\" --project=PROJECT_8 --limit=5 --format=json

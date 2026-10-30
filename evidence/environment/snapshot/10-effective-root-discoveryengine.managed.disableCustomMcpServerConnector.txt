@@ -1,0 +1,11 @@
+$ gcloud org-policies describe discoveryengine.managed.disableCustomMcpServerConnector --folder=FOLDER_ID_2 --effective --format=json
+{
+  "name": "folders/FOLDER_ID_2/policies/discoveryengine.managed.disableCustomMcpServerConnector",
+  "spec": {
+    "rules": [
+      {
+        "enforce": true
+      }
+    ]
+  }
+}

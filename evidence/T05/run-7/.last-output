@@ -1,0 +1,10 @@
+{
+  "name": "projects/PROJECT_NUMBER_7/policies/vertexai.configurableComputerUseToolSafetyPolicies",
+  "spec": {
+    "rules": [
+      {
+        "denyAll": true
+      }
+    ]
+  }
+}

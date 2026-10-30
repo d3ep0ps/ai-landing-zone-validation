@@ -1,0 +1,26 @@
+{
+  "id": "T22",
+  "check": "Reach",
+  "control": "DC2 (1)",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Run first in dry-run: violation entries for the old quota project, none for the tooling quota project. Enforced: both succeed; no egress violation for the tooling quota project",
+  "actual": "dryrun stage: PASS; enforced stage: plan exit 1, read exit 0; plan refused by VPC-SC; violations naming tooling quota project=0",
+  "verdict": "FAIL",
+  "tier": "Enforced",
+  "reason": "enforced stage: plan exit 1, read exit 0; plan refused by VPC-SC; violations naming tooling quota project=0; ",
+  "commands_file": "evidence/T22/run-5-r2/command.txt",
+  "output_file": "evidence/T22/run-5-r2/output.txt",
+  "run_id": "run-5-r2",
+  "timestamp_utc": "2026-10-27T08:21:04Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/docs/quotas/quota-project",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/audit-logging",
+    "https://raw.githubusercontent.com/hashicorp/terraform-provider-google/main/website/docs/guides/provider_reference.html.markdown"
+  ],
+  "script_commit": "023ce5a"
+}

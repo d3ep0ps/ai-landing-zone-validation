@@ -1,0 +1,26 @@
+{
+  "id": "T24",
+  "check": "I6",
+  "control": "DC4",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "The entry appears in the locked bucket within 15 min (writing to a locked bucket is not documented either way); retention change still refused",
+  "actual": "entry found in the locked bucket after 2 poll(s); retention 1 -> 2 days: PASS; retentionDays after=1",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T24/run-4/command.txt",
+  "output_file": "evidence/T24/run-4/output.txt",
+  "run_id": "run-4",
+  "timestamp_utc": "2026-10-25T18:27:08Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/logging/docs/export/aggregated_sinks",
+    "https://docs.cloud.google.com/logging/docs/routing/overview",
+    "https://docs.cloud.google.com/logging/docs/buckets"
+  ],
+  "script_commit": "b09709b"
+}

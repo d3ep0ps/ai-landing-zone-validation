@@ -1,0 +1,43 @@
+# T20 run=run-4 start=2026-10-25T17:45:34Z
+# script_commit=8ce113f
+# check=Baseline control=TS2 for `gcp.restrictNonCmekServices`
+# expected (pre-registered): Without CMEK refused (HTTP 412, as in v1 T07); with CMEK created; constraint name recorded from the Policy Denied audit log if present, else stated as attribution by elimination
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T17:45:34Z: guard ok: folder policy deniedValues = ["storage.googleapis.com"]; key source bucket PROJECT_8-lzv-build-cmek
+## $ gcloud storage buckets describe gs://PROJECT_8-lzv-build-cmek --format=value\(default_kms_key\)
+projects/PROJECT_8/locations/europe-west1/keyRings/lzv-build-keyring/cryptoKeys/lzv-build-key
+## exit=0 at 2026-10-25T17:45:35Z
+## $ gcloud storage buckets create gs://lzv-t20-run4-kjyzwq --location=europe-west1 --project=PROJECT_8
+Creating gs://lzv-t20-run4-kjyzwq/...
+ERROR: (gcloud.storage.buckets.create) HTTPError 412: A default customer-managed encryption key (CMEK) on the bucket is required by an org policy in effect. Learn more at https://cloud.google.com/kms/docs/cmek-org-policy#require-cmek
+## exit=1 at 2026-10-25T17:45:37Z
+## $ gcloud storage buckets create gs://lzv-t20c-run4-ghbtb6 --location=europe-west1 --project=PROJECT_8 --default-encryption-key=projects/PROJECT_8/locations/europe-west1/keyRings/lzv-build-keyring/cryptoKeys/lzv-build-key
+Creating gs://lzv-t20c-run4-ghbtb6/...
+## exit=0 at 2026-10-25T17:45:39Z
+## $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+[]
+## exit=0 at 2026-10-25T17:45:41Z
+## $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+[]
+## exit=0 at 2026-10-25T17:46:42Z
+## $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+[]
+## exit=0 at 2026-10-25T17:47:44Z
+## $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+[]
+## exit=0 at 2026-10-25T17:48:45Z
+## $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+[]
+## exit=0 at 2026-10-25T17:49:47Z
+## note 2026-10-25T17:49:47Z: attempt 1 started 2026-10-25T17:45:35Z; attribution by elimination
+## cleanup start 2026-10-25T17:49:47Z
+## $ if gcloud storage buckets describe gs://lzv-t20c-run4-ghbtb6 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t20c-run4-ghbtb6; fi; if gcloud storage buckets describe gs://lzv-t20c-run4-ghbtb6 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi
+  
+Removing gs://lzv-t20c-run4-ghbtb6/...
+.........
+CLEANUP CHECK: bucket gone
+## exit=0 at 2026-10-25T17:49:52Z
+## $ if gcloud storage buckets describe gs://lzv-t20-run4-kjyzwq >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t20-run4-kjyzwq; fi; if gcloud storage buckets describe gs://lzv-t20-run4-kjyzwq >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi
+CLEANUP CHECK: bucket gone
+## exit=0 at 2026-10-25T17:49:54Z
+## cleanup end 2026-10-25T17:49:54Z

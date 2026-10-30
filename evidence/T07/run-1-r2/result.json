@@ -1,0 +1,24 @@
+{
+  "id": "T07",
+  "check": "Baseline",
+  "control": "`gcp.restrictNonCmekServices` deny `storage.googleapis.com` (folder)",
+  "scope": "folders/FOLDER_ID_2",
+  "expected": "Denied with HTTP 412 \"A default customer-managed encryption key (CMEK) on the bucket is required by an org policy in effect\" (changed 2026-10-23 after run 1, human approved: Cloud Storage error and audit log do not name the constraint; attribution by elimination, see results)",
+  "actual": "bucket create without CMEK in europe-west1 exited 1; constraints named: none",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T07/run-1-r2/command.txt",
+  "output_file": "evidence/T07/run-1-r2/output.txt",
+  "run_id": "run-1-r2",
+  "timestamp_utc": "2026-10-24T05:43:56Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/kms/docs/cmek-org-policy",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ]
+}

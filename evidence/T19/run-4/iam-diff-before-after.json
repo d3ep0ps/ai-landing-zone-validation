@@ -1,0 +1,1 @@
+[{"scope":"project-runtime","change":"added","role":"roles/aiplatform.agentDefaultAccess","member":"principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"}]

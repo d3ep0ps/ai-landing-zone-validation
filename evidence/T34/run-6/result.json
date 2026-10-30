@@ -1,0 +1,27 @@
+{
+  "id": "T34",
+  "check": "V2-C",
+  "control": "Agent Runtime with a PSC interface; egress firewall deny-all attributes the bypass failure",
+  "scope": "projects/PROJECT_8",
+  "expected": "Connection fails (not a DNS error) **and** the firewall log shows a deny for `lzv-swp-deny-egress-all` from 10.77.4.0/28; without that log entry: INCONCLUSIVE",
+  "actual": "control: allowed host via proxy 200; bypass: connection failed (ConnectionError: HTTPSConnectionPool(host='example.com', port=443): Max retries exceeded with url: / (Caused by NewConne); no firewall log DENIED entry for lzv-swp-deny-egress-all from 10.77.4.0/28 in about 10 minutes",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "failure not attributed to the firewall (no log entry; no NAT or route would also fail)",
+  "commands_file": "evidence/T34/run-6/command.txt",
+  "output_file": "evidence/T34/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T09:01:06Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://codelabs.developers.google.com/agent-engine-psc-interface-swp",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/private-service-connect-interface",
+    "https://docs.cloud.google.com/secure-web-proxy/docs/monitor-logs",
+    "https://docs.cloud.google.com/vertex-ai/docs/general/vpc-service-controls"
+  ],
+  "script_commit": "72162f7"
+}

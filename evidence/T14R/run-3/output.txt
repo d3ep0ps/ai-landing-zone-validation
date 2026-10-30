@@ -1,0 +1,209 @@
+# T14R stage=pre run=run-3 start=2026-10-25T14:37:32Z
+# check=Reach control=Agent deployed before the project joins a perimeter
+# expected (pre-registered): pre: tool status 200; post (same agent, project now in the enforced perimeter): tool status 200 (docs: an agent deployed before the project joins a perimeter keeps internet access; article trap #7)
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T14:37:32Z: no resources are created by this script (agent A is Terraform-managed); no cleanup_trap registered
+## note 2026-10-25T14:37:32Z: PASS means the documented gap was reproduced (egress still allowed), not that a control blocked something
+## note 2026-10-25T14:37:32Z: agent A: projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_5
+## $ gcloud asset search-all-resources --scope=projects/PROJECT_NUMBER_4 --asset-types=aiplatform.googleapis.com/ReasoningEngine --format=json\(name\,createTime\) --billing-project=PROJECT_7
+[
+  {
+    "createTime": "2026-10-25T14:34:25Z",
+    "name": "//aiplatform.googleapis.com/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_5"
+  }
+]
+## exit=0 at 2026-10-25T14:37:33Z
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "9d307bceffdde49e",
+    "name": "accessPolicies/ACCESS_POLICY_1",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "af8e3fb92e16dc95",
+    "name": "accessPolicies/ACCESS_POLICY_2",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_2"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-25T14:37:35Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_2 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "af8e3fb92e16dc95",
+  "name": "accessPolicies/ACCESS_POLICY_2/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-25T14:37:36Z
+## note 2026-10-25T14:37:36Z: perimeter lzv_ai: runtime in spec=0, in status=0, status ingressPolicies=0
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_5:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14r","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_907295", "args": {}, "name": "fetch_url"}, "thought_signature": "AY89a18Hmn9DrxbOMJ6_RsNeZKRyMQ2VVULc_al2r5NdOScnJHUqSD3GTCJFNCrKc3Q5x1hKofZZoxBu5dVhTLT9OQEoUKu4oLof9jMzGamY9k_maDFSby65KmwG_QOlzJyqGjxJIlseXd5EU7Vw73RS9SfMwClJs81hRFRCjqT3TdgDiC8fUjJiLLaYmni_Ny7LRwrq5EQoG4uHeHi_XRGbu0qUx_RS6L5xRyny6HJgzXWkWaJyNkQqh91FZJ4ln3bPLK0Fwf0g82KCUg380wpLX4Dd7-jvbXPds_RtCrMgGZ7VY0R1soqNj4NpSLNzlfdzeezPkXrWHPm_Zpodu2AsouCHOw4yupLvB7UUdFWkyJcHqhB5ZiWMKBRAxtNob8qfPwOJldSgpExjZCK_323y5K-qOxPiPjNebKps_ZkLCHQigsG1WZqVu2wOnw5DwkS3UUwjGtqgVwqoo9bG8kxpIHi8bN0174xRdb0Q-Z-hstsG9K3npmvGBQBHSHZvw-PIh8H5F96KwTkUnPGOmb0L4qddS1wW9Fxm6fgMIsoNgaZ9gdGD64c4uvCGnyLUhdaZ50QxRnvwS-uMzrimHV4_X837B9MercfaWzTHEIvW_tEV5tR2o8MLGejh3tYxQzHy6zXPNeOkd_9SkRFLeiMcBCY0txQwR0RSrAU5CQihUn7PkNN_-mRAmVfRve8ef8u6C8ZI5hTxbN11vq01kZmtQ44nznJtUi3H4DhSbEkmqu_sYF4oSqpUsT7zBkMCgbPPKMzOgY5JcwQ2FhVqiiK1e901SxYfLYcIbEpB9TkCkLHBZfbau6VcpIVBI0n5D2t-2DsMJfk7-tuZ5dpeBH_VMDA2Rrkq7j9AIZNQ1tc1BLpNJO_GLv7apES7FQgqTGO6tTa5"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 10, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 10}], "prompt_token_count": 107, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 107}], "thoughts_token_count": 164, "total_token_count": 281, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-6f3b1062-962b-4ac0-96e2-3d56fead99c3", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "long_running_tool_ids": [], "id": "d442c2af-9623-4713-a663-9b15c3c0264a", "timestamp": 1792939059.463625}
+{"content": {"parts": [{"function_response": {"id": "call_907295", "name": "fetch_url", "response": {"status": 200, "error": null, "url": "https://example.com"}}}], "role": "user"}, "invocation_id": "e-6f3b1062-962b-4ac0-96e2-3d56fead99c3", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "0bb68d94-5839-469c-86ca-b695c30cf426", "timestamp": 1792939061.3205812}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "The URL https://example.com was successfully fetched. \n\n**Result:**\n- **Status:** 200 OK\n- **Error:** None", "thought_signature": "AY89a1-1OWbUBuW3_iPb51N06tTs7IMb2c0_mQ7q45m32RWi6MjiL3vi6uCZa-L2U0V5D3FoK56oe8TtOnHZyA3M9UWJs4URMPBAKyi3UrnIa5KOzVj8eE47yKCHtcpjxCcfZT6rJQsVAfg0n9ddB5-Ak4b0vbE82W7VQt9Iw-LmhkqYIdAxO7l5Xqq6XTxyKiGfN5YUihbckNSyFGiPHt0OTX31LJHBOnqunu2YTJknounYTXOgUag5zfxR3Y35rX37dNkbj-7_1ZqW54jVg_P5qYTlx065Y4XVEThgsOvOqKuWT-uXQUQ="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 32, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 32}], "prompt_token_count": 297, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 297}], "thoughts_token_count": 37, "total_token_count": 366, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-6f3b1062-962b-4ac0-96e2-3d56fead99c3", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "9989c42b-c91e-4c5b-b71b-ec8f286a3e09", "timestamp": 1792939061.4001727}
+
+HTTP 200
+## exit=0 at 2026-10-25T14:37:42Z
+## note 2026-10-25T14:37:42Z: http_rc=0 function_responses=1 status=200 err=none
+# T14R stage=post run=run-3 start=2026-10-25T14:54:04Z
+# check=Reach control=Agent deployed before the project joins a perimeter
+# expected (pre-registered): pre: tool status 200; post (same agent, project now in the enforced perimeter): tool status 200 (docs: an agent deployed before the project joins a perimeter keeps internet access; article trap #7)
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T14:54:04Z: no resources are created by this script (agent A is Terraform-managed); no cleanup_trap registered
+## note 2026-10-25T14:54:04Z: PASS means the documented gap was reproduced (egress still allowed), not that a control blocked something
+## note 2026-10-25T14:54:04Z: agent A: projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_5
+## $ gcloud asset search-all-resources --scope=projects/PROJECT_NUMBER_4 --asset-types=aiplatform.googleapis.com/ReasoningEngine --format=json\(name\,createTime\) --billing-project=PROJECT_7
+[
+  {
+    "createTime": "2026-10-25T14:34:25Z",
+    "name": "//aiplatform.googleapis.com/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_5"
+  }
+]
+## exit=0 at 2026-10-25T14:54:06Z
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "9d307bceffdde49e",
+    "name": "accessPolicies/ACCESS_POLICY_1",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "42d56d85b3fe7c59",
+    "name": "accessPolicies/ACCESS_POLICY_2",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_2"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-25T14:54:07Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_2 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "42d56d85b3fe7c59",
+  "name": "accessPolicies/ACCESS_POLICY_2/servicePerimeters/lzv_ai",
+  "spec": {
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        }
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2",
+      "projects/PROJECT_NUMBER_4"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        }
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2",
+      "projects/PROJECT_NUMBER_4"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-25T14:54:08Z
+## note 2026-10-25T14:54:08Z: perimeter lzv_ai: runtime in spec=1, in status=1, status ingressPolicies=1
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_5:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14r","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"code": 403, "message": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: eg66z4O08GUgMnqGvI5S2hmGBNJrCAu-kjMikA1d_GaY3_Bmw3R-By3Ilni4BX9ImOEjrOTlCvXvYu74\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.PreconditionFailure', 'violations': [{'type': 'VPC_SERVICE_CONTROLS', 'description': 'eg66z4O08GUgMnqGvI5S2hmGBNJrCAu-kjMikA1d_GaY3_Bmw3R-By3Ilni4BX9ImOEjrOTlCvXvYu74'}]}, {'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'SECURITY_POLICY_VIOLATED', 'domain': 'googleapis.com', 'metadata': {'uid': 'eg66z4O08GUgMnqGvI5S2hmGBNJrCAu-kjMikA1d_GaY3_Bmw3R-By3Ilni4BX9ImOEjrOTlCvXvYu74', 'service': 'aiplatform.googleapis.com', 'troubleshootToken': 'AdxPL1QLSlEkf2_gw_JWvBbr-s37q5C1OUZmS_yQjgaCGLWN5AZlZixA9pRM0W0aJGYuND8RwLY_LqFe0Q4kBlrVq-hB28C-Vtkhqbiqswn3pXefOyxX6GYktd5TG9RhrUldpHpz6zbwiD_5o9fneSzcpnFP4fwd13-QsfypmR7gUb3EkZ6KiNEYr65RRcwLvUC5e-JVZvvCBog93BgwInk_0XiC4BK5jgmZMvACAx2ng86SDwARG-4trsVg7GjikyXGNdCotOavhpGfj3ANMdoGEKiCIkxm_mDYTl73O-Vi4pEDJ2Xlt4mgG_biJWm-bUW4XmKnbnBnfVxy-VAwNsrbjjaLE1u2apmh3ZUkvCAIAc2e5JZORG94hX5kdBBlA1wM8FlxU-tS4rrJyQPgcxgmKGMhxwbkVCON8BK5e9eoNfIyp_-7mo04b7aCIUqqk4nOq2WAKMdpCH4px9XI88FyKCgypTzglLQuSEoxKPfUG5Ep8osE1Wk20YYrfREi1g2exa_BRqF5ZQ5wJp9dy65a6Vach9bNKuPJljtFI_-Heu_PEy_M69rmSV7Wje97JUW8CW1tbMglY1SgSnCZAqGmaCwOjqH70J4eL-DFDy77JaJ52m7N-WjAzWxsMoGD3PegC9bcEEdpzJQUeSdfLs5JxP8HfrEypblSI8u_Aldb13dR56-8eHab4gTl4QFkEymxEx-RjLAPQyWYbrWKz0Xy6iyThQ'}}]}}", "errorCode": "403", "errorMessage": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: eg66z4O08GUgMnqGvI5S2hmGBNJrCAu-kjMikA1d_GaY3_Bmw3R-By3Ilni4BX9ImOEjrOTlCvXvYu74\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.PreconditionFailure', 'violations': [{'type': 'VPC_SERVICE_CONTROLS', 'description': 'eg66z4O08GUgMnqGvI5S2hmGBNJrCAu-kjMikA1d_GaY3_Bmw3R-By3Ilni4BX9ImOEjrOTlCvXvYu74'}]}, {'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'SECURITY_POLICY_VIOLATED', 'domain': 'googleapis.com', 'metadata': {'uid': 'eg66z4O08GUgMnqGvI5S2hmGBNJrCAu-kjMikA1d_GaY3_Bmw3R-By3Ilni4BX9ImOEjrOTlCvXvYu74', 'service': 'aiplatform.googleapis.com', 'troubleshootToken': 'AdxPL1QLSlEkf2_gw_JWvBbr-s37q5C1OUZmS_yQjgaCGLWN5AZlZixA9pRM0W0aJGYuND8RwLY_LqFe0Q4kBlrVq-hB28C-Vtkhqbiqswn3pXefOyxX6GYktd5TG9RhrUldpHpz6zbwiD_5o9fneSzcpnFP4fwd13-QsfypmR7gUb3EkZ6KiNEYr65RRcwLvUC5e-JVZvvCBog93BgwInk_0XiC4BK5jgmZMvACAx2ng86SDwARG-4trsVg7GjikyXGNdCotOavhpGfj3ANMdoGEKiCIkxm_mDYTl73O-Vi4pEDJ2Xlt4mgG_biJWm-bUW4XmKnbnBnfVxy-VAwNsrbjjaLE1u2apmh3ZUkvCAIAc2e5JZORG94hX5kdBBlA1wM8FlxU-tS4rrJyQPgcxgmKGMhxwbkVCON8BK5e9eoNfIyp_-7mo04b7aCIUqqk4nOq2WAKMdpCH4px9XI88FyKCgypTzglLQuSEoxKPfUG5Ep8osE1Wk20YYrfREi1g2exa_BRqF5ZQ5wJp9dy65a6Vach9bNKuPJljtFI_-Heu_PEy_M69rmSV7Wje97JUW8CW1tbMglY1SgSnCZAqGmaCwOjqH70J4eL-DFDy77JaJ52m7N-WjAzWxsMoGD3PegC9bcEEdpzJQUeSdfLs5JxP8HfrEypblSI8u_Aldb13dR56-8eHab4gTl4QFkEymxEx-RjLAPQyWYbrWKz0Xy6iyThQ'}}]}}"}
+
+HTTP 200
+## exit=0 at 2026-10-25T14:54:10Z
+## note 2026-10-25T14:54:10Z: http_rc=0 function_responses=0 status=none err=none

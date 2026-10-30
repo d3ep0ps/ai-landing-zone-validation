@@ -1,0 +1,4 @@
+snapshot_utc=2026-10-25T15:12:47Z
+Google Cloud SDK 583.0.0
+Terraform v1.17.0
+fabric=be0d4b10e4f8c6969d2f7a4faee086504b334fd0

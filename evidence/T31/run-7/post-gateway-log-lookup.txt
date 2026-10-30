@@ -1,0 +1,31 @@
+# POST-RUN LOOKUP (not part of the test script). Read-only, made by Opus on 2026-10-29 after the run, during the report review.
+# Command: gcloud logging read 'logName="projects/RUNTIME/logs/networkservices.googleapis.com%2Fgateway_requests" AND timestamp>="2026-10-29T20:00:30Z" AND timestamp<="2026-10-29T20:03:30Z"' --project=RUNTIME --limit=200 --format=json
+# Rows below: entries between 20:02:18 and 20:03:30 (this test's run window). Columns: time(UTC) status url(query stripped) mcp_tool authz_policy_results
+20:02:26.79	200	-	-	
+20:02:26.80	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:27.05	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:27.31	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:27.33	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:27.54	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:27.79	200	-	-	
+20:02:27.80	200	https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publ	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:29.02	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:29.30	200	-	-	
+20:02:30.98	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:31.18	200	https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publ	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:34.01	200	https://telemetry.mtls.googleapis.com/v1/metrics	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:35.07	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:35.48	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:36.12	200	https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publ	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:37.58	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:37.79	200	-	-	
+20:02:37.79	403	https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_8/locati	-	lzv-gw-iap-policy=DENIED
+20:02:37.87	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:38.07	200	https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publ	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:38.11	200	https://telemetry.mtls.googleapis.com/v1/logs	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:38.85	403	https://telemetry.mtls.googleapis.com/v1/traces	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:39.35	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:39.37	200	https://telemetry.mtls.googleapis.com/v1/logs	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:39.51	403	https://telemetry.mtls.googleapis.com/v1/traces	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:02:39.66	200	https://telemetry.mtls.googleapis.com/v1/metrics	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+# counts in window: 27 entries; non-200: 3

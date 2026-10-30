@@ -1,0 +1,24 @@
+{
+  "id": "T08",
+  "check": "Baseline",
+  "control": "`gcp.resourceLocations` `in:eu-locations` (folder)",
+  "scope": "folders/FOLDER_ID_2",
+  "expected": "Denied; error contains `violates constraint constraints/gcp.resourceLocations` (attribute by constraint name if T07 is also active)",
+  "actual": "bucket create in us-central1 exited 1; constraints named: constraints/gcp.resourceLocations ",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T08/run-2/command.txt",
+  "output_file": "evidence/T08/run-2/output.txt",
+  "run_id": "run-2",
+  "timestamp_utc": "2026-10-25T04:39:14Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/resource-manager/docs/organization-policy/defining-locations",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ]
+}

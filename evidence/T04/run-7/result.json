@@ -1,0 +1,25 @@
+{
+  "id": "T04",
+  "check": "P1",
+  "control": "`vertexai.allowedModels` allowlist with `:predict` suffix (prod folder)",
+  "scope": "projects/PROJECT_8 (folder FOLDER_ID_6)",
+  "expected": "Non-listed model denied, error names `vertexai.allowedModels`; control succeeds",
+  "actual": "allowed model gemini-3.5-flash: PASS; non-listed model gemini-4-argon: PASS (location global)",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T04/run-7/command.txt",
+  "output_file": "evidence/T04/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-28T15:29:10Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/control-model-access",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ],
+  "script_commit": "eb3fbc9"
+}

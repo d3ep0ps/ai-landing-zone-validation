@@ -1,0 +1,6 @@
+{
+  "stage": "before",
+  "verdict": "PASS",
+  "note": "before: snapshot written, no agents deployed",
+  "timestamp_utc": "2026-10-27T04:58:20Z"
+}

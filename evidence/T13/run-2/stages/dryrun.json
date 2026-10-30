@@ -1,0 +1,6 @@
+{
+  "stage": "dryrun",
+  "verdict": "PASS",
+  "note": "dry-run violations logged, violationReason=NO_MATCHING_ACCESS_LEVEL; ",
+  "timestamp_utc": "2026-10-25T04:39:36Z"
+}

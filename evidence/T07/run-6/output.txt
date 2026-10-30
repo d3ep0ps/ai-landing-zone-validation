@@ -1,0 +1,17 @@
+# T07 run=run-6 start=2026-10-27T13:37:49Z
+# script_commit=d6c4610
+# check=Baseline control=`gcp.restrictNonCmekServices` deny `storage.googleapis.com` (folder)
+# expected (pre-registered): Denied with HTTP 412 "A default customer-managed encryption key (CMEK) on the bucket is required by an org policy in effect" (changed 2026-10-23 after run 1, human approved: Cloud Storage error and audit log do not name the constraint; attribution by elimination, see results)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-27T13:37:49Z: stage guard ok: folder policy deniedValues = ["storage.googleapis.com"]
+## $ gcloud storage buckets create gs://lzv-t07-run6-bsmtv9 --location=europe-west1 --project=PROJECT_10
+Creating gs://lzv-t07-run6-bsmtv9/...
+ERROR: (gcloud.storage.buckets.create) HTTPError 412: A default customer-managed encryption key (CMEK) on the bucket is required by an org policy in effect. Learn more at https://cloud.google.com/kms/docs/cmek-org-policy#require-cmek
+## exit=1 at 2026-10-27T13:37:51Z
+## note 2026-10-27T13:37:51Z: attribution: gcp.restrictNonCmekServices is the only CMEK policy on the folder; Cloud Storage does not name the constraint (run 1 finding)
+## note 2026-10-27T13:37:51Z: constraints named in error: none
+## cleanup start 2026-10-27T13:37:51Z
+## $ if gcloud storage buckets describe gs://lzv-t07-run6-bsmtv9 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t07-run6-bsmtv9; fi; if gcloud storage buckets describe gs://lzv-t07-run6-bsmtv9 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi
+CLEANUP CHECK: bucket gone
+## exit=0 at 2026-10-27T13:37:53Z
+## cleanup end 2026-10-27T13:37:53Z

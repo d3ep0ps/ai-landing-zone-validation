@@ -1,0 +1,7 @@
+# Pinned for run 7 (human decision 2026-10-28). Run 6 was unpinned, so its versions are not known.
+# Both releases are later than the ADK fix for mTLS endpoint handling (adk-python#6365 / PR #6370,
+# closed 2026-07-28); that they contain it is inferred from the dates (notes/doc-verification-v2-B-401.md).
+google-cloud-aiplatform[agent_engines,adk]==2.6.0
+google-adk==2.13.0
+requests
+google-auth

@@ -1,0 +1,10 @@
+# T32 stage=Tool call fails for the agent (connection terminated); a Model Armor finding is logged run=run-7 start=2026-10-29T20:01:31Z
+# script_commit=9baf01e
+# check=B control=MCP fixture returns the T28 injection sample; gateway Model Armor extension on responses, failOpen false
+# expected (pre-registered): Clean tool response passed
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T20:01:32Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-10-29T20:01:33Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-29T20:01:39Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-29T20:01:45Z $ gcloud logging read timestamp\>=\"2026-10-29T20:01:39Z\"\ AND\ \"lzv-ma-gw\"\ AND\ \"MATCH_FOUND\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-29T20:02:17Z $ gcloud logging read timestamp\>=\"2026-10-29T20:01:39Z\"\ AND\ \"lzv-ma-gw\"\ AND\ \"MATCH_FOUND\" --project=PROJECT_8 --limit=5 --format=json

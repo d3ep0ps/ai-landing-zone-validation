@@ -1,0 +1,39 @@
+# T10 run=run-6 start=2026-10-27T13:37:57Z
+# script_commit=d6c4610
+# check=Baseline control=`gcp.restrictNonCmekServices` side effect
+# expected (pre-registered): Fails; record exact error (proves article trap #4)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-27T13:37:57Z: stage guard ok: folder policy deniedValues = ["storage.googleapis.com"]
+## $ gcloud version
+Google Cloud SDK 590.0.1
+alpha 2026.10.22
+beta 2026.10.22
+bq 2.1.41
+bundled-python3-unix 3.14.5
+core 2026.10.22
+gke-gcloud-auth-plugin 0.5.20
+gsutil 5.38
+kubectl 1.35.3
+## exit=0 at 2026-10-27T13:37:58Z
+## $ gcloud storage buckets describe gs://PROJECT_9_cloudbuild
+ERROR: (gcloud.storage.buckets.describe) gs://PROJECT_9_cloudbuild not found: 404.
+## exit=1 at 2026-10-27T13:37:59Z
+## note 2026-10-27T13:37:59Z: precondition ok: gs://PROJECT_9_cloudbuild does not exist
+## note 2026-10-27T13:38:00Z: cloudbuild buckets before: 0
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1
+ERROR: (gcloud.builds.submit) HTTPError 412: 'us' violates constraint 'constraints/gcp.resourceLocations'
+## exit=1 at 2026-10-27T13:38:02Z
+## note 2026-10-27T13:38:02Z: attempt 1 (default bucket): exit 1, blocked by: gcp.resourceLocations
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1 --default-buckets-behavior=regional-user-owned-bucket
+ERROR: (gcloud.builds.submit) HTTPError 412: A default customer-managed encryption key (CMEK) on the bucket is required by an org policy in effect. Learn more at https://cloud.google.com/kms/docs/cmek-org-policy#require-cmek
+## exit=1 at 2026-10-27T13:38:03Z
+## note 2026-10-27T13:38:03Z: attempt 2 (regional bucket): bucket named in error: none
+## cleanup start 2026-10-27T13:38:03Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2
+## exit=0 at 2026-10-27T13:38:03Z
+## $ for b in $(gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10-pre.J59qIa); do echo "CLEANUP: deleting new bucket $b"; gcloud storage rm --recursive gs://$b; done; gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10-pre.J59qIa && echo 'CLEANUP CHECK: new cloudbuild bucket still exists' || echo 'CLEANUP CHECK: no new cloudbuild buckets'
+CLEANUP CHECK: no new cloudbuild buckets
+## exit=0 at 2026-10-27T13:38:05Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10-pre.J59qIa
+## exit=0 at 2026-10-27T13:38:05Z
+## cleanup end 2026-10-27T13:38:05Z

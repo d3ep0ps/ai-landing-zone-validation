@@ -1,0 +1,92 @@
+# T11 run=run-2 start=2026-10-25T04:43:35Z
+# check=I1 control=Per-agent identity (module default `AGENT_IDENTITY`; platform default is a service account)
+# expected (pre-registered): Unique `principal://agents.global.org-…/…/reasoningEngines/ID`; no SA email
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T04:43:35Z: module default identity_type is AGENT_IDENTITY; the raw API/SDK default is a service account (docs), so this observes the module default
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra/agents output -json agent_a
+{"id":"projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2","identity":"principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2"}
+## exit=0 at 2026-10-25T04:43:35Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -H @- "https://${LZV_AGENT_REGION}-aiplatform.googleapis.com/v1beta1/${LZV_AGENT_ID}"
+{
+  "name": "projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2",
+  "displayName": "lzv-probe-a",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ]
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2"
+  },
+  "createTime": "2026-10-25T04:40:31.596826Z",
+  "updateTime": "2026-10-25T04:42:57.436851Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  },
+  "trafficConfig": {
+    "trafficSplitAlwaysLatest": {}
+  },
+  "revisionGarbageCollectionStrategy": {
+    "keepNLatest": {
+      "maxRevisions": 100
+    }
+  }
+}
+## exit=0 at 2026-10-25T04:43:36Z
+## note 2026-10-25T04:43:36Z: terraform identity: principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2
+## note 2026-10-25T04:43:36Z: REST spec.effectiveIdentity (as principal://): principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2 (curl exit 0)
+## note 2026-10-25T04:43:36Z: expected prefix: principal://agents.global.org-ORG_ID.system.id.goog/ ; engine id: AGENT_ID_2

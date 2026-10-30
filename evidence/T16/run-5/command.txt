@@ -1,0 +1,28 @@
+# T16 run=run-5 start=2026-10-27T09:36:26Z
+# script_commit=023ce5a
+# check=Reach control=DC5: Secure Web Proxy plus egress firewall, Cloud Run job with Direct VPC egress
+# expected (pre-registered): Allowed host via proxy: 200; non-allowed host: HTTP 403 on CONNECT, `gateway_requests` log with `DENIED`; proxy bypassed: timeout (firewall), not a DNS error. Agent Runtime via PSC interface out of scope
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T09:36:27Z $ gcloud network-services gateways describe lzv-swp --location=europe-west1 --project=PROJECT_8
+2026-10-27T09:36:28Z $ gcloud run jobs create lzv-t16a-run5-k6skdn --image=docker.io/curlimages/curl:8.10.1 --region=europe-west1 --project=PROJECT_8 --network=lzv-swp-vpc --subnet=lzv-swp-job --vpc-egress=all-traffic --binary-authorization=default --max-retries=0 --task-timeout=240s --args=\^@\^-sS@-o@/dev/null@-w@LZV_CODE=%\{http_code\}@--proxy@http://10.77.0.10:443@https://example.com
+2026-10-27T09:36:31Z $ gcloud run jobs execute lzv-t16a-run5-k6skdn --region=europe-west1 --project=PROJECT_8 --wait
+2026-10-27T09:37:06Z $ gcloud run jobs executions list --job=lzv-t16a-run5-k6skdn --region=europe-west1 --project=PROJECT_8 --format=value\(name\) --limit=1
+2026-10-27T09:37:07Z $ gcloud logging read resource.type=\"cloud_run_job\"\ AND\ resource.labels.job_name=\"lzv-t16a-run5-k6skdn\"\ AND\ labels.\"run.googleapis.com/execution_name\"=\"lzv-t16a-run5-k6skdn-x54ff\" --project=PROJECT_8 --freshness=1h --order=asc --format=value\(textPayload\)
+2026-10-27T09:37:50Z $ gcloud run jobs create lzv-t16b-run5-b76f2a --image=docker.io/curlimages/curl:8.10.1 --region=europe-west1 --project=PROJECT_8 --network=lzv-swp-vpc --subnet=lzv-swp-job --vpc-egress=all-traffic --binary-authorization=default --max-retries=0 --task-timeout=240s --args=\^@\^-sS@-o@/dev/null@-w@LZV_CODE=%\{http_code\}@--proxy@http://10.77.0.10:443@https://www.google.com
+2026-10-27T09:37:53Z $ gcloud run jobs execute lzv-t16b-run5-b76f2a --region=europe-west1 --project=PROJECT_8 --wait
+2026-10-27T09:38:36Z $ gcloud run jobs executions list --job=lzv-t16b-run5-b76f2a --region=europe-west1 --project=PROJECT_8 --format=value\(name\) --limit=1
+2026-10-27T09:38:37Z $ gcloud logging read resource.type=\"cloud_run_job\"\ AND\ resource.labels.job_name=\"lzv-t16b-run5-b76f2a\"\ AND\ labels.\"run.googleapis.com/execution_name\"=\"lzv-t16b-run5-b76f2a-zs79q\" --project=PROJECT_8 --freshness=1h --order=asc --format=value\(textPayload\)
+2026-10-27T09:39:01Z $ gcloud logging read logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.enforcedGatewaySecurityPolicy.matchedRules.action=\"DENIED\" --project=PROJECT_8 --freshness=1h --limit=5 --format=json
+2026-10-27T09:39:02Z $ gcloud run jobs create lzv-t16c-run5-6w8ud6 --image=docker.io/curlimages/curl:8.10.1 --region=europe-west1 --project=PROJECT_8 --network=lzv-swp-vpc --subnet=lzv-swp-job --vpc-egress=all-traffic --binary-authorization=default --max-retries=0 --task-timeout=240s --args=\^@\^-sS@-o@/dev/null@-w@LZV_CODE=%\{http_code\}@--noproxy@\*@--connect-timeout@10@https://example.com
+2026-10-27T09:39:06Z $ gcloud run jobs execute lzv-t16c-run5-6w8ud6 --region=europe-west1 --project=PROJECT_8 --wait
+2026-10-27T09:39:44Z $ gcloud run jobs executions list --job=lzv-t16c-run5-6w8ud6 --region=europe-west1 --project=PROJECT_8 --format=value\(name\) --limit=1
+2026-10-27T09:39:45Z $ gcloud logging read resource.type=\"cloud_run_job\"\ AND\ resource.labels.job_name=\"lzv-t16c-run5-6w8ud6\"\ AND\ labels.\"run.googleapis.com/execution_name\"=\"lzv-t16c-run5-6w8ud6-bhwk7\" --project=PROJECT_8 --freshness=1h --order=asc --format=value\(textPayload\)
+2026-10-27T09:40:06Z $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/t16-bypass-run-5.log
+2026-10-27T09:40:06Z $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/t16-denied-run-5.log
+2026-10-27T09:40:06Z $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/t16-allowed-run-5.log
+2026-10-27T09:40:06Z $ gcloud run jobs delete lzv-t16c-run5-6w8ud6 --region=europe-west1 --project=PROJECT_8
+2026-10-27T09:40:07Z $ gcloud run jobs describe lzv-t16c-run5-6w8ud6 --region=europe-west1 --project=PROJECT_8 --format='value(metadata.name)'
+2026-10-27T09:40:08Z $ gcloud run jobs delete lzv-t16b-run5-b76f2a --region=europe-west1 --project=PROJECT_8
+2026-10-27T09:40:08Z $ gcloud run jobs describe lzv-t16b-run5-b76f2a --region=europe-west1 --project=PROJECT_8 --format='value(metadata.name)'
+2026-10-27T09:40:09Z $ gcloud run jobs delete lzv-t16a-run5-k6skdn --region=europe-west1 --project=PROJECT_8
+2026-10-27T09:40:10Z $ gcloud run jobs describe lzv-t16a-run5-k6skdn --region=europe-west1 --project=PROJECT_8 --format='value(metadata.name)'

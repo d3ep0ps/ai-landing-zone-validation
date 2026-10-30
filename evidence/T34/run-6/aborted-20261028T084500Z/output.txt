@@ -1,0 +1,8 @@
+# T34 run=run-6 start=2026-10-28T08:44:59Z
+# script_commit=a45a24d
+# check=V2-C control=Agent Runtime with a PSC interface; egress firewall deny-all attributes the bypass failure
+# expected (pre-registered): Connection fails (not a DNS error) **and** the firewall log shows a deny for `lzv-swp-deny-egress-all` from 10.77.4.0/28; without that log entry: INCONCLUSIVE
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T08:44:59Z: no resources are created by this script (agent C, gateway and attachment are Terraform-managed); no cleanup_trap registered
+## note 2026-10-28T08:44:59Z: agent C fixed targets: allowed=example.com, denied=www.wikipedia.org (tests/fixtures/agent_c/agent.py)
+## ABORT 2026-10-28T08:45:00Z: terraform output has no .v2_psci_attachment_name.value // empty

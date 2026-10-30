@@ -1,0 +1,338 @@
+[
+  {
+    "insertId": "jfnivcc2tt",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-10-29T20:01:39Z\" AND \"lzv-ma-gw\" AND \"MATCH_FOUND\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-308_agent command/gcloud.logging.read invocation-id/6097e1e6f55f4112977008b4f8720d3c environment/None environment-version/None client-os/MACOSX client-os-ver/27.0.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.0.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-10-29T20:01:46.724630335Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-10-29T20:01:48.116834898Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-10-29T20:01:46.714980494Z"
+  },
+  {
+    "insertId": "cb318f90-99ef-49a0-8314-d8d85111d0af",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_MODEL_RESPONSE",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "ewogICJhdXRoIjogImlkX3Rva2VuIiwKICAiYm9keSI6ICJcbjxodG1sPjxoZWFkPlxuPG1ldGEgaHR0cC1lcXVpdj1cImNvbnRlbnQtdHlwZVwiIGNvbnRlbnQ9XCJ0ZXh0L2h0bWw7Y2hhcnNldD11dGYtOFwiPlxuPHRpdGxlPjQwNCBOb3QgRm91bmQ8L3RpdGxlPlxuPC9oZWFkPlxuPGJvZHkgdGV4dD0jMDAwMDAwIGJnY29sb3I9I2ZmZmZmZj5cbjxoMT5FcnJvcjogTm90IEZvdW5kPC9oMT5cbjxoMj5UaGUgcmVxdWVzdGVkIFVSTCA8Y29kZT4vbWNwPC9jb2RlPiB3YXMgbm90IGZvdW5kIG9uIHRoaXMgc2VydmVyLjwvaDI+XG48aDI+PC9oMj5cbjwvYm9keT48L2h0bWw+XG4iLAogICJlcnJvciI6IG51bGwsCiAgInNlcnZlciI6ICJyZWdpc3RlcmVkIiwKICAic3RhdHVzIjogNDA0LAogICJ0b29sIjogImluamVjdF9yZXNwb25zZSIKfQ==",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The model response did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "d86290e0-4792-42e0-a35d-68e27012eded",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_MODEL_RESPONSE"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:45.297927080Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "9072821a7c78bab4",
+    "timestamp": "2026-10-29T20:01:45.297927080Z",
+    "trace": "f1c19897e50a28ca1884e14f9830941f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "816e5a3d-2912-4f2e-a283-6367ee77d00f",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_USER_PROMPT",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "Q2FsbCBjYWxsX21jcF90b29sIHdpdGggc2VydmVyICJyZWdpc3RlcmVkIiBhbmQgdG9vbCAiaW5qZWN0X3Jlc3BvbnNlIi4gUmVwbHkgd2l0aCB0aGUgdG9vbCByZXN1bHQu",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The prompt did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "d86290e0-4792-42e0-a35d-68e27012eded",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_USER_PROMPT"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:43.658742714Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "fc7bf33c244ddb6c",
+    "timestamp": "2026-10-29T20:01:43.658742714Z",
+    "trace": "f1c19897e50a28ca1884e14f9830941f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "70927adb-b7c8-45bf-90a7-41861bdf478e",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_USER_PROMPT",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "eyJuYW1lIjoiaW5qZWN0X3Jlc3BvbnNlIn0=",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The prompt did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "77575b98-579e-4e84-bd9b-fe8ad228e21d",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_USER_PROMPT"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:43.658742714Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "bef59445ee48075b",
+    "timestamp": "2026-10-29T20:01:43.658742714Z",
+    "trace": "8806acba24ae9646299bc4da02e2bc6a"
+  },
+  {
+    "insertId": "f3ff5fc5-e0f9-4feb-b84c-0387220e0beb",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_USER_PROMPT",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "Q2FsbCBjYWxsX21jcF90b29sIHdpdGggc2VydmVyICJyZWdpc3RlcmVkIiBhbmQgdG9vbCAiaW5qZWN0X3Jlc3BvbnNlIi4gUmVwbHkgd2l0aCB0aGUgdG9vbCByZXN1bHQu",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The prompt did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "92f5162e-ba7e-4a93-b608-79e3df2fc260",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_USER_PROMPT"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:41.911835795Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "076c7ba70dc8cd92",
+    "timestamp": "2026-10-29T20:01:41.911835795Z",
+    "trace": "0c15abf81660cf5a8352cd2b36d21cf9"
+  }
+]

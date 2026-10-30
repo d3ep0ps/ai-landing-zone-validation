@@ -1,0 +1,25 @@
+{
+  "id": "T38",
+  "check": "A/D",
+  "control": "Org-level floor setting (human applies, E4.2); create a weak template in a test project with no project floor",
+  "scope": "projects/PROJECT_10",
+  "expected": "Weak template refused, as T27",
+  "actual": "at-floor template: PASS; weak (filter off): refused, exists=no; weak (HIGH only): refused, exists=no",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T38/run-6/command.txt",
+  "output_file": "evidence/T38/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-27T14:20:07Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/model-armor/configure-floor-settings",
+    "https://docs.cloud.google.com/model-armor/manage-templates"
+  ],
+  "script_commit": "ed0d789"
+}

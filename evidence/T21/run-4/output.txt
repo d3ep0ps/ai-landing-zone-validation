@@ -1,0 +1,37 @@
+# T21 run=run-4 start=2026-10-25T17:50:21Z
+# script_commit=8ce113f
+# check=Baseline control=DC3
+# expected (pre-registered): Build with the CMEK staging bucket succeeds; plain build refused (as in v1 T10)
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T17:50:21Z: guard ok: folder policy deniedValues = ["storage.googleapis.com"]; CMEK bucket in use (name recorded in command.txt)
+## $ gcloud storage buckets describe gs://PROJECT_9_cloudbuild
+ERROR: (gcloud.storage.buckets.describe) gs://PROJECT_9_cloudbuild not found: 404.
+## exit=1 at 2026-10-25T17:50:22Z
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.zfW4sO --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.zfW4sO/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+Creating temporary archive of 1 file(s) totalling 54 bytes before compression.
+Uploading tarball of [/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.zfW4sO] to [gs://PROJECT_8-lzv-build-cmek/source/1792950624.379185-318cef7bd5624ca1943aaf81519db917.tgz]
+ERROR: (gcloud.builds.submit) INVALID_ARGUMENT: could not resolve source: googleapi: Error 403: PROJECT_NUMBER_9-compute@developer.gserviceaccount.com does not have storage.objects.get access to the Google Cloud Storage object. Permission 'storage.objects.get' denied on resource '//storage.googleapis.com/projects/_/buckets/PROJECT_8-lzv-build-cmek/objects/source/1792950624.379185-318cef7bd5624ca1943aaf81519db917.tgz' (or it may not exist)., forbidden
+## exit=1 at 2026-10-25T17:50:26Z
+## note 2026-10-25T17:50:26Z: build 1 (CMEK bucket): exit 1, verdict INCONCLUSIVE
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.zfW4sO --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.zfW4sO/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1
+ERROR: (gcloud.builds.submit) HTTPError 412: 'us' violates constraint 'constraints/gcp.resourceLocations'
+## exit=1 at 2026-10-25T17:50:27Z
+## note 2026-10-25T17:50:27Z: build 2 (plain): exit 1, blocked by: gcp.resourceLocations
+## cleanup start 2026-10-25T17:50:27Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.zfW4sO
+## exit=0 at 2026-10-25T17:50:27Z
+## $ for b in $(gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.KrVjQi); do echo "CLEANUP: deleting new bucket $b"; gcloud storage rm --recursive gs://$b; done; gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.KrVjQi && echo 'CLEANUP CHECK: new cloudbuild bucket still exists' || echo 'CLEANUP CHECK: no new cloudbuild buckets'
+CLEANUP CHECK: no new cloudbuild buckets
+## exit=0 at 2026-10-25T17:50:29Z
+## $ for o in $(gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.rsRvUM); do echo "CLEANUP: deleting new object $o"; gcloud storage rm $o; done; gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.rsRvUM && echo 'CLEANUP CHECK: new objects remain' || echo 'CLEANUP CHECK: no new objects'
+CLEANUP: deleting new object gs://PROJECT_8-lzv-build-cmek/source/1792950624.379185-318cef7bd5624ca1943aaf81519db917.tgz
+Removing objects:
+  
+Removing gs://PROJECT_8-lzv-build-cmek/source/1792950624.379185-318cef7bd5624ca1943aaf81519db917.tgz...
+.....
+ERROR: (gcloud.storage.ls) One or more URLs matched no objects.
+CLEANUP CHECK: no new objects
+## exit=0 at 2026-10-25T17:50:33Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.KrVjQi /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.rsRvUM
+## exit=0 at 2026-10-25T17:50:33Z
+## cleanup end 2026-10-25T17:50:33Z

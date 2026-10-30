@@ -1,0 +1,25 @@
+{
+  "id": "T09",
+  "check": "Baseline",
+  "control": "`storage.publicAccessPrevention` (folder)",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Denied; error refers to public access prevention, not Domain Restricted Sharing",
+  "actual": "allUsers objectViewer binding exited 1; terms named: none",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T09/run-6/command.txt",
+  "output_file": "evidence/T09/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-27T13:01:12Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/storage/docs/public-access-prevention",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ],
+  "script_commit": "f47408e"
+}

@@ -1,0 +1,4 @@
+# T16 run=run-1 start=2026-10-24T07:21:55Z
+# check=Reach (optional) control=Secure Web Proxy + egress firewall
+# expected (pre-registered): n/a
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}

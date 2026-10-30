@@ -1,0 +1,26 @@
+{
+  "id": "T20",
+  "check": "Baseline",
+  "control": "TS2 for `gcp.restrictNonCmekServices`",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Without CMEK refused (HTTP 412, as in v1 T07); with CMEK created; constraint name recorded from the Policy Denied audit log if present, else stated as attribution by elimination",
+  "actual": "no-CMEK bucket create: PASS; CMEK bucket create: PASS; attribution by elimination",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T20/run-5/command.txt",
+  "output_file": "evidence/T20/run-5/output.txt",
+  "run_id": "run-5",
+  "timestamp_utc": "2026-10-26T21:10:22Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/kms/docs/cmek-org-policy",
+    "https://docs.cloud.google.com/resource-manager/docs/organization-policy/audit-logging",
+    "https://docs.cloud.google.com/resource-manager/docs/organization-policy/dry-run-policy"
+  ],
+  "script_commit": "11dc4dd"
+}

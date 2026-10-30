@@ -1,0 +1,17 @@
+# T25 run=run-4 start=2026-10-25T18:47:38Z
+# script_commit=b09709b
+# check=P3 control=Binary Authorization image admission
+# expected (pre-registered): Unattested image refused ("Service update rejected by Binary Authorization policy" or "is not authorized by policy"); attested image deployed. Signing uses `gcloud beta`; the note is created via REST
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-25T18:47:38Z $ gcloud container binauthz policy export --project=PROJECT_9
+2026-10-25T18:47:40Z $ gcloud artifacts repositories create lzv-t25-run4-uuwzsm --repository-format=docker --location=europe-west1 --project=PROJECT_9 --description=lzv\ t25\ temporary
+2026-10-25T18:47:52Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t25 --tag=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25 --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+2026-10-25T18:48:09Z $ gcloud artifacts docker images describe europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25:t25 --project=PROJECT_9 --format=value\(image_summary.digest\)
+2026-10-25T18:48:12Z $ gcloud run deploy lzv-t25-run4-cduwab --image=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+2026-10-25T18:48:18Z $ gcloud beta container binauthz attestations sign-and-create --project=PROJECT_9 --artifact-url=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --attestor=lzv-attestor --attestor-project=PROJECT_9 --keyversion=projects/PROJECT_9/locations/europe-west1/keyRings/lzv-binauthz-keyring/cryptoKeys/lzv-attestor-key/cryptoKeyVersions/1
+2026-10-25T18:48:52Z $ gcloud run deploy lzv-t25-run4-cduwab --image=europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+2026-10-25T18:49:01Z $ gcloud artifacts docker images delete europe-west1-docker.pkg.dev/PROJECT_9/lzv-t25-run4-uuwzsm/lzv-t25@sha256:0111f50f5fc30ff5c4d70645cea24d2371e08d496bf6105516b1139214ae833c --delete-tags
+2026-10-25T18:49:04Z $ gcloud run services delete lzv-t25-run4-cduwab --region=europe-west1 --project=PROJECT_9 --quiet
+2026-10-25T18:49:08Z $ gcloud run services describe lzv-t25-run4-cduwab --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+2026-10-25T18:49:10Z $ gcloud artifacts repositories delete lzv-t25-run4-uuwzsm --location=europe-west1 --project=PROJECT_9
+2026-10-25T18:49:10Z $ gcloud artifacts repositories describe lzv-t25-run4-uuwzsm --location=europe-west1 --project=PROJECT_9 --format='value(name)'

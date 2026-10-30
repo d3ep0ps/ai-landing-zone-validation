@@ -1,0 +1,913 @@
+{
+  "auditConfigs": [
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "allServices"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "accessapproval.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "notebooks.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "apigee.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "apigeeconnect.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudasset.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudbilling.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudbuild.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "composer.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dlp.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dataproc.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "datastore.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudfunctions.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "healthcare.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "iap.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudiot.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudkms.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "lifesciences.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "logging.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "ml.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "managedidentities.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "redis.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "osconfig.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "pubsub.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudresourcemanager.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "runtimeconfig.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "sourcerepo.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "spanner.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudsql.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudtasks.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "tpu.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "translate.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "compute.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "customerusagedataprocessing.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "datacatalog.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dialogflow.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "firebase.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "gcmcontextualcampaign-pa.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "gameservices.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "genomics.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "gkehub.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "appengine.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "deploymentmanager.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dns.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "storage.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "iam.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "identitytoolkit.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "container.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "recaptchaenterprise.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "recommendationengine.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "secretmanager.googleapis.com"
+    }
+  ],
+  "bindings": [
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/billing.admin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com"
+      ],
+      "role": "roles/billing.creator"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/billing.user"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/browser"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.owner"
+    },
+    {
+      "condition": {
+        "expression": "resource.matchTag(\"ORG_ID/env\", \"prod\")",
+        "title": "env-prod"
+      },
+      "members": [
+        "user:USER_3@example.com"
+      ],
+      "role": "roles/cloudsql.admin"
+    },
+    {
+      "condition": {
+        "expression": "resource.matchTag(\"ORG_ID/env\", \"qa\")",
+        "title": "env-qa"
+      },
+      "members": [
+        "user:USER_3@example.com"
+      ],
+      "role": "roles/cloudsql.client"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.networkAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.xpnAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.organizationRoleAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/iam.organizationRoleViewer"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.securityAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/iam.securityReviewer"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/identityplatform.viewer"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.configWriter"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/orgpolicy.policyAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/recommender.iamAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_6@PROJECT.iam.gserviceaccount.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderIamAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.organizationAdmin"
+    },
+    {
+      "members": [
+        "domain:example.org",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/resourcemanager.organizationViewer"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/resourcemanager.projectCreator"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/securitycenter.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_7@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/securitycenter.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/viewer"
+    }
+  ],
+  "etag": "BwXduJbAsTA=",
+  "version": 3
+}

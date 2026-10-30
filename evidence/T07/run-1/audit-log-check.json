@@ -1,0 +1,58 @@
+[
+  {
+    "insertId": "lxqkhie7dmfy",
+    "logName": "projects/PROJECT_4/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "storage.buckets.create",
+          "resource": "projects/_/buckets/lzv-t07-run1-kocnke",
+          "resourceAttributes": {}
+        }
+      ],
+      "metadata": {
+        "session_id": "AP6rU832TUhlyrPR6fvaulsZtSTKqljX5I4RMrZbfrkhSH5YEmVvuFvVqwG4JwCZ07M2QwTj"
+      },
+      "methodName": "storage.buckets.create",
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/583.0.0 agent-name/claude-code_2-1-308_agent command/gcloud.storage.buckets.create invocation-id/ce49fd866cbf4497ac3b64261bcad61c environment/None environment-version/None client-os/MACOSX client-os-ver/27.0.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.0.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-10-23T21:27:19.905779784Z"
+        }
+      },
+      "resourceLocation": {
+        "currentLocations": [
+          "europe-west1"
+        ]
+      },
+      "resourceName": "projects/_/buckets/lzv-t07-run1-kocnke",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 9,
+        "message": "A default customer-managed encryption key (CMEK) on the bucket is required by an org policy in effect. Learn more at https://cloud.google.com/kms/docs/cmek-org-policy#require-cmek"
+      }
+    },
+    "receiveTimestamp": "2026-10-23T21:27:20.689475764Z",
+    "resource": {
+      "labels": {
+        "bucket_name": "lzv-t07-run1-kocnke",
+        "location": "europe-west1",
+        "project_id": "PROJECT_4"
+      },
+      "type": "gcs_bucket"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-23T21:27:19.886314340Z"
+  }
+]

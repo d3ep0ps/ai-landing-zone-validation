@@ -1,0 +1,410 @@
+# T32 stage=Tool call fails for the agent (connection terminated); a Model Armor finding is logged run=run-7 start=2026-10-29T20:01:31Z
+# script_commit=9baf01e
+# check=B control=MCP fixture returns the T28 injection sample; gateway Model Armor extension on responses, failOpen false
+# expected (pre-registered): Clean tool response passed
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T20:01:31Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-10-29T20:01:31Z: unverified: how the agent surfaces the termination (any non-200 or error result counts as failed; the text is not asserted) and the log that carries the Model Armor finding (searched for lzv-ma-gw and MATCH_FOUND)
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/ce758dc0f6bb30a2cp-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxTCCAq2gAwIBAgITCWXVvRhGPedhRg3S1KEax8r0xTANBgkqhkiG9w0BAQsF
+    ADBgMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTcwNQYD
+    VQQDEy5BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBIChldXJvcGUtd2Vz
+    dDEpMB4XDTI2MTAyNzIyMDMwNFoXDTM2MTAyNDIyMDMwM1owYDElMCMGA1UEChMc
+    R29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUGA1UEAxMuQWdlbnQgR2F0
+    ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdlc3QxKTCCASIwDQYJKoZI
+    hvcNAQEBBQADggEPADCCAQoCggEBAJrRCioqulZ3j8YeBz2bk0J77+wevVXFNXc6
+    yydFm40sjE0SWAPw9vgz7gin2JdHXGZZxGRrgSULSqAUr9+OfTGB8NuwjseSU7Di
+    1A6XBrYrEgming9v5DmitN8O9G55DvmPRXAw9muwZ/3UljmFmyrZw2sHdOknM60v
+    +FzWXAMxLiXgQGDK2JeigWX7x6s8hsoMQz2KDUi5UVFsjf2ZHbBBjIfp3R0DjPaW
+    ofU4LlZs48nVUV2ZTUlJGYPyWa7C4lDRO61aPNuUuZf4Kyi8+kLi+m1j9W09u3sA
+    SA/1tXtMp9rsLoaIaBTqK/RXHtEmuEeRJ6Wfe40lTk7oxc2oT0UCAwEAAaN4MHYw
+    DgYDVR0PAQH/BAQDAgEmMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdEwEB/wQF
+    MAMBAf8wHQYDVR0OBBYEFH5e1vaFXUHc5jVhlDYbgYUVtkb6MB8GA1UdIwQYMBaA
+    FH5e1vaFXUHc5jVhlDYbgYUVtkb6MA0GCSqGSIb3DQEBCwUAA4IBAQBP/0zCXL3Q
+    JAIhthsIIVfLXbQJ40MUwqnMTWP7BZiXfQ9umDYn7f4TK6cKy9USMDih4i99tg6i
+    7SyH3crDg2BDyc4zfXHmTuEkFl/PD2t1ZLU7uZuz3qKPGlmOgLHvLJHUBaDAP9F5
+    /4QrFKfGMHkRDCoJmjtNDYhXkR4VeppWHZDCLoeIr4wAEkRr/0MFRpj6v0HPQwbe
+    r1OoF0h7wIFmG0vwNl5+btVd0bLpn2cJVTd9UrhHEB9zCU4OIzOic01cJxwkXnuW
+    sfFhmx1R4xTH7oA57aNIaDpsLVV0DIFHfpsmdvTAWnXFB5sIsuZF3nMc4IXWye4o
+    2m3kjGmxiUXr
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_15@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-10-29T19:34:33.992653518Z'
+etag: jZKmJXDeEYUiKc1rna_LBrTxJ2wGLKSnJJUaxGRUO98
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-10-29T19:36:42.336525361Z'
+## exit=0 at 2026-10-29T20:01:33Z
+## note 2026-10-29T20:01:33Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_19; identity principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_19
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_67135", "args": {"tool": "registered_echo", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a18MluIF1N4MwQraDjaaFnWCfWvInjMAshCMqPXl6Wv69SY8uJaSdPu4D_u5EhpBTk5ezn8LM1yIeyAKLpyPQX8Yt_owlcxbBMR0fJxaduAiGj6XKBkHRIauFoRrJi664v9QX4meXAsUoCCY3BsjFHGskAgDW9324R8Q3_i2l99iGpbwd-0e6uwpgJnFr98r6I7dZHcusx8_BWCVkznr_vlIVEaMiAL_cICPJCleKBkzl_h4Qnw1s-Hx3PVrg3x9P0fGttLgZqFIpebIpgm0QUuO5apc0CZo78ZtRtOaRdRSBz8utOixBza1JpLOGATHHsUx6qNnF2bv735KuK1fW08femcD5QYp86lSPhumk78l5T0NpncbjAnwuAj-MHY0HPSO"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 348, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 348}], "thoughts_token_count": 62, "total_token_count": 437, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-afd89bf6-6a6e-4df2-86a0-966ff81f79e1", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "d7c94271-43eb-4a96-b36c-6e2c1e9826de", "timestamp": 1793304095.0411854}
+{"content": {"parts": [{"function_response": {"id": "call_67135", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 404, "body": "\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>404 Not Found</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Not Found</h1>\n<h2>The requested URL <code>/mcp</code> was not found on this server.</h2>\n<h2></h2>\n</body></html>\n", "auth": "id_token", "error": null}}}], "role": "user"}, "invocation_id": "e-afd89bf6-6a6e-4df2-86a0-966ff81f79e1", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "06d52778-c851-45a5-9fe5-4da9c0bdd99b", "timestamp": 1793304096.9564214}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token\",\n  \"body\": \"\\n<html><head>\\n<meta http-equiv=\\\"content-type\\\" content=\\\"text/html;charset=utf-8\\\">\\n<title>404 Not Found</title>\\n</head>\\n<body text=#000000 bgcolor=#ffffff>\\n<h1>Error: Not Found</h1>\\n<h2>The requested URL <code>/mcp</code> was not found on this server.</h2>\\n<h2></h2>\\n</body></html>\\n\",\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 404,\n  \"tool\": \"registered_echo\"\n}\n```", "thought_signature": "AY89a1_RXi8HQHLOEunqJ4zzVlYNjq5n0eXCuhgzyI_IZEhKkzyGGbcUSfPds3Zg3ck83Zz-qcl9MShnRKs-tTCXWSnxXIPNqgZ3KWi8CsQ34mzX5ol4bvs3fyNqNSVmiBrzijLlSQ0_TU8z7bFJs4fhfhuhXDyP5oX6iSWGY9xw"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 156, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 156}], "prompt_token_count": 545, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 545}], "thoughts_token_count": 11, "total_token_count": 712, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-afd89bf6-6a6e-4df2-86a0-966ff81f79e1", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "45d34451-30cd-445c-a42e-316d4f5a9c88", "timestamp": 1793304097.1534767}
+
+HTTP 200
+## exit=0 at 2026-10-29T20:01:39Z
+## note 2026-10-29T20:01:39Z: agent G: http_rc=0 tool_result=1 status=404 auth=id_token err=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_864232", "args": {"tool": "inject_response", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a19PD6KWDANLL8fnl-lmzuSi9jGQ9f5dk4KiypvdZgVWsNtg5up66Sbt9NiJ-bEHAzC2rXCFhstKqe0kiqNAPY0RslM4dLwtSwniykZY_D_OlZVnrAFzbYcT6YzvaA4a-2p_2OJD6BeUqWw3-YKdzrRtHYlRDSxMz74N2w9L7m0nTLaxLveOaENOerNrG6bIzt2U53qgi2LhiqDu27KWmzUvmXgFXXOPBoikdsUs1b3Aq7B7mSH6RpbeYqrjn0stLl4mkyxZpe61DPKCCs8jdhH7FhRHqAQ3PVJq3XxEq5l4ISwKfGwBwP-o70-noWZdZ7tI30WrQ9yzxL7zp4fL1w4yOkj65B848GcLj3BszH5fNEAVyCujgry3WMlFm4lkRstO1NPIvkAGd6XrQVh0pcIh56eY021D64OeYnWj3puUlXkL6sM="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 348, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 348}], "thoughts_token_count": 73, "total_token_count": 448, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-358ddcb4-b44b-4148-9dd6-f101a38630cb", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "fe02c3ff-25a4-463f-86dd-053f66474fb4", "timestamp": 1793304101.2267032}
+{"content": {"parts": [{"function_response": {"id": "call_864232", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "inject_response", "status": 404, "body": "\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>404 Not Found</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Not Found</h1>\n<h2>The requested URL <code>/mcp</code> was not found on this server.</h2>\n<h2></h2>\n</body></html>\n", "auth": "id_token", "error": null}}}], "role": "user"}, "invocation_id": "e-358ddcb4-b44b-4148-9dd6-f101a38630cb", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "ff46333b-c9a1-4a58-925d-faf066ccf523", "timestamp": 1793304103.2177687}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"auth\": \"id_token\",\n  \"body\": \"\\n<html><head>\\n<meta http-equiv=\\\"content-type\\\" content=\\\"text/html;charset=utf-8\\\">\\n<title>404 Not Found</title>\\n</head>\\n<body text=#000000 bgcolor=#ffffff>\\n<h1>Error: Not Found</h1>\\n<h2>The requested URL <code>/mcp</code> was not found on this server.</h2>\\n<h2></h2>\\n</body></html>\\n\",\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 404,\n  \"tool\": \"inject_response\"\n}", "thought_signature": "AY89a18iqPnvxfQb-kWOcfvrL49Gc42bNjT3DQ_9ZXO598sn5yWPWGnMzVPLMsYRCmXo5NQ56RCk7FXnx7ugU3mTTiPY8BsjoSQpKLzh63l6eFxNXF45U3IofBuNz7vXSwrnTsqqZvgMsl1QLMl0gl9FM8xFDoj6xruPcHhXrT_MgLMX4NIgcHmtIe0xF9eK_rOFGseHLI3OWD6ircKna51aRqEj9SwQUr-BxWD-ldtrIZqlBNti"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 151, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 151}], "prompt_token_count": 556, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 556}], "thoughts_token_count": 23, "total_token_count": 730, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-358ddcb4-b44b-4148-9dd6-f101a38630cb", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "9af76f9f-9f9a-4419-982b-547f75da3a17", "timestamp": 1793304103.387546}
+
+HTTP 200
+## exit=0 at 2026-10-29T20:01:45Z
+## note 2026-10-29T20:01:45Z: agent G: http_rc=0 tool_result=1 status=404 auth=id_token err=none
+## $ gcloud logging read timestamp\>=\"2026-10-29T20:01:39Z\"\ AND\ \"lzv-ma-gw\"\ AND\ \"MATCH_FOUND\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-10-29T20:01:47Z
+## $ gcloud logging read timestamp\>=\"2026-10-29T20:01:39Z\"\ AND\ \"lzv-ma-gw\"\ AND\ \"MATCH_FOUND\" --project=PROJECT_8 --limit=5 --format=json
+[
+  {
+    "insertId": "jfnivcc2tt",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-10-29T20:01:39Z\" AND \"lzv-ma-gw\" AND \"MATCH_FOUND\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-308_agent command/gcloud.logging.read invocation-id/6097e1e6f55f4112977008b4f8720d3c environment/None environment-version/None client-os/MACOSX client-os-ver/27.0.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.0.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-10-29T20:01:46.724630335Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-10-29T20:01:48.116834898Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-10-29T20:01:46.714980494Z"
+  },
+  {
+    "insertId": "cb318f90-99ef-49a0-8314-d8d85111d0af",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_MODEL_RESPONSE",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "ewogICJhdXRoIjogImlkX3Rva2VuIiwKICAiYm9keSI6ICJcbjxodG1sPjxoZWFkPlxuPG1ldGEgaHR0cC1lcXVpdj1cImNvbnRlbnQtdHlwZVwiIGNvbnRlbnQ9XCJ0ZXh0L2h0bWw7Y2hhcnNldD11dGYtOFwiPlxuPHRpdGxlPjQwNCBOb3QgRm91bmQ8L3RpdGxlPlxuPC9oZWFkPlxuPGJvZHkgdGV4dD0jMDAwMDAwIGJnY29sb3I9I2ZmZmZmZj5cbjxoMT5FcnJvcjogTm90IEZvdW5kPC9oMT5cbjxoMj5UaGUgcmVxdWVzdGVkIFVSTCA8Y29kZT4vbWNwPC9jb2RlPiB3YXMgbm90IGZvdW5kIG9uIHRoaXMgc2VydmVyLjwvaDI+XG48aDI+PC9oMj5cbjwvYm9keT48L2h0bWw+XG4iLAogICJlcnJvciI6IG51bGwsCiAgInNlcnZlciI6ICJyZWdpc3RlcmVkIiwKICAic3RhdHVzIjogNDA0LAogICJ0b29sIjogImluamVjdF9yZXNwb25zZSIKfQ==",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The model response did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "d86290e0-4792-42e0-a35d-68e27012eded",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_MODEL_RESPONSE"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:45.297927080Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "9072821a7c78bab4",
+    "timestamp": "2026-10-29T20:01:45.297927080Z",
+    "trace": "f1c19897e50a28ca1884e14f9830941f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "816e5a3d-2912-4f2e-a283-6367ee77d00f",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_USER_PROMPT",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "Q2FsbCBjYWxsX21jcF90b29sIHdpdGggc2VydmVyICJyZWdpc3RlcmVkIiBhbmQgdG9vbCAiaW5qZWN0X3Jlc3BvbnNlIi4gUmVwbHkgd2l0aCB0aGUgdG9vbCByZXN1bHQu",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The prompt did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "d86290e0-4792-42e0-a35d-68e27012eded",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_USER_PROMPT"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:43.658742714Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "fc7bf33c244ddb6c",
+    "timestamp": "2026-10-29T20:01:43.658742714Z",
+    "trace": "f1c19897e50a28ca1884e14f9830941f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "70927adb-b7c8-45bf-90a7-41861bdf478e",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_USER_PROMPT",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "eyJuYW1lIjoiaW5qZWN0X3Jlc3BvbnNlIn0=",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The prompt did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "77575b98-579e-4e84-bd9b-fe8ad228e21d",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_USER_PROMPT"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:43.658742714Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "bef59445ee48075b",
+    "timestamp": "2026-10-29T20:01:43.658742714Z",
+    "trace": "8806acba24ae9646299bc4da02e2bc6a"
+  },
+  {
+    "insertId": "f3ff5fc5-e0f9-4feb-b84c-0387220e0beb",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.modelarmor.logging.v1.SanitizeOperationLogEntry",
+      "filterConfig": {},
+      "operationType": "SANITIZE_USER_PROMPT",
+      "sanitizationInput": {
+        "byteItem": {
+          "byteData": "Q2FsbCBjYWxsX21jcF90b29sIHdpdGggc2VydmVyICJyZWdpc3RlcmVkIiBhbmQgdG9vbCAiaW5qZWN0X3Jlc3BvbnNlIi4gUmVwbHkgd2l0aCB0aGUgdG9vbCByZXN1bHQu",
+          "byteDataType": "PLAINTEXT_UTF8"
+        }
+      },
+      "sanitizationResult": {
+        "filterMatchState": "NO_MATCH_FOUND",
+        "filterResults": {
+          "csam": {
+            "csamFilterFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          },
+          "pi_and_jailbreak": {
+            "piAndJailbreakFilterResult": {
+              "executionState": "EXECUTION_SUCCESS",
+              "matchState": "NO_MATCH_FOUND"
+            }
+          }
+        },
+        "invocationResult": "SUCCESS",
+        "sanitizationMetadata": {
+          "filterVersionConfig": {
+            "filterVersion": "v3",
+            "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+            "projectedDeprecationDate": {},
+            "releaseDate": {
+              "day": 25,
+              "month": 5,
+              "year": 2026
+            }
+          }
+        },
+        "sanitizationVerdict": "MODEL_ARMOR_SANITIZATION_VERDICT_ALLOW",
+        "sanitizationVerdictReason": "The prompt did not violate any safety settings."
+      }
+    },
+    "labels": {
+      "modelarmor.googleapis.com/api_version": "",
+      "modelarmor.googleapis.com/client_correlation_id": "92f5162e-ba7e-4a93-b608-79e3df2fc260",
+      "modelarmor.googleapis.com/client_name": "AGENT_GATEWAY",
+      "modelarmor.googleapis.com/operation_type": "SANITIZE_USER_PROMPT"
+    },
+    "logName": "projects/PROJECT_8/logs/modelarmor.googleapis.com%2Fsanitize_operations",
+    "receiveTimestamp": "2026-10-29T20:01:41.911835795Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "resource_container": "projects/PROJECT_NUMBER_7",
+        "template_id": "lzv-ma-gw"
+      },
+      "type": "modelarmor.googleapis.com/SanitizeOperation"
+    },
+    "severity": "INFO",
+    "spanId": "076c7ba70dc8cd92",
+    "timestamp": "2026-10-29T20:01:41.911835795Z",
+    "trace": "0c15abf81660cf5a8352cd2b36d21cf9"
+  }
+]
+## exit=0 at 2026-10-29T20:02:18Z
+## note 2026-10-29T20:02:18Z: Model Armor finding entries (lzv-ma-gw and MATCH_FOUND): 5 logName=projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access resource=logging_log ts=2026-10-29T20:01:46.714980494Z

@@ -1,0 +1,26 @@
+{
+  "id": "T30",
+  "check": "B",
+  "control": "Agent behind Agent Gateway calls a registered and an unregistered MCP tool; control: Registered tool",
+  "scope": "projects/PROJECT_8",
+  "expected": "Unregistered: HTTP 403 and a gateway log entry with verdict `DENIED`; registered: answered",
+  "actual": "control: registered_echo answered (200); registered origin entries=0; unregistered tool: 403, gateway DENIED log entry, no origin request; token type registered=id_token unregistered=id_token",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T30/run-9/command.txt",
+  "output_file": "evidence/T30/run-9/output.txt",
+  "run_id": "run-9",
+  "timestamp_utc": "2026-10-30T10:46:43Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://codelabs.developers.google.com/cloudnet-agent-gateway",
+    "https://codelabs.developers.google.com/agw-cuj-arun-egress-gmcp",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/set-up-agent-gateway"
+  ],
+  "script_commit": "ed2746f"
+}

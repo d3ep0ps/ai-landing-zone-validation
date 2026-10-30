@@ -1,0 +1,2 @@
+# Copy to terraform.tfvars (git-ignored). Placeholders only.
+quota_project = "DATA_PROJECT_ID" # in-perimeter project (infra/ output project_ids.data)
