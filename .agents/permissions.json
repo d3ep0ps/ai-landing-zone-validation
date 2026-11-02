@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "command(gcloud config list)",
+      "command(gcloud config get)",
+      "command(gcloud config configurations list)",
+      "command(gcloud --version)",
+      "command(gcloud org-policies describe)",
+      "command(gcloud org-policies list)",
+      "command(gcloud projects describe)",
+      "command(gcloud projects list)",
+      "command(gcloud projects get-ancestors-iam-policy)",
+      "command(gcloud resource-manager folders describe)",
+      "command(gcloud resource-manager folders list)",
+      "command(gcloud asset analyze-iam-policy)",
+      "command(gcloud asset search-all-iam-policies)",
+      "command(gcloud asset search-all-resources)",
+      "command(gcloud access-context-manager perimeters describe)",
+      "command(gcloud access-context-manager perimeters list)",
+      "command(gcloud logging read)",
+      "command(gcloud logging buckets describe)",
+      "command(terraform fmt)",
+      "command(terraform validate)",
+      "command(terraform version)",
+      "command(bash -n)",
+      "command(shellcheck)",
+      "command(jq)",
+      "command(python3 tools/redact.py)",
+      "command(python3 tools/test_redact.py)",
+      "command(git status)",
+      "command(git diff)",
+      "command(git log)",
+      "command(git add)",
+      "command(git commit)"
+    ],
+    "deny": [
+      "command(git push)",
+      "command(gcloud organizations set-iam-policy)",
+      "command(gcloud organizations add-iam-policy-binding)",
+      "command(gcloud organizations remove-iam-policy-binding)",
+      "command(gcloud projects delete)",
+      "command(gcloud resource-manager folders delete)",
+      "read_file(~/.config/gcloud/)",
+      "read_file(~/.lzv-redaction-map.json)"
+    ]
+  }
+}
+
