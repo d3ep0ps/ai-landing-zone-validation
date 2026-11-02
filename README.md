@@ -84,3 +84,8 @@ Safety rules:
 - The operator keeps two organization-level roles and one test service account after runs 6 and 7 (human decision 2026-10-28; pending review), plus `roles/iam.accessPolicyAdmin` on the runtime project for IAP V2, which departs from the plan's teardown step.
 - Items marked FAIL, INCONCLUSIVE or NOT_TESTED, and everything in "Not tested in v1", are listed in [limitations.md](limitations.md).
 - A PASS shows that a specific attempt had the stated outcome. It does not show that no other path exists.
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).
+
