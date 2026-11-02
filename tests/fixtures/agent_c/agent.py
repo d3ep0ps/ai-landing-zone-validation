@@ -11,8 +11,8 @@ os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
 # Model calls go to LZV_MODEL_LOCATION (see tests/fixtures/agent/agent.py).
 os.environ["GOOGLE_CLOUD_LOCATION"] = os.environ.get("LZV_MODEL_LOCATION", "global")
 
-# Fixed targets: the caller picks a key, never a URL (ToS-risk reduction,
-# notes/tos-suspension-analysis.md). "allowed" is the SWP allow-list host (T33 positive control);
+# Fixed targets: the caller picks a key, never a URL (ToS-risk reduction).
+# "allowed" is the SWP allow-list host (T33 positive control);
 # "denied" is a host the gateway policy does not allow.
 TARGETS = {
     "allowed": "https://example.com",

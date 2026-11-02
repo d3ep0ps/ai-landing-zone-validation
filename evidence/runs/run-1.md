@@ -47,7 +47,7 @@ T10 finding (human decision 2026-10-23): the trap (plain builds submit fails) is
 
 ## Replacement runtime project (2026-10-24)
 
-- Human chose not to wait for the appeal. Analysis of possible causes: notes/tos-suspension-analysis.md (audit log shows no unknown principal).
+- Human chose not to wait for the appeal (audit log shows no unknown principal).
 - Human deleted PROJECT_1 (soft delete). Opus removed module.prj_runtime from Terraform state (backup scratch/tfstate-before-runtime-rm.json), renamed the project to prj-lzv-runtime2, reviewed the plan (43 add: project, 12 APIs, service-agent grants only; perimeter dry-run spec swaps the project number) and applied at the human's request: complete 2026-10-24T06:05:43Z.
 - Effective policies on the new project checked read-only: allowedModels = gemini-3.5-flash:predict, key creation blocked, computer-use denyAll, CMEK deny storage. Snapshot refreshed (redaction check: 0 findings).
 - Agent fixture: tool now fetches a fixed URL (https://example.com), no caller-chosen target.

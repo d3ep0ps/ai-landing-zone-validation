@@ -93,7 +93,7 @@ Status: **supported** (use as worded), **qualified** (use only with the stated q
 | X4 | Secure Web Proxy / egress firewall controls work in general. | v1: NOT_TESTED. v1.1: one run, Cloud Run jobs only, one allowed host (C19); Agent Runtime through a PSC interface not tested. |
 | X5 | No inference path exists for agents. | T12 FAIL: the opposite was found. |
 | X6 | Results hold at organization scope or in other regions. | Only T36 and T38 ran at the organization level, of a test-only organization. Other regions were not tested. |
-| X7 | The suspension of the first runtime project was caused by a specific activity. | Google gave no specific reason; `notes/tos-suspension-analysis.md` is inference only. |
+| X7 | The suspension of the first runtime project was caused by a specific activity. | Google gave no specific reason. |
 | X8 | Image admission by Binary Authorization was tested in v1. | In v1 only the `default` annotation requirement was tested (T17). v1.1 T25 tested admission once (C18). |
 | X9 | The v1.1 results were reproduced independently, or in another organization. | Run 5 repeated them on the same environment, by the same operator, with script fixes from run 4. Say "repeated once on the same environment". C13 "added at deploy" was not repeated (F14). |
 | X10 | Any cause for either runtime project suspension. | No reason is recorded for either (the first notice cited Terms of Service violations without naming an activity). The second suspension (2026-10-25/26) was lifted after an appeal on 2026-10-26, without a reason; it delayed T16. |

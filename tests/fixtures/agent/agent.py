@@ -14,8 +14,7 @@ os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
 os.environ["GOOGLE_CLOUD_LOCATION"] = os.environ.get("LZV_MODEL_LOCATION", "global")
 
 
-# Fixed target: the caller cannot choose what the agent fetches (ToS-risk reduction,
-# notes/tos-suspension-analysis.md).
+# Fixed target: the caller cannot choose what the agent fetches (ToS-risk reduction).
 PROBE_URL = "https://example.com"
 
 
