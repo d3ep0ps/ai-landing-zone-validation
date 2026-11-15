@@ -1,0 +1,27 @@
+{
+  "id": "T45d",
+  "check": "B6 (Enforced)",
+  "control": "A local dependency (lzv_helper) unhooks the ADK callbacks for requests marked DEP=1; the agent's own guarded path then runs a/b/c against the platform controls, on and off",
+  "scope": "projects/PROJECT_8",
+  "expected": "Identical to T45 mode=bypass: platform on: refused by the platform (deny 403, SWP 403 / direct deadline, VPC-SC 403); platform off: allowed. Falsified if: platform on is allowed, or platform off is refused. Separate outcome (recorded, in the harness's favour): the package cannot reach the live agent objects. INCONCLUSIVE if: the runtime cannot install the local package (then NOT_TESTED with the build error). Tier: Enforced. 2+ runs. Self-owned targets only.",
+  "actual": "on: on: ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=none/200, a-dep=http_status/403, b-dep=URLError/none, c-dep=http_status/403, ctl-restored=adk_callback/none; off: ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=none/200, a-dep=none/200, b-dep=none/200, c-dep=none/200, ctl-restored=adk_callback/none",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T45d/run-7/command.txt",
+  "output_file": "evidence/T45d/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-11-13T13:08:54Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://adk.dev/callbacks/types-of-callbacks/",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/private-service-connect-interface",
+    "https://docs.cloud.google.com/iam/docs/deny-access",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/troubleshooting"
+  ],
+  "script_commit": "5c3808a"
+}

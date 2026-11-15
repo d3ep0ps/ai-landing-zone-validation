@@ -1,0 +1,25 @@
+{
+  "id": "T05",
+  "check": "New (R)",
+  "control": "`vertexai.configurableComputerUseToolSafetyPolicies` deny all (folder); not in the official constraint reference",
+  "scope": "folders/FOLDER_ID_2",
+  "expected": "Policy effective = deny all. If the API does not know the constraint: NOT_TESTED + finding",
+  "actual": "effective policy is deny all at the folder root and in the runtime project",
+  "verdict": "PASS",
+  "tier": "Configured",
+  "reason": "",
+  "commands_file": "evidence/T05/run-1/command.txt",
+  "output_file": "evidence/T05/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-23T21:25:47Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://github.com/GoogleCloudPlatform/cloud-foundation-fabric/issues/4276",
+    "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/computer-use",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ]
+}

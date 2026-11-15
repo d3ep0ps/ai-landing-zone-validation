@@ -1,0 +1,9 @@
+# T29 run=run-6 start=2026-10-27T13:43:16Z
+# script_commit=d6c4610
+# check=A control=Project floor setting with Vertex AI integration in `INSPECT_AND_BLOCK`; `generateContent` with the T28 sample
+# expected (pre-registered): Response blocked: `blockReason: "MODEL_ARMOR"`, message starts "Blocked by Floor Setting"; HTTP status recorded
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T13:43:16Z $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_8/locations/global/floorSetting --format=json
+2026-10-27T13:43:18Z $ gcloud org-policies describe constraints/vertexai.allowedModels --effective --project=PROJECT_8 --format=json --billing-project=PROJECT_6
+2026-10-27T13:43:19Z $ out="$(printf "Authorization: Bearer %s\nx-goog-user-project: %s\n" "$(gcloud auth print-access-token)" "$LZV_P" | curl -sS --max-time 90 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; rc=$?; printf "%s\n" "$out"; exit $rc
+2026-10-27T13:43:20Z $ out="$(printf "Authorization: Bearer %s\nx-goog-user-project: %s\n" "$(gcloud auth print-access-token)" "$LZV_P" | curl -sS --max-time 90 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; rc=$?; printf "%s\n" "$out"; exit $rc

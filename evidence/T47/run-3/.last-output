@@ -1,0 +1,1022 @@
+[
+  {
+    "httpRequest": {
+      "latency": "0.182151s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1027",
+      "requestMethod": "POST",
+      "requestSize": "3339",
+      "requestUrl": "https://telemetry.mtls.googleapis.com/v1/traces",
+      "responseSize": "525",
+      "serverIp": "IP_6:443",
+      "status": 403,
+      "userAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0"
+    },
+    "insertId": "1yham50f2b2pp3",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-d97b-5ad94dac8ce5",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-telemetry-mtls"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "telemetry.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "telemetry.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.012895s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.013032s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.001820s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "telemetry.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:30.707128810Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-13T04:47:29.363747Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.321727s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "POST",
+      "requestSize": "5244",
+      "requestUrl": "https://telemetry.mtls.googleapis.com/v1/logs",
+      "responseSize": "320",
+      "serverIp": "IP_6:443",
+      "status": 200,
+      "userAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0"
+    },
+    "insertId": "6nvaz9f2rqlig",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-d97b-5ad94dac8ce5",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-telemetry-mtls"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "telemetry.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "telemetry.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.019911s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.020033s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.001005s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "telemetry.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:30.382392501Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:47:29.262992Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.216926s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1027",
+      "requestMethod": "POST",
+      "requestSize": "7994",
+      "requestUrl": "https://telemetry.mtls.googleapis.com/v1/traces",
+      "responseSize": "525",
+      "serverIp": "IP_6:443",
+      "status": 403,
+      "userAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0"
+    },
+    "insertId": "1yham50f2b2pp2",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-d97b-5ad94dac8ce5",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-telemetry-mtls"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "telemetry.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "telemetry.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.038701s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.039120s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.009698s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "telemetry.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:30.707128810Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-13T04:47:29.143490Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.205345s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1027",
+      "requestMethod": "POST",
+      "requestSize": "5815",
+      "requestUrl": "https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_47/sessions/6529187842902458368:appendEvent",
+      "responseSize": "308",
+      "serverIp": "IP_18:443",
+      "status": 200,
+      "userAgent": "google-genai-sdk/2.34.0+vertex-genai-modules/2.6.0 gl-python/3.13.15"
+    },
+    "insertId": "1yham50f2b2pp1",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-c044-b5ee2fa5ec7e",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-sessions"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "europe-west1-aiplatform.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "europe-west1-aiplatform.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.019716s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.019863s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.001676s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "europe-west1-aiplatform.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:30.707128810Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:47:29.051717Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.162031s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "GET",
+      "requestSize": "2109",
+      "requestUrl": "https://iamcredentials.mtls.googleapis.com/v1/projects/-/serviceAccounts/USER_4@example.com/allowedLocations",
+      "responseSize": "507",
+      "serverIp": "IP_18:443",
+      "status": 404,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "6nvaz9f2rqlie",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-118a-be839d169040",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-iamcredentials-mtls"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "iamcredentials.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "iamcredentials.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.023865s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.001246s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "iamcredentials.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:30.382392501Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-13T04:47:25.660360Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.257767s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "POST",
+      "requestSize": "5243",
+      "requestUrl": "https://telemetry.mtls.googleapis.com/v1/logs",
+      "responseSize": "320",
+      "serverIp": "IP_6:443",
+      "status": 200,
+      "userAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0"
+    },
+    "insertId": "6nvaz9f2rqlif",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-d97b-5ad94dac8ce5",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-telemetry-mtls"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "telemetry.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "telemetry.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.027079s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.027132s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.000784s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "telemetry.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:30.382392501Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:47:25.659798Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "1.419918s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "CONNECT",
+      "requestSize": "5816",
+      "responseSize": "4738",
+      "status": 200
+    },
+    "insertId": "t595f6f2xk29g",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "IP_14:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:35.919585137Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:47:25.228429Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "31.954536s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "CONNECT",
+      "requestSize": "19117",
+      "responseSize": "4179",
+      "status": 200
+    },
+    "insertId": "1c0pc34f2fsnu5",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "IP_14:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:48:00.834488517Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:47:24.925950Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "39.952613s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1027",
+      "requestMethod": "POST",
+      "requestSize": "5578",
+      "requestUrl": "https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publishers/google/models/gemini-3.5-flash:generateContent",
+      "responseSize": "1868",
+      "serverIp": "IP_8:443",
+      "status": 200,
+      "userAgent": "google-genai-sdk/2.34.0+vertex-genai-modules/2.6.0 gl-python/3.13.15 google-adk/2.13.0+remote_reasoning_engine gl-python/3.13.15"
+    },
+    "insertId": "dxsrz1f12v1cr",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-4963-e6772bc4ae77",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-aiplatform-mtls"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.130218s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.130279s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.004302s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "aiplatform.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:25.807042724Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:46:44.916100Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "15.712510s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1029",
+      "requestMethod": "CONNECT",
+      "requestSize": "5890",
+      "responseSize": "3519",
+      "status": 200
+    },
+    "insertId": "miol7mev71y1",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "IP_14:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:05.603323645Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:46:44.169128Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.247845s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1027",
+      "requestMethod": "GET",
+      "requestSize": "2293",
+      "requestUrl": "https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_47/sessions/6529187842902458368",
+      "responseSize": "597",
+      "serverIp": "IP_8:443",
+      "status": 200,
+      "userAgent": "google-genai-sdk/2.34.0+vertex-genai-modules/2.6.0 gl-python/3.13.15"
+    },
+    "insertId": "xctizif10jee7",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-c044-b5ee2fa5ec7e",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-sessions"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "europe-west1-aiplatform.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "europe-west1-aiplatform.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.030342s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.002095s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "europe-west1-aiplatform.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:46:45.504198140Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:46:43.908228Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.257983s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1027",
+      "requestMethod": "POST",
+      "requestSize": "2315",
+      "requestUrl": "https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_47/sessions",
+      "responseSize": "1076",
+      "serverIp": "IP_8:443",
+      "status": 200,
+      "userAgent": "google-genai-sdk/2.34.0+vertex-genai-modules/2.6.0 gl-python/3.13.15"
+    },
+    "insertId": "xctizif10jee6",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-c044-b5ee2fa5ec7e",
+        "destinationUrn": "urn:endpoint:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-ep-sessions"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "europe-west1-aiplatform.mtls.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "europe-west1-aiplatform.mtls.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.031541s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.031721s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.002206s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "europe-west1-aiplatform.mtls.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:46:45.504198140Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:46:43.642836Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "16.243248s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "CONNECT",
+      "requestSize": "13715",
+      "responseSize": "5854",
+      "status": 200
+    },
+    "insertId": "miol7mev71y2",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "IP_14:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "ijt9gbHl3CqhFQy2aPqifpXPiw1EwrxV2sm6R4pcAJw",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-13T04:47:05.603323645Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/zda48e7d763a5fba2p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-13T04:46:43.638605Z"
+  }
+]

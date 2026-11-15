@@ -1,0 +1,311 @@
+# T14 stage=a run=run-7 start=2026-10-29T04:36:39Z
+# script_commit=8baedc8
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T04:36:39Z: no resources are created by this script (agents are Terraform-managed); no cleanup_trap registered
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "fca0fa4eaeb98eb4",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-29T04:36:40Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "fca0fa4eaeb98eb4",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-29T04:36:42Z
+## note 2026-10-29T04:36:42Z: perimeter lzv_ai: status resources=0, status ingressPolicies=0 (want dryrun-only)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_332414", "args": {}, "name": "fetch_url"}, "thought_signature": "AY89a1_U-IH6uin7LPLRYCQQHrFpdoFfOss8VghQQX3AFI-FYaOJtIowKLS-IAhxUWLDWxlbHqeQaKVM31jVJjWRPhPo9FQdgLF1jJIWWkyWansRcqM7LGTSxITqLIThjOfxrzqBFsLXZws3vHGVf2EQKuyFJvV9GpyaZGGo8QtzgDn6wfp0wadXXWTRwZfCZ70XRaZVVfRftKRd1k9B4hGsSt38AhcFF1_cPv7nn9UtyAFyA4ox1ykqvs4rVC-EKSZE3ZhVwE2zND0H7tD1AJeMNh5IHkbk8H2StniMKGsDSNQWLW620hCN-6EUwVfOAxmZ4XqndxF7XKbmDn2W0rvYCeuky2CpfxVQamAVUMGsFc0QxBMsjq1P31QHBB7L1O5e3767NnOpe_QakOitpSWZUa-trQlZwe9PaTrPhd69clX71sYOwVsCwqpwe4YAATTNb5iIeV5uRKFBRhUc5ev3ApAuHaGp5pbYVOmVUTgqnszP4GKxmmz-ZNJosa1nBykGIISUvKHxsn3c0maSWgT6MZU31QWvRftJArAUEUpBs7gRwgkDHqNsD8DBFKJeN_wJaT0W5sSS5FTlJH8pZwsqDkKoKSfpwxCFhnOf72bY8qqnVL7dw-ViaHnpnJxNeEChPZkDTnTckJYUoIASofQRx1RRQ28qFDV4Rvi_x--KEttT00w-vLBg6AQCa0jcQDAMTnn0y1Z2lBV_CD-F"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 10, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 10}], "prompt_token_count": 107, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 107}], "thoughts_token_count": 110, "total_token_count": 227, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-e15eb583-3701-4dea-a8af-a6a71ef81a79", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "long_running_tool_ids": [], "id": "fbb61b8b-c22b-4d90-9484-c8f8bb736145", "timestamp": 1793248605.5418625}
+{"content": {"parts": [{"function_response": {"id": "call_332414", "name": "fetch_url", "response": {"status": 200, "error": null, "url": "https://example.com"}}}], "role": "user"}, "invocation_id": "e-e15eb583-3701-4dea-a8af-a6a71ef81a79", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "3d7ad9b3-3bbd-4b78-8634-7bec673fb1db", "timestamp": 1793248606.9158263}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"status\": 200,\n  \"error\": null,\n  \"url\": \"https://example.com\"\n}", "thought_signature": "AY89a1_tS7NaE662vK6Hs1uiWQxumrPNUOvXJXmgsmBRi88Zm1mncvfq0Nf4MIbX0qMRHS_kHZqTTHSKtlrMfndGibzvfuj7G6b8jZpII_zjM0Mni2VrhB32AYf6GClF2EPUWPg38PIiCIrdXw3hy7KIN8w7kiAw-NPvmTuiB78JR63VU9ea0s9aEchhecyl7pKvimpRx2Nbrxp_jU1xVM-VlMn4lsa6xScs3r1L3OFAO6q-dH__MiP4SEndUSyhwwsHYQX7riWO9n-0LXW8I3Q2vnkRZ0ai_7s-D86kIx_6UOMLawUa92j0D3i8"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 32, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 32}], "prompt_token_count": 243, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 243}], "thoughts_token_count": 45, "total_token_count": 320, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-e15eb583-3701-4dea-a8af-a6a71ef81a79", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "8e71f44e-6b4a-4b51-b2bd-3665a5d0d88f", "timestamp": 1793248606.9842708}
+
+HTTP 200
+## exit=0 at 2026-10-29T04:36:48Z
+## note 2026-10-29T04:36:48Z: http_rc=0 function_responses=1 status=200 err=none
+# T14 stage=b run=run-7 start=2026-10-29T07:34:44Z
+# script_commit=8baedc8
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T07:34:44Z: no resources are created by this script (agents are Terraform-managed); no cleanup_trap registered
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "5f19fcb69681e7f9",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-29T07:34:46Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "5f19fcb69681e7f9",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-29T07:34:47Z
+## note 2026-10-29T07:34:47Z: perimeter lzv_ai: status resources=3, status ingressPolicies=2 (want enforced-ingress)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_18:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_45393", "args": {}, "name": "fetch_url"}, "thought_signature": "AY89a18onkQ5XE9RXCGXYISkUZBNSkFapB0RhTIbKamglC9AUnlF4RAJFHeS8X4bJfWPqc-gu-AzCCYk9860wsG1OXk0VYwv2D0TVy8WaRck8bGO_BtOskcwfiRFBlYMlGIoV8qxbYxU3PdlmZFjRfkKZ9fZu05CZ5e7IXfPYyPOL5aIW-tHsAHdGpWx2LB5-bCPhgDgPRhchbG_HER9rgn6aIHwiBqaGozsRHW28JZy-5U5rfrkAphhtusTs6glsxpirt18pyazLdKfI_0fx3i7NmrqgotLTqaHdofsvFfcapvOMRvpJXUl9h7W6iG_66xYDvnyvgXiCZxhonVqdUeidltmcehD--gLTZahhbXjf014Kb4_5k_vcvBZhi9Tk8AguPoy3V61M0VfYW8wpTsrrxwYyr1z1sBdwtfHcsb-a-98NZLtO9qCBfnRvDIv_ni5YSSCCjt6Einb3cXnd01Zgwn5gL6BXVCv2_5MD9ZVLiUaNyoIZTb4O87AQcdktZpVQEXHHJObK7GHUPNyfSbDWxQul39GQfWbNIbZ0zFmDjb0nAHriw9cYrkdfXVI3fKqomn7I9jSgGfyTjdG-oC3BE7vmd7rYpCAPR_5BZs2nfjLW8LMyo5q0ND9vA-I75OGzeBSjf3VBYnWUDGVIJVhk5JLh2FhnkzjtuiRNWnxcMMFX_o1m3O73I9ipR4boXRL5dApaHpvRCNQTEhQJ2Qwzx32qBZeMydo2NAWpbtMcZJ_pgqNVg=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 10, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 10}], "prompt_token_count": 107, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 107}], "thoughts_token_count": 137, "total_token_count": 254, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-c9ee45b3-9b21-434a-92b9-0505248535d0", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "long_running_tool_ids": [], "id": "84a804ba-aa3a-4f33-a075-58d0ed57d3a4", "timestamp": 1793259290.6070871}
+{"content": {"parts": [{"function_response": {"id": "call_45393", "name": "fetch_url", "response": {"status": null, "error": "URLError: <urlopen error [Errno 101] Network is unreachable>", "url": "https://example.com"}}}], "role": "user"}, "invocation_id": "e-c9ee45b3-9b21-434a-92b9-0505248535d0", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "4b38b97b-4efc-49b2-928b-001f2aed9669", "timestamp": 1793259312.2401063}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "The attempt to fetch https://example.com returned an error:\n- **Error**: URLError: <urlopen error [Errno 101] Network is unreachable>\n- **Status**: null\n- **URL**: https://example.com", "thought_signature": "AY89a1_vhjRbd06yWiFMKghoDBHXE9Qi10e8Dz_ImQL41fqfxi5MmYK0wZtyEFeqd6lM5iPE7lxX6qYqci5JeXcoP-qNsUzP3TOyT-BqCqa3jHLeO1I_3ZPihG93fgVCmbqx1uUCJVADgRqnOQsjqUMgHpuJV2BGTeoxfbmESWuDXNNPGv7RfyS_KdBOzwB4SIk8djW-nef_nKjgEqIPVKzE9Qn872IsQJ90Y70gDb5lOw=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 52, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 52}], "prompt_token_count": 285, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 285}], "thoughts_token_count": 18, "total_token_count": 355, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-c9ee45b3-9b21-434a-92b9-0505248535d0", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "2c99fd16-ca03-40bd-918c-f1647947fa51", "timestamp": 1793259312.3247116}
+
+HTTP 200
+## exit=0 at 2026-10-29T07:35:14Z
+## note 2026-10-29T07:35:14Z: http_rc=0 function_responses=1 status=none err=status= error=URLError: <urlopen error [Errno 101] Network is unreachable>

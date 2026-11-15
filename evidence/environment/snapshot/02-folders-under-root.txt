@@ -1,0 +1,10 @@
+$ gcloud resource-manager folders list --folder=FOLDER_ID_2 --format=json
+[
+  {
+    "createTime": "2026-10-23T12:53:05.290Z",
+    "displayName": "fldr-ai-prod",
+    "lifecycleState": "ACTIVE",
+    "name": "folders/FOLDER_ID_1",
+    "parent": "folders/FOLDER_ID_2"
+  }
+]

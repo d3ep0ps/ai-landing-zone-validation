@@ -1,0 +1,15 @@
+# T20 run=run-6 start=2026-10-27T13:38:10Z
+# script_commit=d6c4610
+# check=Baseline control=TS2 for `gcp.restrictNonCmekServices`
+# expected (pre-registered): Without CMEK refused (HTTP 412, as in v1 T07); with CMEK created; constraint name recorded from the Policy Denied audit log if present, else stated as attribution by elimination
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T13:38:10Z $ gcloud storage buckets describe gs://PROJECT_8-lzv-build-cmek --format=value\(default_kms_key\)
+2026-10-27T13:38:12Z $ gcloud storage buckets create gs://lzv-t20-run6-w7r05q --location=europe-west1 --project=PROJECT_8
+2026-10-27T13:38:12Z $ gcloud storage buckets create gs://lzv-t20c-run6-1724dn --location=europe-west1 --project=PROJECT_8 --default-encryption-key=projects/PROJECT_8/locations/europe-west1/keyRings/lzv-build-keyring/cryptoKeys/lzv-build-key
+2026-10-27T13:38:15Z $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+2026-10-27T13:39:16Z $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+2026-10-27T13:40:18Z $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+2026-10-27T13:41:20Z $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+2026-10-27T13:42:21Z $ gcloud logging read logName:\"cloudaudit.googleapis.com%2Fpolicy\"\ AND\ protoPayload.metadata.constraint:\"gcp.restrictNonCmekServices\" --project=PROJECT_8 --freshness=30m --limit=5 --format=json
+2026-10-27T13:42:23Z $ if gcloud storage buckets describe gs://lzv-t20c-run6-1724dn >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t20c-run6-1724dn; fi; if gcloud storage buckets describe gs://lzv-t20c-run6-1724dn >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi
+2026-10-27T13:42:27Z $ if gcloud storage buckets describe gs://lzv-t20-run6-w7r05q >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t20-run6-w7r05q; fi; if gcloud storage buckets describe gs://lzv-t20-run6-w7r05q >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi

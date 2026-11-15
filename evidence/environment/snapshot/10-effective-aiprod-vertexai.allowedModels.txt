@@ -1,0 +1,15 @@
+$ gcloud org-policies describe vertexai.allowedModels --folder=FOLDER_ID_1 --effective --format=json
+{
+  "name": "folders/FOLDER_ID_1/policies/vertexai.allowedModels",
+  "spec": {
+    "rules": [
+      {
+        "values": {
+          "allowedValues": [
+            "is:publishers/google/models/gemini-3.5-flash:predict"
+          ]
+        }
+      }
+    ]
+  }
+}

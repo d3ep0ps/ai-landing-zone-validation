@@ -1,0 +1,106 @@
+# T31 stage=Gateway refuses (403, `DENIED`) although IAM allows the agent; then the same call by a non-approved agent is refused by the IAM deny policy ("due to an IAM deny policy") run=run-6 start=2026-10-28T10:46:43Z
+# script_commit=1bc9da1
+# check=B control=E3 row T31b: agent behind the gateway, project deny policy (T18 form) with the agent as exception; call a model endpoint the gateway does not allow
+# expected (pre-registered): Allowed endpoint answered
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T10:46:43Z: this script implements E3 row T31b under test ID T31
+## note 2026-10-28T10:46:43Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-10-28T10:46:43Z: unverified: gateway default-deny on model endpoints; the log field of the verdict (broad free-text search); the 403 body text is not asserted
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/r71d151e28518e1a2p-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxjCCAq6gAwIBAgIUAMMkryhFS3cklmDl/ZPiKDrrtZ4wDQYJKoZIhvcNAQEL
+    BQAwYDElMCMGA1UEChMcR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUG
+    A1UEAxMuQWdlbnQgR2F0ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdl
+    c3QxKTAeFw0yNjEwMjcyMDUwNTVaFw0zNjEwMjQyMDUwNTRaMGAxJTAjBgNVBAoT
+    HEdvb2dsZSBDbG91ZCBNYW5hZ2VkIFNlcnZpY2UxNzA1BgNVBAMTLkFnZW50IEdh
+    dGV3YXkgVExTIEluc3BlY3Rpb24gQ0EgKGV1cm9wZS13ZXN0MSkwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCfVR2pJClQN952mRaXVs+60Pjuv5Ba2S4B
+    SIdpyTPwoL6TGBUhuzsuD5X2WKbjeovm1JwTNBQevf3BvckjAJEZQKQ17UJgNiyy
+    gqAeJsCW9iHS8Kb47IRYGaVl2SrlC1a4wOdpYOD4x300Q2Mnba9y/WecwHGNMdNi
+    MJLFY1uF0yhDnug2u9UKEh7ZfGpJBR+0Of33J9oaB8h970vuvOFpoubhk9h5Ne8W
+    FKNLy36QKJuDhWy0jahLryEtjBAUDz1/TcHpfVwirVOPnSxxf4636/8/S91UICsK
+    O3t0IwuG13RcRCiKlsqMUC8tBvoaAnqYyHHcLPVPw5XHFkBW5tjfAgMBAAGjeDB2
+    MA4GA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8E
+    BTADAQH/MB0GA1UdDgQWBBSXSignbSM2tXJIwutWVLMCuAcAwjAfBgNVHSMEGDAW
+    gBSXSignbSM2tXJIwutWVLMCuAcAwjANBgkqhkiG9w0BAQsFAAOCAQEASn4noKlH
+    GO5W/sSQtHLTKQc6iaSKhrl69y1u7E1ZVJsDyLPjIGIwUqoDQcKMufZj8QAaxAbM
+    KHgZJOXyWEJn3odSPW46Vmr+6nuW5aJD1IuKcRtEMhOxV+rLI3p4e0xzFg9ojbwY
+    NC6b5fisQ1lpO299mDzGa85AYF9DcjdZ7AKw3fHH59OROHtfDCu4JmySG/rhK5Fc
+    GN8FQOf0qedOrZC+8RBxO+dDfMSwVz1KCDulHQAkmimFYpQ3bp9eok7bTu4toGzP
+    oqdmvZNgdUYcbW5YtIfPyDlC2X4wAEw52EbPJuzfo5b/0B6CvSjpgkejIyilaLkR
+    GF0D3zOPaPLYKA==
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_12@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-10-28T09:32:57.485371074Z'
+etag: rbZXuegozZSDC0UlbQkRZzPZMYpxgYXKMZwlj0EI0RU
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-10-28T09:35:13.384944072Z'
+## exit=0 at 2026-10-28T10:46:44Z
+## note 2026-10-28T10:46:44Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_15; identity principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_15
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "policies": [
+    {
+      "createTime": "2026-10-28T09:53:36.692239Z",
+      "displayName": "DC1: deny endpoints.predict to project agents except approved",
+      "kind": "DenyPolicy",
+      "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+      "uid": "c5e55390-242a-3fbf-e0a1-e8bc3c1522ea",
+      "updateTime": "2026-10-28T10:35:48.707615Z"
+    }
+  ]
+}
+## exit=0 at 2026-10-28T10:46:46Z
+## $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "createTime": "2026-10-28T09:53:36.692239Z",
+  "displayName": "DC1: deny endpoints.predict to project agents except approved",
+  "etag": "MTc5MTg2NTUyNTM4MDA3MDYwNDg=",
+  "kind": "DenyPolicy",
+  "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+  "rules": [
+    {
+      "denyRule": {
+        "deniedPermissions": [
+          "aiplatform.googleapis.com/endpoints.predict"
+        ],
+        "deniedPrincipals": [
+          "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+        ],
+        "exceptionPrincipals": [
+          "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_15"
+        ]
+      },
+      "description": "Deny model inference to all agent identities in the runtime project; approved agents are exceptions."
+    }
+  ],
+  "uid": "c5e55390-242a-3fbf-e0a1-e8bc3c1522ea",
+  "updateTime": "2026-10-28T10:35:48.707615Z"
+}
+## exit=0 at 2026-10-28T10:46:47Z
+## note 2026-10-28T10:46:47Z: deny policy lzv-dc1-deny-agent-predict present, age 3191s, G is an exception
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"code": 401, "message": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}", "errorCode": "401", "errorMessage": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}"}
+
+HTTP 200
+## exit=0 at 2026-10-28T10:46:48Z
+## note 2026-10-28T10:46:48Z: agent G: http_rc=0 tool_result=0 status=none auth=none err=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"code": 401, "message": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}", "errorCode": "401", "errorMessage": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}"}
+
+HTTP 200
+## exit=0 at 2026-10-28T10:46:49Z
+## note 2026-10-28T10:46:49Z: agent G: http_rc=0 tool_result=0 status=none auth=none err=none
+## note 2026-10-28T10:46:49Z: blocked-endpoint body (first 160 chars, recorded as observed): 

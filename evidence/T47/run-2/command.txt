@@ -1,0 +1,35 @@
+# T47 stage=s1 run=run-2 start=2026-11-11T21:27:15Z
+# script_commit=54f8c34-dirty
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs. From run 2 (plans/v3h-automation.md, approved before the run): step 3 runs on a second gateway-bound engine with the opt-out (lzv-probe-g-optout, same tarball) deployed side by side; step 4 repeats step 2 on the bound engine (lzv-probe-g) without a redeploy.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:27:16Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-11-11T21:27:17Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-11T21:27:18Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T47 stage=s2 run=run-2 start=2026-11-11T21:27:25Z
+# script_commit=54f8c34-dirty
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs. From run 2 (plans/v3h-automation.md, approved before the run): step 3 runs on a second gateway-bound engine with the opt-out (lzv-probe-g-optout, same tarball) deployed side by side; step 4 repeats step 2 on the bound engine (lzv-probe-g) without a redeploy.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:27:25Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-11-11T21:27:26Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-11T21:27:27Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T21:28:24Z $ gcloud logging read timestamp\>=\"2026-11-11T21:26:24Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" --project=PROJECT_8 --limit=100 --format=json
+# T47 stage=s3 run=run-2 start=2026-11-11T21:28:29Z
+# script_commit=54f8c34-dirty
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs. From run 2 (plans/v3h-automation.md, approved before the run): step 3 runs on a second gateway-bound engine with the opt-out (lzv-probe-g-optout, same tarball) deployed side by side; step 4 repeats step 2 on the bound engine (lzv-probe-g) without a redeploy.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:28:29Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-11-11T21:28:30Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-11T21:28:31Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T21:29:27Z $ gcloud logging read timestamp\>=\"2026-11-11T21:27:27Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" --project=PROJECT_8 --limit=100 --format=json
+# T47 stage=s4 run=run-2 start=2026-11-11T21:29:31Z
+# script_commit=54f8c34-dirty
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs. From run 2 (plans/v3h-automation.md, approved before the run): step 3 runs on a second gateway-bound engine with the opt-out (lzv-probe-g-optout, same tarball) deployed side by side; step 4 repeats step 2 on the bound engine (lzv-probe-g) without a redeploy.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:29:32Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-11-11T21:29:33Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-11T21:29:34Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T21:30:31Z $ gcloud logging read timestamp\>=\"2026-11-11T21:28:31Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" --project=PROJECT_8 --limit=100 --format=json

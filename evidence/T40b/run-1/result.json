@@ -1,0 +1,25 @@
+{
+  "id": "T40b",
+  "check": "B1 complement (Enforced for the 403 call, Configured for plan drift)",
+  "control": "Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding",
+  "scope": "projects/PROJECT_9",
+  "expected": "`plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).",
+  "actual": "pre=PASS; drift=PASS (plan exit 2 expected); call=PASS (403 expected); agent2: platform re-added the binding and plan drifts again (exit 2); agent 2 call error: none",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T40b/run-1/command.txt",
+  "output_file": "evidence/T40b/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-12T17:14:33Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://developer.hashicorp.com/terraform/cli/commands/plan",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity"
+  ],
+  "script_commit": "24fe4d6"
+}

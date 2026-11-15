@@ -1,0 +1,251 @@
+[
+  {
+    "insertId": "tfrjyee1w7l6",
+    "logName": "projects/PROJECT_11/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "principalEmail": "USER_5@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "resourcemanager.projects.setIamPolicy",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "projects/PROJECT_11",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_11",
+            "service": "cloudresourcemanager.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "resourcemanager.projects.setIamPolicy",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "projects/PROJECT_11",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_11",
+            "service": "cloudresourcemanager.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "SetIamPolicy",
+      "request": {
+        "@type": "type.googleapis.com/google.iam.v1.SetIamPolicyRequest",
+        "policy": {
+          "bindings": [
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+              ],
+              "role": "roles/aiplatform.reasoningEngineServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform.iam.gserviceaccount.com"
+              ],
+              "role": "roles/aiplatform.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_10@cloudbuild.gserviceaccount.com"
+              ],
+              "role": "roles/cloudbuild.builds.builder"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+              ],
+              "role": "roles/cloudbuild.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_10@cloudservices.gserviceaccount.com"
+              ],
+              "role": "roles/compute.instanceGroupManagerServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@compute-system.iam.gserviceaccount.com"
+              ],
+              "role": "roles/compute.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@containerregistry.iam.gserviceaccount.com"
+              ],
+              "role": "roles/containerregistry.ServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_10-compute@developer.gserviceaccount.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/editor"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.serviceAccountUser"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-logging.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/owner"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-pubsub.iam.gserviceaccount.com"
+              ],
+              "role": "roles/pubsub.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.projectIamAdmin"
+            },
+            {
+              "members": [
+                "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10"
+              ],
+              "role": "roles/aiplatform.agentDefaultAccess"
+            }
+          ],
+          "etag": "BwZgIHjso8U="
+        },
+        "resource": "PROJECT_NUMBER_10"
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_11",
+      "response": {
+        "@type": "type.googleapis.com/google.iam.v1.Policy",
+        "bindings": [
+          {
+            "members": [
+              "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10"
+            ],
+            "role": "roles/aiplatform.agentDefaultAccess"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+            ],
+            "role": "roles/aiplatform.reasoningEngineServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform.iam.gserviceaccount.com"
+            ],
+            "role": "roles/aiplatform.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:PROJECT_NUMBER_10@cloudbuild.gserviceaccount.com"
+            ],
+            "role": "roles/cloudbuild.builds.builder"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+            ],
+            "role": "roles/cloudbuild.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:PROJECT_NUMBER_10@cloudservices.gserviceaccount.com"
+            ],
+            "role": "roles/compute.instanceGroupManagerServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@compute-system.iam.gserviceaccount.com"
+            ],
+            "role": "roles/compute.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@containerregistry.iam.gserviceaccount.com"
+            ],
+            "role": "roles/containerregistry.ServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:PROJECT_NUMBER_10-compute@developer.gserviceaccount.com",
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/editor"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/iam.serviceAccountUser"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-logging.iam.gserviceaccount.com"
+            ],
+            "role": "roles/logging.serviceAgent"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/owner"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-pubsub.iam.gserviceaccount.com"
+            ],
+            "role": "roles/pubsub.serviceAgent"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/resourcemanager.projectIamAdmin"
+          }
+        ],
+        "etag": "BwZgIHxLBz4="
+      },
+      "serviceData": {
+        "@type": "type.googleapis.com/google.iam.v1.logging.AuditData",
+        "policyDelta": {
+          "bindingDeltas": [
+            {
+              "action": "ADD",
+              "member": "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10",
+              "role": "roles/aiplatform.agentDefaultAccess"
+            }
+          ]
+        }
+      },
+      "serviceName": "cloudresourcemanager.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-13T04:01:41.274232529Z",
+    "resource": {
+      "labels": {
+        "project_id": "PROJECT_11"
+      },
+      "type": "project"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-11-13T04:01:40.119400Z"
+  }
+]

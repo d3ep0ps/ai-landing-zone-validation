@@ -1,0 +1,14 @@
+# T41 stage=before run=run-1 start=2026-11-11T09:44:43Z
+# script_commit=9c0b89a
+# check=B2 (Enforced for the call, Configured for the Troubleshooter) control=Agent 2 (same artifact, zero roles) is covered by the project-wide principalSet grant; control: IAM diff and agent 2 model call
+# expected (pre-registered): no new binding; Troubleshooter shows access granted through the principal-set binding; agent 2's call succeeds. Falsified if: the call is refused, or a per-agent binding appears. Tier: Enforced for the call (an allowed action, recorded as such), Configured for the Troubleshooter.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T09:44:44Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+# T41 stage=after run=run-1 start=2026-11-11T10:16:47Z
+# script_commit=9c0b89a
+# check=B2 (Enforced for the call, Configured for the Troubleshooter) control=Agent 2 (same artifact, zero roles) is covered by the project-wide principalSet grant; control: IAM diff and agent 2 model call
+# expected (pre-registered): no new binding; Troubleshooter shows access granted through the principal-set binding; agent 2's call succeeds. Falsified if: the call is refused, or a per-agent binding appears. Tier: Enforced for the call (an allowed action, recorded as such), Configured for the Troubleshooter.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T10:16:47Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+2026-11-11T10:16:49Z $ gcloud policy-intelligence troubleshoot-policy iam //cloudresourcemanager.googleapis.com/projects/PROJECT_9 --principal-email=agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_9/locations/europe-west1/reasoningEngines/AGENT_ID_25 --permission=aiplatform.endpoints.predict --format=json
+2026-11-11T10:16:49Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

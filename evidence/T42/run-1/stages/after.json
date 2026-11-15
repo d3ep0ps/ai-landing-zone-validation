@@ -1,0 +1,6 @@
+{
+  "stage": "after",
+  "verdict": "PASS",
+  "note": "after: control=PASS, real plan gate=PASS (plan exit 0)",
+  "timestamp_utc": "2026-11-11T09:44:40Z"
+}

@@ -1,0 +1,74 @@
+# T02 run=run-1 start=2026-10-23T13:40:34Z
+# check=Baseline control=`run.managed.requireInvokerIam` (folder)
+# expected (pre-registered): Both denied; error names `run.managed.requireInvokerIam`
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud run deploy lzv-t02-run1-vwkgup --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_5 --ingress=internal --binary-authorization=default
+Allow unauthenticated invocations to [lzv-t02-run1-vwkgup] (y/N)?  
+Deploying container to Cloud Run service [[1mlzv-t02-run1-vwkgup[m] in project [[1mPROJECT_5[m] region [[1meurope-west1[m]
+Deploying new service...
+Creating Revision........................................................................done
+Routing traffic.....done
+Done.
+Service [[1mlzv-t02-run1-vwkgup[m] revision [[1mlzv-t02-run1-vwkgup-00001-qlh[m] has been deployed and is serving [1m100[m percent of traffic.
+Service URL: [1mhttps://lzv-t02-run1-vwkgup-PROJECT_NUMBER_2.europe-west1.run.app[m
+## exit=0 at 2026-10-23T13:40:45Z
+## $ gcloud run deploy lzv-t02-run1-2ekk98 --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_5 --ingress=internal --binary-authorization=default --no-invoker-iam-check
+Deploying container to Cloud Run service [[1mlzv-t02-run1-2ekk98[m] in project [[1mPROJECT_5[m] region [[1meurope-west1[m]
+Deploying new service...
+failed
+Deployment failed
+ERROR: (gcloud.run.deploy) FAILED_PRECONDITION: Operation denied by org policy: ["constraints/run.managed.requireInvokerIam": "When enforced, this constraint requires the IAM invoker check to be enabled on Cloud Run services. <br/> If this constraint is not enforced, you can set the <code>service.invoker_iam_disabled</code> field (v2), or the <code>run.googleapis.com/invoker-iam-disabled</code> annotation (v1) on Cloud Run services to <code>True</code>. Setting <code>service.invoker_iam_disabled</code> to <code>True</code> only affects deployment of new revisions that use this field or annotation set to <code>True</code>. It's also possible to achieve a similar result by granting the <code>run.routes.invoke</code> permission to allUsers. For more information, see https://cloud.google.com/run/docs/securing/managing-access#make-service-public and https://cloud.google.com/run/docs/securing/security."].
+## exit=1 at 2026-10-23T13:40:48Z
+## $ gcloud run services update lzv-t02-run1-vwkgup --region=europe-west1 --project=PROJECT_5 --no-invoker-iam-check
+Updating...
+failed
+Update failed
+ERROR: (gcloud.run.services.update) FAILED_PRECONDITION: Operation denied by org policy: ["constraints/run.managed.requireInvokerIam": "When enforced, this constraint requires the IAM invoker check to be enabled on Cloud Run services. <br/> If this constraint is not enforced, you can set the <code>service.invoker_iam_disabled</code> field (v2), or the <code>run.googleapis.com/invoker-iam-disabled</code> annotation (v1) on Cloud Run services to <code>True</code>. Setting <code>service.invoker_iam_disabled</code> to <code>True</code> only affects deployment of new revisions that use this field or annotation set to <code>True</code>. It's also possible to achieve a similar result by granting the <code>run.routes.invoke</code> permission to allUsers. For more information, see https://cloud.google.com/run/docs/securing/managing-access#make-service-public and https://cloud.google.com/run/docs/securing/security."].
+## exit=1 at 2026-10-23T13:40:50Z
+## cleanup start 2026-10-23T13:40:50Z
+## $ gcloud run services delete lzv-t02-run1-vwkgup --region=europe-west1 --project=PROJECT_5
+Service [lzv-t02-run1-vwkgup] will be deleted.
+
+Do you want to continue (Y/n)?  
+ERROR: (gcloud.run.services.delete) This prompt could not be answered because you are not in an interactive session.  You can re-run the command with the --quiet flag to accept default answers for all prompts.
+## exit=1 at 2026-10-23T13:40:51Z
+## $ gcloud run services describe lzv-t02-run1-vwkgup --region=europe-west1 --project=PROJECT_5
+[1m[32m✔[39;0m[1m Service lzv-t02-run1-vwkgup in region europe-west1[m
+ 
+URL:     https://lzv-t02-run1-vwkgup-PROJECT_NUMBER_2.europe-west1.run.app
+Ingress: internal
+Traffic:
+  100% [1mLATEST (currently lzv-t02-run1-vwkgup-00001-qlh)[m
+ 
+Binary Authorization: default
+Scaling:             Auto (Min: 0, Max: 3)
+SSH enabled:         false
+ 
+Last updated on 2026-10-23T13:40:44.853638Z by USER_1@example.com:
+  [1mRevision lzv-t02-run1-vwkgup-00001-qlh[m
+  Container None
+    Image:           us-docker.pkg.dev/cloudrun/container/hello
+    Port:            8080
+    Memory:          512Mi
+    CPU:             1000m
+    Startup Probe:
+      TCP every 240s
+      Port:          8080
+      Initial delay: 0s
+      Timeout:       240s
+      Failure threshold: 1
+      Type:          Default
+  Service account:   PROJECT_NUMBER_2-compute@developer.gserviceaccount.com
+  Concurrency:       80
+  Timeout:           300s
+## exit=0 at 2026-10-23T13:40:53Z
+## $ gcloud run services delete lzv-t02-run1-2ekk98 --region=europe-west1 --project=PROJECT_5
+Service [lzv-t02-run1-2ekk98] will be deleted.
+
+Do you want to continue (Y/n)?  
+ERROR: (gcloud.run.services.delete) This prompt could not be answered because you are not in an interactive session.  You can re-run the command with the --quiet flag to accept default answers for all prompts.
+## exit=1 at 2026-10-23T13:40:53Z
+## $ gcloud run services describe lzv-t02-run1-2ekk98 --region=europe-west1 --project=PROJECT_5
+ERROR: (gcloud.run.services.describe) Cannot find service [lzv-t02-run1-2ekk98]
+## exit=1 at 2026-10-23T13:40:55Z
+## cleanup end 2026-10-23T13:40:55Z

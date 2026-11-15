@@ -1,0 +1,23 @@
+# T57 stage=before run=run-1 start=2026-11-12T15:43:17Z
+# script_commit=b6c4b19
+# check=Findings 24 / F20 re-check (Configured) control=Targeted Terraform destroy (provider 8.8.0) of the runtime project Model Armor floor setting with enforcement on; raw floor describe before, +1 min and +5 min after, and after the restore
+# expected (pre-registered): After the destroy the address is gone from Terraform state and the floor describe still shows the before content: same filterConfig (pi_and_jailbreak, MEDIUM_AND_ABOVE), integratedServices with AI_PLATFORM, updateTime unchanged. Falsified if: the describe fails with 404/NOT_FOUND, shows a reset floor (no pi_and_jailbreak filter or no integratedServices), or updateTime changed. Recorded without prediction: enableFloorSettingEnforcement after the destroy. INCONCLUSIVE if: the before describe does not match the baseline. Tier: Configured. 1 run.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T15:43:17Z $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_8/locations/global/floorSetting --format=json
+2026-11-12T15:43:19Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra state list
+# T57 stage=after run=run-1 start=2026-11-12T15:45:00Z
+# script_commit=b6c4b19
+# check=Findings 24 / F20 re-check (Configured) control=Targeted Terraform destroy (provider 8.8.0) of the runtime project Model Armor floor setting with enforcement on; raw floor describe before, +1 min and +5 min after, and after the restore
+# expected (pre-registered): After the destroy the address is gone from Terraform state and the floor describe still shows the before content: same filterConfig (pi_and_jailbreak, MEDIUM_AND_ABOVE), integratedServices with AI_PLATFORM, updateTime unchanged. Falsified if: the describe fails with 404/NOT_FOUND, shows a reset floor (no pi_and_jailbreak filter or no integratedServices), or updateTime changed. Recorded without prediction: enableFloorSettingEnforcement after the destroy. INCONCLUSIVE if: the before describe does not match the baseline. Tier: Configured. 1 run.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T15:45:00Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra state list
+2026-11-12T15:45:00Z $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_8/locations/global/floorSetting --format=json
+2026-11-12T15:49:02Z $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_8/locations/global/floorSetting --format=json
+# T57 stage=restored run=run-1 start=2026-11-12T15:50:16Z
+# script_commit=b6c4b19
+# check=Findings 24 / F20 re-check (Configured) control=Targeted Terraform destroy (provider 8.8.0) of the runtime project Model Armor floor setting with enforcement on; raw floor describe before, +1 min and +5 min after, and after the restore
+# expected (pre-registered): After the destroy the address is gone from Terraform state and the floor describe still shows the before content: same filterConfig (pi_and_jailbreak, MEDIUM_AND_ABOVE), integratedServices with AI_PLATFORM, updateTime unchanged. Falsified if: the describe fails with 404/NOT_FOUND, shows a reset floor (no pi_and_jailbreak filter or no integratedServices), or updateTime changed. Recorded without prediction: enableFloorSettingEnforcement after the destroy. INCONCLUSIVE if: the before describe does not match the baseline. Tier: Configured. 1 run.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T15:50:16Z $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_8/locations/global/floorSetting --format=json
+2026-11-12T15:50:18Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra state list
+2026-11-12T15:50:18Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra plan -no-color -input=false -detailed-exitcode -var-file=terraform.tfvars -var-file=profiles/lz-5-reference.tfvars -var-file=profiles/v3h-baseline.tfvars -target=google_model_armor_floorsetting.v2_project\[0\] -target=google_model_armor_floorsetting.v2_folder\[0\]

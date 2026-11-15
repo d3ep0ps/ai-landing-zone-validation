@@ -1,0 +1,5 @@
+# T46 run=run-3 start=2026-11-13T04:52:07Z
+# script_commit=d998479
+# check=B7 (Documented) control=DPoP support for agent tokens through Agent Gateway; control: none (documentation and package-source check)
+# expected (pre-registered): unknown, so pre-register "record outcome". NOT_TESTED is acceptable with links and dates.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}

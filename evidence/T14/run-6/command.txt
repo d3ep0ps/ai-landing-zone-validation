@@ -1,0 +1,16 @@
+# T14 stage=a run=run-6 start=2026-10-28T04:30:35Z
+# script_commit=f33f041
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T04:30:35Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T04:30:37Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T04:30:38Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T14 stage=b run=run-6 start=2026-10-28T06:11:59Z
+# script_commit=24e353d
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T06:11:59Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-28T06:12:00Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-28T06:12:02Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_13:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

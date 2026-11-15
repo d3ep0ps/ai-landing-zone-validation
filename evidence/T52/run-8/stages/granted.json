@@ -1,0 +1,6 @@
+{
+  "stage": "granted",
+  "verdict": "PASS",
+  "note": "granted: B on A list=200 get=200 memories=200 query=403; controls 200/200/200/200",
+  "timestamp_utc": "2026-11-14T15:51:45Z"
+}

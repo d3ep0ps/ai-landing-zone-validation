@@ -1,0 +1,410 @@
+# T43 stage=t0 run=run-3 start=2026-11-13T04:32:35Z
+# script_commit=d998479
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-13T04:32:35Z: plan claim B4; no resources are created or deleted by this script; no cleanup_trap registered
+## note 2026-11-13T04:32:35Z: per-run project: PROJECT_11 (label r3)
+## $ gcloud projects get-iam-policy PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    }
+  ],
+  "etag": "BwZgIHxLBz4=",
+  "version": 1
+}
+## exit=0 at 2026-11-13T04:32:36Z
+## note 2026-11-13T04:32:36Z: snapshot t0 written to evidence/T43/run-3/iam-t0
+## note 2026-11-13T04:32:36Z: snapshot t0: platform binding present=1
+# T43 stage=p15 run=run-3 start=2026-11-13T04:52:23Z
+# script_commit=d998479
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-13T04:52:23Z: plan claim B4; no resources are created or deleted by this script; no cleanup_trap registered
+## note 2026-11-13T04:52:23Z: per-run project: PROJECT_11 (label r3)
+## note 2026-11-13T04:52:23Z: stage p15: 1187 s since t0 (t0 at 2026-11-13T04:32:36Z)
+## $ gcloud projects get-iam-policy PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    }
+  ],
+  "etag": "BwZgIHxLBz4=",
+  "version": 1
+}
+## exit=0 at 2026-11-13T04:52:25Z
+## note 2026-11-13T04:52:25Z: snapshot p15 written to evidence/T43/run-3/iam-p15
+## note 2026-11-13T04:52:25Z: snapshot p15: platform binding present=1
+# T43 stage=p24h run=run-3 start=2026-11-14T04:41:31Z
+# script_commit=2033224
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-14T04:41:31Z: plan claim B4; no resources are created or deleted by this script; no cleanup_trap registered
+## note 2026-11-14T04:41:31Z: per-run project: PROJECT_11 (label r3)
+## note 2026-11-14T04:41:31Z: stage p24h: 86935 s since t0 (t0 at 2026-11-13T04:32:36Z)
+## $ gcloud projects get-iam-policy PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    }
+  ],
+  "etag": "BwZgIHxLBz4=",
+  "version": 1
+}
+## exit=0 at 2026-11-14T04:41:33Z
+## note 2026-11-14T04:41:33Z: snapshot p24h written to evidence/T43/run-3/iam-p24h
+## note 2026-11-14T04:41:33Z: snapshot p24h: platform binding present=1
+# T43 stage=agent3 run=run-3 start=2026-11-14T05:18:43Z
+# script_commit=2033224
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-14T05:18:43Z: plan claim B4; no resources are created or deleted by this script; no cleanup_trap registered
+## note 2026-11-14T05:18:43Z: per-run project: PROJECT_11 (label r3)
+## $ gcloud projects get-iam-policy PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_10"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_10-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_10@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    }
+  ],
+  "etag": "BwZgIHxLBz4=",
+  "version": 1
+}
+## exit=0 at 2026-11-14T05:18:45Z
+## note 2026-11-14T05:18:45Z: snapshot agent3 written to evidence/T43/run-3/iam-agent3
+## note 2026-11-14T05:18:45Z: snapshot agent3: platform binding present=1

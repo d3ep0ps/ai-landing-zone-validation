@@ -1,0 +1,11 @@
+# T17 run=run-1 start=2026-10-23T13:46:02Z
+# check=P3 control=run.allowedBinaryAuthorizationPolicies = default (folder)
+# expected (pre-registered): Effective = `default`; deploy refused. Record whether the refusal names the org policy or a Binary Authorization admission rule
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-23T13:46:02Z $ gcloud org-policies describe run.allowedBinaryAuthorizationPolicies --effective --project=PROJECT_5 --format=json --billing-project=PROJECT_6
+2026-10-23T13:46:03Z $ gcloud run deploy lzv-t17x-run1-da2lr6 --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_5 --ingress=internal --no-allow-unauthenticated
+2026-10-23T13:46:07Z $ gcloud run deploy lzv-t17c-run1-ov4lpm --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_5 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+2026-10-23T13:47:08Z $ gcloud run services delete lzv-t17x-run1-da2lr6 --region=europe-west1 --project=PROJECT_5 --quiet
+2026-10-23T13:47:09Z $ gcloud run services describe lzv-t17x-run1-da2lr6 --region=europe-west1 --project=PROJECT_5 --format='value(metadata.name)'
+2026-10-23T13:47:10Z $ gcloud run services delete lzv-t17c-run1-ov4lpm --region=europe-west1 --project=PROJECT_5 --quiet
+2026-10-23T13:47:15Z $ gcloud run services describe lzv-t17c-run1-ov4lpm --region=europe-west1 --project=PROJECT_5 --format='value(metadata.name)'

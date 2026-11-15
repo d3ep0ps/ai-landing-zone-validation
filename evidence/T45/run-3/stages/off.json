@@ -1,0 +1,6 @@
+{
+  "stage": "off",
+  "verdict": "PASS",
+  "note": "off: ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=none/200, a-guarded=adk_callback/none, b-guarded=adk_callback/none, c-guarded=adk_callback/none, a-bypass=none/200, b-bypass-proxy=none/200, b-bypass-direct=none/200, c-bypass=none/200",
+  "timestamp_utc": "2026-11-13T05:32:19Z"
+}

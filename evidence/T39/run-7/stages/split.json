@@ -1,0 +1,6 @@
+{
+  "stage": "split",
+  "verdict": "PASS",
+  "note": "T39 split: inside plan exit 2, outside plan exit 2; enforced violations since 2026-10-29T05:42:31Z naming inside quota project=0, outside=0",
+  "timestamp_utc": "2026-10-29T05:44:46Z"
+}

@@ -1,0 +1,6 @@
+{
+  "stage": "outside-read-r2",
+  "verdict": "PASS",
+  "note": "log violationReason=NO_MATCHING_ACCESS_LEVEL",
+  "timestamp_utc": "2026-10-24T06:50:56Z"
+}

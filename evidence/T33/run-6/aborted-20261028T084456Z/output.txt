@@ -1,0 +1,8 @@
+# T33 run=run-6 start=2026-10-28T08:44:56Z
+# script_commit=a45a24d
+# check=V2-C control=Agent Runtime with a PSC interface; internet only through Secure Web Proxy over the attachment
+# expected (pre-registered): example.com 200 through the proxy; non-allowed host refused on CONNECT (403) with `DENIED` in `gateway_requests`
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T08:44:56Z: no resources are created by this script (agent C, gateway and attachment are Terraform-managed); no cleanup_trap registered
+## note 2026-10-28T08:44:56Z: agent C fixed targets: allowed=example.com, denied=www.wikipedia.org (tests/fixtures/agent_c/agent.py)
+## ABORT 2026-10-28T08:44:56Z: terraform output has no .v2_psci_attachment_name.value // empty

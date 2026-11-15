@@ -1,0 +1,12 @@
+# T02 run=run-6 start=2026-10-27T12:59:11Z
+# script_commit=f47408e
+# check=Baseline control=`run.managed.requireInvokerIam` (folder)
+# expected (pre-registered): Both denied; error names `run.managed.requireInvokerIam`
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T12:59:11Z $ gcloud run deploy lzv-t02-run6-kfbt34 --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=internal --binary-authorization=default
+2026-10-27T12:59:19Z $ gcloud run deploy lzv-t02-run6-h6yngj --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=internal --binary-authorization=default --no-invoker-iam-check
+2026-10-27T12:59:22Z $ gcloud run services update lzv-t02-run6-kfbt34 --region=europe-west1 --project=PROJECT_9 --no-invoker-iam-check
+2026-10-27T12:59:23Z $ gcloud run services delete lzv-t02-run6-kfbt34 --region=europe-west1 --project=PROJECT_9 --quiet
+2026-10-27T12:59:27Z $ gcloud run services describe lzv-t02-run6-kfbt34 --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+2026-10-27T12:59:28Z $ gcloud run services delete lzv-t02-run6-h6yngj --region=europe-west1 --project=PROJECT_9 --quiet
+2026-10-27T12:59:30Z $ gcloud run services describe lzv-t02-run6-h6yngj --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'

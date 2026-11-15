@@ -1,0 +1,6 @@
+{
+  "stage": "main",
+  "verdict": "FAIL",
+  "note": "main: granted=none; setIamPolicy=409; patch own engine=403; controls 409/409 200/200; agent attempt not refused with 403 (setIamPolicy=409 ABORTED, patch=403 PERMISSION_DENIED)",
+  "timestamp_utc": "2026-11-13T11:53:32Z"
+}

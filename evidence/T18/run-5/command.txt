@@ -1,0 +1,17 @@
+# T18 stage=pre run=run-5 start=2026-10-27T08:21:32Z
+# script_commit=023ce5a
+# check=R2 / I3 control=Agent-identity inference restricted by IAM deny policy (DC1)
+# expected (pre-registered): Before the deny policy: the non-approved agent's call succeeds. After it (wait 10 min): the non-approved agent's call refused with `PERMISSION_DENIED` (deny text is generic); the approved agent's identical call succeeds; `gcloud iam policies list --kind=denypolicies` shows the policy. Policy Analyzer is not used (allow policies only)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T08:21:33Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-27T08:21:34Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-27T08:22:01Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+# T18 stage=post run=run-5 start=2026-10-27T09:28:34Z
+# script_commit=023ce5a
+# check=R2 / I3 control=Agent-identity inference restricted by IAM deny policy (DC1)
+# expected (pre-registered): Before the deny policy: the non-approved agent's call succeeds. After it (wait 10 min): the non-approved agent's call refused with `PERMISSION_DENIED` (deny text is generic); the approved agent's identical call succeeds; `gcloud iam policies list --kind=denypolicies` shows the policy. Policy Analyzer is not used (allow policies only)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T09:28:35Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-27T09:28:36Z $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-27T09:28:37Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-27T09:28:40Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1

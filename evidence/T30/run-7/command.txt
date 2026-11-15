@@ -1,0 +1,11 @@
+# T30 stage=Unregistered: HTTP 403 and a gateway log entry with verdict `DENIED`; registered: answered run=run-7 start=2026-10-29T20:00:34Z
+# script_commit=9baf01e
+# check=B control=Agent behind Agent Gateway calls a registered and an unregistered MCP tool
+# expected (pre-registered): Registered tool
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T20:00:34Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-10-29T20:00:35Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-29T20:00:48Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-29T20:00:54Z $ gcloud logging read timestamp\>=\"2026-10-29T20:00:48Z\"\ AND\ \"DENIED\"\ AND\ \"lzv-gw\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-29T20:01:25Z $ gcloud logging read timestamp\>=\"2026-10-29T20:00:48Z\"\ AND\ \"DENIED\"\ AND\ \"lzv-gw\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-29T20:01:27Z $ gcloud logging read resource.type=\"cloud_run_revision\"\ AND\ resource.labels.service_name=\"lzv-mcp-unreg\"\ AND\ timestamp\>=\"2026-10-29T20:00:48Z\" --project=PROJECT_8 --limit=5 --format=json

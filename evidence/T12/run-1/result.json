@@ -1,0 +1,24 @@
+{
+  "id": "T12",
+  "check": "R2 / I3",
+  "control": "No direct inference, no broad grants",
+  "scope": "organizations/ORG_ID",
+  "expected": "No path found; no fleet grants. Limitation: allow policies only, direct bindings",
+  "actual": "control results=0; analyzer found path=0; fleet grants= [project runtime] roles/aiplatform.agentDefaultAccess principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_4; inference bindings=none",
+  "verdict": "FAIL",
+  "tier": "Enforced",
+  "reason": "found: analyzer_results=0 fleet_grants=[ [project runtime] roles/aiplatform.agentDefaultAccess principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_4] inference_bindings=[none]; limitation: allow policies only (no deny policies), direct bindings for agent principals, best-effort analyzer freshness",
+  "commands_file": "evidence/T12/run-1/command.txt",
+  "output_file": "evidence/T12/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-24T06:18:14Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/policy-intelligence/docs/analyze-iam-policies",
+    "https://docs.cloud.google.com/iam/docs/principal-identifiers"
+  ]
+}

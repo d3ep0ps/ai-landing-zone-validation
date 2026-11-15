@@ -1,0 +1,46 @@
+# Evidence review, part 1 (T01–T06)
+
+Reviewer: evidence-reviewer (independent, repository only). Date: 2026-10-25.
+Scope: tests/T01.sh–T06.sh, EXECUTION-PLAN.md §4 + Appendix A, evidence/T01–T06 (all run folders), evidence/runs/run-1.md and run-2.md rows for T01–T06. results.md / README.md / claims-register.md are out of scope (not written yet).
+
+## Pre-registration check (all six tests)
+
+- The expected text in every `output.txt` header, every `result.json` `expected` field, the current `tests/TNN.sh` header and Appendix A are word-for-word identical for T01–T06. No expected result was changed.
+- Timing (from `.git/logs/HEAD`): the Appendix A update commit 5f03f7e is from 2026-10-23T12:29:49Z. The script commit b2d85bb is from 13:32:51Z, before the first run-1 test (T01 at 13:38:46Z). Run-2 scripts are at 04d260b (2026-10-24T07:42:02Z), before run 2 started (2026-10-25T04:37:38Z).
+- Script changes during run 1: the org-policy read now passes `--billing-project` (after T01), and Cloud Run cleanup moved to `cleanup_run_service` (after T02). Both are recorded in run-1.md. Neither touches the expected text or the matcher of T01–T06.
+
+## Per-test assessment
+
+**T01** (key creation, Enforced). In run-1, run-1-r2 and run-2, `keys create` was refused with `FAILED_PRECONDITION` and the error names `constraints/iam.managed.disableServiceAccountKeyCreation`. That supports PASS/Enforced. The run-1 effective-policy read failed because the orgpolicy API was off ("enforce=unreadable"); this is documented and does not affect the verdict. In run-2 the cleanup post-check (describe) still returned the SA.
+
+**T02** (requireInvokerIam, Enforced). Create and update with `--no-invoker-iam-check` were both refused with `FAILED_PRECONDITION`, naming `constraints/run.managed.requireInvokerIam`. The positive control deployed. Both runs agree. In run-1 the cleanup failed: the control service was left running and was deleted by hand. That deletion is documented only in prose.
+
+**T03** (allowedIngress, Enforced). `--ingress=all` was refused, with `PreconditionFailure` type `constraints/run.allowedIngress`. The `--ingress=internal` control deployed. Cleanup is verified by describe → "Cannot find service" in both runs. The runs agree.
+
+**T04** (allowedModels, Enforced). The effective allowlist was read (gemini-3.5-flash:predict). The control returned HTTP 200. gemini-4-argon was refused with HTTP 400 FAILED_PRECONDITION naming `constraints/vertexai.allowedModels`. run-1, run-1-r2 (runtime2) and run-2 agree. No resources were created and no token appears in the evidence.
+
+**T05** (computer-use deny all, Configured). The effective policy is denyAll at the folder root and at the runtime project. The non-effective folder describe shows our policy (updateTime matches the Stage 2 apply). The API accepted the constraint, so the precondition holds. Configured is the correct maximum tier. All three runs agree.
+
+**T06** (custom MCP connector, Configured). Effective enforce=true at the folder and the mcp project, both before and after our folder policy. The after-stage guard shows our folder policy exists. PASS/Configured matches the pre-registered expected result. However, the test cannot tell our policy apart from the Google default. Both runs agree.
+
+## Issues
+
+HIGH: none.
+
+- [MEDIUM] T01: in run-2 the cleanup check shows the SA still present. `gcloud iam service-accounts describe` after the delete returned the full SA (exit 0, 04:38:00Z). The only later proof is `scratch/stage4-checks-run2.txt` ("test SAs: 0"), which is git-ignored and holds counts only, without commands. Evidence: evidence/T01/run-2/output.txt lines 39–47. Fix: run a read-only `gcloud iam service-accounts list --project=<runtime2> --filter="email~^lzv-t01-"` and save it as `evidence/T01/run-2/cleanup-check.txt`, or commit a redacted copy of the stage4 check (with its commands) under evidence/runs/. Cite that file in run-2.md instead of "later list clean".
+- [MEDIUM] T02: in run-1 the control service `lzv-t02-run1-vwkgup` was left running; the delete prompt failed in a non-interactive session. The manual `--quiet` delete and the list check (~13:50Z) appear only as prose in run-1.md. Evidence: evidence/T02/run-1/output.txt lines 29–64; evidence/runs/run-1.md line 14. Fix: add `evidence/T02/run-1/cleanup-manual.md` with the exact command, time, approver and the `run services list` result, or state plainly that the output was not captured. Mention the ~10 min of a leftover service in limitations/results.
+- [MEDIUM] T06: PASS cannot fail because of our folder policy. Effective enforce=true was already in place before the policy (Google default), and `reason` is empty, so result.json alone over-reads. Evidence: evidence/T06/run-1/stages/before.json, evidence/T06/run-1/result.json, evidence/T06/run-2/result.json. Fix: do not edit evidence. In results/limitations, say that T06 shows only the effective state and that the folder policy is redundant with the platform default. Do not claim the folder policy is what enforces it.
+- [MEDIUM] T01–T04: no evidence shows that the folder (or prod folder) is the source of the policy. Appendix A states the scope as "(folder)", but the evidence has only effective reads at project level (T01, T04), or no policy read at all (T02, T03). The snapshot files `evidence/environment/snapshot/10-effective-root-*.txt` are also effective reads. None of these can tell a folder policy from an inherited org-level one; new organizations can carry secure-by-default org policies such as SA key creation. T06 showed this kind of default exists here. Fix: add read-only non-effective `gcloud org-policies describe <C> --folder=<F>` and `gcloud org-policies list --organization=<ORG>` outputs to the snapshot. Otherwise, word results as "refused by constraint X; effective at the project" without claiming that the folder policy caused the refusal.
+- [LOW] T01: in run-1 the effective read is "unreadable" (orgpolicy API disabled, pre-fix lib). Evidence: evidence/T01/run-1/output.txt lines 5–22. Fix: when citing the effective policy, use run-1-r2/run-2. Keep run-1 as the refusal evidence only.
+- [LOW] T01: in run-1-r2 the post-delete describe returned PERMISSION_DENIED, read as "missing SA". That is ambiguous. Evidence: evidence/T01/run-1-r2/output.txt lines 39–46. Fix: the delete exited 0, so cite that; future scripts should use `service-accounts list --filter` for the post-check.
+- [LOW] T01–T06 (run 2): tests ran in parallel, although Phase 4 says one test per delegation in the listed order. T01, T02 and T03 overlap: T02 and T03 both start at 04:37:51Z in the same mcp project. T04 and T06-before both start at 04:39:10Z. T05 and T06-after both start at 05:01:14Z. Resources were separate, so no verdict depends on this. run-2.md does not mention it. Evidence: header lines of evidence/T0[1-6]/run-2/output.txt. Fix: add one line to run-2.md recording the parallel execution.
+- [LOW] T02/T03/T04: in `actual`, sub-verdicts read as "create(--no-invoker-iam-check)=PASS" and "non-listed model gemini-4-argon: PASS", where PASS means "refused as expected". A reader can misread this. Evidence: evidence/T02/run-*/result.json, evidence/T03/run-*/result.json, evidence/T04/run-*/result.json. Fix: leave the evidence unchanged; in the report, write "refused" / "deployed".
+- [LOW] T04: one denied model and one location (global) were tested. The source for gemini-4-argon's availability (the model page cited in run-1.md) is not in `doc_refs`. Evidence: evidence/T04/run-1/result.json; evidence/runs/run-1.md line 5. Fix: cite the model page URL in results/claims, and state the single-model, single-location limitation.
+- [LOW] T05: the constraint is not in the official reference. The evidence shows only that the Org Policy API stores the policy and evaluates it as denyAll. No request-level attempt shows Vertex AI honours it, and there is no "before" baseline. Evidence: evidence/T05/run-*/output.txt. Fix: state this in limitations ("Configured: policy accepted and effective; runtime enforcement not observed").
+- [LOW] T06: the before stage records only effective reads. It does not show that our folder policy was absent (NOT_FOUND) at that time; absence is inferred from run-1.md and the updateTime in the after stage. Evidence: evidence/T06/run-1/output.txt lines 1–29. Fix: cite the toggle apply time (run-1.md Stage 2, run-2.md Stage 2) next to updateTime 21:09:05Z / 04:45:25Z. For v1.1, add a non-effective describe to the before stage.
+- [LOW] T04/T05/T06: the run folders contain stray `.last-output` helper files that are not in the §4 schema; T04's holds the API error body. Evidence: evidence/T04/run-*/.last-output, evidence/T05/run-*/.last-output, evidence/T06/run-*/.last-output. Fix: list them in tests/README.md as helper artifacts, or stop writing them inside evidence/ in the next script version. Do not delete them from the recorded runs without noting it.
+- [LOW] All: `command.txt`/`output.txt` headers do not record the script commit. Pre-registration can be shown only through git history. Fix: in results, cite b2d85bb (13:32:51Z, before 13:38:46Z) and 04d260b. For v1.1, add `git rev-parse HEAD` to the header in lib.sh.
+
+## Counts
+
+HIGH 0 · MEDIUM 4 · LOW 9

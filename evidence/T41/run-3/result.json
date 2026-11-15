@@ -1,0 +1,25 @@
+{
+  "id": "T41",
+  "check": "B2 (Enforced for the call, Configured for the Troubleshooter)",
+  "control": "Agent 2 (same artifact, zero roles) is covered by the project-wide principalSet grant; control: IAM diff and agent 2 model call",
+  "scope": "projects/PROJECT_11",
+  "expected": "no new binding; Troubleshooter shows access granted through the principal-set binding; agent 2's call succeeds. Falsified if: the call is refused, or a per-agent binding appears. Tier: Enforced for the call (an allowed action, recorded as such), Configured for the Troubleshooter.",
+  "actual": "diff added=0; troubleshooter access=CAN_ACCESS (exit 0); agent 2 call status=200 refused_by=none",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T41/run-3/command.txt",
+  "output_file": "evidence/T41/run-3/output.txt",
+  "run_id": "run-3",
+  "timestamp_utc": "2026-11-13T04:32:19Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/policy-intelligence/docs/troubleshoot-access",
+    "https://docs.cloud.google.com/iam/docs/auth-agent-own-identity"
+  ],
+  "script_commit": "d998479"
+}

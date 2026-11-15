@@ -1,0 +1,12 @@
+# recorded 2026-11-11T10:44:40Z by tests/T46.sh
+# docs accessed 2026-11-10; sources: the URLs below
+https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security
+https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+https://pypi.org/project/google-auth/
+# pinned versions in the agent fixtures (requirements.txt):
+google-cloud-aiplatform[agent_engines,adk]==2.6.0
+google-adk==2.13.0
+google-auth==2.62.1  # pinned 2026-11-10 for v3h T47: >= 2.59 reads GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN (runs 7-9 resolved an unrecorded version)
+google-cloud-aiplatform[agent_engines,adk]==2.6.0
+google-adk==2.13.0
+google-auth==2.62.1

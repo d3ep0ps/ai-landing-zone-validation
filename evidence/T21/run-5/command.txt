@@ -1,0 +1,12 @@
+# T21 run=run-5 start=2026-10-26T21:10:36Z
+# script_commit=11dc4dd
+# check=Baseline control=DC3
+# expected (pre-registered): Build with the CMEK staging bucket succeeds; plain build refused (as in v1 T10)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-26T21:10:36Z $ gcloud storage buckets describe gs://PROJECT_9_cloudbuild
+2026-10-26T21:10:39Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.cTpgJo --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.cTpgJo/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+2026-10-26T21:10:51Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.cTpgJo --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.cTpgJo/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1
+2026-10-26T21:10:52Z $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.cTpgJo
+2026-10-26T21:10:52Z $ for b in $(gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.y3Qu2X); do echo "CLEANUP: deleting new bucket $b"; gcloud storage rm --recursive gs://$b; done; gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.y3Qu2X && echo 'CLEANUP CHECK: new cloudbuild bucket still exists' || echo 'CLEANUP CHECK: no new cloudbuild buckets'
+2026-10-26T21:10:54Z $ for o in $(gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.Par8uD); do echo "CLEANUP: deleting new object $o"; gcloud storage rm $o; done; gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.Par8uD && echo 'CLEANUP CHECK: new objects remain' || echo 'CLEANUP CHECK: no new objects'
+2026-10-26T21:11:00Z $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.y3Qu2X /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.Par8uD

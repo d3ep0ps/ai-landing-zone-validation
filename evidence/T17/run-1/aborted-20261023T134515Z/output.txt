@@ -1,0 +1,22 @@
+# T17 run=run-1 start=2026-10-23T13:44:42Z
+# check=P3 control=run.allowedBinaryAuthorizationPolicies = default (folder)
+# expected (pre-registered): Effective = `default`; deploy refused. Record whether the refusal names the org policy or a Binary Authorization admission rule
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe run.allowedBinaryAuthorizationPolicies --effective --project=PROJECT_5 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_2/policies/run.allowedBinaryAuthorizationPolicies",
+  "spec": {
+    "rules": [
+      {
+        "values": {
+          "allowedValues": [
+            "default"
+          ]
+        }
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-23T13:44:43Z
+## note 2026-10-23T13:44:43Z: Configured part: effective allowedValues contains default
+## ABORT (recorded by Opus): cleanup_run_service rejected service name lzv-t17x-* (lib regex bug); no resource created

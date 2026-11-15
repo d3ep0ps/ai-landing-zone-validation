@@ -1,0 +1,1559 @@
+# T13 stage=setup run=run-6 start=2026-10-27T13:01:29Z
+# script_commit=f47408e
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "1cb25eebc5b13bc7",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-27T13:01:31Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "1cb25eebc5b13bc7",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-27T13:01:32Z
+## note 2026-10-27T13:01:32Z: perimeter lzv_ai: status resources=0, status ingressPolicies=0 (want dryrun-only)
+## note 2026-10-27T13:01:33Z: creating bucket A=lzv-t13a-run6-hl4f8u (project data, inside perimeter) and bucket B=lzv-t13b-run6-sxssle (project outside)
+## $ gcloud storage buckets create gs://lzv-t13a-run6-hl4f8u --project=PROJECT_10 --location=europe-west1 --uniform-bucket-level-access
+Creating gs://lzv-t13a-run6-hl4f8u/...
+## exit=0 at 2026-10-27T13:01:35Z
+## $ gcloud storage buckets create gs://lzv-t13b-run6-sxssle --project=PROJECT_11 --location=europe-west1 --uniform-bucket-level-access
+Creating gs://lzv-t13b-run6-sxssle/...
+## exit=0 at 2026-10-27T13:01:37Z
+## $ printf '%s\n' 'lzv-t13-fixture' | gcloud storage cp - gs://lzv-t13a-run6-hl4f8u/probe.txt
+Copying file://- to gs://lzv-t13a-run6-hl4f8u/probe.txt
+  
+...
+## exit=0 at 2026-10-27T13:01:40Z
+## fixtures: BUCKET_A=lzv-t13a-run6-hl4f8u BUCKET_B=lzv-t13b-run6-sxssle object=probe.txt (kept until stage copy)
+# T13 stage=dryrun run=run-6 start=2026-10-27T13:01:45Z
+# script_commit=f47408e
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "1cb25eebc5b13bc7",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-27T13:01:46Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "1cb25eebc5b13bc7",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-27T13:01:48Z
+## note 2026-10-27T13:01:48Z: perimeter lzv_ai: status resources=0, status ingressPolicies=0 (want dryrun-only)
+## $ gcloud storage cat gs://lzv-t13a-run6-hl4f8u/probe.txt
+lzv-t13-fixture
+## exit=0 at 2026-10-27T13:01:49Z
+## $ gcloud storage cp gs://lzv-t13a-run6-hl4f8u/probe.txt gs://lzv-t13b-run6-sxssle/
+Copying gs://lzv-t13a-run6-hl4f8u/probe.txt to gs://lzv-t13b-run6-sxssle/probe.txt
+  
+.....
+## exit=0 at 2026-10-27T13:01:51Z
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ protoPayload.metadata.dryRun=true --project=PROJECT_10 --freshness=1h --format=json
+[
+  {
+    "insertId": "1eiq3ddc65h",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.objects.create"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t13a-run6-hl4f8u/objects/probe.txt"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "ANnsxSC3OZ7Kvd0cHYZ9PXTtWogySYzWceQpdgb67eqPGUV__imJV_-K8pC03cmT4eHqgOczEyd_HU2Y"
+      },
+      "methodName": "google.storage.buckets.testIamPermissions",
+      "requestMetadata": {
+        "callerIp": "IP_2",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "ANnsxSC3OZ7Kvd0cHYZ9PXTtWogySYzWceQpdgb67eqPGUV__imJV_-K8pC03cmT4eHqgOczEyd_HU2Y",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "ANnsxSC3OZ7Kvd0cHYZ9PXTtWogySYzWceQpdgb67eqPGUV__imJV_-K8pC03cmT4eHqgOczEyd_HU2Y"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: ANnsxSC3OZ7Kvd0cHYZ9PXTtWogySYzWceQpdgb67eqPGUV__imJV_-K8pC03cmT4eHqgOczEyd_HU2Y"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:40.912730936Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.testIamPermissions",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:39.479228051Z"
+  },
+  {
+    "insertId": "h7lf6ie3ytvx",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.objects.get"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t13a-run6-hl4f8u/objects/probe.txt"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "UF8cdq-S6JESkmQK_8GDEt8cCp43yWzwqHIRBAy5XNPXZdlG9e7A4SSxbj2AnjsEY5jlPcy0o6aQctW1"
+      },
+      "methodName": "google.storage.objects.get",
+      "requestMetadata": {
+        "callerIp": "IP_2",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "UF8cdq-S6JESkmQK_8GDEt8cCp43yWzwqHIRBAy5XNPXZdlG9e7A4SSxbj2AnjsEY5jlPcy0o6aQctW1",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "UF8cdq-S6JESkmQK_8GDEt8cCp43yWzwqHIRBAy5XNPXZdlG9e7A4SSxbj2AnjsEY5jlPcy0o6aQctW1"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: UF8cdq-S6JESkmQK_8GDEt8cCp43yWzwqHIRBAy5XNPXZdlG9e7A4SSxbj2AnjsEY5jlPcy0o6aQctW1"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:39.382500387Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.objects.get",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:39.022891042Z"
+  },
+  {
+    "insertId": "1u1uh70e4c4ph",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.create"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t13a-run6-hl4f8u"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "ufAYA0T_W0R9rrUKBAA4KgZcGogicVUBBqGBqAB9BrC3xwxWQpUXonzPnfI-5w3je27kGm-giFsq4_35"
+      },
+      "methodName": "google.storage.buckets.create",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "ufAYA0T_W0R9rrUKBAA4KgZcGogicVUBBqGBqAB9BrC3xwxWQpUXonzPnfI-5w3je27kGm-giFsq4_35",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "ufAYA0T_W0R9rrUKBAA4KgZcGogicVUBBqGBqAB9BrC3xwxWQpUXonzPnfI-5w3je27kGm-giFsq4_35"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: ufAYA0T_W0R9rrUKBAA4KgZcGogicVUBBqGBqAB9BrC3xwxWQpUXonzPnfI-5w3je27kGm-giFsq4_35"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:35.283793338Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.create",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:34.279545177Z"
+  },
+  {
+    "insertId": "1fya9yoe45ujc",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.delete",
+              "storage.buckets.getIamPolicy"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t09-run6-bmcd6g"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "J_5vu0pGwrE_Q3XsfM3BdIZKaxNoI8N18W3i334gg7sIBK4Ajtcooce4jflSFE2C_BnOZPiGtcBO2yId"
+      },
+      "methodName": "google.storage.buckets.delete",
+      "requestMetadata": {
+        "callerIp": "IP_2",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "J_5vu0pGwrE_Q3XsfM3BdIZKaxNoI8N18W3i334gg7sIBK4Ajtcooce4jflSFE2C_BnOZPiGtcBO2yId",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "J_5vu0pGwrE_Q3XsfM3BdIZKaxNoI8N18W3i334gg7sIBK4Ajtcooce4jflSFE2C_BnOZPiGtcBO2yId"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: J_5vu0pGwrE_Q3XsfM3BdIZKaxNoI8N18W3i334gg7sIBK4Ajtcooce4jflSFE2C_BnOZPiGtcBO2yId"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:16.773511137Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.delete",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:15.674309165Z"
+  },
+  {
+    "insertId": "1l5zjcne5cz42",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.getIamPolicy",
+              "storage.buckets.get"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t09-run6-bmcd6g"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "b5jBCPBZQqc9oOI5br__iVh0Sdv3ikcZ2r9PIPENZMuvDe9b8DJb7leLUucr_aMQvoOtOzH9q-9DI2lk"
+      },
+      "methodName": "google.storage.buckets.get",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "b5jBCPBZQqc9oOI5br__iVh0Sdv3ikcZ2r9PIPENZMuvDe9b8DJb7leLUucr_aMQvoOtOzH9q-9DI2lk",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "b5jBCPBZQqc9oOI5br__iVh0Sdv3ikcZ2r9PIPENZMuvDe9b8DJb7leLUucr_aMQvoOtOzH9q-9DI2lk"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: b5jBCPBZQqc9oOI5br__iVh0Sdv3ikcZ2r9PIPENZMuvDe9b8DJb7leLUucr_aMQvoOtOzH9q-9DI2lk"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:13.383575764Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.get",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:13.342678173Z"
+  },
+  {
+    "insertId": "1aw9lvfe1qtcx",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.setIamPolicy"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t09-run6-bmcd6g"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "zZ2iu-DqCOH-j0YkQFrmGuQC-oYKIeQPcpdnqwAWJRiZ0lTVts1vjvxk0t36fWSgTKAsYItDcGE1EQPO"
+      },
+      "methodName": "google.storage.buckets.setIamPolicy",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "zZ2iu-DqCOH-j0YkQFrmGuQC-oYKIeQPcpdnqwAWJRiZ0lTVts1vjvxk0t36fWSgTKAsYItDcGE1EQPO",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "zZ2iu-DqCOH-j0YkQFrmGuQC-oYKIeQPcpdnqwAWJRiZ0lTVts1vjvxk0t36fWSgTKAsYItDcGE1EQPO"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: zZ2iu-DqCOH-j0YkQFrmGuQC-oYKIeQPcpdnqwAWJRiZ0lTVts1vjvxk0t36fWSgTKAsYItDcGE1EQPO"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:25.699136791Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.setIamPolicy",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:12.491303193Z"
+  },
+  {
+    "insertId": "1ucqxzme19jha",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.getIamPolicy"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t09-run6-bmcd6g"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "0BLiNj8KbGHn0ev6grv3K1Hwjx1ArMYJgyLT1rtaCGfCnwXPRMvOPPCIiJYygkjVUTdE0O6pJoabWdGU"
+      },
+      "methodName": "google.storage.buckets.getIamPolicy",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "0BLiNj8KbGHn0ev6grv3K1Hwjx1ArMYJgyLT1rtaCGfCnwXPRMvOPPCIiJYygkjVUTdE0O6pJoabWdGU",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "0BLiNj8KbGHn0ev6grv3K1Hwjx1ArMYJgyLT1rtaCGfCnwXPRMvOPPCIiJYygkjVUTdE0O6pJoabWdGU"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: 0BLiNj8KbGHn0ev6grv3K1Hwjx1ArMYJgyLT1rtaCGfCnwXPRMvOPPCIiJYygkjVUTdE0O6pJoabWdGU"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:13.926783567Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.getIamPolicy",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:12.329957673Z"
+  },
+  {
+    "insertId": "79bbede1bhnr",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.create"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t09-run6-bmcd6g"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "gY5LNi5VoBggHi9QJ3wqxiyNRi7G1mPdnGff5GhsysKQgAflGlHW6Miuh3ru0esMN38w2ZvXAVvzuvsl"
+      },
+      "methodName": "google.storage.buckets.create",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "gY5LNi5VoBggHi9QJ3wqxiyNRi7G1mPdnGff5GhsysKQgAflGlHW6Miuh3ru0esMN38w2ZvXAVvzuvsl",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "gY5LNi5VoBggHi9QJ3wqxiyNRi7G1mPdnGff5GhsysKQgAflGlHW6Miuh3ru0esMN38w2ZvXAVvzuvsl"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: gY5LNi5VoBggHi9QJ3wqxiyNRi7G1mPdnGff5GhsysKQgAflGlHW6Miuh3ru0esMN38w2ZvXAVvzuvsl"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:11.948491694Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.create",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:09.942005123Z"
+  },
+  {
+    "insertId": "ogic2le2et63",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.buckets.create"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t08-run6-tiq390"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "8BKJUE38huQ7JL3Rkoy1CLeDUypF5p5jsyMrJgJFPxA983Kwit0wLuQ1fECrKpt9E-PpjXwMddosLFhK"
+      },
+      "methodName": "google.storage.buckets.create",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "8BKJUE38huQ7JL3Rkoy1CLeDUypF5p5jsyMrJgJFPxA983Kwit0wLuQ1fECrKpt9E-PpjXwMddosLFhK",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "8BKJUE38huQ7JL3Rkoy1CLeDUypF5p5jsyMrJgJFPxA983Kwit0wLuQ1fECrKpt9E-PpjXwMddosLFhK"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: 8BKJUE38huQ7JL3Rkoy1CLeDUypF5p5jsyMrJgJFPxA983Kwit0wLuQ1fECrKpt9E-PpjXwMddosLFhK"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:01:01.814998192Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.buckets.create",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T13:01:01.189994577Z"
+  },
+  {
+    "insertId": "1ha4yv5e1twh6",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_5-6qr4p6gpi6hn506pt8ejuq83di341hur.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "egressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "source": "projects/PROJECT_NUMBER_8",
+            "sourceType": "Resource",
+            "targetResource": "projects/PROJECT_NUMBER_5",
+            "targetResourcePermissions": [
+              "serviceusage.services.use"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_",
+          "projects/PROJECT_NUMBER_5"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "-nZfc-MA4WlgpiSvgt9xsNjjebfwKAPCofJuA0yS0VLAy31tYGp4jTFgt6O3SxkV321ARCKfi7YJlE1w"
+      },
+      "methodName": "google.storage.projects.serviceAccounts.getOrCreate",
+      "requestMetadata": {
+        "callerIp": "IP_3",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "-nZfc-MA4WlgpiSvgt9xsNjjebfwKAPCofJuA0yS0VLAy31tYGp4jTFgt6O3SxkV321ARCKfi7YJlE1w",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "-nZfc-MA4WlgpiSvgt9xsNjjebfwKAPCofJuA0yS0VLAy31tYGp4jTFgt6O3SxkV321ARCKfi7YJlE1w"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: -nZfc-MA4WlgpiSvgt9xsNjjebfwKAPCofJuA0yS0VLAy31tYGp4jTFgt6O3SxkV321ARCKfi7YJlE1w"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T12:56:19.156031359Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.projects.serviceAccounts.getOrCreate",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T12:56:17.236156144Z"
+  },
+  {
+    "insertId": "a9vmqee13t8r",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_5-6qr4p6gpi6hn506pt8ejuq83di341hur.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "dryRun": true,
+        "egressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "source": "projects/PROJECT_NUMBER_8",
+            "sourceType": "Resource",
+            "targetResource": "projects/PROJECT_NUMBER_5",
+            "targetResourcePermissions": [
+              "serviceusage.services.use"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_",
+          "projects/PROJECT_NUMBER_5"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "b7EVJ3rcTBvE1xkgIwWjDMfBiwIilEPNADIX0Ex01yv24mt2NkBQeLqGE-JLATV4dq3e743sBJMhXa1A"
+      },
+      "methodName": "google.storage.projects.serviceAccounts.getOrCreate",
+      "requestMetadata": {
+        "callerIp": "IP_2",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "b7EVJ3rcTBvE1xkgIwWjDMfBiwIilEPNADIX0Ex01yv24mt2NkBQeLqGE-JLATV4dq3e743sBJMhXa1A",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "b7EVJ3rcTBvE1xkgIwWjDMfBiwIilEPNADIX0Ex01yv24mt2NkBQeLqGE-JLATV4dq3e743sBJMhXa1A"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: b7EVJ3rcTBvE1xkgIwWjDMfBiwIilEPNADIX0Ex01yv24mt2NkBQeLqGE-JLATV4dq3e743sBJMhXa1A"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T12:54:24.398767353Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.projects.serviceAccounts.getOrCreate",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-27T12:54:24.251431199Z"
+  }
+]
+## exit=0 at 2026-10-27T13:01:53Z
+## evidence fields (try 1, project PROJECT_10)
+{"timestamp":"2026-10-27T13:01:39.479228051Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.objects.create"]}],"egressViolations":null,"dryRun":true,"uniqueId":"ANnsxSC3OZ7Kvd0cHYZ9PXTtWogySYzWceQpdgb67eqPGUV__imJV_-K8pC03cmT4eHqgOczEyd_HU2Y","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t13a-run6-hl4f8u/objects/probe.txt"]}
+{"timestamp":"2026-10-27T13:01:39.022891042Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.objects.get"]}],"egressViolations":null,"dryRun":true,"uniqueId":"UF8cdq-S6JESkmQK_8GDEt8cCp43yWzwqHIRBAy5XNPXZdlG9e7A4SSxbj2AnjsEY5jlPcy0o6aQctW1","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t13a-run6-hl4f8u/objects/probe.txt"]}
+{"timestamp":"2026-10-27T13:01:34.279545177Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.create"]}],"egressViolations":null,"dryRun":true,"uniqueId":"ufAYA0T_W0R9rrUKBAA4KgZcGogicVUBBqGBqAB9BrC3xwxWQpUXonzPnfI-5w3je27kGm-giFsq4_35","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t13a-run6-hl4f8u"]}
+{"timestamp":"2026-10-27T13:01:15.674309165Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.delete","storage.buckets.getIamPolicy"]}],"egressViolations":null,"dryRun":true,"uniqueId":"J_5vu0pGwrE_Q3XsfM3BdIZKaxNoI8N18W3i334gg7sIBK4Ajtcooce4jflSFE2C_BnOZPiGtcBO2yId","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t09-run6-bmcd6g"]}
+{"timestamp":"2026-10-27T13:01:13.342678173Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.getIamPolicy","storage.buckets.get"]}],"egressViolations":null,"dryRun":true,"uniqueId":"b5jBCPBZQqc9oOI5br__iVh0Sdv3ikcZ2r9PIPENZMuvDe9b8DJb7leLUucr_aMQvoOtOzH9q-9DI2lk","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t09-run6-bmcd6g"]}
+{"timestamp":"2026-10-27T13:01:12.491303193Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.setIamPolicy"]}],"egressViolations":null,"dryRun":true,"uniqueId":"zZ2iu-DqCOH-j0YkQFrmGuQC-oYKIeQPcpdnqwAWJRiZ0lTVts1vjvxk0t36fWSgTKAsYItDcGE1EQPO","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t09-run6-bmcd6g"]}
+{"timestamp":"2026-10-27T13:01:12.329957673Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.getIamPolicy"]}],"egressViolations":null,"dryRun":true,"uniqueId":"0BLiNj8KbGHn0ev6grv3K1Hwjx1ArMYJgyLT1rtaCGfCnwXPRMvOPPCIiJYygkjVUTdE0O6pJoabWdGU","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t09-run6-bmcd6g"]}
+{"timestamp":"2026-10-27T13:01:09.942005123Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.create"]}],"egressViolations":null,"dryRun":true,"uniqueId":"gY5LNi5VoBggHi9QJ3wqxiyNRi7G1mPdnGff5GhsysKQgAflGlHW6Miuh3ru0esMN38w2ZvXAVvzuvsl","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t09-run6-bmcd6g"]}
+{"timestamp":"2026-10-27T13:01:01.189994577Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.buckets.create"]}],"egressViolations":null,"dryRun":true,"uniqueId":"8BKJUE38huQ7JL3Rkoy1CLeDUypF5p5jsyMrJgJFPxA983Kwit0wLuQ1fECrKpt9E-PpjXwMddosLFhK","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t08-run6-tiq390"]}
+{"timestamp":"2026-10-27T12:56:17.236156144Z","violationReason":"RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER","servicePerimeter":null,"ingressViolations":null,"egressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","source":"projects/PROJECT_NUMBER_8","sourceType":"Resource","targetResource":"projects/PROJECT_NUMBER_5","targetResourcePermissions":["serviceusage.services.use"]}],"dryRun":true,"uniqueId":"-nZfc-MA4WlgpiSvgt9xsNjjebfwKAPCofJuA0yS0VLAy31tYGp4jTFgt6O3SxkV321ARCKfi7YJlE1w","source":null,"targetResource":null,"resourceNames":["projects/_","projects/PROJECT_NUMBER_5"]}
+{"timestamp":"2026-10-27T12:54:24.251431199Z","violationReason":"RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER","servicePerimeter":null,"ingressViolations":null,"egressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","source":"projects/PROJECT_NUMBER_8","sourceType":"Resource","targetResource":"projects/PROJECT_NUMBER_5","targetResourcePermissions":["serviceusage.services.use"]}],"dryRun":true,"uniqueId":"b7EVJ3rcTBvE1xkgIwWjDMfBiwIilEPNADIX0Ex01yv24mt2NkBQeLqGE-JLATV4dq3e743sBJMhXa1A","source":null,"targetResource":null,"resourceNames":["projects/_","projects/PROJECT_NUMBER_5"]}
+# T13 stage=outside-read run=run-6 start=2026-10-28T05:24:54Z
+# script_commit=24b040c
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "d5d11632475b26bb",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-28T05:24:56Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "d5d11632475b26bb",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-28T05:24:57Z
+## note 2026-10-28T05:24:57Z: perimeter lzv_ai: status resources=3, status ingressPolicies=0 (want enforced-noingress)
+## $ gcloud storage cat gs://lzv-t13a-run6-hl4f8u/probe.txt
+ERROR: (gcloud.storage.cat) HTTPError 403: Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property
+## exit=1 at 2026-10-28T05:24:58Z
+## note 2026-10-28T05:24:58Z: vpcServiceControlsUniqueIdentifier extracted: yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF\" --project=PROJECT_10 --freshness=1h --format=json
+[]
+## exit=0 at 2026-10-28T05:25:00Z
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF\" --project=PROJECT_11 --freshness=1h --format=json
+[]
+## exit=0 at 2026-10-28T05:25:02Z
+## note 2026-10-28T05:25:02Z: no matching log entry yet (try 1/5); sleeping 60 s
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF\" --project=PROJECT_10 --freshness=1h --format=json
+[
+  {
+    "insertId": "1hvgrxse16nxd",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_8",
+            "targetResourcePermissions": [
+              "storage.objects.get"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t13a-run6-hl4f8u/objects/probe.txt"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF"
+      },
+      "methodName": "google.storage.objects.get",
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF"
+      }
+    },
+    "receiveTimestamp": "2026-10-28T05:24:59.087339001Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.objects.get",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-28T05:24:58.543316191Z"
+  }
+]
+## exit=0 at 2026-10-28T05:26:04Z
+## evidence fields (try 2, project PROJECT_10)
+{"timestamp":"2026-10-28T05:24:58.543316191Z","violationReason":"NO_MATCHING_ACCESS_LEVEL","servicePerimeter":null,"ingressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","targetResource":"projects/PROJECT_NUMBER_8","targetResourcePermissions":["storage.objects.get"]}],"egressViolations":null,"dryRun":null,"uniqueId":"yJRrxBBjflvSi8Zdstgjh9kWDRk7Al88LDs60ZEtNjLlGlWfe3a1oj1_xy3gcYQJ4Za2IAfNnm4LxtrF","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t13a-run6-hl4f8u/objects/probe.txt"]}
+# T13 stage=copy run=run-6 start=2026-10-28T05:52:03Z
+# script_commit=d306107
+# check=Baseline (Reach) control=VPC-SC perimeter (dry-run control first, then enforced)
+# expected (pre-registered): Both denied; audit log violation reasons `NO_MATCHING_ACCESS_LEVEL` (a) and regex `RESOURCES?_NOT_IN_SAME_SERVICE_PERIMETER` (b)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "5185ac57589eaf4f",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-28T05:52:04Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "5185ac57589eaf4f",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-28T05:52:05Z
+## note 2026-10-28T05:52:05Z: perimeter lzv_ai: status resources=3, status ingressPolicies=2 (want enforced-ingress)
+## $ gcloud storage cp gs://lzv-t13a-run6-hl4f8u/probe.txt gs://lzv-t13b-run6-sxssle/copied.txt --billing-project=PROJECT_10
+ERROR: (gcloud.storage.cp) HTTPError 403: Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property
+## exit=1 at 2026-10-28T05:52:07Z
+## note 2026-10-28T05:52:07Z: vpcServiceControlsUniqueIdentifier extracted: YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA\" --project=PROJECT_10 --freshness=1h --format=json
+[]
+## exit=0 at 2026-10-28T05:52:09Z
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA\" --project=PROJECT_11 --freshness=1h --format=json
+[]
+## exit=0 at 2026-10-28T05:52:11Z
+## note 2026-10-28T05:52:11Z: no matching log entry yet (try 1/5); sleeping 60 s
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ resource.type=\"audited_resource\"\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ NOT\ protoPayload.metadata.dryRun=true\ protoPayload.metadata.vpcServiceControlsUniqueId=\"YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA\" --project=PROJECT_10 --freshness=1h --format=json
+[
+  {
+    "insertId": "x1vmqidbunc",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "zh...a@ad...a"
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "egressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "source": "projects/PROJECT_NUMBER_8",
+            "sourceType": "Resource",
+            "targetResource": "projects/PROJECT_NUMBER_10",
+            "targetResourcePermissions": [
+              "storage.objects.list",
+              "storage.objects.get"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/_/buckets/lzv-t13b-run6-sxssle/objects/copied.txt",
+          "projects/PROJECT_NUMBER_8"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA"
+      },
+      "methodName": "google.storage.objects.get",
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_8",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "storage.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA"
+      }
+    },
+    "receiveTimestamp": "2026-10-28T05:52:08.199329320Z",
+    "resource": {
+      "labels": {
+        "method": "google.storage.objects.get",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-10-28T05:52:07.499798944Z"
+  }
+]
+## exit=0 at 2026-10-28T05:53:13Z
+## evidence fields (try 2, project PROJECT_10)
+{"timestamp":"2026-10-28T05:52:07.499798944Z","violationReason":"RESOURCES_NOT_IN_SAME_SERVICE_PERIMETER","servicePerimeter":null,"ingressViolations":null,"egressViolations":[{"servicePerimeter":"accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai","source":"projects/PROJECT_NUMBER_8","sourceType":"Resource","targetResource":"projects/PROJECT_NUMBER_10","targetResourcePermissions":["storage.objects.list","storage.objects.get"]}],"dryRun":null,"uniqueId":"YYrRAsuCbV0IjMpSD5uMu_Dp8WB1Z_NXLtSDOHr4VupEhByiOuCKG1ivSHcqYPVekTJE0m3So0EXqizA","source":null,"targetResource":null,"resourceNames":["projects/_/buckets/lzv-t13b-run6-sxssle/objects/copied.txt","projects/PROJECT_NUMBER_8"]}
+## note 2026-10-28T05:53:13Z: egress target is the outside project (destination bucket)
+## cleanup start 2026-10-28T05:53:13Z
+## $ gcloud storage rm --recursive gs://lzv-t13a-run6-hl4f8u --billing-project=PROJECT_10
+Removing objects:
+  
+Removing gs://lzv-t13a-run6-hl4f8u/probe.txt#1793106099890142...
+.....
+Removing buckets:
+  
+Removing gs://lzv-t13a-run6-hl4f8u/...
+...........
+## exit=0 at 2026-10-28T05:53:19Z
+## $ gcloud storage rm --recursive gs://lzv-t13b-run6-sxssle
+Removing objects:
+  
+Removing gs://lzv-t13b-run6-sxssle/probe.txt#1793106111243775...
+.......
+Removing buckets:
+  
+Removing gs://lzv-t13b-run6-sxssle/...
+............
+## exit=0 at 2026-10-28T05:53:25Z
+## $ gcloud storage buckets describe gs://lzv-t13b-run6-sxssle --format='value(name)'
+ERROR: (gcloud.storage.buckets.describe) gs://lzv-t13b-run6-sxssle not found: 404.
+## exit=1 at 2026-10-28T05:53:26Z
+## $ gcloud storage buckets describe gs://lzv-t13a-run6-hl4f8u --format='value(name)'
+ERROR: (gcloud.storage.buckets.describe) gs://lzv-t13a-run6-hl4f8u not found: 404.
+## exit=1 at 2026-10-28T05:53:27Z
+## cleanup end 2026-10-28T05:53:27Z

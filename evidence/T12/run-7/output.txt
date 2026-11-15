@@ -1,0 +1,2334 @@
+# T12 run=run-7 start=2026-10-29T04:36:24Z
+# script_commit=8baedc8
+# check=R2 / I3 control=No direct inference, no broad grants
+# expected (pre-registered): No path found; no fleet grants. Limitation: allow policies only, direct bindings
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T04:36:24Z: agent principal: principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17
+## $ gcloud iam roles describe roles/aiplatform.user --format=json
+{
+  "description": "Grants access to use all resource in Agent Platform.",
+  "etag": "AA==",
+  "includedPermissions": [
+    "aiplatform.agentAnomalyDetectionScopes.create",
+    "aiplatform.agentAnomalyDetectionScopes.delete",
+    "aiplatform.agentAnomalyDetectionScopes.get",
+    "aiplatform.agentAnomalyDetectionScopes.list",
+    "aiplatform.agentExamples.create",
+    "aiplatform.agentExamples.delete",
+    "aiplatform.agentExamples.get",
+    "aiplatform.agentExamples.list",
+    "aiplatform.agentExamples.update",
+    "aiplatform.agents.create",
+    "aiplatform.agents.delete",
+    "aiplatform.agents.get",
+    "aiplatform.agents.list",
+    "aiplatform.agents.update",
+    "aiplatform.analyzedInvocations.get",
+    "aiplatform.analyzedInvocations.list",
+    "aiplatform.analyzedSessions.aggregate",
+    "aiplatform.analyzedSessions.get",
+    "aiplatform.analyzedSessions.list",
+    "aiplatform.annotationSpecs.create",
+    "aiplatform.annotationSpecs.delete",
+    "aiplatform.annotationSpecs.get",
+    "aiplatform.annotationSpecs.list",
+    "aiplatform.annotationSpecs.update",
+    "aiplatform.annotations.create",
+    "aiplatform.annotations.delete",
+    "aiplatform.annotations.get",
+    "aiplatform.annotations.list",
+    "aiplatform.annotations.update",
+    "aiplatform.apps.create",
+    "aiplatform.apps.delete",
+    "aiplatform.apps.get",
+    "aiplatform.apps.list",
+    "aiplatform.apps.update",
+    "aiplatform.artifacts.create",
+    "aiplatform.artifacts.delete",
+    "aiplatform.artifacts.get",
+    "aiplatform.artifacts.list",
+    "aiplatform.artifacts.update",
+    "aiplatform.batchPredictionJobs.cancel",
+    "aiplatform.batchPredictionJobs.create",
+    "aiplatform.batchPredictionJobs.delete",
+    "aiplatform.batchPredictionJobs.get",
+    "aiplatform.batchPredictionJobs.list",
+    "aiplatform.cacheConfigs.get",
+    "aiplatform.cachedContents.create",
+    "aiplatform.cachedContents.delete",
+    "aiplatform.cachedContents.get",
+    "aiplatform.cachedContents.list",
+    "aiplatform.cachedContents.update",
+    "aiplatform.consents.get",
+    "aiplatform.contexts.addContextArtifactsAndExecutions",
+    "aiplatform.contexts.addContextChildren",
+    "aiplatform.contexts.create",
+    "aiplatform.contexts.delete",
+    "aiplatform.contexts.get",
+    "aiplatform.contexts.list",
+    "aiplatform.contexts.queryContextLineageSubgraph",
+    "aiplatform.contexts.update",
+    "aiplatform.customJobs.cancel",
+    "aiplatform.customJobs.create",
+    "aiplatform.customJobs.delete",
+    "aiplatform.customJobs.get",
+    "aiplatform.customJobs.list",
+    "aiplatform.dataItems.create",
+    "aiplatform.dataItems.delete",
+    "aiplatform.dataItems.get",
+    "aiplatform.dataItems.list",
+    "aiplatform.dataItems.update",
+    "aiplatform.dataLabelingJobs.cancel",
+    "aiplatform.dataLabelingJobs.create",
+    "aiplatform.dataLabelingJobs.delete",
+    "aiplatform.dataLabelingJobs.get",
+    "aiplatform.dataLabelingJobs.list",
+    "aiplatform.datasetVersions.create",
+    "aiplatform.datasetVersions.delete",
+    "aiplatform.datasetVersions.get",
+    "aiplatform.datasetVersions.list",
+    "aiplatform.datasetVersions.restore",
+    "aiplatform.datasets.create",
+    "aiplatform.datasets.delete",
+    "aiplatform.datasets.export",
+    "aiplatform.datasets.get",
+    "aiplatform.datasets.import",
+    "aiplatform.datasets.list",
+    "aiplatform.datasets.update",
+    "aiplatform.deploymentResourcePools.create",
+    "aiplatform.deploymentResourcePools.delete",
+    "aiplatform.deploymentResourcePools.get",
+    "aiplatform.deploymentResourcePools.list",
+    "aiplatform.deploymentResourcePools.queryDeployedModels",
+    "aiplatform.deploymentResourcePools.update",
+    "aiplatform.edgeDeploymentJobs.create",
+    "aiplatform.edgeDeploymentJobs.delete",
+    "aiplatform.edgeDeploymentJobs.get",
+    "aiplatform.edgeDeploymentJobs.list",
+    "aiplatform.edgeDeviceDebugInfo.get",
+    "aiplatform.edgeDevices.create",
+    "aiplatform.edgeDevices.delete",
+    "aiplatform.edgeDevices.get",
+    "aiplatform.edgeDevices.list",
+    "aiplatform.edgeDevices.update",
+    "aiplatform.endpoints.create",
+    "aiplatform.endpoints.delete",
+    "aiplatform.endpoints.deploy",
+    "aiplatform.endpoints.explain",
+    "aiplatform.endpoints.get",
+    "aiplatform.endpoints.getIamPolicy",
+    "aiplatform.endpoints.list",
+    "aiplatform.endpoints.predict",
+    "aiplatform.endpoints.undeploy",
+    "aiplatform.endpoints.update",
+    "aiplatform.entityTypes.create",
+    "aiplatform.entityTypes.delete",
+    "aiplatform.entityTypes.deleteFeatureValues",
+    "aiplatform.entityTypes.exportFeatureValues",
+    "aiplatform.entityTypes.get",
+    "aiplatform.entityTypes.getIamPolicy",
+    "aiplatform.entityTypes.importFeatureValues",
+    "aiplatform.entityTypes.list",
+    "aiplatform.entityTypes.readFeatureValues",
+    "aiplatform.entityTypes.streamingReadFeatureValues",
+    "aiplatform.entityTypes.update",
+    "aiplatform.entityTypes.writeFeatureValues",
+    "aiplatform.evaluationExperiments.create",
+    "aiplatform.evaluationExperiments.delete",
+    "aiplatform.evaluationExperiments.get",
+    "aiplatform.evaluationExperiments.list",
+    "aiplatform.evaluationExperiments.update",
+    "aiplatform.evaluationItems.create",
+    "aiplatform.evaluationItems.delete",
+    "aiplatform.evaluationItems.get",
+    "aiplatform.evaluationItems.list",
+    "aiplatform.evaluationItems.update",
+    "aiplatform.evaluationMetrics.create",
+    "aiplatform.evaluationMetrics.delete",
+    "aiplatform.evaluationMetrics.get",
+    "aiplatform.evaluationMetrics.list",
+    "aiplatform.evaluationRuns.cancel",
+    "aiplatform.evaluationRuns.create",
+    "aiplatform.evaluationRuns.delete",
+    "aiplatform.evaluationRuns.execute",
+    "aiplatform.evaluationRuns.get",
+    "aiplatform.evaluationRuns.list",
+    "aiplatform.evaluationRuns.update",
+    "aiplatform.evaluationSets.create",
+    "aiplatform.evaluationSets.delete",
+    "aiplatform.evaluationSets.get",
+    "aiplatform.evaluationSets.import",
+    "aiplatform.evaluationSets.list",
+    "aiplatform.evaluationSets.update",
+    "aiplatform.exampleStores.create",
+    "aiplatform.exampleStores.delete",
+    "aiplatform.exampleStores.get",
+    "aiplatform.exampleStores.list",
+    "aiplatform.exampleStores.readExample",
+    "aiplatform.exampleStores.update",
+    "aiplatform.exampleStores.writeExample",
+    "aiplatform.executions.addExecutionEvents",
+    "aiplatform.executions.create",
+    "aiplatform.executions.delete",
+    "aiplatform.executions.get",
+    "aiplatform.executions.list",
+    "aiplatform.executions.queryExecutionInputsAndOutputs",
+    "aiplatform.executions.update",
+    "aiplatform.extensions.delete",
+    "aiplatform.extensions.execute",
+    "aiplatform.extensions.get",
+    "aiplatform.extensions.import",
+    "aiplatform.extensions.list",
+    "aiplatform.extensions.update",
+    "aiplatform.featureGroups.create",
+    "aiplatform.featureGroups.delete",
+    "aiplatform.featureGroups.get",
+    "aiplatform.featureGroups.getIamPolicy",
+    "aiplatform.featureGroups.list",
+    "aiplatform.featureGroups.update",
+    "aiplatform.featureMonitorJobs.create",
+    "aiplatform.featureMonitorJobs.get",
+    "aiplatform.featureMonitorJobs.list",
+    "aiplatform.featureMonitors.create",
+    "aiplatform.featureMonitors.delete",
+    "aiplatform.featureMonitors.get",
+    "aiplatform.featureMonitors.list",
+    "aiplatform.featureMonitors.update",
+    "aiplatform.featureOnlineStores.create",
+    "aiplatform.featureOnlineStores.delete",
+    "aiplatform.featureOnlineStores.get",
+    "aiplatform.featureOnlineStores.getIamPolicy",
+    "aiplatform.featureOnlineStores.list",
+    "aiplatform.featureOnlineStores.update",
+    "aiplatform.featureViewSyncs.get",
+    "aiplatform.featureViewSyncs.list",
+    "aiplatform.featureViews.create",
+    "aiplatform.featureViews.delete",
+    "aiplatform.featureViews.directWrite",
+    "aiplatform.featureViews.fetchFeatureValues",
+    "aiplatform.featureViews.get",
+    "aiplatform.featureViews.getIamPolicy",
+    "aiplatform.featureViews.list",
+    "aiplatform.featureViews.searchNearestEntities",
+    "aiplatform.featureViews.sync",
+    "aiplatform.featureViews.update",
+    "aiplatform.features.create",
+    "aiplatform.features.delete",
+    "aiplatform.features.get",
+    "aiplatform.features.list",
+    "aiplatform.features.update",
+    "aiplatform.featurestores.batchReadFeatureValues",
+    "aiplatform.featurestores.create",
+    "aiplatform.featurestores.delete",
+    "aiplatform.featurestores.exportFeatures",
+    "aiplatform.featurestores.get",
+    "aiplatform.featurestores.getIamPolicy",
+    "aiplatform.featurestores.importFeatures",
+    "aiplatform.featurestores.list",
+    "aiplatform.featurestores.readFeatures",
+    "aiplatform.featurestores.update",
+    "aiplatform.featurestores.writeFeatures",
+    "aiplatform.humanInTheLoops.cancel",
+    "aiplatform.humanInTheLoops.create",
+    "aiplatform.humanInTheLoops.delete",
+    "aiplatform.humanInTheLoops.get",
+    "aiplatform.humanInTheLoops.list",
+    "aiplatform.humanInTheLoops.queryAnnotationStats",
+    "aiplatform.humanInTheLoops.send",
+    "aiplatform.humanInTheLoops.update",
+    "aiplatform.hyperparameterTuningJobs.cancel",
+    "aiplatform.hyperparameterTuningJobs.create",
+    "aiplatform.hyperparameterTuningJobs.delete",
+    "aiplatform.hyperparameterTuningJobs.get",
+    "aiplatform.hyperparameterTuningJobs.list",
+    "aiplatform.indexEndpoints.create",
+    "aiplatform.indexEndpoints.delete",
+    "aiplatform.indexEndpoints.deploy",
+    "aiplatform.indexEndpoints.get",
+    "aiplatform.indexEndpoints.list",
+    "aiplatform.indexEndpoints.queryVectors",
+    "aiplatform.indexEndpoints.undeploy",
+    "aiplatform.indexEndpoints.update",
+    "aiplatform.indexes.create",
+    "aiplatform.indexes.delete",
+    "aiplatform.indexes.get",
+    "aiplatform.indexes.list",
+    "aiplatform.indexes.update",
+    "aiplatform.interactions.cancel",
+    "aiplatform.interactions.create",
+    "aiplatform.interactions.delete",
+    "aiplatform.interactions.get",
+    "aiplatform.interactions.list",
+    "aiplatform.locations.evaluateInstances",
+    "aiplatform.locations.get",
+    "aiplatform.locations.list",
+    "aiplatform.memories.create",
+    "aiplatform.memories.delete",
+    "aiplatform.memories.generate",
+    "aiplatform.memories.get",
+    "aiplatform.memories.list",
+    "aiplatform.memories.retrieve",
+    "aiplatform.memories.update",
+    "aiplatform.memoryRevisions.get",
+    "aiplatform.memoryRevisions.list",
+    "aiplatform.memoryRevisions.rollback",
+    "aiplatform.metadataSchemas.create",
+    "aiplatform.metadataSchemas.delete",
+    "aiplatform.metadataSchemas.get",
+    "aiplatform.metadataSchemas.list",
+    "aiplatform.metadataStores.create",
+    "aiplatform.metadataStores.delete",
+    "aiplatform.metadataStores.get",
+    "aiplatform.metadataStores.list",
+    "aiplatform.migratableResources.search",
+    "aiplatform.modelDeploymentMonitoringJobs.create",
+    "aiplatform.modelDeploymentMonitoringJobs.delete",
+    "aiplatform.modelDeploymentMonitoringJobs.get",
+    "aiplatform.modelDeploymentMonitoringJobs.list",
+    "aiplatform.modelDeploymentMonitoringJobs.pause",
+    "aiplatform.modelDeploymentMonitoringJobs.resume",
+    "aiplatform.modelDeploymentMonitoringJobs.searchStatsAnomalies",
+    "aiplatform.modelDeploymentMonitoringJobs.update",
+    "aiplatform.modelEvaluationSlices.get",
+    "aiplatform.modelEvaluationSlices.import",
+    "aiplatform.modelEvaluationSlices.list",
+    "aiplatform.modelEvaluations.exportEvaluatedDataItems",
+    "aiplatform.modelEvaluations.get",
+    "aiplatform.modelEvaluations.import",
+    "aiplatform.modelEvaluations.list",
+    "aiplatform.modelMonitoringJobs.create",
+    "aiplatform.modelMonitoringJobs.delete",
+    "aiplatform.modelMonitoringJobs.get",
+    "aiplatform.modelMonitoringJobs.list",
+    "aiplatform.modelMonitors.create",
+    "aiplatform.modelMonitors.delete",
+    "aiplatform.modelMonitors.get",
+    "aiplatform.modelMonitors.list",
+    "aiplatform.modelMonitors.searchModelMonitoringAlerts",
+    "aiplatform.modelMonitors.searchModelMonitoringStats",
+    "aiplatform.modelMonitors.update",
+    "aiplatform.models.delete",
+    "aiplatform.models.export",
+    "aiplatform.models.get",
+    "aiplatform.models.list",
+    "aiplatform.models.update",
+    "aiplatform.models.upload",
+    "aiplatform.monitoredAgents.disable",
+    "aiplatform.monitoredAgents.enable",
+    "aiplatform.monitoredAgents.get",
+    "aiplatform.monitoredAgents.list",
+    "aiplatform.nasJobs.cancel",
+    "aiplatform.nasJobs.create",
+    "aiplatform.nasJobs.delete",
+    "aiplatform.nasJobs.get",
+    "aiplatform.nasJobs.list",
+    "aiplatform.nasTrialDetails.get",
+    "aiplatform.nasTrialDetails.list",
+    "aiplatform.notebookExecutionJobs.create",
+    "aiplatform.notebookExecutionJobs.delete",
+    "aiplatform.notebookExecutionJobs.get",
+    "aiplatform.notebookExecutionJobs.list",
+    "aiplatform.notebookRuntimeTemplates.apply",
+    "aiplatform.notebookRuntimeTemplates.create",
+    "aiplatform.notebookRuntimeTemplates.delete",
+    "aiplatform.notebookRuntimeTemplates.get",
+    "aiplatform.notebookRuntimeTemplates.getIamPolicy",
+    "aiplatform.notebookRuntimeTemplates.list",
+    "aiplatform.notebookRuntimeTemplates.update",
+    "aiplatform.notebookRuntimes.assign",
+    "aiplatform.notebookRuntimes.delete",
+    "aiplatform.notebookRuntimes.get",
+    "aiplatform.notebookRuntimes.list",
+    "aiplatform.notebookRuntimes.start",
+    "aiplatform.notebookRuntimes.update",
+    "aiplatform.notebookRuntimes.upgrade",
+    "aiplatform.onlineEvaluators.create",
+    "aiplatform.onlineEvaluators.delete",
+    "aiplatform.onlineEvaluators.get",
+    "aiplatform.onlineEvaluators.list",
+    "aiplatform.onlineEvaluators.update",
+    "aiplatform.operations.list",
+    "aiplatform.persistentResources.get",
+    "aiplatform.persistentResources.list",
+    "aiplatform.pipelineJobs.cancel",
+    "aiplatform.pipelineJobs.create",
+    "aiplatform.pipelineJobs.delete",
+    "aiplatform.pipelineJobs.get",
+    "aiplatform.pipelineJobs.list",
+    "aiplatform.provisionedThroughputRevisions.get",
+    "aiplatform.provisionedThroughputRevisions.list",
+    "aiplatform.provisionedThroughputs.get",
+    "aiplatform.provisionedThroughputs.list",
+    "aiplatform.ragCorpora.create",
+    "aiplatform.ragCorpora.delete",
+    "aiplatform.ragCorpora.get",
+    "aiplatform.ragCorpora.list",
+    "aiplatform.ragCorpora.query",
+    "aiplatform.ragCorpora.update",
+    "aiplatform.ragEngineConfigs.get",
+    "aiplatform.ragFiles.delete",
+    "aiplatform.ragFiles.get",
+    "aiplatform.ragFiles.import",
+    "aiplatform.ragFiles.list",
+    "aiplatform.ragFiles.upload",
+    "aiplatform.reasoningEngineRuntimeRevisions.delete",
+    "aiplatform.reasoningEngineRuntimeRevisions.get",
+    "aiplatform.reasoningEngineRuntimeRevisions.list",
+    "aiplatform.reasoningEngineRuntimeRevisions.query",
+    "aiplatform.reasoningEngines.create",
+    "aiplatform.reasoningEngines.delete",
+    "aiplatform.reasoningEngines.get",
+    "aiplatform.reasoningEngines.list",
+    "aiplatform.reasoningEngines.query",
+    "aiplatform.reasoningEngines.update",
+    "aiplatform.sandboxEnvironments.create",
+    "aiplatform.sandboxEnvironments.delete",
+    "aiplatform.sandboxEnvironments.execute",
+    "aiplatform.sandboxEnvironments.get",
+    "aiplatform.sandboxEnvironments.list",
+    "aiplatform.schedules.create",
+    "aiplatform.schedules.delete",
+    "aiplatform.schedules.get",
+    "aiplatform.schedules.list",
+    "aiplatform.schedules.update",
+    "aiplatform.semanticGovernancePolicies.create",
+    "aiplatform.semanticGovernancePolicies.delete",
+    "aiplatform.semanticGovernancePolicies.get",
+    "aiplatform.semanticGovernancePolicies.list",
+    "aiplatform.semanticGovernancePolicies.update",
+    "aiplatform.semanticGovernancePolicyEngine.get",
+    "aiplatform.semanticGovernancePolicyEngine.update",
+    "aiplatform.sessionEvents.append",
+    "aiplatform.sessionEvents.list",
+    "aiplatform.sessions.create",
+    "aiplatform.sessions.delete",
+    "aiplatform.sessions.get",
+    "aiplatform.sessions.list",
+    "aiplatform.sessions.run",
+    "aiplatform.sessions.update",
+    "aiplatform.specialistPools.create",
+    "aiplatform.specialistPools.delete",
+    "aiplatform.specialistPools.get",
+    "aiplatform.specialistPools.list",
+    "aiplatform.specialistPools.update",
+    "aiplatform.studies.create",
+    "aiplatform.studies.delete",
+    "aiplatform.studies.get",
+    "aiplatform.studies.list",
+    "aiplatform.studies.update",
+    "aiplatform.tasks.cancel",
+    "aiplatform.tasks.create",
+    "aiplatform.tasks.delete",
+    "aiplatform.tasks.get",
+    "aiplatform.tasks.list",
+    "aiplatform.tasks.update",
+    "aiplatform.tensorboardExperiments.create",
+    "aiplatform.tensorboardExperiments.delete",
+    "aiplatform.tensorboardExperiments.get",
+    "aiplatform.tensorboardExperiments.list",
+    "aiplatform.tensorboardExperiments.update",
+    "aiplatform.tensorboardExperiments.write",
+    "aiplatform.tensorboardRuns.batchCreate",
+    "aiplatform.tensorboardRuns.create",
+    "aiplatform.tensorboardRuns.delete",
+    "aiplatform.tensorboardRuns.get",
+    "aiplatform.tensorboardRuns.list",
+    "aiplatform.tensorboardRuns.update",
+    "aiplatform.tensorboardRuns.write",
+    "aiplatform.tensorboardTimeSeries.batchCreate",
+    "aiplatform.tensorboardTimeSeries.batchRead",
+    "aiplatform.tensorboardTimeSeries.create",
+    "aiplatform.tensorboardTimeSeries.delete",
+    "aiplatform.tensorboardTimeSeries.get",
+    "aiplatform.tensorboardTimeSeries.list",
+    "aiplatform.tensorboardTimeSeries.read",
+    "aiplatform.tensorboardTimeSeries.update",
+    "aiplatform.tensorboards.create",
+    "aiplatform.tensorboards.delete",
+    "aiplatform.tensorboards.get",
+    "aiplatform.tensorboards.list",
+    "aiplatform.tensorboards.update",
+    "aiplatform.trainingPipelines.cancel",
+    "aiplatform.trainingPipelines.create",
+    "aiplatform.trainingPipelines.delete",
+    "aiplatform.trainingPipelines.get",
+    "aiplatform.trainingPipelines.list",
+    "aiplatform.trials.create",
+    "aiplatform.trials.delete",
+    "aiplatform.trials.get",
+    "aiplatform.trials.list",
+    "aiplatform.trials.update",
+    "aiplatform.tuningJobs.cancel",
+    "aiplatform.tuningJobs.create",
+    "aiplatform.tuningJobs.delete",
+    "aiplatform.tuningJobs.get",
+    "aiplatform.tuningJobs.list",
+    "aiplatform.tuningJobs.optimizePrompt",
+    "aiplatform.tuningJobs.validateReinforcementTuningReward",
+    "aiplatform.tuningJobs.vertexTune",
+    "resourcemanager.projects.get",
+    "resourcemanager.projects.list"
+  ],
+  "name": "roles/aiplatform.user",
+  "stage": "GA",
+  "title": "Agent Platform User"
+}
+## exit=0 at 2026-10-29T04:36:25Z
+## $ gcloud asset analyze-iam-policy --organization="$LZV_ORG" --identity="user:$(gcloud config get account)" --permissions=resourcemanager.folders.get --billing-project="$LZV_RT" --format=json
+Your active configuration is: [lz-validation]
+Your analysis request is fully explored. The ACLs matching your requests are listed per IAM policy binding, so there could be duplications.
+[
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_6"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_6",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_6"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_6",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderEditor"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/modelarmor.floorSettingsAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderEditor"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_1"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_1",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_1"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_1",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderEditor"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_2"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_2",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_2"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_2",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderEditor"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_3"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_3",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_3"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_3",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderEditor"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_4"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_4",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_4"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_4",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderEditor"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/modelarmor.floorSettingsAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+      "binding": {
+        "members": [
+          "group:USER_2@example.com",
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.folderIamAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+      "binding": {
+        "members": [
+          "group:USER_2@example.com",
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/resourcemanager.organizationAdmin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+      "binding": {
+        "members": [
+          "user:USER_1@example.com"
+        ],
+        "role": "roles/securitycenter.admin"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+      "binding": {
+        "members": [
+          "group:USER_2@example.com",
+          "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+        ],
+        "role": "roles/browser"
+      }
+    }
+  },
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "resourcemanager.folders.get"
+          }
+        ],
+        "identities": [
+          {
+            "name": "user:USER_1@example.com"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+      "binding": {
+        "members": [
+          "group:USER_2@example.com",
+          "serviceAccount:SA_6@PROJECT.iam.gserviceaccount.com",
+          "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+        ],
+        "role": "roles/resourcemanager.folderAdmin"
+      }
+    }
+  }
+]
+## exit=0 at 2026-10-29T04:36:27Z
+## note 2026-10-29T04:36:27Z: positive control: exit 0, analysis results = 19
+## $ gcloud asset analyze-iam-policy --organization=ORG_ID --identity=principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17 --permissions=aiplatform.endpoints.predict --billing-project=PROJECT_8 --format=json
+Your analysis request is fully explored. The ACLs matching your requests are listed per IAM policy binding, so there could be duplications.
+[
+  {
+    "ACLs": [
+      {
+        "accesses": [
+          {
+            "permission": "aiplatform.endpoints.predict"
+          }
+        ],
+        "identities": [
+          {
+            "name": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17"
+          }
+        ],
+        "resources": [
+          {
+            "fullResourceName": "//cloudresourcemanager.googleapis.com/projects/PROJECT_8"
+          }
+        ]
+      }
+    ],
+    "policy": {
+      "attachedResource": "//cloudresourcemanager.googleapis.com/projects/PROJECT_8",
+      "binding": {
+        "members": [
+          "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+        ],
+        "role": "roles/aiplatform.agentDefaultAccess"
+      }
+    }
+  }
+]
+## exit=0 at 2026-10-29T04:36:29Z
+## note 2026-10-29T04:36:29Z: agent analyzer --permissions=aiplatform.endpoints.predict: analysis results = 1
+## $ gcloud asset analyze-iam-policy --organization=ORG_ID --identity=principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17 --roles=roles/aiplatform.expressUser\,roles/aiplatform.user --billing-project=PROJECT_8 --format=json
+Your analysis request is fully explored. No matching ACL is found.
+[]
+## exit=0 at 2026-10-29T04:36:30Z
+## note 2026-10-29T04:36:30Z: agent analyzer --roles=roles/aiplatform.expressUser,roles/aiplatform.user: analysis results = 0
+## $ gcloud projects get-iam-policy PROJECT_8 --format=json
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "role": "roles/agentgateway.serviceAgent"
+    },
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-sandbox.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.agentSandboxServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-bp.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.batchPredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-nb.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.colabServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.customCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionCustomCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-mm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.modelMonitoringServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-vm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.notebookServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-op.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.onlinePredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-rag.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.ragServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-eval.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.rapidevalServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-pie.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-telemetry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.telemetryServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-moss-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-tune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.tuningServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-shtune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.user"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudasset.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.accessPolicyAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-networkactions.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkactions.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-ns-authz.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networksecurity.authzServiceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-dep.iam.gserviceaccount.com"
+      ],
+      "role": "roles/serviceextensions.serviceAgent"
+    }
+  ],
+  "etag": "BwZe6tm_qoI=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:32Z
+## note 2026-10-29T04:36:32Z: inspect project runtime: agents.global members: roles/aiplatform.agentDefaultAccess principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7
+## $ gcloud resource-manager folders get-iam-policy FOLDER_ID_6 --format=json
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZerT_mIOw=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:33Z
+## note 2026-10-29T04:36:33Z: inspect folder ai_prod: agents.global members: none
+## $ gcloud resource-manager folders get-iam-policy FOLDER_ID_5 --format=json
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZe0NGtlVQ=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:35Z
+## note 2026-10-29T04:36:35Z: inspect folder root: agents.global members: none
+## $ gcloud organizations get-iam-policy ORG_ID --format=json
+{
+  "auditConfigs": [
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "allServices"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "accessapproval.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "notebooks.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "apigee.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "apigeeconnect.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudasset.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudbilling.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudbuild.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "composer.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dlp.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dataproc.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "datastore.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudfunctions.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "healthcare.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "iap.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudiot.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudkms.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "lifesciences.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "logging.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "ml.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "managedidentities.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "redis.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "osconfig.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "pubsub.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudresourcemanager.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "runtimeconfig.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "sourcerepo.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "spanner.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudsql.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "cloudtasks.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "tpu.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "translate.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "compute.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "customerusagedataprocessing.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "datacatalog.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dialogflow.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "firebase.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "gcmcontextualcampaign-pa.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "gameservices.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "genomics.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "gkehub.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "appengine.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "deploymentmanager.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "dns.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "storage.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "iam.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "identitytoolkit.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "container.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "recaptchaenterprise.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "recommendationengine.googleapis.com"
+    },
+    {
+      "auditLogConfigs": [
+        {
+          "logType": "ADMIN_READ"
+        },
+        {
+          "logType": "DATA_READ"
+        },
+        {
+          "logType": "DATA_WRITE"
+        }
+      ],
+      "service": "secretmanager.googleapis.com"
+    }
+  ],
+  "bindings": [
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/billing.admin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com"
+      ],
+      "role": "roles/billing.creator"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/billing.user"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/browser"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.owner"
+    },
+    {
+      "condition": {
+        "expression": "resource.matchTag(\"ORG_ID/env\", \"prod\")",
+        "title": "env-prod"
+      },
+      "members": [
+        "user:USER_3@example.com"
+      ],
+      "role": "roles/cloudsql.admin"
+    },
+    {
+      "condition": {
+        "expression": "resource.matchTag(\"ORG_ID/env\", \"qa\")",
+        "title": "env-qa"
+      },
+      "members": [
+        "user:USER_3@example.com"
+      ],
+      "role": "roles/cloudsql.client"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.networkAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.xpnAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.denyAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.organizationRoleAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/iam.organizationRoleViewer"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.securityAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/iam.securityReviewer"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/identityplatform.viewer"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.configWriter"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/orgpolicy.policyAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/recommender.iamAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_6@PROJECT.iam.gserviceaccount.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderIamAdmin"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.organizationAdmin"
+    },
+    {
+      "members": [
+        "domain:example.org",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/resourcemanager.organizationViewer"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com",
+        "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/resourcemanager.projectCreator"
+    },
+    {
+      "members": [
+        "group:USER_2@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/securitycenter.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_7@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/securitycenter.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/viewer"
+    }
+  ],
+  "etag": "BwZe0NEW4Bw=",
+  "version": 3
+}
+## exit=0 at 2026-10-29T04:36:36Z
+## note 2026-10-29T04:36:36Z: inspect organization: agents.global members: none
+## note 2026-10-29T04:36:36Z: observation, agent default roles on the agent principal: none found

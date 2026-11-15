@@ -1,0 +1,27 @@
+{
+  "id": "T23",
+  "check": "Reach",
+  "control": "DC2 (3): agent deployed before the project joins the perimeter, ingress rule for agent identities",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Per Google docs: A's fetch succeeds, B's fetch fails. That A's API calls work with the ingress rule is a prediction (undocumented); if they are still refused: INCONCLUSIVE with the violation reason",
+  "actual": "pre: A tool status 200; post: A tool status 200; B tool result status= error=URLError: <urlopen error [Errno 101] Network is unreachable>",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T23/run-4/command.txt",
+  "output_file": "evidence/T23/run-4/output.txt",
+  "run_id": "run-4",
+  "timestamp_utc": "2026-10-25T21:11:36Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/ingress-egress-rules",
+    "https://docs.cloud.google.com/vertex-ai/docs/general/vpc-service-controls",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity"
+  ],
+  "script_commit": "af47222"
+}

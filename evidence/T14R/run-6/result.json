@@ -1,0 +1,25 @@
+{
+  "id": "T14R",
+  "check": "Reach",
+  "control": "Agent deployed before the project joins a perimeter",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "pre: tool status 200; post (same agent, project now in the enforced perimeter): tool status 200 (docs: an agent deployed before the project joins a perimeter keeps internet access; article trap #7)",
+  "actual": "pre: tool status 200; post: no function response",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "stage post: query succeeded but no function response appeared (LLM may not have called the tool); ",
+  "commands_file": "evidence/T14R/run-6/command.txt",
+  "output_file": "evidence/T14R/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T05:46:32Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vertex-ai/docs/general/vpc-service-controls",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/private-service-connect-interface"
+  ],
+  "script_commit": "10a91d7"
+}

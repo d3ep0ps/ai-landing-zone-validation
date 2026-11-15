@@ -1,0 +1,6 @@
+# T07 run=run-1 start=2026-10-23T21:27:19Z
+# check=Baseline control=`gcp.restrictNonCmekServices` deny `storage.googleapis.com` (folder)
+# expected (pre-registered): Denied; error names `gcp.restrictNonCmekServices`
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-23T21:27:19Z $ gcloud storage buckets create gs://lzv-t07-run1-kocnke --location=europe-west1 --project=PROJECT_4
+2026-10-23T21:27:20Z $ if gcloud storage buckets describe gs://lzv-t07-run1-kocnke >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t07-run1-kocnke; fi; if gcloud storage buckets describe gs://lzv-t07-run1-kocnke >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi

@@ -1,0 +1,6 @@
+{
+  "stage": "off",
+  "verdict": "INCONCLUSIVE",
+  "note": "off: ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=http_status/403, a-guarded=adk_callback/none, b-guarded=adk_callback/none, c-guarded=adk_callback/none, a-bypass=none/200, b-bypass-proxy=none/200, b-bypass-direct=none/200, c-bypass=none/200; not PASS: ctl-c-src-bucket: INCONCLUSIVE not allowed: refused_by=http_status status=403",
+  "timestamp_utc": "2026-11-11T16:31:00Z"
+}

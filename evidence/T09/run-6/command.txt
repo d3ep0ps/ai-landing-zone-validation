@@ -1,0 +1,8 @@
+# T09 run=run-6 start=2026-10-27T13:01:09Z
+# script_commit=f47408e
+# check=Baseline control=`storage.publicAccessPrevention` (folder)
+# expected (pre-registered): Denied; error refers to public access prevention, not Domain Restricted Sharing
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T13:01:09Z $ gcloud storage buckets create gs://lzv-t09-run6-bmcd6g --location=europe-west1 --project=PROJECT_10
+2026-10-27T13:01:11Z $ gcloud storage buckets add-iam-policy-binding gs://lzv-t09-run6-bmcd6g --member=allUsers --role=roles/storage.objectViewer
+2026-10-27T13:01:12Z $ if gcloud storage buckets describe gs://lzv-t09-run6-bmcd6g >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t09-run6-bmcd6g; fi; if gcloud storage buckets describe gs://lzv-t09-run6-bmcd6g >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi

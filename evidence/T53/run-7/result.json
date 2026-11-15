@@ -1,0 +1,24 @@
+{
+  "id": "T53",
+  "check": "B14 (Enforced)",
+  "control": "Agent G tries three destinations without the gateway on purpose (no proxy settings); control: the registered MCP tool through the gateway 200",
+  "scope": "projects/PROJECT_8",
+  "expected": "Each direct attempt either does not connect or is refused by the gateway (unregistered destination); none lands on its target. Falsified if: any call returns a response from the real target. Control: the registered MCP tool through the gateway returns 200 in the same run. Tier: Enforced. 2+ runs.",
+  "actual": "control=404; unregistered_mcp: gateway_refused (status=403 stage=- err=); example_ip: landed (status=403 stage=http err=); storage_api: gateway_refused (status=403 stage=- err=); ",
+  "verdict": "FAIL",
+  "tier": "Enforced",
+  "reason": "example_ip landed on its target",
+  "commands_file": "evidence/T53/run-7/command.txt",
+  "output_file": "evidence/T53/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-11-13T11:56:20Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-gateway-runtime-deploy"
+  ],
+  "script_commit": "9b18633"
+}

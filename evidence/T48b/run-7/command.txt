@@ -1,0 +1,11 @@
+# T48b run=run-7 start=2026-11-13T11:52:48Z
+# script_commit=9b18633
+# check=B9 (Enforced) control=Agent X's bound token presented over agent Y's own mTLS session (Y's agent certificate) to the mTLS Vertex AI endpoint; controls: X's own call 200, Y's own token over its session 200
+# expected (pre-registered): Expected: 401 (UNAUTHENTICATED / Context-Aware Access). Falsified if: 200 (binding not checked against the presenting certificate). INCONCLUSIVE if: a control fails or any 403. Docs are silent on a fingerprint match; the expectation is an inference from 'only usable by the agent running in its provisioned environment'. Tier: Enforced. 2+ runs. Tokens in memory only.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-13T11:52:49Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-13T11:52:50Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-13T11:52:50Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-13T11:52:52Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-13T11:52:54Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-13T11:53:00Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

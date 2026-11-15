@@ -1,0 +1,6 @@
+{
+  "stage": "optout",
+  "verdict": "PASS",
+  "note": "optout: own=200 control2=200 replay=200 sha12=71db2d897053",
+  "timestamp_utc": "2026-11-13T04:48:54Z"
+}

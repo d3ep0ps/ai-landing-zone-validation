@@ -1,0 +1,29 @@
+# T15 run=run-7 start=2026-10-28T15:30:01Z
+# script_commit=eb3fbc9
+# check=I6 control=Locked log bucket
+# expected (pre-registered): `locked: true`; change denied
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T15:30:01Z: target bucket projects/PROJECT_10/locations/europe-west1/buckets/lzv-locked-logs; no cleanup registered: the lock is irreversible and the bucket is kept (empty, so still deletable)
+## $ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_10 --format=json
+{
+  "createTime": "2026-10-25T17:11:29.004005501Z",
+  "lifecycleState": "ACTIVE",
+  "locked": true,
+  "name": "projects/PROJECT_10/locations/europe-west1/buckets/lzv-locked-logs",
+  "retentionDays": 1,
+  "updateTime": "2026-10-25T17:11:29.004005501Z"
+}
+## exit=0 at 2026-10-28T15:30:01Z
+## $ gcloud logging buckets update lzv-locked-logs --location=europe-west1 --project=PROJECT_10 --retention-days=2
+ERROR: (gcloud.logging.buckets.update) FAILED_PRECONDITION: This bucket is locked. Locked buckets are immutable
+## exit=1 at 2026-10-28T15:30:02Z
+## $ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_10 --format=json
+{
+  "createTime": "2026-10-25T17:11:29.004005501Z",
+  "lifecycleState": "ACTIVE",
+  "locked": true,
+  "name": "projects/PROJECT_10/locations/europe-west1/buckets/lzv-locked-logs",
+  "retentionDays": 1,
+  "updateTime": "2026-10-25T17:11:29.004005501Z"
+}
+## exit=0 at 2026-10-28T15:30:03Z

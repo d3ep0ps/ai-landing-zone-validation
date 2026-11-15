@@ -1,0 +1,6 @@
+{
+  "stage": "calls",
+  "verdict": "PASS",
+  "note": "calls made: 13; early read recorded (observation only)",
+  "timestamp_utc": "2026-11-14T15:49:09Z"
+}

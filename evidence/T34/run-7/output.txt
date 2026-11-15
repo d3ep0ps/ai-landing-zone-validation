@@ -1,0 +1,345 @@
+# T34 run=run-7 start=2026-10-29T12:04:04Z
+# script_commit=8baedc8
+# check=V2-C control=Agent Runtime with a PSC interface; egress firewall deny-all attributes the bypass failure
+# expected (pre-registered): Connection fails (not a DNS error) **and** the firewall log shows a deny for `lzv-swp-deny-egress-all` from 10.77.4.0/28; without that log entry: INCONCLUSIVE
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T12:04:04Z: no resources are created by this script (agent C, gateway and attachment are Terraform-managed); no cleanup_trap registered
+## note 2026-10-29T12:04:04Z: agent C fixed targets: allowed=example.com, denied=www.wikipedia.org (tests/fixtures/agent_c/agent.py)
+## $ gcloud network-services gateways describe lzv-swp --location=europe-west1 --project=PROJECT_8
+addresses:
+- 10.77.0.10
+createTime: '2026-10-29T11:52:14.663829463Z'
+description: Managed by Terraform.
+gatewaySecurityPolicy: projects/PROJECT_8/locations/europe-west1/gatewaySecurityPolicies/lzv-swp
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/gateways/lzv-swp
+network: projects/PROJECT_8/global/networks/lzv-swp-vpc
+ports:
+- 443
+selfLink: https://networkservices.googleapis.com/v1alpha1/projects/PROJECT_8/locations/europe-west1/gateways/lzv-swp
+subnetwork: projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-job
+type: SECURE_WEB_GATEWAY
+updateTime: '2026-10-29T11:52:23.288680641Z'
+## exit=0 at 2026-10-29T12:04:05Z
+## $ gcloud compute network-attachments describe lzv-psci --region=europe-west1 --project=PROJECT_8
+connectionEndpoints:
+- ipAddress: 10.77.4.3
+  projectIdOrNum: 'PROJECT_NUMBER_14'
+  status: ACCEPTED
+  subnetwork: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-psci
+- ipAddress: 10.77.4.2
+  projectIdOrNum: 'PROJECT_NUMBER_14'
+  status: ACCEPTED
+  subnetwork: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-psci
+connectionPreference: ACCEPT_AUTOMATIC
+creationTimestamp: '2026-10-29T04:52:12.508-07:00'
+description: 'v2 C: Agent Runtime PSC interface (T33, T34).'
+fingerprint: INVNHfvetfs=
+id: '7600395746597047683'
+kind: compute#networkAttachment
+name: lzv-psci
+network: https://www.googleapis.com/compute/v1/projects/PROJECT_8/global/networks/lzv-swp-vpc
+region: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1
+selfLink: https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-psci
+subnetworks:
+- https://www.googleapis.com/compute/v1/projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-psci
+## exit=0 at 2026-10-29T12:04:06Z
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "174daadafb85fca6",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-29T12:04:07Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "174daadafb85fca6",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_18"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com",
+            "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_18"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-29T12:04:09Z
+## note 2026-10-29T12:04:09Z: guards ok: gateway lzv-swp, attachment lzv-psci, agent C projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_20, runtime project in enforced perimeter
+## $ gcloud compute networks subnets describe lzv-swp-psci --region=europe-west1 --project=PROJECT_8 --format=value\(ipCidrRange\)
+10.77.4.0/28
+## exit=0 at 2026-10-29T12:04:10Z
+## $ gcloud compute firewall-rules describe lzv-swp-deny-egress-all --project=PROJECT_8 --format=value\(name\,logConfig.enable\,direction\,disabled\)
+lzv-swp-deny-egress-all	True	EGRESS	False
+## exit=0 at 2026-10-29T12:04:11Z
+## note 2026-10-29T12:04:11Z: attachment CIDR 10.77.4.0/28; deny rule lzv-swp-deny-egress-all present with logging
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_631419", "args": {"via_proxy": true, "target": "allowed"}, "name": "fetch_probe"}, "thought_signature": "AY89a1_1v0hVCxTRZxCHg1wol5mP2dO1L1R7WqjN8BTvIR56XwVtrKJ4ZlvD64doK8nQn-pmHXpHsb66LgS5w31mjdPwmyq-IQ5j50_0qPWU0ryGZEAJnnvg9L6LA5i9w9JhkEoJjlrBM6bv1PhForkII4phjMPpdI7-UWQfCwZmJ7_D6R548_3bAlqkQYKEZbBnmmpAHylAWWozgkdWZo1jGoqujHpnq7YOWwQ55wP-eQKjI8C1nzX7ld8WcBW3Hxk2KlCc5LVpDbClwt9fmQbffOHrtG9lwjfuhZ-8tbB2PFjen4sn-FlusqdktLaYPotV5oXs2zTAyxDfS_9oVKPDUaVuV7E6dm1WfiJEQ06N79AHZK9wnFc40WUmpsfpvh8f"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 22, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 22}], "prompt_token_count": 242, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 242}], "thoughts_token_count": 53, "total_token_count": 317, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-470ed236-3889-440f-bcdb-ae90b5afa0b9", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "long_running_tool_ids": [], "id": "548db29b-ee24-41f1-aa72-6033c833cfaf", "timestamp": 1793275453.8404045}
+{"content": {"parts": [{"function_response": {"id": "call_631419", "name": "fetch_probe", "response": {"target": "allowed", "url": "https://example.com", "via_proxy": true, "status": 200, "error": null}}}], "role": "user"}, "invocation_id": "e-470ed236-3889-440f-bcdb-ae90b5afa0b9", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "701ee4cc-fe89-41ce-85ac-c057a5112416", "timestamp": 1793275455.4237351}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"target\": \"allowed\",\n  \"url\": \"https://example.com\",\n  \"via_proxy\": true,\n  \"status\": 200,\n  \"error\": null\n}\n```", "thought_signature": "AY89a18p3HV6MEZfSe3RsC2irFHpPNakHW-xzgVBWzHMJ2G49svuDx4ikzNa6q4il7yGO2XTuxPfy65I9TqU-KZT5owPy39f9rYrXby6DbeWOCQQpDG3y6N59sPwV7MGNxp8ZAxud8Tpiw0XLarcq7uvf5ytzFmZpnlsPmGSa8me1i2qLEnLRg2q-VK5AGf5DloNqqQz7YOfhz795IHE3s3tKhjoj_36_KYEev_y7B8="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 53, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 53}], "prompt_token_count": 333, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 333}], "thoughts_token_count": 19, "total_token_count": 405, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-470ed236-3889-440f-bcdb-ae90b5afa0b9", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "98e4400f-e0b6-4f3d-a2f7-18d42c9ad99b", "timestamp": 1793275455.4973984}
+
+HTTP 200
+## exit=0 at 2026-10-29T12:04:17Z
+## note 2026-10-29T12:04:17Z: probe allowed via_proxy=true: http_rc=0 tool_result=1 status=200 error=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_16664", "args": {"target": "allowed", "via_proxy": false}, "name": "fetch_probe"}, "thought_signature": "AY89a18Odt85mtNX9O241gVsvbgfGU7fFUO4mZJ1gvTP9g75GEdbGQzRcLijvInInktjMtDXDSK-oS6Mj40yeRtHSHX0NSrO_z0TH8KGl-VS0eKnUz9H3LUaV6oGYT8DqTqPWe5xae5HfkEq_f8c68SAsKq2tyAOoyBEDeZlVleLkghSCFbgIpUQJ0zHNVmOxYkbxH6DiTUvZRMtZr2dhqwBIODp95ITXZ5Kn95XO10Hkaapag3KYoksZ5fzQflKAnicYgog7yP0C3KYlllaFKiWcMxJQ6EYyV_bL4E3ujH9uKNGhlfAzr3urbBGtIoZ3Jg="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 22, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 22}], "prompt_token_count": 242, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 242}], "thoughts_token_count": 43, "total_token_count": 307, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-84896739-047f-4660-92e7-f77a3ce3144e", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "long_running_tool_ids": [], "id": "b2730d2e-6bf3-4ec8-80e0-f14848feae7a", "timestamp": 1793275458.3149571}
+{"content": {"parts": [{"function_response": {"id": "call_16664", "name": "fetch_probe", "response": {"target": "allowed", "url": "https://example.com", "via_proxy": false, "status": null, "error": "ConnectionError: HTTPSConnectionPool(host='example.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError(\"HTTPSConnection(host='example.com', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))"}}}], "role": "user"}, "invocation_id": "e-84896739-047f-4660-92e7-f77a3ce3144e", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "4e08eeb7-b450-4360-ad9a-5eb15c2ab219", "timestamp": 1793275498.0400746}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"target\": \"allowed\",\n  \"url\": \"https://example.com\",\n  \"via_proxy\": false,\n  \"status\": null,\n  \"error\": \"ConnectionError: HTTPSConnectionPool(host='example.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError(\\\"HTTPSConnection(host='example.com', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\\\"))\"\n}\n```", "thought_signature": "AY89a1_48zb0VPfjcU9q8UNsxgvqTjbvoEdTYezptHCzo2SxkiZ2yZFkAlq2E7JAZeCWg7-Ug1OWaNuRy0a3pi-ULKzQXPj9SH_4kugqT4kUN0uPyl45B-UPJFKtw4UVhEmKC_E61kVEx1EWn4_sBQbQ0TxoJO5cSzbo_ypWJBBhpNxyanGNELmOR5YT4C7gBczY"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 122, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 122}], "prompt_token_count": 389, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 389}], "thoughts_token_count": 15, "total_token_count": 526, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-84896739-047f-4660-92e7-f77a3ce3144e", "author": "lzv_probe_c", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_c@1"}, "id": "792ddd75-4023-49d0-9549-faa93b86677d", "timestamp": 1793275498.1275425}
+
+HTTP 200
+## exit=0 at 2026-10-29T12:04:59Z
+## note 2026-10-29T12:05:00Z: probe allowed via_proxy=false: http_rc=0 tool_result=1 status=none error=ConnectionError: HTTPSConnectionPool(host='example.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError("HTTPSConnection(host='example.com', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable"))
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:05:01Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:06:02Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:07:04Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:08:05Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:09:07Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:10:08Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:11:09Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:12:11Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:13:12Z
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/compute.googleapis.com%2Ffirewall\"\ AND\ jsonPayload.disposition=\"DENIED\"\ AND\ jsonPayload.rule_details.reference:\"lzv-swp-deny-egress-all\"\ AND\ timestamp\>=\"2026-10-29T12:04:17Z\" --project=PROJECT_8 --limit=50 --format=json
+[]
+## exit=0 at 2026-10-29T12:14:14Z

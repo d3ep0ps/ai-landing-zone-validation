@@ -1,0 +1,6 @@
+{
+  "stage": "before",
+  "verdict": "PASS",
+  "note": "recorded before folder policy: folder root enforce=true; project mcp enforce=true",
+  "timestamp_utc": "2026-10-25T04:39:12Z"
+}

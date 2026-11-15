@@ -1,0 +1,341 @@
+[
+  {
+    "insertId": "12botqcdaqzp",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_12"
+        },
+        "principalEmail": "SA_16@PROJECT.iam.gserviceaccount.com",
+        "serviceAccountDelegationInfo": [
+          {
+            "firstPartyPrincipal": {
+              "principalEmail": "USER_1@example.com"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_7",
+            "targetResourcePermissions": [
+              "aiplatform.reasoningEngines.list"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/PROJECT_8/locations/europe-west1"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "9NOGeQTXvYHK_nKfZPi1v6veqizrY8sLQww8AhBz-BHDOzXltCfpUAJWyhiA5ISPy04VGLdsgtX0gulv"
+      },
+      "methodName": "google.cloud.aiplatform.v1.ReasoningEngineService.ListReasoningEngines",
+      "requestMetadata": {
+        "callerIp": "IP_16",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7",
+      "serviceName": "aiplatform.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "9NOGeQTXvYHK_nKfZPi1v6veqizrY8sLQww8AhBz-BHDOzXltCfpUAJWyhiA5ISPy04VGLdsgtX0gulv",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "aiplatform.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "9NOGeQTXvYHK_nKfZPi1v6veqizrY8sLQww8AhBz-BHDOzXltCfpUAJWyhiA5ISPy04VGLdsgtX0gulv"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: 9NOGeQTXvYHK_nKfZPi1v6veqizrY8sLQww8AhBz-BHDOzXltCfpUAJWyhiA5ISPy04VGLdsgtX0gulv"
+      }
+    },
+    "receiveTimestamp": "2026-11-13T12:39:14.564590733Z",
+    "resource": {
+      "labels": {
+        "method": "google.cloud.aiplatform.v1.ReasoningEngineService.ListReasoningEngines",
+        "project_id": "PROJECT_8",
+        "service": "aiplatform.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-11-13T12:39:13.571312434Z"
+  },
+  {
+    "insertId": "4gr4mld8mnv",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_55"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_55",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "callerAgent": {},
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_7",
+            "targetResourcePermissions": [
+              "vpcsc.permissions.unavailable"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/PROJECT_8/locations/europe-west1/reasoningEngines/AGENT_ID_55"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "Fqu8vq85dpbKb2n-yB0YmRr4a3nTQGcxSfwiDj-UioOQC0cmahnsGbVIC330c2aalLeVCh_JoQ69RAEB"
+      },
+      "methodName": "google.cloud.aiplatform.v1beta1.SessionService.CreateSession",
+      "requestMetadata": {
+        "callerIp": "2600:1900:0:4302::400",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7",
+      "serviceName": "aiplatform.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "Fqu8vq85dpbKb2n-yB0YmRr4a3nTQGcxSfwiDj-UioOQC0cmahnsGbVIC330c2aalLeVCh_JoQ69RAEB",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "aiplatform.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "Fqu8vq85dpbKb2n-yB0YmRr4a3nTQGcxSfwiDj-UioOQC0cmahnsGbVIC330c2aalLeVCh_JoQ69RAEB"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: Fqu8vq85dpbKb2n-yB0YmRr4a3nTQGcxSfwiDj-UioOQC0cmahnsGbVIC330c2aalLeVCh_JoQ69RAEB"
+      }
+    },
+    "receiveTimestamp": "2026-11-13T12:38:30.503494312Z",
+    "resource": {
+      "labels": {
+        "method": "google.cloud.aiplatform.v1beta1.SessionService.CreateSession",
+        "project_id": "PROJECT_8",
+        "service": "aiplatform.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-11-13T12:38:29.999513409Z"
+  },
+  {
+    "insertId": "7jlhryd4g11",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_55"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_55",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "callerAgent": {},
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_7",
+            "targetResourcePermissions": [
+              "vpcsc.permissions.unavailable"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/PROJECT_8/locations/europe-west1/reasoningEngines/AGENT_ID_55"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "vkZaQFgYaiZOWF7jZbt2G9N8PbnDaVyYtLexTBNw1-axgo10N2N1_uHqsFzkjlKvwAoRA1-IzwKNvkHw"
+      },
+      "methodName": "google.cloud.aiplatform.v1beta1.SessionService.CreateSession",
+      "requestMetadata": {
+        "callerIp": "2600:1900:0:4302::400",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7",
+      "serviceName": "aiplatform.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "vkZaQFgYaiZOWF7jZbt2G9N8PbnDaVyYtLexTBNw1-axgo10N2N1_uHqsFzkjlKvwAoRA1-IzwKNvkHw",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "aiplatform.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "vkZaQFgYaiZOWF7jZbt2G9N8PbnDaVyYtLexTBNw1-axgo10N2N1_uHqsFzkjlKvwAoRA1-IzwKNvkHw"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: vkZaQFgYaiZOWF7jZbt2G9N8PbnDaVyYtLexTBNw1-axgo10N2N1_uHqsFzkjlKvwAoRA1-IzwKNvkHw"
+      }
+    },
+    "receiveTimestamp": "2026-11-13T12:37:51.705994778Z",
+    "resource": {
+      "labels": {
+        "method": "google.cloud.aiplatform.v1beta1.SessionService.CreateSession",
+        "project_id": "PROJECT_8",
+        "service": "aiplatform.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-11-13T12:37:50.905133651Z"
+  },
+  {
+    "insertId": "1uvvsrmch7z",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_55"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_55",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "callerAgent": {},
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata",
+        "deviceState": "Unknown",
+        "ingressViolations": [
+          {
+            "servicePerimeter": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+            "targetResource": "projects/PROJECT_NUMBER_7",
+            "targetResourcePermissions": [
+              "vpcsc.permissions.unavailable"
+            ]
+          }
+        ],
+        "resourceNames": [
+          "projects/PROJECT_8/locations/europe-west1/reasoningEngines/AGENT_ID_55"
+        ],
+        "securityPolicyInfo": {
+          "organizationId": "ORG_ID",
+          "servicePerimeterName": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        },
+        "violationReason": "NO_MATCHING_ACCESS_LEVEL",
+        "vpcServiceControlsTroubleshootToken": "REDACTED_ERROR_ID",
+        "vpcServiceControlsUniqueId": "urwmd34dboFUqCrUDihz6MQsz8gEDK0vZ0nKINrM5ozFW6RwHjAdlEk5aB7q5HQrvW16vrcppA6JZWKI"
+      },
+      "methodName": "google.cloud.aiplatform.v1beta1.SessionService.CreateSession",
+      "requestMetadata": {
+        "callerIp": "2600:1900:0:4302::400",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7",
+      "serviceName": "aiplatform.googleapis.com",
+      "status": {
+        "code": 7,
+        "details": [
+          {
+            "@type": "type.googleapis.com/google.rpc.PreconditionFailure",
+            "violations": [
+              {
+                "description": "urwmd34dboFUqCrUDihz6MQsz8gEDK0vZ0nKINrM5ozFW6RwHjAdlEk5aB7q5HQrvW16vrcppA6JZWKI",
+                "type": "VPC_SERVICE_CONTROLS"
+              }
+            ]
+          },
+          {
+            "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+            "domain": "googleapis.com",
+            "metadata": {
+              "service": "aiplatform.googleapis.com",
+              "troubleshootToken": "REDACTED_ERROR_ID",
+              "uid": "urwmd34dboFUqCrUDihz6MQsz8gEDK0vZ0nKINrM5ozFW6RwHjAdlEk5aB7q5HQrvW16vrcppA6JZWKI"
+            },
+            "reason": "SECURITY_POLICY_VIOLATED"
+          }
+        ],
+        "message": "Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: urwmd34dboFUqCrUDihz6MQsz8gEDK0vZ0nKINrM5ozFW6RwHjAdlEk5aB7q5HQrvW16vrcppA6JZWKI"
+      }
+    },
+    "receiveTimestamp": "2026-11-13T12:38:13.771226978Z",
+    "resource": {
+      "labels": {
+        "method": "google.cloud.aiplatform.v1beta1.SessionService.CreateSession",
+        "project_id": "PROJECT_8",
+        "service": "aiplatform.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "ERROR",
+    "timestamp": "2026-11-13T12:37:49.876286500Z"
+  }
+]

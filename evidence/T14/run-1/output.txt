@@ -1,0 +1,52 @@
+# T14 stage=a run=run-1 start=2026-10-24T06:20:05Z
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-24T06:20:05Z: no resources are created by this script (agents are Terraform-managed); no cleanup_trap registered
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "9d307bceffdde49e",
+    "name": "accessPolicies/ACCESS_POLICY_1",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "dd574eefd6c90948",
+    "name": "accessPolicies/ACCESS_POLICY_2",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_2"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-24T06:20:07Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_2 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "dd574eefd6c90948",
+  "name": "accessPolicies/ACCESS_POLICY_2/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2",
+      "projects/PROJECT_NUMBER_4"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-24T06:20:08Z
+## note 2026-10-24T06:20:08Z: perimeter lzv_ai: status resources=0, status ingressPolicies=0 (want dryrun-only)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_1:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"error_code": "NOT_FOUND", "error_message": "404 NOT_FOUND. {'error': {'code': 404, 'message': 'Publisher model `projects/PROJECT_7/locations/europe-west1/publishers/google/models/gemini-3.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.', 'status': 'NOT_FOUND'}}", "invocation_id": "e-c17c8e98-e090-4f8c-858f-930a4fcaf98b", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "0036f7e7-d8aa-4b4e-9106-823992115e46", "timestamp": 1792822811.8776436}
+{"code": 404, "message": "404 NOT_FOUND. {'error': {'code': 404, 'message': 'Publisher model `projects/PROJECT_7/locations/europe-west1/publishers/google/models/gemini-3.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.', 'status': 'NOT_FOUND'}}", "errorCode": "404", "errorMessage": "404 NOT_FOUND. {'error': {'code': 404, 'message': 'Publisher model `projects/PROJECT_7/locations/europe-west1/publishers/google/models/gemini-3.5-flash` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.', 'status': 'NOT_FOUND'}}"}
+
+HTTP 200
+## exit=0 at 2026-10-24T06:20:17Z
+## note 2026-10-24T06:20:17Z: http_rc=0 function_responses=0 status=none err=none

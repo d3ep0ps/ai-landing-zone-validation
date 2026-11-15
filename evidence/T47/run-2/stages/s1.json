@@ -1,0 +1,6 @@
+{
+  "stage": "s1",
+  "verdict": "PASS",
+  "note": "s1: direct control (v3a, default binding, no gateway) status 200",
+  "timestamp_utc": "2026-11-11T21:27:22Z"
+}

@@ -1,0 +1,32 @@
+# T40b stage=pre run=run-1 start=2026-11-12T16:58:31Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T16:58:31Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+2026-11-12T16:58:32Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r1 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r1.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-pre.tfplan
+2026-11-12T16:58:40Z $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-pre.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40b/run-1/plan-pre.json'
+2026-11-12T16:58:40Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T40b stage=drift run=run-1 start=2026-11-12T16:58:47Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T16:58:48Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r1 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r1.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-drift.tfplan
+2026-11-12T16:58:55Z $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-drift.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40b/run-1/plan-drift.json'
+# T40b stage=call run=run-1 start=2026-11-12T17:06:23Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T17:06:23Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+2026-11-12T17:06:24Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T40b stage=agent2 run=run-1 start=2026-11-12T17:13:59Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T17:14:00Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+2026-11-12T17:14:01Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r1 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r1.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-agent2.tfplan
+2026-11-12T17:14:28Z $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-agent2.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40b/run-1/plan-agent2.json'
+2026-11-12T17:14:29Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

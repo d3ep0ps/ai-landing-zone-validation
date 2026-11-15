@@ -1,0 +1,9 @@
+# T19 stage=before run=run-4 start=2026-10-25T18:55:14Z
+# script_commit=c6a5c51
+# check=TS1 control=IAM bindings added by the platform when one agent is deployed
+# expected (pre-registered): The only added bindings are those on the pre-registered list (from v1: `roles/aiplatform.agentDefaultAccess` on the project principalSet). Any other added binding = finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T18:55:14Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-10-25T18:55:14Z: limitation: get-iam-policy returns direct bindings only at each resource; organization allow policy not read
+## ABORT 2026-10-25T18:55:15Z: terraform output in infra/agents is unreadable
+## note (added by hand by Opus, 2026-10-25): aborted on the agents output guard before any IAM read; infra/agents never applied in v1.1, output was '{}'. Guard fixed (tests/T19.sh) and the stage re-run in evidence/T19/run-4/.

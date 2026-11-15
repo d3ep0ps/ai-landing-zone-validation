@@ -1,0 +1,22 @@
+$ gcloud access-context-manager perimeters list --policy=ACCESS_POLICY_2 --format=json
+[
+  {
+    "description": "LZ validation perimeter: runtime, mcp, data",
+    "etag": "95b2d8448f2cc8f2",
+    "name": "accessPolicies/ACCESS_POLICY_2/servicePerimeters/lzv_ai",
+    "spec": {
+      "resources": [
+        "projects/PROJECT_NUMBER_1",
+        "projects/PROJECT_NUMBER_2",
+        "projects/PROJECT_NUMBER_4"
+      ],
+      "restrictedServices": [
+        "aiplatform.googleapis.com",
+        "storage.googleapis.com"
+      ]
+    },
+    "status": {},
+    "title": "lzv_ai",
+    "useExplicitDryRunSpec": true
+  }
+]

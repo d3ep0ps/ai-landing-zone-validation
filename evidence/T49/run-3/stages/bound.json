@@ -1,0 +1,6 @@
+{
+  "stage": "bound",
+  "verdict": "PASS",
+  "note": "bound: s1 own(gateway)=200 mTLS-host=200 control2=200 replay=401 sha12=58e5031760ce; google-auth=2.62.1 agent_cert=true should_request_bound=true env_runtime_bound=none",
+  "timestamp_utc": "2026-11-13T04:50:02Z"
+}

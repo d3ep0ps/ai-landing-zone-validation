@@ -1,0 +1,6 @@
+{
+  "stage": "default",
+  "verdict": "PASS",
+  "note": "default: B on A list=403 get=403 memories=403 query=403; controls 200/200/200/200",
+  "timestamp_utc": "2026-11-14T15:41:55Z"
+}

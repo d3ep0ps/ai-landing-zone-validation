@@ -1,0 +1,7 @@
+# T04 run=run-1-r2 start=2026-10-24T06:11:19Z
+# check=P1 control=`vertexai.allowedModels` allowlist with `:predict` suffix (prod folder)
+# expected (pre-registered): Non-listed model denied, error names `vertexai.allowedModels`; control succeeds
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-24T06:11:19Z $ gcloud org-policies describe constraints/vertexai.allowedModels --effective --project=PROJECT_7 --format=json --billing-project=PROJECT_6
+2026-10-24T06:11:20Z $ out=$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -H @- -H "Content-Type: application/json" -d '{"contents":[{"role":"user","parts":[{"text":"Reply OK"}]}],"generationConfig":{"maxOutputTokens":5}}' -w "\nHTTP %{http_code}\n" 'https://aiplatform.googleapis.com/v1/projects/PROJECT_7/locations/global/publishers/google/models/gemini-3.5-flash:generateContent'); printf "%s\n" "$out"; code=$(printf "%s\n" "$out" | sed -n "s/^HTTP //p" | tail -1); [ "$code" = 200 ]
+2026-10-24T06:11:22Z $ out=$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -H @- -H "Content-Type: application/json" -d '{"contents":[{"role":"user","parts":[{"text":"Reply OK"}]}],"generationConfig":{"maxOutputTokens":5}}' -w "\nHTTP %{http_code}\n" 'https://aiplatform.googleapis.com/v1/projects/PROJECT_7/locations/global/publishers/google/models/gemini-4-argon:generateContent'); printf "%s\n" "$out"; code=$(printf "%s\n" "$out" | sed -n "s/^HTTP //p" | tail -1); [ "$code" = 200 ]

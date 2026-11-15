@@ -1,0 +1,247 @@
+# T47r run=run-1 start=2026-11-12T06:04:19Z
+# script_commit=3426da1
+# check=B8 regression (Enforced, 1 attempt) control=Run-6 setup rebuilt (IAP policy V1, no gateway VPC egress, agent G unpinned, default binding); one call through the gateway as T47 s2
+# expected (pre-registered): 401 as in run 6 (F16). If 200: the finding is 'the run-6 401 did not reproduce on DATE; cause unknown'. Versions of google-auth, google-cloud-aiplatform, google-adk and the IAP policy version are recorded. Tier: Enforced (1 attempt). Paid: gateway hours; same-day teardown.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-12T06:04:19Z: plan B8 regression; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-12T06:04:19Z: unpinned tarball sha256 adc86036708169a9...; requirements: google-cloud-aiplatform[agent_engines,adk] google-adk requests google-auth 
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8 --format=json
+{
+  "agentGatewayCard": {
+    "mtlsEndpoint": "projects/l34fb9d82ffdb1e61p-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa",
+    "rootCertificates": [
+      "-----BEGIN CERTIFICATE-----\nMIIDxTCCAq2gAwIBAgITXMl2gTtcvqJpYkrMVfwTQNE07zANBgkqhkiG9w0BAQsF\nADBgMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTcwNQYD\nVQQDEy5BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBIChldXJvcGUtd2Vz\ndDEpMB4XDTI2MTExMTA5MTQ0MVoXDTM2MTEwODA5MTQ0MFowYDElMCMGA1UEChMc\nR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUGA1UEAxMuQWdlbnQgR2F0\nZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdlc3QxKTCCASIwDQYJKoZI\nhvcNAQEBBQADggEPADCCAQoCggEBANixK0YVdhpeylTC3X83J/2pVWdU7RK8NXUE\nkOvAASVGZL/kiti5TKhN4cfA6Wi5AJ2tVlYm8lpLn2BgZcNc46v57IWuhRWB15gi\nra+IANXvbkTlBdqW+1N20EqrsjKHsZ11DbnNV06/dzvwLGvQpbJBkiS9+in980Lc\nOsGRWEQ4djIfyQEYzqou1eMvJW220MpuSQu+V4XEkHRjQrxIO76VhAWBF60XlTLI\nel43DRskb58u6iYR6iu+RXj2P5J28zo6fVR7Oc40Dt2SnJC7B0eZEQ45YGTdAYo+\nWF27VlbgV/1IcTp07O3cvKXtQrBLFxBeTEVqm4ZX5FE4ohD1uosCAwEAAaN4MHYw\nDgYDVR0PAQH/BAQDAgEmMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdEwEB/wQF\nMAMBAf8wHQYDVR0OBBYEFORhNUSfM7ozV+wjzkc0Sbx2sFwYMB8GA1UdIwQYMBaA\nFORhNUSfM7ozV+wjzkc0Sbx2sFwYMA0GCSqGSIb3DQEBCwUAA4IBAQAEtrvWhMQ8\n+0rbFl+Nx1UGgPaiJ8mtsWM2KTTrWdWBusgOk/9VOseZR70hU7Scv/eGPN0uwlue\nhVyZGSVHSlqH84YW1NQCaK+wts8h3FBrj54u6VWv4+5NhIIll//WH6niAmW0gyjD\nRJhjp8H0vy6A5QQEuVbfZ6OmlZmkA8YmXUBbGxdVR7hza48KkWeOnDhV01QYBTD9\ngRE9+Liwd49esGrYxMvp8zdC9mApOqw0XmgzrTZn0Z/b0bSl+IvVWG32CmhcuY7S\nQZaQVH4gHEns+DO6cb2lCQXfWBCU8uAGA8x6NZK7cNLzhIDZohSHZzh/b2RIXvRG\n3+v65L6RAl/2\n-----END CERTIFICATE-----\n"
+    ],
+    "serviceExtensionsServiceAccount": "service-PROJECT_NUMBER_20@gcp-sa-dep.iam.gserviceaccount.com"
+  },
+  "createTime": "2026-11-12T05:46:35.426941903Z",
+  "etag": "idjHA-oaol8mZnfk7SFaJw6k_1vIIonsQ9lTW6w0ilQ",
+  "googleManaged": {
+    "governedAccessPath": "AGENT_TO_ANYWHERE"
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  },
+  "name": "projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw",
+  "protocols": [
+    "MCP"
+  ],
+  "registries": [
+    "//agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1"
+  ],
+  "updateTime": "2026-11-12T05:48:09.424119652Z"
+}
+## exit=0 at 2026-11-12T06:04:20Z
+## note 2026-11-12T06:04:20Z: gateway: iapPolicyVersion=not shown; network egress config present=false
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_38",
+  "displayName": "lzv-probe-g",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_REPLAY_URL",
+          "value": "https://lzv-v3h-replay-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "MCP_UNREG_URL",
+          "value": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "MCP_REG_URL",
+          "value": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ],
+      "agentGatewayConfig": {
+        "agentToAnywhereConfig": {
+          "agentGateway": "projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw"
+        }
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_38"
+  },
+  "createTime": "2026-11-12T05:56:47.396466Z",
+  "updateTime": "2026-11-12T06:00:06.956427Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-12T06:04:21Z
+## note 2026-11-12T06:04:21Z: engine env (selected names): ["LZV_MODEL","LZV_MODEL_LOCATION","LZV_PROJECT_ID","LZV_REPLAY_URL"]
+## $ gcloud logging read timestamp\>=\"2026-11-12T05:56:47.396466Z\"\ AND\ \"lzv_versions\" --project=PROJECT_8 --limit=20 --format=json
+[
+  {
+    "insertId": "6af555de000330d3428c0727",
+    "jsonPayload": {
+      "lzv_versions": {
+        "google-adk": "2.14.0",
+        "google-auth": "2.62.2",
+        "google-cloud-aiplatform": "2.8.0",
+        "requests": "2.34.2"
+      }
+    },
+    "labels": {
+      "managed-by": "reasoning-engine",
+      "service.version": "1"
+    },
+    "logName": "projects/PROJECT_8/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-11-12T05:59:58.246546786Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "reasoning_engine_id": "AGENT_ID_38",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "timestamp": "2026-11-12T05:59:58.209107Z"
+  },
+  {
+    "insertId": "6af555de0002a143547dfb30",
+    "jsonPayload": {
+      "lzv_versions": {
+        "google-adk": "2.14.0",
+        "google-auth": "2.62.2",
+        "google-cloud-aiplatform": "2.8.0",
+        "requests": "2.34.2"
+      }
+    },
+    "labels": {
+      "managed-by": "reasoning-engine",
+      "service.version": "1"
+    },
+    "logName": "projects/PROJECT_8/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-11-12T05:59:58.246546786Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "reasoning_engine_id": "AGENT_ID_38",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "timestamp": "2026-11-12T05:59:58.172355Z"
+  },
+  {
+    "insertId": "6af555de00029f776a1b99bf",
+    "jsonPayload": {
+      "lzv_versions": {
+        "google-adk": "2.14.0",
+        "google-auth": "2.62.2",
+        "google-cloud-aiplatform": "2.8.0",
+        "requests": "2.34.2"
+      }
+    },
+    "labels": {
+      "managed-by": "reasoning-engine",
+      "service.version": "1"
+    },
+    "logName": "projects/PROJECT_8/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-11-12T05:59:58.246546786Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "reasoning_engine_id": "AGENT_ID_38",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "timestamp": "2026-11-12T05:59:58.171895Z"
+  },
+  {
+    "insertId": "6af555de00029f651ccc75eb",
+    "jsonPayload": {
+      "lzv_versions": {
+        "google-adk": "2.14.0",
+        "google-auth": "2.62.2",
+        "google-cloud-aiplatform": "2.8.0",
+        "requests": "2.34.2"
+      }
+    },
+    "labels": {
+      "managed-by": "reasoning-engine",
+      "service.version": "1"
+    },
+    "logName": "projects/PROJECT_8/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-11-12T05:59:58.246546786Z",
+    "resource": {
+      "labels": {
+        "location": "europe-west1",
+        "reasoning_engine_id": "AGENT_ID_38",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "timestamp": "2026-11-12T05:59:58.171877Z"
+  }
+]
+## exit=0 at 2026-11-12T06:04:24Z
+## note 2026-11-12T06:04:24Z: agent G resolved versions (import-time log line): google-adk=2.14.0 google-auth=2.62.2 google-cloud-aiplatform=2.8.0 requests=2.34.2
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_83650293903199406", "args": {"endpoint": "allowed"}, "name": "call_model"}, "thought_signature": "AY89a1-FfUsWwj5Hgxd6mSSzQ-0wf7zC_9rYpLykOG343emye9TosfxcqilBAIRQM3OFE1Ntp6_xrg46vfJt2OUOMJ2AFacBzF_N7z5YXWrhzeRWKRLg4Bho1OY5Owe6wik5089jBkHkf88OErk_bh52sYiLOdznydMs0p0ZdTJQZnivGv_ba0-WnjGTHRzXezMjqvXxTH3d8we5kQBEHrt4Y7oHrOhXB-RGJ-5vvRisveVMHvdBO2MAdnHKvrvNuqvJ2TkkU1DEXZPdhCCfdG0bAEqf3ng6j0HbbLMeonzFSXUNKJqQS5kUKIQoLlOofhQfZmTDXNIgC6ypMyIy-SMX0mZsw8iU232FCnkPjjw0PCoY-VkjMVJbMm0LiEDmJX0TtNqtPm5SHtU-5gqEeFFB3ymbCfzQfj1Cw7FQE_xp7cS_bCHrbwPWoMUAgh21Cu4Rlcq-1y2zml5i2tdXPxLyCQjKNI4K6APLDPQJvtEMhQCg7KZf_UFwSAFpKb2EKyJJZLCEpSRtfOHGtigibLUhzbCEcArUoc5Fvh8NNNLZpdevBVmwo33T724lRkjd2k0eZ-_0od_d1v2B"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 578, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 578}], "thoughts_token_count": 98, "total_token_count": 692, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-01a045b3-eae9-4975-89e5-f19efdfb4546", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "c634506c-16cb-4514-a565-81313d645474", "timestamp": 1794463470.3765104}
+{"content": {"parts": [{"function_response": {"id": "call_83650293903199406", "name": "call_model", "response": {"endpoint": "allowed", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a19jxz4zWgOlvvMftqFlxX/ccKTXYmMm92v3La8xnRW1sP5f/XYAH1hhdoLi/w0+GmBoXeQ/+RFrVdFK34UGonsUUm+yAM2aI0ykrfXWiUezCi6A1cuRMq2CQFWbbYydmWPz1WfVjHeaxtNUeCTjuci3iBLLOfRNepTItmhIxfhVsGVwtnmWmvCb9LPEeku2fw/aaUzU+m5V4OpgfUzTwU9wn9qdk3z/ONzivmjg2gxQsn4dSbie2IWlF1GBrflrevSLMC7U6B0cvZpJZy2c24TN2FpTQf7jcK5c9OJWjOOKfc5nrwBx8rdDRTy8AjEUGzWm7QkpEgBRV6RXuzLH4jWLy0WuIVIsT3UpBxLznbOd1VsiLaYhXnP43csDHp6n849uU36VqSc1H9Jk87dcABWZYSLcHAOmTso51LwZTxsclXK7XIcP", "error": null}}}], "role": "user"}, "invocation_id": "e-01a045b3-eae9-4975-89e5-f19efdfb4546", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "812ec4f4-0878-47d3-9818-7c7d29b798f2", "timestamp": 1794463472.7021244}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"endpoint\": \"allowed\",\n  \"status\": 200,\n  \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a19jxz4zWgOlvvMftqFlxX/ccKTXYmMm92v3La8xnRW1sP5f/XYAH1hhdoLi/w0+GmBoXeQ/+RFrVdFK34UGonsUUm+yAM2aI0ykrfXWiUezCi6A1cuRMq2CQFWbbYydmWPz1WfVjHeaxtNUeCTjuci3iBLLOfRNepTItmhIxfhVsGVwtnmWmvCb9LPEeku2fw/aaUzU+m5V4OpgfUzTwU9wn9qdk3z/ONzivmjg2gxQsn4dSbie2IWlF1GBrflrevSLMC7U6B0cvZpJZy2c24TN2FpTQf7jcK5c9OJWjOOKfc5nrwBx8rdDRTy8AjEUGzWm7QkpEgBRV6RXuzLH4jWLy0WuIVIsT3UpBxLznbOd1VsiLaYhXnP43csDHp6n849uU36VqSc1H9Jk87dcABWZYSLcHAOmTso51LwZTxsclXK7XIcP\",\n  \"error\": null\n}", "thought_signature": "AY89a19EOoXy2Ek5NpebTNNR6LLaTtxIPfIB27zDQ9Da9ZBcSQot9tnGnV7eHyE_SLS8p3A23h3BgHgJ28J4YQxPmRnjxmvvLoL8kRDT9YdJnl5B"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 389, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 389}], "prompt_token_count": 1054, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 1054}], "total_token_count": 1443, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-01a045b3-eae9-4975-89e5-f19efdfb4546", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "79234731-cbce-4c62-9eef-028ceca0a73d", "timestamp": 1794463475.507721}
+
+HTTP 200
+## exit=0 at 2026-11-12T06:04:37Z
+## note 2026-11-12T06:04:37Z: agent G call: class=200 where=tool detail={"status":200,"error":""}

@@ -1,0 +1,40 @@
+[
+  {
+    "httpRequest": {
+      "latency": "0.003768s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "10.77.4.3:48092",
+      "requestMethod": "CONNECT",
+      "requestSize": "71",
+      "responseSize": "141",
+      "status": 403
+    },
+    "insertId": "1cafz34eix1wb",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "www.wikipedia.org:443",
+        "matchedRules": [
+          {
+            "action": "DENIED",
+            "name": "default_denied"
+          }
+        ]
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-10-28T08:49:40.963874370Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-swp",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/PROJECT_8/global/networks/lzv-swp-vpc",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-10-28T08:49:35.079821Z"
+  }
+]

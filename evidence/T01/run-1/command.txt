@@ -1,0 +1,10 @@
+# T01 run=run-1 start=2026-10-23T13:38:46Z
+# check=I2 control=`iam.managed.disableServiceAccountKeyCreation` (managed constraint, not the legacy `iam.disableServiceAccountKeyCreation`) (folder)
+# expected (pre-registered): Denied with `FAILED_PRECONDITION`; error names the managed constraint or says "Key creation is not allowed"
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-23T13:38:46Z $ gcloud org-policies describe constraints/iam.managed.disableServiceAccountKeyCreation --effective --project=PROJECT_1 --format=json
+2026-10-23T13:38:47Z $ gcloud iam service-accounts create lzv-t01-run1-1j7kys --project=PROJECT_1 --display-name=lzv\ T01\ test\ SA
+2026-10-23T13:39:04Z $ gcloud iam service-accounts keys create /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.ie21kL/key.json --iam-account=SA_2@PROJECT.iam.gserviceaccount.com --project=PROJECT_1
+2026-10-23T13:39:06Z $ gcloud iam service-accounts delete SA_2@PROJECT.iam.gserviceaccount.com --project=PROJECT_1
+2026-10-23T13:39:08Z $ gcloud iam service-accounts describe SA_2@PROJECT.iam.gserviceaccount.com --project=PROJECT_1
+2026-10-23T13:39:09Z $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.ie21kL

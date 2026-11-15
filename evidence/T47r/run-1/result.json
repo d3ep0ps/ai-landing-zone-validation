@@ -1,0 +1,25 @@
+{
+  "id": "T47r",
+  "check": "B8 regression (Enforced, 1 attempt)",
+  "control": "Run-6 setup rebuilt (IAP policy V1, no gateway VPC egress, agent G unpinned, default binding); one call through the gateway as T47 s2",
+  "scope": "projects/PROJECT_8",
+  "expected": "401 as in run 6 (F16). If 200: the finding is 'the run-6 401 did not reproduce on DATE; cause unknown'. Versions of google-auth, google-cloud-aiplatform, google-adk and the IAP policy version are recorded. Tier: Enforced (1 attempt). Paid: gateway hours; same-day teardown.",
+  "actual": "call through the gateway: 200 (where=tool); iapPolicyVersion=not shown; versions: google-adk=2.14.0 google-auth=2.62.2 google-cloud-aiplatform=2.8.0 requests=2.34.2",
+  "verdict": "FAIL",
+  "tier": "Enforced",
+  "reason": "the run-6 401 did not reproduce on 2026-11-12; cause unknown",
+  "commands_file": "evidence/T47r/run-1/command.txt",
+  "output_file": "evidence/T47r/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-12T06:04:37Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-gateway-runtime-deploy",
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security"
+  ],
+  "script_commit": "3426da1"
+}

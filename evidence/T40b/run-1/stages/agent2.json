@@ -1,0 +1,6 @@
+{
+  "stage": "agent2",
+  "verdict": "PASS",
+  "note": "agent2: platform re-added the binding and plan drifts again (exit 2)",
+  "timestamp_utc": "2026-11-12T17:14:33Z"
+}

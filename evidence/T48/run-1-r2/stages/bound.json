@@ -1,0 +1,6 @@
+{
+  "stage": "bound",
+  "verdict": "INCONCLUSIVE",
+  "note": "bound: own=401 control2=200 replay=none sha12=cc634d4b4626; control 1 failed: the agent's own call status is 401, so the replayed result cannot be attributed to binding",
+  "timestamp_utc": "2026-11-11T11:27:06Z"
+}

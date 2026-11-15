@@ -1,0 +1,7 @@
+# T47r2 (plan 3b, pre-registered 2026-11-12): the package set an unpinned build resolved at run 6 (2026-10-28 ~10:00Z),
+# = latest PyPI uploads before that time. aiplatform 2.6.0 and google-genai 2.33.0 match run 6's gateway-log user-agent.
+google-cloud-aiplatform[agent_engines,adk]==2.6.0
+google-genai==2.33.0
+google-auth==2.62.0
+google-adk==2.13.0
+requests

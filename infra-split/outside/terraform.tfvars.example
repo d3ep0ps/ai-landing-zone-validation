@@ -1,0 +1,2 @@
+# Copy to terraform.tfvars (git-ignored). Placeholders only.
+quota_project = "SEED_PROJECT_ID" # outside the perimeter; same value as quota_project in infra/

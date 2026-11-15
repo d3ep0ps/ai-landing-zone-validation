@@ -1,0 +1,293 @@
+# T50 stage=main run=run-5 start=2026-11-13T10:27:33Z
+# script_commit=a4c71cd
+# check=B11 (Enforced; part a Configured) control=From inside the agent with its own credentials: permission check and no-op change attempts on its project IAM, the deny policy and its own engine; controls: the operator's same calls (409 stale etag / 200 unchanged name)
+# expected (pre-registered): a: testIamPermissions returns none of the listed permissions on the project and the folder. b: setIamPolicy (stale etag), deny policy update (stale etag) and reasoningEngines.patch of its own engine (unchanged displayName) are all refused with 403. Falsified if: any permission is returned or any attempt is not 403 (then 'outside the agent's reach' must be qualified). Control: the operator's same calls return 409 (stale etag) / 200 (unchanged name). Tier: a Configured, b Enforced. 2+ runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-13T10:27:33Z: plan claim B11; nothing is created; every attempt is a no-op by construction (stale etag / unchanged value); no cleanup_trap registered
+## note 2026-11-13T10:27:34Z: agent principal set roles in the runtime project: roles/aiplatform.agentDefaultAccess
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "be061b3ede7c6541",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-11-13T10:27:36Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "be061b3ede7c6541",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.get"
+                },
+                {
+                  "method": "google.storage.buckets.getIamPolicy"
+                },
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "modelarmor.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "modelarmor.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-11-13T10:27:37Z
+## note 2026-11-13T10:27:38Z: agent: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53 (display name lzv-v3-a)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"boundary\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-13T10:27:46+00:00\", \"agent_name\": \"lzv-v3-a\", \"probe\": {\"step\": \"perms\", \"mtls\": true, \"mtls_error\": \"\", \"perms\": {\"project:resourcemanager.projects.setIamPolicy\": false, \"project:iam.denypolicies.update\": false, \"project:iam.denypolicies.delete\": false, \"project:aiplatform.reasoningEngines.update\": false, \"project:networksecurity.gatewaySecurityPolicies.update\": false, \"project:networksecurity.gatewaySecurityPolicyRules.update\": false, \"project:networkservices.agentGateways.update\": false, \"project:networksecurity.authzPolicies.update\": false, \"project:accesscontextmanager.servicePerimeters.update\": \"error 400: Permission accesscontextmanager.servicePerimeters.update is not valid for this r\", \"project:orgpolicy.policy.set\": false, \"folder:resourcemanager.folders.setIamPolicy\": false, \"folder:iam.denypolicies.update\": false, \"folder:iam.denypolicies.delete\": false, \"folder:accesscontextmanager.servicePerimeters.update\": \"error 400: Permission accesscontextmanager.servicePerimeters.update is not valid for this r\", \"folder:orgpolicy.policy.set\": false}}}"}], "role": "model"}, "invocation_id": "e-28b08918-cdd5-4bf3-900d-e17f63182ce5", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "68b101a0-51a2-4dba-96bc-11170ec40e25", "timestamp": 1794565666.504355}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:27:46Z
+## note 2026-11-13T10:27:46Z: query [ACTION=boundary STEP=perms PROJECT=PROJECT_8 FOLDER=FOLDER_ID_5]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-13T10:27:46Z: a) testIamPermissions: 15 checked; granted: none; errors (not evaluated): project:accesscontextmanager.servicePerimeters.update=error 400: Permission accesscontextmanager.servicePerimeters.update is not valid for this r; folder:accesscontextmanager.servicePerimeters.update=error 400: Permission accesscontextmanager.servicePerimeters.update is not valid for this r
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"boundary\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-13T10:27:48+00:00\", \"agent_name\": \"lzv-v3-a\", \"probe\": {\"step\": \"setiam\", \"mtls\": true, \"mtls_error\": \"\", \"result\": {\"status\": 409, \"error_status\": \"ABORTED\", \"error\": \"There were concurrent policy changes. Please retry the whole read-modify-write with exponential backoff. The request's ETag '\\\\007\\\\006\\\\000\\\\000\\\\000\\\\000\\\\000\\\\000' did not match the current policy's ETag '\\\\007\\\\006`%j\\\\354B\\\\304'.\"}}}"}], "role": "model"}, "invocation_id": "e-957f9f43-78c4-4567-be42-5036e6e96079", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "75dc4464-69b6-4dbd-986e-ae01e98302e3", "timestamp": 1794565668.8345256}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:27:49Z
+## note 2026-11-13T10:27:49Z: query [ACTION=boundary STEP=setiam PROJECT=PROJECT_8]: http_rc=0 line=1 status=200 refused_by=none err=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"boundary\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-13T10:27:50+00:00\", \"agent_name\": \"lzv-v3-a\", \"probe\": {\"step\": \"patch\", \"mtls\": true, \"mtls_error\": \"\", \"result\": {\"status\": 403, \"error_status\": \"PERMISSION_DENIED\", \"error\": \"Permission 'aiplatform.reasoningEngines.update' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://consol\"}}}"}], "role": "model"}, "invocation_id": "e-f2c81342-7a66-4913-802f-f05beb255775", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "1451b600-8556-4962-9afd-c4cd1c649ba3", "timestamp": 1794565670.7052}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:27:51Z
+## note 2026-11-13T10:27:51Z: query [ACTION=boundary STEP=patch ENGINE=projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53 DISPLAY=lzv-v3-a]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-13T10:27:51Z: b1) agent setIamPolicy (stale etag, auditConfigs only)=409 ABORTED; b2) agent patch of its own engine (unchanged name)=403 PERMISSION_DENIED
+## $ curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" -H "x-goog-user-project: PROJECT_6" "$LZV_URL" --data-binary @"$LZV_BF" -w "\nHTTP %{http_code}\n"
+{
+  "error": {
+    "code": 409,
+    "message": "There were concurrent policy changes. Please retry the whole read-modify-write with exponential backoff. The request's ETag '\\007\\006\\000\\000\\000\\000\\000\\000' did not match the current policy's ETag '\\007\\006`%j\\354B\\304'.",
+    "status": "ABORTED"
+  }
+}
+
+HTTP 409
+## exit=0 at 2026-11-13T10:27:52Z
+## $ curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" -H "x-goog-user-project: PROJECT_6" "$LZV_URL" --data-binary @"$LZV_BF" -w "\nHTTP %{http_code}\n"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/operations/1758677438562304000",
+  "metadata": {
+    "@type": "type.googleapis.com/google.cloud.aiplatform.v1.UpdateReasoningEngineOperationMetadata",
+    "genericMetadata": {
+      "createTime": "2026-11-13T10:27:54.151940Z",
+      "updateTime": "2026-11-13T10:27:54.151940Z"
+    }
+  },
+  "done": true,
+  "response": {
+    "@type": "type.googleapis.com/google.cloud.aiplatform.v1.ReasoningEngine",
+    "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53",
+    "displayName": "lzv-v3-a",
+    "spec": {
+      "classMethods": [
+        {
+          "api_mode": "",
+          "name": "create_session"
+        },
+        {
+          "api_mode": "",
+          "name": "get_session"
+        },
+        {
+          "api_mode": "async",
+          "name": "async_create_session"
+        },
+        {
+          "api_mode": "stream",
+          "name": "stream_query"
+        },
+        {
+          "api_mode": "async_stream",
+          "name": "async_stream_query"
+        }
+      ],
+      "deploymentSpec": {
+        "env": [
+          {
+            "name": "GOOGLE_GENAI_USE_VERTEXAI",
+            "value": "True"
+          },
+          {
+            "name": "LZV_REPLAY_URL",
+            "value": "https://lzv-v3h-replay-runhash1-ew.a.run.app"
+          },
+          {
+            "name": "LZV_ALLOWED_URL",
+            "value": "https://lzv-v3h-allowed-runhash1-ew.a.run.app"
+          },
+          {
+            "name": "LZV_MODEL_LOCATION",
+            "value": "global"
+          },
+          {
+            "name": "LZV_SRC_OBJECT",
+            "value": "lzv-v3h-probe.txt"
+          },
+          {
+            "name": "LZV_DENIED_URL",
+            "value": "https://lzv-v3h-denied-runhash1-ew.a.run.app"
+          },
+          {
+            "name": "LZV_OUT_BUCKET",
+            "value": "PROJECT_11-lzv-v3h-out"
+          },
+          {
+            "name": "LZV_SRC_BUCKET",
+            "value": "PROJECT_8-lzv-build-cmek"
+          },
+          {
+            "name": "LZV_PROJECT_ID",
+            "value": "PROJECT_8"
+          },
+          {
+            "name": "HARNESS_GUARD",
+            "value": "on"
+          },
+          {
+            "name": "LZV_INTERNET_URL",
+            "value": "https://example.com"
+          },
+          {
+            "name": "LZV_AGENT_NAME",
+            "value": "lzv-v3-a"
+          },
+          {
+            "name": "LZV_APPROVED_AGENTS",
+            "value": "lzv-v3-a,lzv-v3-a-psci,lzv-v3-a-dep,lzv-v3-a-dep-psci"
+          },
+          {
+            "name": "LZV_MODEL",
+            "value": "gemini-3.5-flash"
+          },
+          {
+            "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+            "value": "true"
+          }
+        ]
+      },
+      "agentFramework": "google-adk",
+      "sourceCodeSpec": {
+        "inlineSource": {},
+        "pythonSpec": {
+          "version": "3.13",
+          "entrypointModule": "agent",
+          "entrypointObject": "app",
+          "requirementsFile": "requirements.txt"
+        }
+      },
+      "identityType": "AGENT_IDENTITY",
+      "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53"
+    },
+    "createTime": "2026-11-13T10:24:25.812068Z",
+    "updateTime": "2026-11-13T10:26:51.073189Z",
+    "description": "Terraform managed.",
+    "contextSpec": {
+      "memoryBankConfig": {
+        "generationConfig": {}
+      }
+    },
+    "labels": {
+      "goog-terraform-provisioned": "true"
+    }
+  }
+}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:27:54Z
+## note 2026-11-13T10:27:54Z: controls (operator): setIamPolicy stale etag=409 ABORTED (expect 409 ABORTED); patch unchanged name=200 (expect 200)

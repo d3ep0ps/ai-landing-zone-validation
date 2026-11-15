@@ -1,0 +1,6 @@
+{
+  "stage": "before",
+  "verdict": "PASS",
+  "note": "before: snapshot written, platform binding present, agent 2 not deployed",
+  "timestamp_utc": "2026-11-11T09:44:45Z"
+}

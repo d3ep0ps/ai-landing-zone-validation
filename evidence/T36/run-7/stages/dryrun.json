@@ -1,0 +1,6 @@
+{
+  "stage": "dryrun",
+  "verdict": "PASS",
+  "note": "dryrun: create allowed; audit entry dryRunResult=DENIED liveResult=ALLOWED for lzv-t36-run7-uwuzw9 in PROJECT_10",
+  "timestamp_utc": "2026-10-28T15:44:50Z"
+}

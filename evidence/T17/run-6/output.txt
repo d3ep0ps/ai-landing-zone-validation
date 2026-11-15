@@ -1,0 +1,65 @@
+# T17 run=run-6 start=2026-10-27T12:59:55Z
+# script_commit=f47408e
+# check=P3 control=run.allowedBinaryAuthorizationPolicies = default (folder)
+# expected (pre-registered): Effective = `default`; deploy refused. Record whether the refusal names the org policy or a Binary Authorization admission rule
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe run.allowedBinaryAuthorizationPolicies --effective --project=PROJECT_9 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_9/policies/run.allowedBinaryAuthorizationPolicies",
+  "spec": {
+    "rules": [
+      {
+        "values": {
+          "allowedValues": [
+            "default"
+          ]
+        }
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-27T12:59:56Z
+## note 2026-10-27T12:59:56Z: Configured part: effective allowedValues contains default
+## $ gcloud run deploy lzv-t17x-run6-i75y31 --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated
+Deploying container to Cloud Run service [[1mlzv-t17x-run6-i75y31[m] in project [[1mPROJECT_9[m] region [[1meurope-west1[m]
+Deploying new service...
+failed
+Deployment failed
+ERROR: (gcloud.run.deploy) FAILED_PRECONDITION: Constraint constraints/run.allowedBinaryAuthorizationPolicies violated for attempting CreateService with annotation "run.googleapis.com/binary-authorization" set to null. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints for more information.
+- '@type': type.googleapis.com/google.rpc.PreconditionFailure
+  violations:
+  - description: Constraint constraints/run.allowedBinaryAuthorizationPolicies violated
+      for attempting CreateService with annotation "run.googleapis.com/binary-authorization"
+      set to null. See https://cloud.google.com/resource-manager/docs/organization-policy/org-policy-constraints
+      for more information.
+    subject: orgpolicy:projects/PROJECT_9
+    type: constraints/run.allowedBinaryAuthorizationPolicies
+## exit=1 at 2026-10-27T12:59:59Z
+## note 2026-10-27T12:59:59Z: refusal names the org policy constraint run.allowedBinaryAuthorizationPolicies
+## $ gcloud run deploy lzv-t17c-run6-jekb2h --image=us-docker.pkg.dev/cloudrun/container/hello --region=europe-west1 --project=PROJECT_9 --ingress=internal --no-allow-unauthenticated --binary-authorization=default
+Deploying container to Cloud Run service [[1mlzv-t17c-run6-jekb2h[m] in project [[1mPROJECT_9[m] region [[1meurope-west1[m]
+Deploying new service...
+Creating Revision.......................................................................................................................done
+Routing traffic.....done
+Done.
+Service [[1mlzv-t17c-run6-jekb2h[m] revision [[1mlzv-t17c-run6-jekb2h-00001-p7t[m] has been deployed and is serving [1m100[m percent of traffic.
+Service URL: [1mhttps://lzv-t17c-run6-jekb2h-PROJECT_NUMBER_9.europe-west1.run.app[m
+## exit=0 at 2026-10-27T13:00:15Z
+## cleanup start 2026-10-27T13:00:15Z
+## $ gcloud run services delete lzv-t17x-run6-i75y31 --region=europe-west1 --project=PROJECT_9 --quiet
+Deleting [lzv-t17x-run6-i75y31]...
+..failed.
+ERROR: (gcloud.run.services.delete) Service [lzv-t17x-run6-i75y31] could not be found.
+## exit=1 at 2026-10-27T13:00:17Z
+## $ gcloud run services describe lzv-t17x-run6-i75y31 --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+ERROR: (gcloud.run.services.describe) Cannot find service [lzv-t17x-run6-i75y31]
+## exit=1 at 2026-10-27T13:00:37Z
+## $ gcloud run services delete lzv-t17c-run6-jekb2h --region=europe-west1 --project=PROJECT_9 --quiet
+Deleting [lzv-t17c-run6-jekb2h]...
+.................done.
+Deleted service [lzv-t17c-run6-jekb2h].
+## exit=0 at 2026-10-27T13:00:41Z
+## $ gcloud run services describe lzv-t17c-run6-jekb2h --region=europe-west1 --project=PROJECT_9 --format='value(metadata.name)'
+ERROR: (gcloud.run.services.describe) Cannot find service [lzv-t17c-run6-jekb2h]
+## exit=1 at 2026-10-27T13:00:43Z
+## cleanup end 2026-10-27T13:00:43Z

@@ -1,0 +1,6 @@
+{
+  "stage": "ingress1",
+  "verdict": "PASS",
+  "note": "ingress1: A=200 (vpcsc=0) B=200 (vpcsc=0) control=200; observation only",
+  "timestamp_utc": "2026-11-13T12:39:54Z"
+}

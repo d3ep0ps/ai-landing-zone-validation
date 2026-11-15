@@ -1,0 +1,24 @@
+# T36 stage=dryrun run=run-7 start=2026-10-28T15:42:37Z
+# script_commit=eb3fbc9
+# check=V2-D control=Organization-level policy: dry-run staging, inheritance to projects, a scoped exception project
+# expected (pre-registered): Dry run: create allowed, audit entry `dryRunResult=DENIED`, `liveResult=ALLOWED` (poll up to 30 min, else INCONCLUSIVE). Enforced: create refused in an inheriting test project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T15:42:39Z $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --organization=ORG_ID --format=json --billing-project=PROJECT_6
+2026-10-28T15:42:39Z $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --project=PROJECT_11 --format=json --billing-project=PROJECT_6
+2026-10-28T15:42:40Z $ gcloud storage buckets create gs://lzv-t36-run7-uwuzw9 --location=europe-west1 --project=PROJECT_10
+2026-10-28T15:42:42Z $ gcloud storage buckets delete gs://lzv-t36-run7-uwuzw9
+2026-10-28T15:42:47Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ AND\ protoPayload.metadata.dryRunResult=\"DENIED\"\ AND\ timestamp\>=\"2026-10-28T15:42:40Z\" --project=PROJECT_10 --limit=20 --format=json
+2026-10-28T15:44:48Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ AND\ protoPayload.metadata.dryRunResult=\"DENIED\"\ AND\ timestamp\>=\"2026-10-28T15:42:40Z\" --project=PROJECT_10 --limit=20 --format=json
+2026-10-28T15:44:50Z $ if gcloud storage buckets describe gs://lzv-t36-run7-uwuzw9 --project=PROJECT_10 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t36-run7-uwuzw9; fi; if gcloud storage buckets describe gs://lzv-t36-run7-uwuzw9 --project=PROJECT_10 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket lzv-t36-run7-uwuzw9 still exists'; else echo 'CLEANUP CHECK: bucket lzv-t36-run7-uwuzw9 gone'; fi
+# T36 stage=enforce run=run-7 start=2026-10-28T16:35:05Z
+# script_commit=eb3fbc9
+# check=V2-D control=Organization-level policy: dry-run staging, inheritance to projects, a scoped exception project
+# expected (pre-registered): Dry run: create allowed, audit entry `dryRunResult=DENIED`, `liveResult=ALLOWED` (poll up to 30 min, else INCONCLUSIVE). Enforced: create refused in an inheriting test project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T16:35:07Z $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --organization=ORG_ID --format=json --billing-project=PROJECT_6
+2026-10-28T16:35:07Z $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --project=PROJECT_11 --format=json --billing-project=PROJECT_6
+2026-10-28T16:35:08Z $ gcloud storage buckets create gs://lzv-t36-run7-5l5nts --location=europe-west1 --project=PROJECT_10
+2026-10-28T16:35:11Z $ gcloud storage buckets create gs://lzv-t36-run7-nxti41 --location=europe-west1 --project=PROJECT_11
+2026-10-28T16:35:13Z $ gcloud storage buckets delete gs://lzv-t36-run7-nxti41
+2026-10-28T16:35:17Z $ if gcloud storage buckets describe gs://lzv-t36-run7-nxti41 --project=PROJECT_11 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t36-run7-nxti41; fi; if gcloud storage buckets describe gs://lzv-t36-run7-nxti41 --project=PROJECT_11 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket lzv-t36-run7-nxti41 still exists'; else echo 'CLEANUP CHECK: bucket lzv-t36-run7-nxti41 gone'; fi
+2026-10-28T16:35:19Z $ if gcloud storage buckets describe gs://lzv-t36-run7-5l5nts --project=PROJECT_10 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t36-run7-5l5nts; fi; if gcloud storage buckets describe gs://lzv-t36-run7-5l5nts --project=PROJECT_10 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket lzv-t36-run7-5l5nts still exists'; else echo 'CLEANUP CHECK: bucket lzv-t36-run7-5l5nts gone'; fi

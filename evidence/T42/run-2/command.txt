@@ -1,0 +1,20 @@
+# T42 stage=before run=run-2 start=2026-11-11T20:16:28Z
+# script_commit=54f8c34
+# check=B3 (Configured) control=Conftest/OPA gate on tfplan.json before and after the deploy; control: synthetic plan with a roles/aiplatform.user grant must fail the gate
+# expected (pre-registered): the gate passes with 0 violations both times, because pre-deploy static analysis only sees declared Terraform resources, not out-of-band `SetIamPolicy` side effects executed by Google's control plane during runtime provisioning. Falsified if: the gate flags the grant. Tier: Configured. Keep the Rego rule in the repo so readers can rerun it.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T20:16:28Z $ conftest --version
+2026-11-11T20:16:28Z $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t42/tfplan-grant.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+2026-11-11T20:16:29Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r2 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r2.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-before.tfplan
+2026-11-11T20:16:35Z $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-before.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-before.json'
+2026-11-11T20:16:36Z $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-before.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+# T42 stage=after run=run-2 start=2026-11-11T21:07:28Z
+# script_commit=54f8c34-dirty
+# check=B3 (Configured) control=Conftest/OPA gate on tfplan.json before and after the deploy; control: synthetic plan with a roles/aiplatform.user grant must fail the gate
+# expected (pre-registered): the gate passes with 0 violations both times, because pre-deploy static analysis only sees declared Terraform resources, not out-of-band `SetIamPolicy` side effects executed by Google's control plane during runtime provisioning. Falsified if: the gate flags the grant. Tier: Configured. Keep the Rego rule in the repo so readers can rerun it.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:07:28Z $ conftest --version
+2026-11-11T21:07:29Z $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t42/tfplan-grant.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+2026-11-11T21:07:29Z $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r2 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r2.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-after.tfplan
+2026-11-11T21:07:36Z $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-after.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-after.json'
+2026-11-11T21:07:36Z $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-after.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color

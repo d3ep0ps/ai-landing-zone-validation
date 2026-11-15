@@ -1,0 +1,3 @@
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:59+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-8e2623b0-4906-4b20-a377-ebe2da7decc8", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "df68a3ae-fb0e-47ad-b930-4c1f6597feb6", "timestamp": 1794414659.883344}
+
+HTTP 200

@@ -1,0 +1,8 @@
+# T50c run=run-1 start=2026-11-13T09:35:06Z
+# script_commit=efd02aa
+# check=B11 b1 control (Enforced) control=A principal matched to the agent (projects.get, no getIamPolicy/setIamPolicy) sends the agent's b1 request (project setIamPolicy, stale etag, auditConfigs only)
+# expected (pre-registered): c1 precondition: the canary holds resourcemanager.projects.get only (of get, getIamPolicy, setIamPolicy), else INCONCLUSIVE. c2: 409 ABORTED, i.e. the stale-etag attempt does not discriminate and T50 b1 is reported with that limitation. Falsified if: c2 = 403 PERMISSION_DENIED. Other answers: INCONCLUSIVE. Tier: Enforced. 1 attempt.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-13T09:35:07Z $ gcloud projects get-iam-policy PROJECT_8 --format=json
+2026-11-13T09:35:08Z $ curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token --impersonate-service-account="$LZV_EMAIL" 2>/dev/null)" -H "Content-Type: application/json" "$LZV_URL" --data-binary @"$LZV_BF" -w "\nHTTP %{http_code}\n"
+2026-11-13T09:35:10Z $ curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token --impersonate-service-account="$LZV_EMAIL" 2>/dev/null)" -H "Content-Type: application/json" "$LZV_URL" --data-binary @"$LZV_BF" -w "\nHTTP %{http_code}\n"

@@ -1,0 +1,6 @@
+{
+  "stage": "deny",
+  "verdict": "PASS",
+  "note": "deny: agent=403 PERMISSION_DENIED; control=409",
+  "timestamp_utc": "2026-11-13T12:57:39Z"
+}

@@ -1,0 +1,20 @@
+# T09 run=run-1 start=2026-10-23T13:52:18Z
+# check=Baseline control=`storage.publicAccessPrevention` (folder)
+# expected (pre-registered): Denied; error refers to public access prevention, not Domain Restricted Sharing
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-23T13:52:18Z: stage guard ok: gcp.restrictNonCmekServices not set on the folder
+## $ gcloud storage buckets create gs://lzv-t09-run1-zp92i4 --location=europe-west1 --project=PROJECT_4
+Creating gs://lzv-t09-run1-zp92i4/...
+## exit=0 at 2026-10-23T13:52:20Z
+## $ gcloud storage buckets add-iam-policy-binding gs://lzv-t09-run1-zp92i4 --member=allUsers --role=roles/storage.objectViewer
+ERROR: (gcloud.storage.buckets.add-iam-policy-binding) HTTPError 412: The member bindings allUsers and allAuthenticatedUsers are not allowed since public access prevention is enforced.
+## exit=1 at 2026-10-23T13:52:21Z
+## note 2026-10-23T13:52:22Z: constraint/terms named in error: none
+## cleanup start 2026-10-23T13:52:22Z
+## $ if gcloud storage buckets describe gs://lzv-t09-run1-zp92i4 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t09-run1-zp92i4; fi; if gcloud storage buckets describe gs://lzv-t09-run1-zp92i4 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi
+  
+Removing gs://lzv-t09-run1-zp92i4/...
+........
+CLEANUP CHECK: bucket gone
+## exit=0 at 2026-10-23T13:52:26Z
+## cleanup end 2026-10-23T13:52:26Z

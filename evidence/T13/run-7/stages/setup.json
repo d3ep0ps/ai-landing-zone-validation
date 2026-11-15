@@ -1,0 +1,6 @@
+{
+  "stage": "setup",
+  "verdict": "PASS",
+  "note": "buckets lzv-t13a-run7-r5dhn6 (data) and lzv-t13b-run7-1p2296 (outside) created, object probe.txt uploaded",
+  "timestamp_utc": "2026-10-28T15:29:46Z"
+}

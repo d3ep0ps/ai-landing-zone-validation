@@ -1,0 +1,6 @@
+{
+  "stage": "ingress",
+  "verdict": "FAIL",
+  "note": "ingress: A tool=200/none, A model=200/none; B tool=200/none, B model=200/none; B reached the non-allowed host (A and B behave the same)",
+  "timestamp_utc": "2026-11-11T14:24:36Z"
+}

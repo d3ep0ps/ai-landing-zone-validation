@@ -1,0 +1,609 @@
+# T40b stage=pre run=run-1 start=2026-11-12T16:58:31Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-12T16:58:31Z: plan claim B1; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-12T16:58:31Z: dedicated project: PROJECT_9 (label r1)
+## $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_9"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    }
+  ],
+  "etag": "BwZf_Odgwgg=",
+  "version": 1
+}
+## exit=0 at 2026-11-12T16:58:32Z
+## note 2026-11-12T16:58:32Z: snapshot pre written to evidence/T40b/run-1/iam-pre
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r1 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r1.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-pre.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_9/aiplatform.googleapis.com]
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_9/serviceusage.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudresourcemanager.googleapis.com]
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudbuild.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_9/iam.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_9/storage.googleapis.com]
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_9/logging.googleapis.com]
+data.google_project.existing[0]: Read complete after 2s [id=projects/PROJECT_9]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_9/roles/editor/user:USER_1@example.com]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_9/roles/iam.serviceAccountUser/user:USER_1@example.com]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_9/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+module.agent["1"].google_vertex_ai_reasoning_engine.managed[0]: Refreshing state... [id=projects/PROJECT_9/locations/europe-west1/reasoningEngines/AGENT_ID_39]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+## exit=0 at 2026-11-12T16:58:40Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-pre.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40b/run-1/plan-pre.json'
+## exit=0 at 2026-11-12T16:58:40Z
+## note 2026-11-12T16:58:40Z: plan pre: exit=0 changes=[]
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"model\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-12T16:58:44+00:00\", \"agent_name\": \"\"}"}], "role": "model"}, "invocation_id": "e-f21ff870-6ed8-4a12-b304-cb2eccc51d49", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "5dbd172b-a87b-4652-8e0a-d2a8fa5c4293", "timestamp": 1794502724.3546495}
+
+HTTP 200
+## exit=0 at 2026-11-12T16:58:44Z
+## note 2026-11-12T16:58:44Z: query [ACTION=model MODE=bypass]: http_rc=0 line=1 status=200 refused_by=none err=none
+# T40b stage=drift run=run-1 start=2026-11-12T16:58:47Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-12T16:58:47Z: plan claim B1; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-12T16:58:48Z: dedicated project: PROJECT_9 (label r1)
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r1 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r1.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-drift.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_9/aiplatform.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_9/storage.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudresourcemanager.googleapis.com]
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_9/serviceusage.googleapis.com]
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudbuild.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_9/iam.googleapis.com]
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_9/logging.googleapis.com]
+data.google_project.existing[0]: Read complete after 2s [id=projects/PROJECT_9]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_9/roles/iam.serviceAccountUser/user:USER_1@example.com]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_9/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_9/roles/editor/user:USER_1@example.com]
+module.agent["1"].google_vertex_ai_reasoning_engine.managed[0]: Refreshing state... [id=projects/PROJECT_9/locations/europe-west1/reasoningEngines/AGENT_ID_39]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # module.agent["1"].google_vertex_ai_reasoning_engine.managed[0] has changed
+  ~ resource "google_vertex_ai_reasoning_engine" "managed" {
+        id               = "projects/PROJECT_9/locations/europe-west1/reasoningEngines/AGENT_ID_39"
+      + labels           = {}
+        name             = "AGENT_ID_39"
+        # (10 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_project_iam_binding.t40b[0] will be created
+  + resource "google_project_iam_binding" "t40b" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + project = "PROJECT_9"
+      + role    = "roles/aiplatform.agentDefaultAccess"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to:
+/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-drift.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-drift.tfplan"
+## exit=2 at 2026-11-12T16:58:55Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-drift.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40b/run-1/plan-drift.json'
+## exit=0 at 2026-11-12T16:58:55Z
+## note 2026-11-12T16:58:55Z: plan drift: exit=2 changes=[google_project_iam_binding.t40b[0] create]
+# T40b stage=call run=run-1 start=2026-11-12T17:06:23Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-12T17:06:23Z: plan claim B1; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-12T17:06:23Z: dedicated project: PROJECT_9 (label r1)
+## $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    }
+  ],
+  "etag": "BwZgFzs-42o=",
+  "version": 1
+}
+## exit=0 at 2026-11-12T17:06:24Z
+## note 2026-11-12T17:06:24Z: snapshot call written to evidence/T40b/run-1/iam-call
+{"scope":"project-v3h","change":"removed","role":"roles/aiplatform.agentDefaultAccess","member":"principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_9"}
+## note 2026-11-12T17:06:24Z: platform binding removed by the apply: 1
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"model\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"http_status\", \"status\": 403, \"error\": \"ClientError: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \\\"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_9/locations/global/publishers/google/models/gemini-3.5-flash' (or it may not exist). Remediate access with this\", \"timestamp\": \"2026-11-12T17:06:25+00:00\", \"agent_name\": \"\"}"}], "role": "model"}, "invocation_id": "e-21cf460c-02d2-4d31-a7f0-bc6dbb3d8749", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "d31049b2-d950-4ff6-8bde-5453be5f4251", "timestamp": 1794503185.4949243}
+
+HTTP 200
+## exit=0 at 2026-11-12T17:06:25Z
+## note 2026-11-12T17:06:25Z: query [ACTION=model MODE=bypass]: http_rc=0 line=1 status=403 refused_by=http_status err=ClientError: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': "Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_9/locations/global/publishers/google/models/gemini-3.5-flash' (or it may not exist). Remediate access with this
+# T40b stage=agent2 run=run-1 start=2026-11-12T17:13:59Z
+# script_commit=24fe4d6
+# check=B1 complement (Enforced for the 403 call, Configured for plan drift) control=Authoritative google_project_iam_binding for roles/aiplatform.agentDefaultAccess with members = []; control: agent 1 model call succeeds before the binding
+# expected (pre-registered): `plan` detects drift (exit 2); applying `members = []` breaks agent 1's model calls (`403`); deploying agent 2 either re-introduces the drift or leaves agents broken. Tier: Enforced (for the 403 call) + Configured (for plan drift).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-12T17:13:59Z: plan claim B1; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-12T17:14:00Z: dedicated project: PROJECT_9 (label r1)
+## $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_9"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    }
+  ],
+  "etag": "BwZgF1YLQ_0=",
+  "version": 1
+}
+## exit=0 at 2026-11-12T17:14:01Z
+## note 2026-11-12T17:14:01Z: snapshot agent2 written to evidence/T40b/run-1/iam-agent2
+{"scope":"project-v3h","change":"added","role":"roles/aiplatform.agentDefaultAccess","member":"principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_9"}
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r1 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r1.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-agent2.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudbuild.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudresourcemanager.googleapis.com]
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_9/logging.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_9/iam.googleapis.com]
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_9/serviceusage.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_9/storage.googleapis.com]
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_9/aiplatform.googleapis.com]
+data.google_project.existing[0]: Read complete after 1s [id=projects/PROJECT_9]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_9/roles/editor/user:USER_1@example.com]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_9/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_9/roles/iam.serviceAccountUser/user:USER_1@example.com]
+google_project_iam_binding.t40b[0]: Refreshing state... [id=PROJECT_9/roles/aiplatform.agentDefaultAccess]
+module.agent["1"].google_vertex_ai_reasoning_engine.managed[0]: Refreshing state... [id=projects/PROJECT_9/locations/europe-west1/reasoningEngines/AGENT_ID_39]
+module.agent["2"].google_vertex_ai_reasoning_engine.managed[0]: Refreshing state... [id=projects/PROJECT_9/locations/europe-west1/reasoningEngines/AGENT_ID_40]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+  # module.agent["2"].google_vertex_ai_reasoning_engine.managed[0] has changed
+  ~ resource "google_vertex_ai_reasoning_engine" "managed" {
+        id               = "projects/PROJECT_9/locations/europe-west1/reasoningEngines/AGENT_ID_40"
+      + labels           = {}
+        name             = "AGENT_ID_40"
+        # (10 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # google_project_iam_binding.t40b[0] will be updated in-place
+  ~ resource "google_project_iam_binding" "t40b" {
+        id      = "PROJECT_9/roles/aiplatform.agentDefaultAccess"
+      ~ members = [
+          - "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_9",
+        ]
+        # (3 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to:
+/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-agent2.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-agent2.tfplan"
+## exit=2 at 2026-11-12T17:14:28Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r1-T40b-run-1-agent2.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40b/run-1/plan-agent2.json'
+## exit=0 at 2026-11-12T17:14:29Z
+## note 2026-11-12T17:14:29Z: plan agent2: exit=2 changes=[google_project_iam_binding.t40b[0] update]
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"model\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-12T17:14:33+00:00\", \"agent_name\": \"\"}"}], "role": "model"}, "invocation_id": "e-1a6b2a8a-239f-42b6-aedf-06c7d227edb2", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "1b2db289-1092-4d94-92db-907dc736e400", "timestamp": 1794503673.4781291}
+
+HTTP 200
+## exit=0 at 2026-11-12T17:14:33Z
+## note 2026-11-12T17:14:33Z: query [ACTION=model MODE=bypass]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-12T17:14:33Z: after agent 2: platform binding re-added=1; plan exit=2; agent 2 call status=200

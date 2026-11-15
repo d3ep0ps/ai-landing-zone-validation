@@ -1,0 +1,25 @@
+{
+  "id": "T27",
+  "check": "A",
+  "control": "Folder floor setting on (prompt injection and jailbreak, MEDIUM_AND_ABOVE, enforcement on). Create a project template with the filter off or at HIGH only",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Weak template create fails (non-zero exit, error from `modelarmor.googleapis.com`; text recorded as observed); the weak template does not exist afterwards",
+  "actual": "at-floor template: PASS; weak (filter off): refused, exists=no; weak (HIGH only): refused, exists=no",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T27/run-7/command.txt",
+  "output_file": "evidence/T27/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-28T16:08:55Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/model-armor/configure-floor-settings",
+    "https://docs.cloud.google.com/model-armor/manage-templates"
+  ],
+  "script_commit": "eb3fbc9"
+}

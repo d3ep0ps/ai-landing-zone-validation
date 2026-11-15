@@ -1,0 +1,25 @@
+{
+  "id": "T42",
+  "check": "B3 (Configured)",
+  "control": "Conftest/OPA gate on tfplan.json before and after the deploy; control: synthetic plan with a roles/aiplatform.user grant must fail the gate",
+  "scope": "projects/PROJECT_11",
+  "expected": "the gate passes with 0 violations both times, because pre-deploy static analysis only sees declared Terraform resources, not out-of-band `SetIamPolicy` side effects executed by Google's control plane during runtime provisioning. Falsified if: the gate flags the grant. Tier: Configured. Keep the Rego rule in the repo so readers can rerun it.",
+  "actual": "before: before: control=PASS, real plan gate=PASS (plan exit 0); after: control=PASS, real plan gate=PASS (plan exit 0)",
+  "verdict": "PASS",
+  "tier": "Configured",
+  "reason": "",
+  "commands_file": "evidence/T42/run-3/command.txt",
+  "output_file": "evidence/T42/run-3/output.txt",
+  "run_id": "run-3",
+  "timestamp_utc": "2026-11-13T04:24:30Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://www.conftest.dev/install/",
+    "https://developer.hashicorp.com/terraform/internals/json-format"
+  ],
+  "script_commit": "d998479"
+}

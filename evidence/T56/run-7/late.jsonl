@@ -1,0 +1,13 @@
+{"tool":"registered_echo","host":"reg","expected":"200","status":"404","start":1794570984,"end":1794570993,"usable":false,"n":0,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"404","start":1794570993,"end":1794571000,"usable":false,"n":0,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"404","start":1794571000,"end":1794571013,"usable":false,"n":0,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"404","start":1794571013,"end":1794571019,"usable":false,"n":1,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"404","start":1794571019,"end":1794571025,"usable":false,"n":1,"denied":false}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794571025,"end":1794571031,"usable":true,"n":1,"denied":true}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794571031,"end":1794571040,"usable":true,"n":2,"denied":true}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794571040,"end":1794571046,"usable":true,"n":0,"denied":false}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794571046,"end":1794571052,"usable":true,"n":1,"denied":true}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794571053,"end":1794571068,"usable":true,"n":1,"denied":true}
+{"tool":"inject_response","host":"reg","expected":"403","status":"404","start":1794571068,"end":1794571078,"usable":false,"n":1,"denied":false}
+{"tool":"inject_response","host":"reg","expected":"403","status":"404","start":1794571078,"end":1794571086,"usable":false,"n":1,"denied":false}
+{"tool":"inject_response","host":"reg","expected":"403","status":"404","start":1794571086,"end":1794571094,"usable":false,"n":1,"denied":false}

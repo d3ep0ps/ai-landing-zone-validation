@@ -1,0 +1,379 @@
+# T48b run=run-4 start=2026-11-13T07:58:20Z
+# script_commit=02c5d5e
+# check=B9 (Enforced) control=Agent X's bound token presented over agent Y's own mTLS session (Y's agent certificate) to the mTLS Vertex AI endpoint; controls: X's own call 200, Y's own token over its session 200
+# expected (pre-registered): Expected: 401 (UNAUTHENTICATED / Context-Aware Access). Falsified if: 200 (binding not checked against the presenting certificate). INCONCLUSIVE if: a control fails or any 403. Docs are silent on a fingerprint match; the expectation is an inference from 'only usable by the agent running in its provisioned environment'. Tier: Enforced. 2+ runs. Tokens in memory only.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-13T07:58:20Z: plan claim B9 (wrong certificate); no resources are created by this script; no cleanup_trap registered
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_51",
+  "displayName": "lzv-v3-a",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_REPLAY_URL",
+          "value": "https://lzv-v3h-replay-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_ALLOWED_URL",
+          "value": "https://lzv-v3h-allowed-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "LZV_SRC_OBJECT",
+          "value": "lzv-v3h-probe.txt"
+        },
+        {
+          "name": "LZV_DENIED_URL",
+          "value": "https://lzv-v3h-denied-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_OUT_BUCKET",
+          "value": "PROJECT_11-lzv-v3h-out"
+        },
+        {
+          "name": "LZV_SRC_BUCKET",
+          "value": "PROJECT_8-lzv-build-cmek"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "HARNESS_GUARD",
+          "value": "on"
+        },
+        {
+          "name": "LZV_INTERNET_URL",
+          "value": "https://example.com"
+        },
+        {
+          "name": "LZV_AGENT_NAME",
+          "value": "lzv-v3-a"
+        },
+        {
+          "name": "LZV_APPROVED_AGENTS",
+          "value": "lzv-v3-a,lzv-v3-a-psci,lzv-v3-a-dep,lzv-v3-a-dep-psci"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ]
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_51"
+  },
+  "createTime": "2026-11-13T07:53:18.081040Z",
+  "updateTime": "2026-11-13T07:55:38.230208Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-13T07:58:21Z
+## note 2026-11-13T07:58:21Z: engine env (selected names): ["HARNESS_GUARD","LZV_AGENT_NAME","LZV_ALLOWED_URL","LZV_APPROVED_AGENTS","LZV_DENIED_URL","LZV_INTERNET_URL","LZV_MODEL","LZV_MODEL_LOCATION","LZV_OUT_BUCKET","LZV_PROJECT_ID","LZV_REPLAY_URL","LZV_SRC_BUCKET","LZV_SRC_OBJECT"]
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_52",
+  "displayName": "lzv-v3-x",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_REPLAY_URL",
+          "value": "https://lzv-v3h-replay-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_ALLOWED_URL",
+          "value": "https://lzv-v3h-allowed-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "LZV_AGENT_NAME",
+          "value": "lzv-v3-x"
+        },
+        {
+          "name": "LZV_SRC_OBJECT",
+          "value": "lzv-v3h-probe.txt"
+        },
+        {
+          "name": "LZV_DENIED_URL",
+          "value": "https://lzv-v3h-denied-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_OUT_BUCKET",
+          "value": "PROJECT_11-lzv-v3h-out"
+        },
+        {
+          "name": "LZV_SRC_BUCKET",
+          "value": "PROJECT_8-lzv-build-cmek"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "HARNESS_GUARD",
+          "value": "on"
+        },
+        {
+          "name": "LZV_INTERNET_URL",
+          "value": "https://example.com"
+        },
+        {
+          "name": "LZV_APPROVED_AGENTS",
+          "value": "lzv-v3-a,lzv-v3-a-psci,lzv-v3-a-dep,lzv-v3-a-dep-psci"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ]
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_52"
+  },
+  "createTime": "2026-11-13T07:50:53.959499Z",
+  "updateTime": "2026-11-13T07:53:08.949128Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-13T07:58:22Z
+## note 2026-11-13T07:58:22Z: engine env (selected names): ["HARNESS_GUARD","LZV_AGENT_NAME","LZV_ALLOWED_URL","LZV_APPROVED_AGENTS","LZV_DENIED_URL","LZV_INTERNET_URL","LZV_MODEL","LZV_MODEL_LOCATION","LZV_OUT_BUCKET","LZV_PROJECT_ID","LZV_REPLAY_URL","LZV_SRC_BUCKET","LZV_SRC_OBJECT"]
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "be061b3ede7c6541",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-11-13T07:58:23Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "be061b3ede7c6541",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.get"
+                },
+                {
+                  "method": "google.storage.buckets.getIamPolicy"
+                },
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "modelarmor.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "modelarmor.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-11-13T07:58:25Z
+## note 2026-11-13T07:58:25Z: X: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_51; Y: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_52; nonce t48b0758250327df
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"relay_put\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-13T07:58:28+00:00\", \"agent_name\": \"lzv-v3-a\", \"probe\": {\"nonce\": \"t48b0758250327df\", \"token_sha12\": \"18b1e354d6ef\", \"own_mtls\": true, \"own_mtls_error\": \"\", \"own\": {\"status\": 200, \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a1+fHXqCxLNAcW9S4y6WicoATU+/7VnuKDtJ/2FxgaHYPasErI/GENw45CE1JFPLboJpO8Rl7pr9JaoV5YXYbxKlu1Bz0lohs6cZP1aqtbnmiUeVbGgtOiybOn2gj8+jiV/q9QrxBQXj3ctqBq9NPtMHY+tPcy+FcpIgE7eZ78I7k6SkqnLvM4KADNq42+Y+Newema6FvcpfVQPYOcv7LG7FeEKffXyihD5Td09hZaCg\"}, \"put_status\": 200}}"}], "role": "model"}, "invocation_id": "e-66aefac1-58f4-490f-8663-9936565c80b8", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "431b5540-4341-4c8c-b4d9-ea8668012883", "timestamp": 1794556708.7108088}
+
+HTTP 200
+## exit=0 at 2026-11-13T07:58:29Z
+## note 2026-11-13T07:58:29Z: query [ACTION=relay_put NONCE=t48b0758250327df]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-13T07:58:29Z: X: own call over its mTLS session=200 (is_mtls=true); relay put=200; token sha12=18b1e354d6ef
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"relay_take\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-13T07:58:33+00:00\", \"agent_name\": \"lzv-v3-x\", \"probe\": {\"nonce\": \"t48b0758250327df\", \"take_status\": 200, \"x_token_sha12\": \"18b1e354d6ef\", \"x_over_y_mtls\": true, \"x_over_y_mtls_error\": \"\", \"x_over_y\": {\"status\": null, \"error\": \"RefreshError: The credentials do not contain the necessary fields need to refresh the access token. You must specify refresh_token, token_uri, client_id, and client_secret.\"}, \"y_own_mtls\": true, \"y_own_mtls_error\": \"\", \"y_own\": {\"status\": 200, \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a1++lgYuAtgThy0xryzK5r+919hz/2QwtQv33XI58fG71SDZTlMiDIcx9I8uTfjZNbF4Gxk+z6lw5YYmB8891qIJ4NuBovmhgK8UkBHbZNO2eQV0TULEpmwvigOKa4gcG4aLDORtBfY2wV0fgTnbeYhBPVAsGgxG5/mxuNxlluplqZMMTNvu51BB/oq5Ir12F2mWb8nnm4D9iLseafKB8/eBY5w25veEi6k0/z2DfjT9\"}}}"}], "role": "model"}, "invocation_id": "e-0407f5d2-1ae0-4bcd-8993-8cda04a8f11b", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "7b46bb44-82ee-4067-86d1-db0e5637d4de", "timestamp": 1794556713.3214738}
+
+HTTP 200
+## exit=0 at 2026-11-13T07:58:33Z
+## note 2026-11-13T07:58:33Z: query [ACTION=relay_take NONCE=t48b0758250327df]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-13T07:58:33Z: Y: relay take=200 (sha12 18b1e354d6ef, same token=yes); X's token over Y's session=none (is_mtls=true;  RefreshError: The credentials do not contain the necessary fields need to refresh the access token. You must specify refresh_token, token_uri, client_id, and client_secret.); Y own token=200 (is_mtls=true)

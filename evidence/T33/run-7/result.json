@@ -1,0 +1,27 @@
+{
+  "id": "T33",
+  "check": "V2-C",
+  "control": "Agent Runtime with a PSC interface; internet only through Secure Web Proxy over the attachment",
+  "scope": "projects/PROJECT_8",
+  "expected": "example.com 200 through the proxy; non-allowed host refused on CONNECT (403) with `DENIED` in `gateway_requests`",
+  "actual": "allowed host via proxy: 200; non-allowed host: refused on CONNECT (403: ProxyError: HTTPSConnectionPool(host='www.wikipedia.org', port=443): Max retries exceeded with url: / (Caused by ProxyEr); gateway_requests DENIED entry present (names wikipedia: 1)",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T33/run-7/command.txt",
+  "output_file": "evidence/T33/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-29T12:03:59Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://codelabs.developers.google.com/agent-engine-psc-interface-swp",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/private-service-connect-interface",
+    "https://docs.cloud.google.com/secure-web-proxy/docs/monitor-logs",
+    "https://docs.cloud.google.com/vertex-ai/docs/general/vpc-service-controls"
+  ],
+  "script_commit": "8baedc8"
+}

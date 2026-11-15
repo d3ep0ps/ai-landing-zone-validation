@@ -1,0 +1,26 @@
+{
+  "id": "T49",
+  "check": "B10 (Enforced)",
+  "control": "Replay, from a different workload, of a bound agent token that was used on the Agent Gateway path; controls: the agent's gateway call 200, replay service with operator credentials 200, opt-out token replay 200",
+  "scope": "projects/PROJECT_8",
+  "expected": "s1: the bound agent's own call through the gateway returns 200 (T47 s2 reproduced). s2: the same token replayed from the replay service (other project, no agent certificate) against the same endpoint and payload is refused with 401 UNAUTHENTICATED: the token taken on the gateway path is bound and binding is enforced on the replay. s3 (stage optout, G-optout): replay 200. Falsified if: s2 returns 200 (a token used on the gateway path is replayable from another workload). INCONCLUSIVE if: the s3 replay is not 200, s1 is not 200, either replay returns 403 (fixture IAM), or the replay request cannot reach the service through the gateway egress policy. Tier: Enforced. 3 runs.",
+  "actual": "bound: bound: s1 own(gateway)=200 mTLS-host=200 control2=200 replay=401 sha12=58e5031760ce; google-auth=2.62.1 agent_cert=true should_request_bound=true env_runtime_bound=none; optout: own=200 control2=200 replay=200 sha12=948875ffbaed",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T49/run-3/command.txt",
+  "output_file": "evidence/T49/run-3/output.txt",
+  "run_id": "run-3",
+  "timestamp_utc": "2026-11-13T04:52:04Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/troubleshooting/runtime-setup",
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security"
+  ],
+  "script_commit": "d998479"
+}

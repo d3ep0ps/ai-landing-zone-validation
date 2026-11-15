@@ -1,0 +1,33 @@
+# T44 stage=pre run=run-1 start=2026-11-11T12:29:31Z
+# script_commit=831b29a-dirty
+# check=B5 (Enforced) control=Identical artifact deployed before (A) and after (B) perimeter enforcement; control: baseline calls in dry-run, then same calls with the agent ingress rule
+# expected (pre-registered): Expected (from T14R/T23): without the ingress rule, A's own model calls are refused (agent unusable), B has no internet; with the ingress rule, A keeps internet access, B has none. Falsified if: A and B behave the same. Tier: Enforced.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T12:29:32Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-11T12:29:34Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-11T12:29:35Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T12:29:39Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T44 stage=noingress run=run-1 start=2026-11-11T14:06:10Z
+# script_commit=831b29a-dirty
+# check=B5 (Enforced) control=Identical artifact deployed before (A) and after (B) perimeter enforcement; control: baseline calls in dry-run, then same calls with the agent ingress rule
+# expected (pre-registered): Expected (from T14R/T23): without the ingress rule, A's own model calls are refused (agent unusable), B has no internet; with the ingress rule, A keeps internet access, B has none. Falsified if: A and B behave the same. Tier: Enforced.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T14:06:11Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-11T14:06:12Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-11T14:06:13Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:06:14Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:06:16Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:06:20Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:06:25Z $ gcloud logging read protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\" --project=PROJECT_8 --freshness=30m --limit=10 --format=json
+# T44 stage=ingress run=run-1 start=2026-11-11T14:24:18Z
+# script_commit=831b29a-dirty
+# check=B5 (Enforced) control=Identical artifact deployed before (A) and after (B) perimeter enforcement; control: baseline calls in dry-run, then same calls with the agent ingress rule
+# expected (pre-registered): Expected (from T14R/T23): without the ingress rule, A's own model calls are refused (agent unusable), B has no internet; with the ingress rule, A keeps internet access, B has none. Falsified if: A and B behave the same. Tier: Enforced.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T14:24:19Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-11T14:24:21Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-11T14:24:22Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:24:24Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:24:28Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:24:30Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-11T14:24:34Z $ gcloud logging read protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\" --project=PROJECT_8 --freshness=30m --limit=10 --format=json

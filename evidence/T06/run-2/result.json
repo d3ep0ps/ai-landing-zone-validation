@@ -1,0 +1,25 @@
+{
+  "id": "T06",
+  "check": "I5",
+  "control": "`discoveryengine.managed.disableCustomMcpServerConnector` (folder)",
+  "scope": "folders/FOLDER_ID_2; projects/PROJECT_5",
+  "expected": "Effective = enforced",
+  "actual": "after: folder root enforce=true; project mcp enforce=true | recorded before folder policy: folder root enforce=true; project mcp enforce=true",
+  "verdict": "PASS",
+  "tier": "Configured",
+  "reason": "",
+  "commands_file": "evidence/T06/run-2/command.txt",
+  "output_file": "evidence/T06/run-2/output.txt",
+  "run_id": "run-2",
+  "timestamp_utc": "2026-10-25T05:01:16Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini/enterprise/docs/connectors/custom-mcp-server/override-constraint-for-custom-mcp-data-stores",
+    "https://docs.cloud.google.com/gemini/enterprise/docs/connectors/managed-policy-constraints-overview",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ]
+}

@@ -1,0 +1,31 @@
+# POST-RUN LOOKUP (not part of the test script). Read-only, made by Opus on 2026-10-29 after the run, during the report review.
+# Command: gcloud logging read 'logName="projects/RUNTIME/logs/networkservices.googleapis.com%2Fgateway_requests" AND timestamp>="2026-10-29T20:00:30Z" AND timestamp<="2026-10-29T20:03:30Z"' --project=RUNTIME --limit=200 --format=json
+# Rows below: entries between 20:00:30 and 20:01:28 (this test's run window). Columns: time(UTC) status url(query stripped) mcp_tool authz_policy_results
+20:00:38.47	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:38.77	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:39.08	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:39.10	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:41.75	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:42.63	200	-	-	
+20:00:42.63	200	https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publ	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:44.50	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:44.83	200	-	-	
+20:00:45.05	404	https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp	registered_echo	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:45.35	200	-	-	
+20:00:45.35	200	-	-	
+20:00:45.36	404	https://iamcredentials.mtls.googleapis.com/v1/projects/-/serviceAccounts/REDACTED	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:45.36	200	https://telemetry.mtls.googleapis.com/v1/logs	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:45.40	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:45.63	200	https://aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/global/publ	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:47.51	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:47.74	200	-	-	
+20:00:48.09	200	-	-	
+20:00:49.44	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:49.89	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:51.55	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:51.84	200	-	-	
+20:00:51.88	403	https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app/mcp	unregistered_echo	lzv-gw-iap-policy=DENIED
+20:00:51.99	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:53.50	200	https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/location	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+20:00:53.91	200	https://telemetry.mtls.googleapis.com/v1/metrics	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+# counts in window: 27 entries; non-200: 3

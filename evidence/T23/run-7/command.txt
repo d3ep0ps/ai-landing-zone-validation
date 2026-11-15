@@ -1,0 +1,17 @@
+# T23 stage=pre run=run-7 start=2026-10-29T04:37:04Z
+# script_commit=8baedc8
+# check=Reach control=DC2 (3): agent deployed before the project joins the perimeter, ingress rule for agent identities
+# expected (pre-registered): Per Google docs: A's fetch succeeds, B's fetch fails. That A's API calls work with the ingress rule is a prediction (undocumented); if they are still refused: INCONCLUSIVE with the violation reason
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T04:37:05Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-29T04:37:06Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-29T04:37:08Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t23","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+# T23 stage=post run=run-7 start=2026-10-29T07:52:56Z
+# script_commit=8baedc8
+# check=Reach control=DC2 (3): agent deployed before the project joins the perimeter, ingress rule for agent identities
+# expected (pre-registered): Per Google docs: A's fetch succeeds, B's fetch fails. That A's API calls work with the ingress rule is a prediction (undocumented); if they are still refused: INCONCLUSIVE with the violation reason
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-29T07:52:57Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-29T07:52:59Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-29T07:53:01Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_17:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t23","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-29T07:53:06Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_18:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t23","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

@@ -1,0 +1,6 @@
+{
+  "stage": "off",
+  "verdict": "PASS",
+  "note": "off: ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=none/200, a-dep=none/200, b-dep=none/200, c-dep=none/200, ctl-restored=adk_callback/none",
+  "timestamp_utc": "2026-11-13T13:08:54Z"
+}

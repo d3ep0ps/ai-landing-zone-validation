@@ -1,0 +1,15 @@
+[PROJECT_6]. Would you like to enable and retry (this will take a few 
+minutes)? (y/N)?  
+ERROR: (gcloud.policy-intelligence.troubleshoot-policy.iam) PERMISSION_DENIED: Policy Troubleshooter API has not been used in project PROJECT_6 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/policytroubleshooter.googleapis.com/overview?project=PROJECT_6 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property.
+Policy Troubleshooter API has not been used in project PROJECT_6 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/policytroubleshooter.googleapis.com/overview?project=PROJECT_6 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+Google developers console API activation
+https://console.developers.google.com/apis/api/policytroubleshooter.googleapis.com/overview?project=PROJECT_6
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: googleapis.com
+  metadata:
+    activationUrl: https://console.developers.google.com/apis/api/policytroubleshooter.googleapis.com/overview?project=PROJECT_6
+    consumer: projects/PROJECT_6
+    containerInfo: PROJECT_6
+    service: policytroubleshooter.googleapis.com
+    serviceTitle: Policy Troubleshooter API
+  reason: SERVICE_DISABLED

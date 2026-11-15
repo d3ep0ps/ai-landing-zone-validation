@@ -1,0 +1,6 @@
+{
+  "stage": "pre",
+  "verdict": "PASS",
+  "note": "pre: A model 200, A denied-host call 200 in dry-run",
+  "timestamp_utc": "2026-11-11T12:29:41Z"
+}

@@ -1,0 +1,113 @@
+# T52 stage=default run=run-5 start=2026-11-13T10:27:57Z
+# script_commit=a4c71cd
+# check=B13 (Enforced) control=Agent B reads/queries agent A's sessions and memory, without and with project-level agentContextEditor on the agents principal set; control: the operator's same calls 200
+# expected (pre-registered): default (no extra grant): sessions.list, sessions.get, memories.list and reasoningEngines.query on A from B all 403. granted (agentContextEditor on the project): B can list and read A's sessions and memories (200, recorded as an allowed action: no per-agent scoping documented); reasoningEngines.query on A still 403. Falsified if: default allows any call, or granted refuses the session/memory reads (then a per-agent scope exists; record how). Tier: Enforced. 2+ runs. Synthetic session content only.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-13T10:27:57Z: plan claim B13; the operator creates one session with synthetic state; the grant is Terraform-managed (infra/v3h-t52.tf); no cleanup_trap registered
+## note 2026-11-13T10:27:59Z: agentContextEditor bindings for the agents principal set in the runtime project: 0
+## $ if [ -n "$LZV_J" ]; then d=(-d "$LZV_J"); else d=(); fi; curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" "$LZV_URL" "${d[@]}" -w "\nHTTP %{http_code}\n"
+{
+  "output": {
+    "id": "5600461157245648896",
+    "user_id": "lzv-t52",
+    "state": {
+      "note": "synthetic t52 session"
+    },
+    "last_update_time": 1794565680.151401,
+    "events": [],
+    "app_name": "AGENT_ID_53"
+  }
+}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:28:00Z
+## $ if [ -n "$LZV_J" ]; then d=(-d "$LZV_J"); else d=(); fi; curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" "$LZV_URL" "${d[@]}" -w "\nHTTP %{http_code}\n"
+{
+  "sessions": [
+    {
+      "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/5600461157245648896",
+      "createTime": "2026-11-13T10:28:00.151401Z",
+      "updateTime": "2026-11-13T10:28:00.151401Z",
+      "sessionState": {
+        "note": "synthetic t52 session"
+      },
+      "userId": "lzv-t52",
+      "expireTime": "2027-11-13T10:28:00.146381Z"
+    },
+    {
+      "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/3060430967408689152",
+      "createTime": "2026-11-13T10:27:50.014849Z",
+      "updateTime": "2026-11-13T10:27:50.756191Z",
+      "userId": "lzv-v3h",
+      "expireTime": "2027-11-13T10:27:50.010437Z"
+    },
+    {
+      "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/5942734728925806592",
+      "createTime": "2026-11-13T10:27:47.768380Z",
+      "updateTime": "2026-11-13T10:27:48.919695Z",
+      "userId": "lzv-v3h",
+      "expireTime": "2027-11-13T10:27:47.764369Z"
+    },
+    {
+      "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/7951340162733047808",
+      "createTime": "2026-11-13T10:27:39.799649Z",
+      "updateTime": "2026-11-13T10:27:46.599103Z",
+      "userId": "lzv-v3h",
+      "expireTime": "2027-11-13T10:27:39.790820Z"
+    },
+    {
+      "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/1213955120186785792",
+      "createTime": "2026-11-13T10:27:21.920083Z",
+      "updateTime": "2026-11-13T10:27:25.050847Z",
+      "userId": "lzv-v3h",
+      "expireTime": "2027-11-13T10:27:21.914387Z"
+    }
+  ],
+  "nextPageToken": "AMEw9yN0W7qTlYSDA2LK5ZOLftbeE-DXoxVOAxtSNMGl-ST6wHY0un6Nu2eFQZ9-X_CMrxm44COqFi3buQy6V2gxxePmEVy-5fBCay2z09hoeNPX0PCqWw=="
+}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:28:01Z
+## $ if [ -n "$LZV_J" ]; then d=(-d "$LZV_J"); else d=(); fi; curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" "$LZV_URL" "${d[@]}" -w "\nHTTP %{http_code}\n"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/5600461157245648896",
+  "createTime": "2026-11-13T10:28:00.151401Z",
+  "updateTime": "2026-11-13T10:28:00.151401Z",
+  "sessionState": {
+    "note": "synthetic t52 session"
+  },
+  "userId": "lzv-t52",
+  "expireTime": "2027-11-13T10:28:00.146381Z"
+}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:28:02Z
+## $ if [ -n "$LZV_J" ]; then d=(-d "$LZV_J"); else d=(); fi; curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" "$LZV_URL" "${d[@]}" -w "\nHTTP %{http_code}\n"
+{}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:28:03Z
+## $ if [ -n "$LZV_J" ]; then d=(-d "$LZV_J"); else d=(); fi; curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "Content-Type: application/json" "$LZV_URL" "${d[@]}" -w "\nHTTP %{http_code}\n"
+{
+  "output": {
+    "lastUpdateTime": 1794565680.151401,
+    "id": "5600461157245648896",
+    "userId": "lzv-t52",
+    "events": [],
+    "state": {
+      "note": "synthetic t52 session"
+    },
+    "appName": "AGENT_ID_53"
+  }
+}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:28:04Z
+## note 2026-11-13T10:28:04Z: operator session 5600461157245648896 on A; controls: sessions.list=200 sessions.get=200 memories.list=200 query=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"sessions\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-13T10:28:06+00:00\", \"agent_name\": \"lzv-v3-x\", \"probe\": {\"mtls\": true, \"mtls_error\": \"\", \"calls\": {\"sessions_list\": {\"status\": 403, \"error_status\": \"PERMISSION_DENIED\", \"error\": \"Permission 'aiplatform.sessions.list' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.go\"}, \"sessions_get\": {\"status\": 403, \"error_status\": \"PERMISSION_DENIED\", \"error\": \"Permission 'aiplatform.sessions.get' denied on resource 'projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53/sessions/5600461157245648896'\"}, \"memories_list\": {\"status\": 403, \"error_status\": \"PERMISSION_DENIED\", \"error\": \"Permission 'aiplatform.memories.list' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.go\"}, \"query_get_session\": {\"status\": 403, \"error_status\": \"PERMISSION_DENIED\", \"error\": \"Permission 'aiplatform.reasoningEngines.query' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://console\"}}}}"}], "role": "model"}, "invocation_id": "e-fa2ce68e-2a43-4d89-af63-bb000e2756ec", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "935370bf-0c62-4c69-8c9d-21bb2e27588f", "timestamp": 1794565686.4011805}
+
+HTTP 200
+## exit=0 at 2026-11-13T10:28:06Z
+## note 2026-11-13T10:28:06Z: query [ACTION=sessions ENGINE=projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_53 SESSION=5600461157245648896 USER=lzv-t52]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-13T10:28:06Z: B on A: sessions.list=403 sessions.get=403 memories.list=403 query(get_session)=403 (mtls=true)

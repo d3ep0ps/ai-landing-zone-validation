@@ -1,0 +1,27 @@
+{
+  "id": "T46",
+  "check": "B7 (Documented)",
+  "control": "DPoP support for agent tokens through Agent Gateway; control: none (documentation and package-source check)",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "unknown, so pre-register \"record outcome\". NOT_TESTED is acceptable with links and dates.",
+  "actual": "not tested: documented design only (CAA with DPoP, docs accessed 2026-11-10); no documented switch to enable or verify DPoP from the agent, no DPoP code in google-auth 2.62.1, google-cloud-aiplatform 2.6.0 or google-adk 2.13.0, and no doc or release note stating it works end to end for Vertex AI through Agent Gateway. Only lever would be on the gateway/IAP side, not agent code. Evidence: doc-evidence.txt",
+  "verdict": "NOT_TESTED",
+  "tier": "Documented",
+  "reason": "documented design only (CAA with DPoP, docs accessed 2026-11-10); no documented switch to enable or verify DPoP from the agent, no DPoP code in google-auth 2.62.1, google-cloud-aiplatform 2.6.0 or google-adk 2.13.0, and no doc or release note stating it works end to end for Vertex AI through Agent Gateway. Only lever would be on the gateway/IAP side, not agent code. Evidence: doc-evidence.txt",
+  "commands_file": "evidence/T46/run-2/command.txt",
+  "output_file": "evidence/T46/run-2/output.txt",
+  "run_id": "run-2",
+  "timestamp_utc": "2026-11-11T21:31:06Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+    "https://pypi.org/project/google-auth/",
+    "https://github.com/googleapis/python-aiplatform/issues/7209"
+  ],
+  "script_commit": "54f8c34-dirty"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "T44",
+  "check": "B5 (Enforced)",
+  "control": "Identical artifact deployed before (A) and after (B) perimeter enforcement; control: baseline calls in dry-run, then same calls with the agent ingress rule",
+  "scope": "projects/PROJECT_8",
+  "expected": "T44 v2 (from v3h run 3; runs 1-2 exploratory). pre (dry-run): A model 200, A example.com 200, A run.app 200. noingress: B example.com refused (no route / timeout / proxy refusal), B model 200. ingress (>= 15 min after the ingress apply): A example.com 200, B example.com refused. Google-hosted host, own row, not in the verdict: B run.app 200 in both stages. Falsified if: at ingress A and B behave the same on example.com. INCONCLUSIVE if: the pre baseline is not clean, or A cannot create a session at +15 min (T44b decides). Tier: Enforced. 3 runs unchanged.",
+  "actual": "artifact sha256 3dcf5b7c2d44...; noingress: noingress: A model=403/vpc_sc_runtime, A run.app=403/vpc_sc_runtime; B internet=none/URLError, B run.app=200/none, B model=200/none; ingress: A internet=200, A run.app=200, A model=200; B internet=none, B run.app=200, B model=200",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T44/run-7/command.txt",
+  "output_file": "evidence/T44/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-11-13T12:54:55Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/ingress-egress-rules",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity"
+  ],
+  "script_commit": "5c3808a"
+}

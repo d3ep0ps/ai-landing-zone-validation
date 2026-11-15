@@ -1,0 +1,1036 @@
+# T19 stage=before run=run-7 start=2026-10-29T04:30:47Z
+# script_commit=8baedc8
+# check=TS1 control=IAM bindings added by the platform when one agent is deployed
+# expected (pre-registered): The only added bindings are those on the pre-registered list (from v1: `roles/aiplatform.agentDefaultAccess` on the project principalSet). Any other added binding = finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T04:30:47Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-10-29T04:30:47Z: limitation: get-iam-policy returns direct bindings only at each resource; organization allow policy not read
+## note 2026-10-29T04:30:48Z: agents deployed: A=0 B=0
+## $ gcloud projects get-iam-policy PROJECT_8 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "role": "roles/agentgateway.serviceAgent"
+    },
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-sandbox.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.agentSandboxServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-bp.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.batchPredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-nb.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.colabServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.customCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionCustomCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-mm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.modelMonitoringServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-vm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.notebookServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-op.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.onlinePredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-rag.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.ragServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-eval.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.rapidevalServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-pie.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-telemetry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.telemetryServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-moss-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-tune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.tuningServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-shtune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.user"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudasset.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.accessPolicyAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-networkactions.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkactions.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-ns-authz.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networksecurity.authzServiceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-dep.iam.gserviceaccount.com"
+      ],
+      "role": "roles/serviceextensions.serviceAgent"
+    }
+  ],
+  "etag": "BwZe6tm_qoI=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:30:49Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-10-29T04:30:51Z
+## $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    }
+  ],
+  "etag": "BwZerWHnxVg=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:30:53Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_9 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-10-29T04:30:55Z
+## $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudkms.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.bucketViewer"
+    }
+  ],
+  "etag": "BwZe6s3Yyho=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:30:56Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_10 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-10-29T04:30:58Z
+## $ gcloud resource-manager folders get-iam-policy FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZe0NGtlVQ=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:30:59Z
+## $ gcloud resource-manager folders get-iam-policy FOLDER_ID_6 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZerT_mIOw=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:31:01Z
+## note 2026-10-29T04:31:01Z: iam_snapshot before written to evidence/T19/run-7/iam-before
+# T19 stage=after run=run-7 start=2026-10-29T04:36:02Z
+# script_commit=8baedc8
+# check=TS1 control=IAM bindings added by the platform when one agent is deployed
+# expected (pre-registered): The only added bindings are those on the pre-registered list (from v1: `roles/aiplatform.agentDefaultAccess` on the project principalSet). Any other added binding = finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-29T04:36:02Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-10-29T04:36:02Z: limitation: get-iam-policy returns direct bindings only at each resource; organization allow policy not read
+## note 2026-10-29T04:36:02Z: agents deployed: A=1 B=0
+## $ gcloud projects get-iam-policy PROJECT_8 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "role": "roles/agentgateway.serviceAgent"
+    },
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-sandbox.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.agentSandboxServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-bp.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.batchPredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-nb.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.colabServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.customCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionCustomCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-mm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.modelMonitoringServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-vm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.notebookServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-op.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.onlinePredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-rag.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.ragServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-eval.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.rapidevalServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-pie.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-telemetry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.telemetryServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-moss-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-tune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.tuningServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-shtune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.user"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudasset.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.accessPolicyAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-networkactions.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkactions.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-ns-authz.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networksecurity.authzServiceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-dep.iam.gserviceaccount.com"
+      ],
+      "role": "roles/serviceextensions.serviceAgent"
+    }
+  ],
+  "etag": "BwZe6tm_qoI=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:04Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-10-29T04:36:05Z
+## $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_9-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_9@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    }
+  ],
+  "etag": "BwZerWHnxVg=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:07Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_9 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-10-29T04:36:09Z
+## $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudkms.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.bucketViewer"
+    }
+  ],
+  "etag": "BwZe6s3Yyho=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:10Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_10 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-10-29T04:36:12Z
+## $ gcloud resource-manager folders get-iam-policy FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZe0NGtlVQ=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:14Z
+## $ gcloud resource-manager folders get-iam-policy FOLDER_ID_6 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZerT_mIOw=",
+  "version": 1
+}
+## exit=0 at 2026-10-29T04:36:15Z
+## note 2026-10-29T04:36:15Z: iam_snapshot after written to evidence/T19/run-7/iam-after
+## note 2026-10-29T04:36:16Z: added=0 expected_binding_added=0 extra=[none] removed=[none]
+## note 2026-10-29T04:36:16Z: no bindings added; expected binding present before the deploy

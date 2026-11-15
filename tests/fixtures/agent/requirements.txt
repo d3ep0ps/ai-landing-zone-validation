@@ -1,0 +1,2 @@
+# Versions intentionally unpinned: none could be justified from the verified docs (open question).
+google-cloud-aiplatform[agent_engines,adk]

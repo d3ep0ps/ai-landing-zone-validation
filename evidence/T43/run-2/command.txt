@@ -1,0 +1,24 @@
+# T43 stage=t0 run=run-2 start=2026-11-11T21:15:43Z
+# script_commit=54f8c34-dirty
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:15:44Z $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+# T43 stage=p15 run=run-2 start=2026-11-11T21:31:22Z
+# script_commit=54f8c34-dirty
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T21:31:22Z $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+# T43 stage=p24h run=run-2 start=2026-11-12T21:17:28Z
+# script_commit=0ca23bd
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T21:17:28Z $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+# T43 stage=agent3 run=run-2 start=2026-11-12T21:25:33Z
+# script_commit=0ca23bd
+# check=B4 (Configured, read-back) control=Platform grant after deleting all agents, then after a new deploy; control: binding present before the delete (T40)
+# expected (pre-registered): binding still present at both checks (+15 min and +24 h); agent 3's deploy adds nothing. Falsified if: the binding disappears.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T21:25:34Z $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6

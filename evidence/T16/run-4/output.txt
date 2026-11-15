@@ -1,0 +1,201 @@
+# T16 run=run-4 start=2026-10-26T20:24:46Z
+# script_commit=b138546
+# check=Reach control=DC5: Secure Web Proxy plus egress firewall, Cloud Run job with Direct VPC egress
+# expected (pre-registered): Allowed host via proxy: 200; non-allowed host: HTTP 403 on CONNECT, `gateway_requests` log with `DENIED`; proxy bypassed: timeout (firewall), not a DNS error. Agent Runtime via PSC interface out of scope
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-26T20:24:46Z: cost: Secure Web Proxy about USD 1.25 per gateway-hour plus USD 0.018/GB; billed until the gateway is destroyed (swp_enabled=false)
+## $ gcloud network-services gateways describe lzv-swp --location=europe-west1 --project=PROJECT_8
+addresses:
+- 10.77.0.10
+createTime: '2026-10-26T20:23:52.789965346Z'
+description: Managed by Terraform.
+gatewaySecurityPolicy: projects/PROJECT_8/locations/europe-west1/gatewaySecurityPolicies/lzv-swp
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/gateways/lzv-swp
+network: projects/PROJECT_8/global/networks/lzv-swp-vpc
+ports:
+- 443
+selfLink: https://networkservices.googleapis.com/v1alpha1/projects/PROJECT_8/locations/europe-west1/gateways/lzv-swp
+subnetwork: projects/PROJECT_8/regions/europe-west1/subnetworks/lzv-swp-job
+type: SECURE_WEB_GATEWAY
+updateTime: '2026-10-26T20:24:06.086072501Z'
+## exit=0 at 2026-10-26T20:24:48Z
+## note 2026-10-26T20:24:48Z: gateway lzv-swp exists (createTime '2026-10-26T20:23:52.789965346Z'); proxy http://10.77.0.10:443; allowed host example.com
+## note 2026-10-26T20:24:48Z: job names (delete by hand if cleanup cannot confirm): lzv-t16a-run4-m6h8t3 lzv-t16b-run4-rdyvl2 lzv-t16c-run4-yz5een
+## $ gcloud run jobs create lzv-t16a-run4-m6h8t3 --image=docker.io/curlimages/curl:8.10.1 --region=europe-west1 --project=PROJECT_8 --network=lzv-swp-vpc --subnet=lzv-swp-job --vpc-egress=all-traffic --binary-authorization=default --max-retries=0 --task-timeout=240s --args=\^@\^-sS@-o@/dev/null@-w@LZV_CODE=%\{http_code\}@--proxy@http://10.77.0.10:443@https://example.com
+Creating Cloud Run job [[1mlzv-t16a-run4-m6h8t3[m] in project [[1mPROJECT_8[m] region [[1meurope-west1[m]
+Creating job...
+Done.
+Job [[1mlzv-t16a-run4-m6h8t3[m] has successfully been created.
+
+To execute this job, use:
+gcloud run jobs execute lzv-t16a-run4-m6h8t3
+## exit=0 at 2026-10-26T20:24:55Z
+## $ gcloud run jobs execute lzv-t16a-run4-m6h8t3 --region=europe-west1 --project=PROJECT_8 --wait
+Creating execution...
+Provisioning resources....................................done
+Starting execution.........................................................................................................................................done
+Running execution......................................................................................................................done
+Done.
+Execution [[1mlzv-t16a-run4-m6h8t3-xwgxd[m] has successfully completed.
+
+View details about this execution by running:
+gcloud run jobs executions describe lzv-t16a-run4-m6h8t3-xwgxd
+
+Or visit https://console.cloud.google.com/run/jobs/executions/details/europe-west1/lzv-t16a-run4-m6h8t3-xwgxd?project=PROJECT_NUMBER_7
+## exit=0 at 2026-10-26T20:25:24Z
+## $ gcloud run jobs executions list --job=lzv-t16a-run4-m6h8t3 --region=europe-west1 --project=PROJECT_8 --format=value\(name\) --limit=1
+lzv-t16a-run4-m6h8t3-xwgxd
+## exit=0 at 2026-10-26T20:25:25Z
+## note 2026-10-26T20:25:25Z: case allowed: job lzv-t16a-run4-m6h8t3 execution lzv-t16a-run4-m6h8t3-xwgxd exit 0
+## $ gcloud logging read resource.type=\"cloud_run_job\"\ AND\ resource.labels.job_name=\"lzv-t16a-run4-m6h8t3\"\ AND\ labels.\"run.googleapis.com/execution_name\"=\"lzv-t16a-run4-m6h8t3-xwgxd\" --project=PROJECT_8 --freshness=1h --order=asc --format=value\(textPayload\)
+Container called exit(0).
+LZV_CODE=200
+
+## exit=0 at 2026-10-26T20:26:02Z
+## note 2026-10-26T20:26:02Z: case allowed log: Container called exit(0). LZV_CODE=200  
+## $ gcloud run jobs create lzv-t16b-run4-rdyvl2 --image=docker.io/curlimages/curl:8.10.1 --region=europe-west1 --project=PROJECT_8 --network=lzv-swp-vpc --subnet=lzv-swp-job --vpc-egress=all-traffic --binary-authorization=default --max-retries=0 --task-timeout=240s --args=\^@\^-sS@-o@/dev/null@-w@LZV_CODE=%\{http_code\}@--proxy@http://10.77.0.10:443@https://www.google.com
+Creating Cloud Run job [[1mlzv-t16b-run4-rdyvl2[m] in project [[1mPROJECT_8[m] region [[1meurope-west1[m]
+Creating job...
+Done.
+Job [[1mlzv-t16b-run4-rdyvl2[m] has successfully been created.
+
+To execute this job, use:
+gcloud run jobs execute lzv-t16b-run4-rdyvl2
+## exit=0 at 2026-10-26T20:26:05Z
+## $ gcloud run jobs execute lzv-t16b-run4-rdyvl2 --region=europe-west1 --project=PROJECT_8 --wait
+Creating execution...
+Provisioning resources......................done
+Starting execution...................................................................................................................................................................................................................................................................................................................................................................done
+Running execution....................................................................failed
+Executing job failed
+ERROR: (gcloud.run.jobs.execute) The execution failed.
+View details about this execution by running:
+gcloud run jobs executions describe lzv-t16b-run4-rdyvl2-44ksw
+
+Or visit https://console.cloud.google.com/run/jobs/executions/details/europe-west1/lzv-t16b-run4-rdyvl2-44ksw?project=PROJECT_NUMBER_7
+## exit=1 at 2026-10-26T20:26:50Z
+## $ gcloud run jobs executions list --job=lzv-t16b-run4-rdyvl2 --region=europe-west1 --project=PROJECT_8 --format=value\(name\) --limit=1
+lzv-t16b-run4-rdyvl2-44ksw
+## exit=0 at 2026-10-26T20:26:52Z
+## note 2026-10-26T20:26:52Z: case denied: job lzv-t16b-run4-rdyvl2 execution lzv-t16b-run4-rdyvl2-44ksw exit 1
+## $ gcloud logging read resource.type=\"cloud_run_job\"\ AND\ resource.labels.job_name=\"lzv-t16b-run4-rdyvl2\"\ AND\ labels.\"run.googleapis.com/execution_name\"=\"lzv-t16b-run4-rdyvl2-44ksw\" --project=PROJECT_8 --freshness=1h --order=asc --format=value\(textPayload\)
+curl: (56) CONNECT tunnel failed, response 403
+Container called exit(56).
+LZV_CODE=000
+
+## exit=0 at 2026-10-26T20:27:18Z
+## note 2026-10-26T20:27:18Z: case denied log: curl: (56) CONNECT tunnel failed, response 403 Container called exit(56). LZV_CODE=000  
+## $ gcloud logging read logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.enforcedGatewaySecurityPolicy.matchedRules.action=\"DENIED\" --project=PROJECT_8 --freshness=1h --limit=5 --format=json
+[
+  {
+    "httpRequest": {
+      "latency": "0.003772s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "10.77.0.17:41688",
+      "requestMethod": "CONNECT",
+      "requestSize": "120",
+      "responseSize": "141",
+      "status": 403,
+      "userAgent": "curl/8.10.1"
+    },
+    "insertId": "tr3jufeausty",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "enforcedGatewaySecurityPolicy": {
+        "clientServiceAccount": "PROJECT_NUMBER_7-compute@developer.gserviceaccount.com",
+        "hostname": "www.google.com:443",
+        "matchedRules": [
+          {
+            "action": "DENIED",
+            "name": "default_denied"
+          }
+        ]
+      }
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-10-26T20:26:51.300770511Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-swp",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/PROJECT_8/global/networks/lzv-swp-vpc",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-10-26T20:26:45.083501Z"
+  }
+]
+## exit=0 at 2026-10-26T20:27:20Z
+## $ gcloud run jobs create lzv-t16c-run4-yz5een --image=docker.io/curlimages/curl:8.10.1 --region=europe-west1 --project=PROJECT_8 --network=lzv-swp-vpc --subnet=lzv-swp-job --vpc-egress=all-traffic --binary-authorization=default --max-retries=0 --task-timeout=240s --args=\^@\^-sS@-o@/dev/null@-w@LZV_CODE=%\{http_code\}@--noproxy@\*@--connect-timeout@10@https://example.com
+Creating Cloud Run job [[1mlzv-t16c-run4-yz5een[m] in project [[1mPROJECT_8[m] region [[1meurope-west1[m]
+Creating job...
+Done.
+Job [[1mlzv-t16c-run4-yz5een[m] has successfully been created.
+
+To execute this job, use:
+gcloud run jobs execute lzv-t16c-run4-yz5een
+## exit=0 at 2026-10-26T20:27:23Z
+## $ gcloud run jobs execute lzv-t16c-run4-yz5een --region=europe-west1 --project=PROJECT_8 --wait
+Creating execution...
+Provisioning resources........................done
+Starting execution...........................................................................................................................................done
+Running execution............................................................................................................................................................................................................................................................failed
+Executing job failed
+ERROR: (gcloud.run.jobs.execute) The execution failed.
+View details about this execution by running:
+gcloud run jobs executions describe lzv-t16c-run4-yz5een-ft6nk
+
+Or visit https://console.cloud.google.com/run/jobs/executions/details/europe-west1/lzv-t16c-run4-yz5een-ft6nk?project=PROJECT_NUMBER_7
+## exit=1 at 2026-10-26T20:28:04Z
+## $ gcloud run jobs executions list --job=lzv-t16c-run4-yz5een --region=europe-west1 --project=PROJECT_8 --format=value\(name\) --limit=1
+lzv-t16c-run4-yz5een-ft6nk
+## exit=0 at 2026-10-26T20:28:05Z
+## note 2026-10-26T20:28:05Z: case bypass: job lzv-t16c-run4-yz5een execution lzv-t16c-run4-yz5een-ft6nk exit 1
+## $ gcloud logging read resource.type=\"cloud_run_job\"\ AND\ resource.labels.job_name=\"lzv-t16c-run4-yz5een\"\ AND\ labels.\"run.googleapis.com/execution_name\"=\"lzv-t16c-run4-yz5een-ft6nk\" --project=PROJECT_8 --freshness=1h --order=asc --format=value\(textPayload\)
+curl: (28) Failed to connect to example.com port 443 after 10002 ms: Could not connect to server
+Container called exit(28).
+LZV_CODE=000
+
+## exit=0 at 2026-10-26T20:28:26Z
+## note 2026-10-26T20:28:26Z: case bypass log: curl: (28) Failed to connect to example.com port 443 after 10002 ms: Could not connect to server Container called exit(28). LZV_CODE=000  
+## note 2026-10-26T20:28:26Z: gateway createTime '2026-10-26T20:23:52.789965346Z'; cost accrues until swp_enabled=false is applied (about USD 1.25/gateway-hour)
+## cleanup start 2026-10-26T20:28:26Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/t16-bypass-run-4.log
+## exit=0 at 2026-10-26T20:28:26Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/t16-denied-run-4.log
+## exit=0 at 2026-10-26T20:28:26Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/t16-allowed-run-4.log
+## exit=0 at 2026-10-26T20:28:26Z
+## $ gcloud run jobs delete lzv-t16c-run4-yz5een --region=europe-west1 --project=PROJECT_8
+Job [lzv-t16c-run4-yz5een] will be deleted.
+
+Do you want to continue (Y/n)?  
+ERROR: (gcloud.run.jobs.delete) This prompt could not be answered because you are not in an interactive session.  You can re-run the command with the --quiet flag to accept default answers for all prompts.
+## exit=1 at 2026-10-26T20:28:27Z
+## $ gcloud run jobs describe lzv-t16c-run4-yz5een --region=europe-west1 --project=PROJECT_8 --format='value(metadata.name)'
+lzv-t16c-run4-yz5een
+## exit=0 at 2026-10-26T20:28:28Z
+## $ gcloud run jobs delete lzv-t16b-run4-rdyvl2 --region=europe-west1 --project=PROJECT_8
+Job [lzv-t16b-run4-rdyvl2] will be deleted.
+
+Do you want to continue (Y/n)?  
+ERROR: (gcloud.run.jobs.delete) This prompt could not be answered because you are not in an interactive session.  You can re-run the command with the --quiet flag to accept default answers for all prompts.
+## exit=1 at 2026-10-26T20:28:28Z
+## $ gcloud run jobs describe lzv-t16b-run4-rdyvl2 --region=europe-west1 --project=PROJECT_8 --format='value(metadata.name)'
+lzv-t16b-run4-rdyvl2
+## exit=0 at 2026-10-26T20:28:29Z
+## $ gcloud run jobs delete lzv-t16a-run4-m6h8t3 --region=europe-west1 --project=PROJECT_8
+Job [lzv-t16a-run4-m6h8t3] will be deleted.
+
+Do you want to continue (Y/n)?  
+ERROR: (gcloud.run.jobs.delete) This prompt could not be answered because you are not in an interactive session.  You can re-run the command with the --quiet flag to accept default answers for all prompts.
+## exit=1 at 2026-10-26T20:28:30Z
+## $ gcloud run jobs describe lzv-t16a-run4-m6h8t3 --region=europe-west1 --project=PROJECT_8 --format='value(metadata.name)'
+lzv-t16a-run4-m6h8t3
+## exit=0 at 2026-10-26T20:28:31Z
+## cleanup end 2026-10-26T20:28:31Z

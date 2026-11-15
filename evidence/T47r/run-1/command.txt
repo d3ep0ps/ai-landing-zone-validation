@@ -1,0 +1,9 @@
+# T47r run=run-1 start=2026-11-12T06:04:19Z
+# script_commit=3426da1
+# check=B8 regression (Enforced, 1 attempt) control=Run-6 setup rebuilt (IAP policy V1, no gateway VPC egress, agent G unpinned, default binding); one call through the gateway as T47 s2
+# expected (pre-registered): 401 as in run 6 (F16). If 200: the finding is 'the run-6 401 did not reproduce on DATE; cause unknown'. Versions of google-auth, google-cloud-aiplatform, google-adk and the IAP policy version are recorded. Tier: Enforced (1 attempt). Paid: gateway hours; same-day teardown.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-12T06:04:19Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8 --format=json
+2026-11-12T06:04:20Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-12T06:04:21Z $ gcloud logging read timestamp\>=\"2026-11-12T05:56:47.396466Z\"\ AND\ \"lzv_versions\" --project=PROJECT_8 --limit=20 --format=json
+2026-11-12T06:04:24Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1

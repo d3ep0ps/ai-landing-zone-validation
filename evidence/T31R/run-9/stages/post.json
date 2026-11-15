@@ -1,0 +1,6 @@
+{
+  "stage": "post",
+  "verdict": "INCONCLUSIVE",
+  "note": "post: (d) after registering: 404 (registry entry age 645s); IAM identical: 1; (d) no 200 and no conclusive 403 (status=404, registry entry age 645s)",
+  "timestamp_utc": "2026-10-30T12:26:34Z"
+}

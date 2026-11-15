@@ -1,0 +1,27 @@
+{
+  "id": "T16",
+  "check": "Reach",
+  "control": "DC5: Secure Web Proxy plus egress firewall, Cloud Run job with Direct VPC egress",
+  "scope": "projects/PROJECT_8",
+  "expected": "Allowed host via proxy: 200; non-allowed host: HTTP 403 on CONNECT, `gateway_requests` log with `DENIED`; proxy bypassed: timeout (firewall), not a DNS error. Agent Runtime via PSC interface out of scope",
+  "actual": "allowed host via proxy: 200; non-allowed host: 403 on CONNECT; gateway_requests DENIED entry present; bypass: connection timed out (not DNS)",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T16/run-6/command.txt",
+  "output_file": "evidence/T16/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T08:04:18Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/secure-web-proxy/docs/quickstart",
+    "https://docs.cloud.google.com/secure-web-proxy/docs/monitor-logs",
+    "https://docs.cloud.google.com/run/docs/configuring/vpc-direct-vpc",
+    "https://cloud.google.com/secure-web-proxy/pricing"
+  ],
+  "script_commit": "d7fff1c"
+}

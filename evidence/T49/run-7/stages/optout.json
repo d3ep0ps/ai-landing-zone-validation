@@ -1,0 +1,6 @@
+{
+  "stage": "optout",
+  "verdict": "PASS",
+  "note": "optout: s1 own(gateway)=200 mTLS-host=200 control2=200 replay=200 sha12=a8a70a619510; google-auth=2.62.1 agent_cert=false should_request_bound=false env_runtime_bound=false",
+  "timestamp_utc": "2026-11-13T12:03:44Z"
+}

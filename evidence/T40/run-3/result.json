@@ -1,0 +1,26 @@
+{
+  "id": "T40",
+  "check": "B1 (Configured, read-back)",
+  "control": "Deploy-time IAM change is invisible to additive Terraform; control: before/after IAM snapshot and two plans",
+  "scope": "projects/PROJECT_11",
+  "expected": "T40 (additive IAM, 3 runs): `after.json` contains one new binding, `roles/aiplatform.agentDefaultAccess` on `principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/N`; `terraform plan` returns exit code **0** (no changes) both before and after deploy; the audit log shows the change was made out-of-band by a Google-managed service identity, not the operator. Falsified if: no binding is added, or `terraform plan` reports the change under `google_project_iam_member`. Tier: Configured (read-back).",
+  "actual": "diff: added=1 (expected binding=1, extra=[none]); stage before=PASS (plan before), plan after exit 0; audit entries mentioning the role=1, actor=USER_5@example.com",
+  "verdict": "PASS",
+  "tier": "Configured",
+  "reason": "",
+  "commands_file": "evidence/T40/run-3/command.txt",
+  "output_file": "evidence/T40/run-3/output.txt",
+  "run_id": "run-3",
+  "timestamp_utc": "2026-11-13T04:24:18Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+    "https://docs.cloud.google.com/resource-manager/docs/audit-logging",
+    "https://developer.hashicorp.com/terraform/cli/commands/plan"
+  ],
+  "script_commit": "d998479"
+}

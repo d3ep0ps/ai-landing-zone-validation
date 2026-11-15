@@ -1,0 +1,127 @@
+# v3h run 7 (2026-11-13), subset (tests/run-v3h.sh subset)
+
+No per-run project (block 2/3 only, plan 3b scheduling). Expected results: script headers (pre-registered).
+
+## Log
+- 11:18Z step preflight
+- 11:18Z preflight OK (subset): PROJECT_8 empty, canary OK
+- 11:18Z step build
+- 11:18Z artifacts: agent_v3 dep (T45d) sha256 5ca424cc40eab162...
+- 11:18Z artifacts: agent_v3 sha256 3dcf5b7c2d4400b3..., agent_g sha256 b8d524168a5f1428...
+- 11:18Z step b2-infra
+- 11:19Z plan b2-infra: 75 changes (74 create 1 delete )
+- 11:20Z apply b2-infra failed with a known propagation error; retry 1 of 2 in 180 s (Error: Error waiting to create AgentGateway: Error waiting for Creating AgentGateway: Error code 3, message: Config validation failed)
+- 11:24Z plan b2-infra-retry: 3 changes (3 create )
+- 11:29Z apply b2-infra-retry failed with a known propagation error; retry 2 of 2 in 180 s (Error: Error waiting to create AuthzPolicy: Error waiting for Creating AuthzPolicy: Error code 10, message: There is another ongoing operation for the same Agen)
+- 11:33Z plan b2-infra-retry-retry: 1 changes (1 create )
+- 11:35Z apply b2-infra-retry-retry: Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+- 11:35Z step b2-fixtures
+- 11:36Z replay image sha256:b08d75f736983298bc6187a47a184a484720c43591141ad01729e42e3d89ebba; gateway MCP fixtures rebuilt and deployed
+- 11:37Z plan b2-replay: 4 changes (4 create )
+- 11:38Z apply b2-replay: Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+- 11:38Z step s2-agents
+- 11:38Z plan s2-agents: 6 changes (6 create )
+- 11:52Z apply s2-agents: Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+- 11:52Z ready: v3-a after 2 s
+- 11:52Z ready: v3-o after 3 s
+- 11:52Z ready: v3-x after 2 s
+- 11:52Z ready: g after 2 s
+- 11:52Z ready: g-optout after 3 s
+- 11:52Z step t48b
+- 11:53Z T48b  (run-7): PASS RESULT T48b: PASS
+- 11:53Z step t50-main
+- 11:53Z T50 main (run-7): FAIL 
+- 11:53Z step t52-default
+- 11:53Z T52 default (run-7): PASS 
+- 11:53Z step t52-grant
+- 11:54Z plan t52-grant: 1 changes (1 create )
+- 11:54Z apply t52-grant: Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+- 11:54Z step t53
+- 11:56Z T53  (run-7): FAIL RESULT T53: FAIL
+- 11:56Z step t56-calls
+- 12:01Z T56 calls (run-7): PASS 
+- 12:01Z step t49
+- 12:02Z T49 bound (run-7): PASS 
+- 12:03Z T49 optout (run-7): PASS RESULT T49: PASS
+- 12:03Z step t52-granted
+- 12:03Z T52 granted (run-7): PASS RESULT T52: PASS
+- 12:03Z step t52-revoke
+- 12:04Z plan t52-revoke: 1 changes (1 delete )
+- 12:05Z apply t52-revoke: Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
+- 12:05Z waiting 13 min: T56: >= 15 min after its last call (pre-registered late read)
+- 12:17Z step t56-late
+- 12:17Z T56 late (run-7): FAIL RESULT T56: FAIL
+- 12:17Z step t44-pre
+- 12:17Z T44 pre (run-7): PASS 
+- 12:17Z step b3-enforce
+- 12:18Z plan b3-enforce: 1 changes (1 update )
+- 12:18Z apply b3-enforce: Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+- 12:18Z canary: perimeter 'enforced' live after 34 s
+- 12:18Z step s3-agents
+- 12:19Z plan s3-agents: 4 changes (4 create )
+- 12:27Z apply s3-agents: Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+- 12:27Z ready: v3-b after 3 s
+- 12:27Z ready: v3-a_psci after 2 s
+- 12:27Z ready: v3-b_psci after 2 s
+- 12:27Z step s3-dep-agents
+- 12:27Z plan s3-dep-agents: 4 changes (4 create )
+- 12:37Z apply s3-dep-agents: Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+- 12:37Z ready: v3-a_dep after 2 s
+- 12:37Z ready: v3-b_dep after 2 s
+- 12:37Z ready: v3-a_dep_psci after 2 s
+- 12:37Z ready: v3-b_dep_psci after 2 s
+- 12:37Z step t44-noingress
+- 12:38Z T44 noingress (run-7): PASS 
+- 12:38Z step t44b-noingress
+- 12:38Z T44b noingress (run-7): INCONCLUSIVE 
+- 12:38Z step b3-ingress-deny
+- 12:39Z plan b3-ingress-deny: 2 changes (1 create 1 update )
+- 12:39Z apply b3-ingress-deny: Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
+- 12:39Z canary: perimeter 'ingress' live after 34 s
+- 12:39Z step t44b-ingress1
+- 12:39Z T44b ingress1 (run-7): PASS 
+- 12:39Z waiting 15 min: T44 v2 / T44b: 15 min after the ingress apply (pre-registered)
+- 12:54Z step t44-ingress
+- 12:54Z T44 ingress (run-7): PASS RESULT T44: PASS
+- 12:54Z step t44b-ingress15
+- 12:55Z T44b ingress15 (run-7): INCONCLUSIVE RESULT T44b: INCONCLUSIVE
+- 12:55Z step t45d-on
+- 12:55Z T45d on (run-7): PASS 
+- 12:55Z step t51
+- 12:56Z T51  (run-7): INCONCLUSIVE RESULT T51: INCONCLUSIVE
+- 12:56Z step t55
+- 12:57Z T55  (run-7): PASS RESULT T55: PASS
+- 12:57Z step t50-deny
+- 12:57Z T50 deny (run-7): FAIL RESULT T50: FAIL
+- 12:57Z step b3-off
+- 12:58Z plan b3-off: 2 changes (1 delete 1 update )
+- 12:58Z apply b3-off: Apply complete! Resources: 0 added, 1 changed, 1 destroyed.
+- 12:59Z canary: perimeter 'open' live after 64 s
+- 12:59Z waiting 9 min: IAM deny removal propagation (fixed)
+- 13:08Z step t45d-off
+- 13:08Z T45d off (run-7): PASS RESULT T45d: PASS
+- 13:08Z step teardown
+- 13:09Z teardown: agents
+- 13:09Z plan td-agents: 14 changes (14 delete )
+- 13:12Z apply td-agents: Apply complete! Resources: 0 added, 0 changed, 14 destroyed.
+- 13:12Z teardown: perimeter dry-run, ingress cleared, deny removed (targeted; full refresh fails while enforced)
+- 13:12Z plan td-perim: 1 changes (1 update )
+- 13:12Z apply td-perim: Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+- 13:12Z teardown: infra/ back to lz-5 + v3h-baseline
+- 13:14Z plan td-infra: 87 changes (1 create 86 delete )
+- 13:34Z apply td-infra failed with a known propagation error; retry 1 of 2 in 180 s (Error: Error waiting for Deleting AuthzPolicy: Error code 10, message: There is another ongoing operation for the same AgentGateway: projects/PROJECT_NUMBER_7/locat)
+- 13:37Z plan td-infra-retry: 30 changes (30 delete )
+- 13:57Z STOP: apply td-infra-retry failed: Error: Error when reading or editing NetworkAttachment: googleapi: Error 412: Network Attachment with connected endpoints cannot be deleted., conditionNotMet
+- 13:57Z teardown: PSC-I attachment still has endpoints from deleted agents; background poll will finish it (free resources)
+- 13:57Z subset run 7 finished
+- 13:57Z step redact
+- 13:58Z redaction: redacted 42/65 files; check: checked 65 files, 0 with findings (T43 run-7 redacted at close)
+
+## Analysis (2026-11-13, written after the run; no expected result changed)
+- Paid resources after teardown: 0 agent gateways, 0 engines, 0 SWP gateways, 0 addresses, 0 forwarding rules. Known free PSC-I leftovers (412).
+- **MCP fixture (affects T53, T56 only):** `lzv-mcp-reg`/`lzv-mcp-unreg` had no ready revision ("Image ... lzv-gw/mcp:v1 not found"). The image build fails with HTTP 412 (org policy gcp.restrictNonCmekServices denies storage.googleapis.com without CMEK; Cloud Build staging bucket) in every v3h run (scratch gw-build.txt of runs 2-5, 7), and setup.sh exited 0. Every allowed call through the gateway got 404 from the backend (gateway log: both authz policies ALLOWED, status 404; no Cloud Run request). Plan 3b: T53 v2 / T56 v2 (5c3808a).
+- **T53 FAIL (as recorded) is a misclassification:** control = 404 (pre-registered 200; the script did not enforce it). example_ip "landed" with status 403, but the probe's connected address was the gateway address (an address in the reserved Class E range 240/4, the same address all agent egress used in the gateway log); the gateway intercepts TLS, so the certificate name "example.com" came from the gateway. No gateway record names example.com. Not evidence of a bypass.
+- **T56 FAIL (as recorded):** 8 of 13 calls excluded (404, fixture). Of 5 unregistered_echo calls (403 from IAP, before the backend, so the fixture does not affect them), call 3 (11:57:20-26Z) has no gateway_requests record at the late read; the gateway log for that host shows 4 records for 5 calls (11:57:09, :17, :30, :37). Call 2's n=2 is a window-overlap artifact (it also matched call 1's record at 11:57:09). One denied call without a log entry reproduces Findings 29's pattern for a blocked call. Limitation: our infra sets no gateway log sampling; Google's default sampling for gateway_requests was not checked.
+- **T51 INCONCLUSIVE:** chatCompletions_global from the non-approved agent returned no status (agent-side error), and generateContent_regional from the approved agent returned 404 (not_tested). The other four methods: non-approved 403, approved 200 (batch create: both 403).
+- **T50:** main FAIL as runs 4-5 (b1 409; T50c shows b1 does not discriminate); deny stage: agent 403, operator control 409, as expected.
+- **T44b INCONCLUSIVE** as run 3: noingress A=400 with a VPC-SC id (pre-registered 403).

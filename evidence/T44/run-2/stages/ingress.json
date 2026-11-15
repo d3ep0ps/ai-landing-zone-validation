@@ -1,0 +1,6 @@
+{
+  "stage": "ingress",
+  "verdict": "INCONCLUSIVE",
+  "note": "ingress: A internet=403/vpc_sc_runtime, A run.app=200/none, A model=403/vpc_sc_runtime; B internet=none/URLError, B run.app=200/none, B model=200/none; A's own model call refused even with the ingress rule (prediction not met): by=vpc_sc_runtime status=403",
+  "timestamp_utc": "2026-11-11T21:42:04Z"
+}

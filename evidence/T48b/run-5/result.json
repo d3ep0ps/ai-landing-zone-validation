@@ -1,0 +1,25 @@
+{
+  "id": "T48b",
+  "check": "B9 (Enforced)",
+  "control": "Agent X's bound token presented over agent Y's own mTLS session (Y's agent certificate) to the mTLS Vertex AI endpoint; controls: X's own call 200, Y's own token over its session 200",
+  "scope": "projects/PROJECT_8",
+  "expected": "Expected: 401 (UNAUTHENTICATED / Context-Aware Access). Falsified if: 200 (binding not checked against the presenting certificate). INCONCLUSIVE if: a control fails or any 403. Docs are silent on a fingerprint match; the expectation is an inference from 'only usable by the agent running in its provisioned environment'. Tier: Enforced. 2+ runs. Tokens in memory only.",
+  "actual": "X own=200; X token over Y session=401 (UNAUTHENTICATED Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in); Y own=200; token sha12 f7aab32f886f",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T48b/run-5/command.txt",
+  "output_file": "evidence/T48b/run-5/output.txt",
+  "run_id": "run-5",
+  "timestamp_utc": "2026-11-13T10:27:29Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity"
+  ],
+  "script_commit": "a4c71cd"
+}

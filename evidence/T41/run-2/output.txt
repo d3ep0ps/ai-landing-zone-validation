@@ -1,0 +1,2540 @@
+# T41 stage=before run=run-2 start=2026-11-11T21:07:39Z
+# script_commit=54f8c34-dirty
+# check=B2 (Enforced for the call, Configured for the Troubleshooter) control=Agent 2 (same artifact, zero roles) is covered by the project-wide principalSet grant; control: IAM diff and agent 2 model call
+# expected (pre-registered): no new binding; Troubleshooter shows access granted through the principal-set binding; agent 2's call succeeds. Falsified if: the call is refused, or a per-agent binding appears. Tier: Enforced for the call (an allowed action, recorded as such), Configured for the Troubleshooter.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T21:07:39Z: plan claim B2; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T21:07:39Z: limitation: the call is an allowed action (positive result); Troubleshooter cannot evaluate attribute-based principalSet bindings for non-standard agent subjects (Unknown)
+## note 2026-11-11T21:07:39Z: per-run project: PROJECT_10 (label r2)
+## $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudkms.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.bucketWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.logWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.bucketViewer"
+    }
+  ],
+  "etag": "BwZgBeCR3LM=",
+  "version": 1
+}
+## exit=0 at 2026-11-11T21:07:40Z
+## note 2026-11-11T21:07:40Z: snapshot before written to evidence/T41/run-2/iam-before
+# T41 stage=after run=run-2 start=2026-11-11T21:15:19Z
+# script_commit=54f8c34-dirty
+# check=B2 (Enforced for the call, Configured for the Troubleshooter) control=Agent 2 (same artifact, zero roles) is covered by the project-wide principalSet grant; control: IAM diff and agent 2 model call
+# expected (pre-registered): no new binding; Troubleshooter shows access granted through the principal-set binding; agent 2's call succeeds. Falsified if: the call is refused, or a per-agent binding appears. Tier: Enforced for the call (an allowed action, recorded as such), Configured for the Troubleshooter.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T21:15:19Z: plan claim B2; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T21:15:19Z: limitation: the call is an allowed action (positive result); Troubleshooter cannot evaluate attribute-based principalSet bindings for non-standard agent subjects (Unknown)
+## note 2026-11-11T21:15:19Z: per-run project: PROJECT_10 (label r2)
+## note 2026-11-11T21:15:20Z: agent 2: projects/PROJECT_NUMBER_8/locations/europe-west1/reasoningEngines/AGENT_ID_30; identity: principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_8/locations/europe-west1/reasoningEngines/AGENT_ID_30
+## $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudkms.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.bucketWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.logWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.bucketViewer"
+    }
+  ],
+  "etag": "BwZgBeCR3LM=",
+  "version": 1
+}
+## exit=0 at 2026-11-11T21:15:21Z
+## note 2026-11-11T21:15:21Z: snapshot after written to evidence/T41/run-2/iam-after
+## note 2026-11-11T21:15:21Z: added=0 removed=[none]
+## $ gcloud policy-intelligence troubleshoot-policy iam //cloudresourcemanager.googleapis.com/projects/PROJECT_10 --principal-email=agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_8/locations/europe-west1/reasoningEngines/AGENT_ID_30 --permission=aiplatform.endpoints.predict --format=json
+{
+  "accessTuple": {
+    "conditionContext": {
+      "destination": {},
+      "request": {},
+      "resource": {}
+    },
+    "fullResourceName": "//cloudresourcemanager.googleapis.com/projects/PROJECT_10",
+    "permission": "aiplatform.endpoints.predict",
+    "permissionFqdn": "aiplatform.googleapis.com/endpoints.predict",
+    "principal": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_8/locations/europe-west1/reasoningEngines/AGENT_ID_30"
+  },
+  "allowPolicyExplanation": {
+    "allowAccessState": "ALLOW_ACCESS_STATE_GRANTED",
+    "explainedPolicies": [
+      {
+        "allowAccessState": "ALLOW_ACCESS_STATE_GRANTED",
+        "bindingExplanations": [
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8": {
+                "membership": "MEMBERSHIP_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_HIGH",
+            "role": "roles/aiplatform.agentDefaultAccess",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/aiplatform.reasoningEngineServiceAgent",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/aiplatform.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/binaryauthorization.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/cloudbuild.builds.builder",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/cloudbuild.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/cloudkms.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/compute.instanceGroupManagerServiceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/compute.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/container.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/containeranalysis.ServiceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/containerregistry.ServiceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              },
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/editor",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/file.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.serviceAccountUser",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/logging.bucketWriter",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/logging.logWriter",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/logging.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/modelarmor.admin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/modelarmor.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/owner",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/pubsub.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.projectIamAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/storage.bucketViewer",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          }
+        ],
+        "fullResourceName": "//cloudresourcemanager.googleapis.com/projects/PROJECT_10",
+        "policy": {
+          "bindings": [
+            {
+              "members": [
+                "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"
+              ],
+              "role": "roles/aiplatform.agentDefaultAccess"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+              ],
+              "role": "roles/aiplatform.reasoningEngineServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+              ],
+              "role": "roles/aiplatform.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+              ],
+              "role": "roles/binaryauthorization.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+              ],
+              "role": "roles/cloudbuild.builds.builder"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+              ],
+              "role": "roles/cloudbuild.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+              ],
+              "role": "roles/cloudkms.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+              ],
+              "role": "roles/compute.instanceGroupManagerServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+              ],
+              "role": "roles/compute.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+              ],
+              "role": "roles/container.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+              ],
+              "role": "roles/containeranalysis.ServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+              ],
+              "role": "roles/containerregistry.ServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/editor"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+              ],
+              "role": "roles/file.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.serviceAccountUser"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.bucketWriter"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.logWriter"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/modelarmor.admin"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+              ],
+              "role": "roles/modelarmor.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/owner"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+              ],
+              "role": "roles/pubsub.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.projectIamAdmin"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/storage.bucketViewer"
+            }
+          ],
+          "etag": "BwZgBeCR3LM=",
+          "version": 1
+        },
+        "relevance": "HEURISTIC_RELEVANCE_HIGH"
+      },
+      {
+        "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+        "bindingExplanations": [
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/modelarmor.floorSettingsAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.folderAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.folderEditor",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          }
+        ],
+        "fullResourceName": "//cloudresourcemanager.googleapis.com/folders/FOLDER_ID_5",
+        "policy": {
+          "bindings": [
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/modelarmor.floorSettingsAdmin"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.folderAdmin"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.folderEditor"
+            }
+          ],
+          "etag": "BwZe0NGtlVQ=",
+          "version": 1
+        },
+        "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+      },
+      {
+        "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+        "bindingExplanations": [
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/billing.admin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/billing.creator",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/billing.user",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/browser",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/cloudasset.owner",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "condition": {
+              "expression": "resource.matchTag(\"ORG_ID/env\", \"prod\")",
+              "title": "env-prod"
+            },
+            "conditionExplanation": {
+              "evaluationStates": [
+                {
+                  "end": 45,
+                  "value": false
+                }
+              ],
+              "value": false
+            },
+            "memberships": {
+              "user:USER_3@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/cloudsql.admin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "condition": {
+              "expression": "resource.matchTag(\"ORG_ID/env\", \"qa\")",
+              "title": "env-qa"
+            },
+            "conditionExplanation": {
+              "evaluationStates": [
+                {
+                  "end": 43,
+                  "value": false
+                }
+              ],
+              "value": false
+            },
+            "memberships": {
+              "user:USER_3@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/cloudsql.client",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/compute.networkAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/compute.xpnAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.denyAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.organizationRoleAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.organizationRoleViewer",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              },
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.securityAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.securityReviewer",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              },
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/iam.serviceAccountAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/identityplatform.viewer",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/logging.configWriter",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/modelarmor.floorSettingsAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              },
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/orgpolicy.policyAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/owner",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/recommender.iamAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_6@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.folderAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.folderIamAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.organizationAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "domain:example.org": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.organizationViewer",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              },
+              "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.projectCreator",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_HIGH"
+            },
+            "memberships": {
+              "group:USER_2@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_HIGH"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/resourcemanager.projectIamAdmin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "user:USER_1@example.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/securitycenter.admin",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_7@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/securitycenter.serviceAgent",
+            "rolePermission": "ROLE_PERMISSION_NOT_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_NORMAL"
+          },
+          {
+            "allowAccessState": "ALLOW_ACCESS_STATE_NOT_GRANTED",
+            "combinedMembership": {
+              "membership": "MEMBERSHIP_NOT_MATCHED",
+              "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+            },
+            "memberships": {
+              "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com": {
+                "membership": "MEMBERSHIP_NOT_MATCHED",
+                "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+              }
+            },
+            "relevance": "HEURISTIC_RELEVANCE_NORMAL",
+            "role": "roles/viewer",
+            "rolePermission": "ROLE_PERMISSION_INCLUDED",
+            "rolePermissionRelevance": "HEURISTIC_RELEVANCE_HIGH"
+          }
+        ],
+        "fullResourceName": "//cloudresourcemanager.googleapis.com/organizations/ORG_ID",
+        "policy": {
+          "auditConfigs": [
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "allServices"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "accessapproval.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "notebooks.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "apigee.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "apigeeconnect.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudasset.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudbilling.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudbuild.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "composer.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "dlp.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "dataproc.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "datastore.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudfunctions.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "healthcare.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "iap.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudiot.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudkms.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "lifesciences.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "logging.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "ml.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "managedidentities.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "redis.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "osconfig.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "pubsub.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudresourcemanager.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "runtimeconfig.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "sourcerepo.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "spanner.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudsql.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "cloudtasks.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "tpu.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "translate.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "compute.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "customerusagedataprocessing.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "datacatalog.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "dialogflow.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "firebase.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "gcmcontextualcampaign-pa.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "gameservices.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "genomics.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "gkehub.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "appengine.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "deploymentmanager.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "dns.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "storage.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "iam.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "identitytoolkit.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "container.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "recaptchaenterprise.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "recommendationengine.googleapis.com"
+            },
+            {
+              "auditLogConfigs": [
+                {
+                  "logType": "ADMIN_READ"
+                },
+                {
+                  "logType": "DATA_READ"
+                },
+                {
+                  "logType": "DATA_WRITE"
+                }
+              ],
+              "service": "secretmanager.googleapis.com"
+            }
+          ],
+          "bindings": [
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/billing.admin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com"
+              ],
+              "role": "roles/billing.creator"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/billing.user"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/browser"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/cloudasset.owner"
+            },
+            {
+              "condition": {
+                "expression": "resource.matchTag(\"ORG_ID/env\", \"prod\")",
+                "title": "env-prod"
+              },
+              "members": [
+                "user:USER_3@example.com"
+              ],
+              "role": "roles/cloudsql.admin"
+            },
+            {
+              "condition": {
+                "expression": "resource.matchTag(\"ORG_ID/env\", \"qa\")",
+                "title": "env-qa"
+              },
+              "members": [
+                "user:USER_3@example.com"
+              ],
+              "role": "roles/cloudsql.client"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/compute.networkAdmin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/compute.xpnAdmin"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.denyAdmin"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.organizationRoleAdmin"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/iam.organizationRoleViewer"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.securityAdmin"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/iam.securityReviewer"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.serviceAccountAdmin"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/identityplatform.viewer"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.configWriter"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/modelarmor.floorSettingsAdmin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/orgpolicy.policyAdmin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/owner"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/recommender.iamAdmin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_6@PROJECT.iam.gserviceaccount.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/resourcemanager.folderAdmin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.folderIamAdmin"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.organizationAdmin"
+            },
+            {
+              "members": [
+                "domain:example.org",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/resourcemanager.organizationViewer"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com",
+                "serviceAccount:SA_4@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/resourcemanager.projectCreator"
+            },
+            {
+              "members": [
+                "group:USER_2@example.com"
+              ],
+              "role": "roles/resourcemanager.projectIamAdmin"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/securitycenter.admin"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_7@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/securitycenter.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_5@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/viewer"
+            }
+          ],
+          "etag": "BwZe0NEW4Bw=",
+          "version": 3
+        },
+        "relevance": "HEURISTIC_RELEVANCE_NORMAL"
+      }
+    ],
+    "relevance": "HEURISTIC_RELEVANCE_HIGH"
+  },
+  "denyPolicyExplanation": {
+    "denyAccessState": "DENY_ACCESS_STATE_NOT_DENIED",
+    "permissionDeniable": true,
+    "relevance": "HEURISTIC_RELEVANCE_HIGH"
+  },
+  "overallAccessState": "CAN_ACCESS"
+}
+## exit=0 at 2026-11-11T21:15:23Z
+## note 2026-11-11T21:15:23Z: troubleshooter: exit=0 access=CAN_ACCESS
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"model\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T21:15:27+00:00\", \"agent_name\": \"\"}"}], "role": "model"}, "invocation_id": "e-491fe40a-bf27-4dc9-ac2c-a37fdbb04bbd", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "c619aa69-a64b-4512-8633-94bc947dd9a7", "timestamp": 1794431727.2540247}
+
+HTTP 200
+## exit=0 at 2026-11-11T21:15:28Z
+## note 2026-11-11T21:15:28Z: query [ACTION=model MODE=bypass]: http_rc=0 line=1 status=200 refused_by=none err=none

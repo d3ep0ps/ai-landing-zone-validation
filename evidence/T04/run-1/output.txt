@@ -1,0 +1,73 @@
+# T04 run=run-1 start=2026-10-23T13:48:02Z
+# check=P1 control=`vertexai.allowedModels` allowlist with `:predict` suffix (prod folder)
+# expected (pre-registered): Non-listed model denied, error names `vertexai.allowedModels`; control succeeds
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/vertexai.allowedModels --effective --project=PROJECT_1 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_3/policies/vertexai.allowedModels",
+  "spec": {
+    "rules": [
+      {
+        "values": {
+          "allowedValues": [
+            "is:publishers/google/models/gemini-3.5-flash:predict"
+          ]
+        }
+      }
+    ]
+  }
+}
+## exit=0 at 2026-10-23T13:48:03Z
+## note 2026-10-23T13:48:03Z: allowed model (control): gemini-3.5-flash; denied model (attempt): gemini-4-argon; location: global; host: aiplatform.googleapis.com
+## $ out=$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -H @- -H "Content-Type: application/json" -d '{"contents":[{"role":"user","parts":[{"text":"Reply OK"}]}],"generationConfig":{"maxOutputTokens":5}}' -w "\nHTTP %{http_code}\n" 'https://aiplatform.googleapis.com/v1/projects/PROJECT_1/locations/global/publishers/google/models/gemini-3.5-flash:generateContent'); printf "%s\n" "$out"; code=$(printf "%s\n" "$out" | sed -n "s/^HTTP //p" | tail -1); [ "$code" = 200 ]
+{
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          {
+            "text": "OK",
+            "thoughtSignature": "AY89a1+m/gPqcu5//GvW2y2AFc/xWcpTEMMwZSDvczpszWOopaMN9Ues2J2r41UQT1XZIdp4y+8Igx77VqgZO9HhkugUJ9xqlC8jgvHvJBPjnooq"
+          }
+        ]
+      },
+      "finishReason": "MAX_TOKENS"
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 2,
+    "candidatesTokenCount": 1,
+    "totalTokenCount": 3,
+    "trafficType": "ON_DEMAND",
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 2
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1
+      }
+    ]
+  },
+  "modelVersion": "gemini-3.5-flash",
+  "createTime": "2026-10-23T13:48:04.020805Z",
+  "responseId": "lGXbasWiAd-Tg7QPzM-P8QE"
+}
+
+HTTP 200
+## exit=0 at 2026-10-23T13:48:04Z
+## $ out=$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -H @- -H "Content-Type: application/json" -d '{"contents":[{"role":"user","parts":[{"text":"Reply OK"}]}],"generationConfig":{"maxOutputTokens":5}}' -w "\nHTTP %{http_code}\n" 'https://aiplatform.googleapis.com/v1/projects/PROJECT_1/locations/global/publishers/google/models/gemini-4-argon:generateContent'); printf "%s\n" "$out"; code=$(printf "%s\n" "$out" | sed -n "s/^HTTP //p" | tail -1); [ "$code" = 200 ]
+{
+  "error": {
+    "code": 400,
+    "message": "Organization Policy constraint constraints/vertexai.allowedModels violated for `projects/PROJECT_NUMBER_3` attempting to use a disallowed Gen AI model gemini-4-argon. Please contact your organization administrator to fix this violation by adding `publishers/google/models/gemini-4-argon:predict` to the allowed values. For more info, see https://cloud.google.com/vertex-ai/generative-ai/docs/control-model-access.",
+    "status": "FAILED_PRECONDITION"
+  }
+}
+
+HTTP 400
+## exit=1 at 2026-10-23T13:48:05Z

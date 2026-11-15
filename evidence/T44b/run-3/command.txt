@@ -1,0 +1,30 @@
+# T44b stage=noingress run=run-3 start=2026-11-13T05:03:00Z
+# script_commit=d998479
+# check=B5 (Enforced) control=Session creation on an agent deployed before (A) vs after (B) perimeter enforcement, without and with the agent ingress rule; control: operator reasoningEngines.list 200
+# expected (pre-registered): noingress: A refused with HTTP 403 carrying a VPC-SC unique identifier, B 200. ingress +15 min: A 200, B 200. The +1 min cell is recorded only. Falsified if: A and B behave the same without the ingress rule, or A is still refused at +15 min with its identity in the ingress rule. Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-13T05:03:01Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-13T05:03:02Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-13T05:03:03Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS --max-time 60 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "{\"class_method\":\"async_create_session\",\"input\":{\"user_id\":\"lzv-t44b\"}}" -w "\nHTTP %{http_code}\n"
+2026-11-13T05:03:04Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS --max-time 60 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "{\"class_method\":\"async_create_session\",\"input\":{\"user_id\":\"lzv-t44b\"}}" -w "\nHTTP %{http_code}\n"
+2026-11-13T05:03:06Z $ curl -sS --max-time 60 -o /dev/null -w "HTTP %{http_code}\n" -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+# T44b stage=ingress1 run=run-3 start=2026-11-13T05:04:24Z
+# script_commit=d998479
+# check=B5 (Enforced) control=Session creation on an agent deployed before (A) vs after (B) perimeter enforcement, without and with the agent ingress rule; control: operator reasoningEngines.list 200
+# expected (pre-registered): noingress: A refused with HTTP 403 carrying a VPC-SC unique identifier, B 200. ingress +15 min: A 200, B 200. The +1 min cell is recorded only. Falsified if: A and B behave the same without the ingress rule, or A is still refused at +15 min with its identity in the ingress rule. Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-13T05:04:24Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-13T05:04:26Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-13T05:04:28Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS --max-time 60 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "{\"class_method\":\"async_create_session\",\"input\":{\"user_id\":\"lzv-t44b\"}}" -w "\nHTTP %{http_code}\n"
+2026-11-13T05:04:29Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS --max-time 60 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "{\"class_method\":\"async_create_session\",\"input\":{\"user_id\":\"lzv-t44b\"}}" -w "\nHTTP %{http_code}\n"
+2026-11-13T05:04:30Z $ curl -sS --max-time 60 -o /dev/null -w "HTTP %{http_code}\n" -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+# T44b stage=ingress15 run=run-3 start=2026-11-13T05:19:35Z
+# script_commit=d998479
+# check=B5 (Enforced) control=Session creation on an agent deployed before (A) vs after (B) perimeter enforcement, without and with the agent ingress rule; control: operator reasoningEngines.list 200
+# expected (pre-registered): noingress: A refused with HTTP 403 carrying a VPC-SC unique identifier, B 200. ingress +15 min: A 200, B 200. The +1 min cell is recorded only. Falsified if: A and B behave the same without the ingress rule, or A is still refused at +15 min with its identity in the ingress rule. Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-13T05:19:36Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-13T05:19:37Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-13T05:19:39Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS --max-time 60 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "{\"class_method\":\"async_create_session\",\"input\":{\"user_id\":\"lzv-t44b\"}}" -w "\nHTTP %{http_code}\n"
+2026-11-13T05:19:40Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS --max-time 60 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "{\"class_method\":\"async_create_session\",\"input\":{\"user_id\":\"lzv-t44b\"}}" -w "\nHTTP %{http_code}\n"
+2026-11-13T05:19:42Z $ curl -sS --max-time 60 -o /dev/null -w "HTTP %{http_code}\n" -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"

@@ -1,0 +1,7 @@
+# T08 run=run-7 start=2026-10-28T15:29:14Z
+# script_commit=eb3fbc9
+# check=Baseline control=`gcp.resourceLocations` `in:eu-locations` (folder)
+# expected (pre-registered): Denied; error contains `violates constraint constraints/gcp.resourceLocations` (attribute by constraint name if T07 is also active)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-28T15:29:14Z $ gcloud storage buckets create gs://lzv-t08-run7-np2u9k --location=us-central1 --project=PROJECT_10
+2026-10-28T15:29:15Z $ if gcloud storage buckets describe gs://lzv-t08-run7-np2u9k >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t08-run7-np2u9k; fi; if gcloud storage buckets describe gs://lzv-t08-run7-np2u9k >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket still exists'; else echo 'CLEANUP CHECK: bucket gone'; fi

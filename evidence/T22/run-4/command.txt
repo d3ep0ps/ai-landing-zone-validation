@@ -1,0 +1,14 @@
+# T22 stage=dryrun run=run-4 start=2026-10-25T20:02:50Z
+# script_commit=ede24cd
+# check=Reach control=DC2 (1)
+# expected (pre-registered): Run first in dry-run: violation entries for the old quota project, none for the tooling quota project. Enforced: both succeed; no egress violation for the tooling quota project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-25T20:02:51Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-10-25T20:02:52Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-10-25T20:02:56Z $ gcloud storage buckets list --project=PROJECT_10 --billing-project=PROJECT_6 --format=value\(name\)
+2026-10-25T20:02:57Z $ env GOOGLE_BILLING_PROJECT=PROJECT_10 USER_PROJECT_OVERRIDE=true terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra plan -input=false -lock=false -detailed-exitcode -var quota_project=PROJECT_10
+2026-10-25T20:03:36Z $ gcloud storage buckets list --project=PROJECT_10 --billing-project=PROJECT_10 --format=value\(name\)
+2026-10-25T20:05:37Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ protoPayload.metadata.dryRun=true --project=PROJECT_10 --freshness=30m --format=json
+2026-10-25T20:05:39Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ protoPayload.metadata.dryRun=true --project=PROJECT_8 --freshness=30m --format=json
+2026-10-25T20:05:40Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ protoPayload.metadata.dryRun=true --project=PROJECT_10 --freshness=30m --format=json
+2026-10-25T20:05:42Z $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ severity=ERROR\ protoPayload.metadata.\"@type\"=\"type.googleapis.com/google.cloud.audit.VpcServiceControlAuditMetadata\"\ protoPayload.metadata.dryRun=true --project=PROJECT_8 --freshness=30m --format=json

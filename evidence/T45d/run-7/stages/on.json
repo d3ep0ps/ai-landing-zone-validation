@@ -1,0 +1,6 @@
+{
+  "stage": "on",
+  "verdict": "PASS",
+  "note": "on: ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=none/200, a-dep=http_status/403, b-dep=URLError/none, c-dep=http_status/403, ctl-restored=adk_callback/none",
+  "timestamp_utc": "2026-11-13T12:55:44Z"
+}

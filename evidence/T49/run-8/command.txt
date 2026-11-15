@@ -1,0 +1,24 @@
+# T49 stage=bound run=run-8 start=2026-11-14T15:49:12Z
+# script_commit=daebf53
+# check=B10 (Enforced) control=Replay, from a different workload, of a bound agent token that was used on the Agent Gateway path; controls: the agent's gateway call 200, replay service with operator credentials 200, opt-out token replay 200
+# expected (pre-registered): s1: the bound agent's own call through the gateway returns 200 (T47 s2 reproduced). s2: the same token replayed from the replay service (other project, no agent certificate) against the same endpoint and payload is refused with 401 UNAUTHENTICATED: the token taken on the gateway path is bound and binding is enforced on the replay. s3 (stage optout, G-optout): replay 200. Falsified if: s2 returns 200 (a token used on the gateway path is replayable from another workload). INCONCLUSIVE if: the s3 replay is not 200, s1 is not 200, either replay returns 403 (fixture IAM), or the replay request cannot reach the service through the gateway egress policy. Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-14T15:49:13Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-14T15:49:14Z $ gcloud logging read timestamp\>=\"2026-11-14T15:26:33.412581Z\"\ AND\ \"lzv_versions\" --project=PROJECT_8 --limit=20 --format=json
+2026-11-14T15:49:15Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-14T15:49:17Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-14T15:49:19Z $ jq -cn --arg t "$(gcloud auth print-access-token)" --arg p "$LZV_PROJECT" --arg m "$LZV_MODEL_NAME" "{token:\$t,project:\$p,model:\$m,location:\"global\"}" | curl -sS --max-time 90 -H "Authorization: Bearer $(gcloud auth print-identity-token)" -H "Content-Type: application/json" -X POST "$LZV_REPLAY_URL/replay" -d @- -w "\nHTTP %{http_code}\n"
+2026-11-14T15:49:21Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+2026-11-14T15:50:17Z $ gcloud logging read timestamp\>=\"2026-11-14T15:47:17Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" --project=PROJECT_8 --limit=200 --format=json
+# T49 stage=optout run=run-8 start=2026-11-14T15:50:21Z
+# script_commit=daebf53
+# check=B10 (Enforced) control=Replay, from a different workload, of a bound agent token that was used on the Agent Gateway path; controls: the agent's gateway call 200, replay service with operator credentials 200, opt-out token replay 200
+# expected (pre-registered): s1: the bound agent's own call through the gateway returns 200 (T47 s2 reproduced). s2: the same token replayed from the replay service (other project, no agent certificate) against the same endpoint and payload is refused with 401 UNAUTHENTICATED: the token taken on the gateway path is bound and binding is enforced on the replay. s3 (stage optout, G-optout): replay 200. Falsified if: s2 returns 200 (a token used on the gateway path is replayable from another workload). INCONCLUSIVE if: the s3 replay is not 200, s1 is not 200, either replay returns 403 (fixture IAM), or the replay request cannot reach the service through the gateway egress policy. Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-14T15:50:22Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-14T15:50:23Z $ gcloud logging read timestamp\>=\"2026-11-14T15:30:09.401324Z\"\ AND\ \"lzv_versions\" --project=PROJECT_8 --limit=20 --format=json
+2026-11-14T15:50:26Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-14T15:50:27Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-14T15:50:28Z $ jq -cn --arg t "$(gcloud auth print-access-token)" --arg p "$LZV_PROJECT" --arg m "$LZV_MODEL_NAME" "{token:\$t,project:\$p,model:\$m,location:\"global\"}" | curl -sS --max-time 90 -H "Authorization: Bearer $(gcloud auth print-identity-token)" -H "Content-Type: application/json" -X POST "$LZV_REPLAY_URL/replay" -d @- -w "\nHTTP %{http_code}\n"
+2026-11-14T15:50:30Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+2026-11-14T15:51:30Z $ gcloud logging read timestamp\>=\"2026-11-14T15:48:30Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" --project=PROJECT_8 --limit=200 --format=json

@@ -1,0 +1,20 @@
+{
+  "error": {
+    "code": 409,
+    "message": "The provided etag does not match the most recent version of the policy.",
+    "status": "ABORTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "INVALID_ETAG",
+        "domain": "iam.googleapis.com",
+        "metadata": {
+          "policyId": "lzv-dc1-deny-agent-predict",
+          "resource": "projects/PROJECT_NUMBER_7"
+        }
+      }
+    ]
+  }
+}
+
+HTTP 409

@@ -1,0 +1,6 @@
+{
+  "stage": "pre",
+  "verdict": "PASS",
+  "note": "pre: agent 1 model call 200, plan exit 0, platform binding present",
+  "timestamp_utc": "2026-11-12T16:58:44Z"
+}

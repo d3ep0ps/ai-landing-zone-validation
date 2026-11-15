@@ -1,0 +1,26 @@
+{
+  "id": "T48",
+  "check": "B9 (Enforced)",
+  "control": "Replay of an agent bearer token from a different workload against the same Vertex AI endpoint and payload; control: agent's own call 200, replay service with operator credentials 200",
+  "scope": "projects/PROJECT_8",
+  "expected": "With default token binding (GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES unset/true): expected refused (401 UNAUTHENTICATED) when replayed from the second workload, even though IAM allows the principal. With the gateway opt-out (GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES=False): expected accepted (200 OK) when replayed from the second workload. Falsified if: the bound token returns 200 OK from the second workload (which would prove binding isn't enforced on Vertex AI calls), or the opt-out token returns 401, or either returns 403 (fixture IAM error). Tier: Enforced. From run 2 (plans/v3h-automation.md, approved before the run): the optout stage runs on a side-by-side engine with the opt-out (lzv-v3-o, same tarball as v3a) instead of redeploying v3a.",
+  "actual": "bound: bound: own=200 control2=200 replay=401 sha12=5aec582131f3; optout: own=200 control2=200 replay=200 sha12=71db2d897053",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T48/run-3/command.txt",
+  "output_file": "evidence/T48/run-3/output.txt",
+  "run_id": "run-3",
+  "timestamp_utc": "2026-11-13T04:48:54Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/troubleshooting/runtime-setup",
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security"
+  ],
+  "script_commit": "d998479"
+}

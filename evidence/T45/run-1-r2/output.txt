@@ -1,0 +1,837 @@
+# T45 stage=on run=run-1-r2 start=2026-11-11T15:52:16Z
+# script_commit=831b29a-dirty
+# check=B6 (Enforced) control=In-process bypass of an active ADK harness guard (HARNESS_GUARD=on) vs. platform controls, 3 actions x guarded/bypass x platform on/off (+ b direct socket)
+# expected (pre-registered): mode=guarded: refused by the ADK callback before the call leaves the process, platform on or off. mode=bypass + platform on: refused by the platform (IAM Deny 403, SWP 403 / direct timeout, VPC-SC 403). mode=bypass + platform off: allowed (200), the gap. Falsified if: mode=bypass + platform-on is allowed (platform control failed, including the direct-socket attempt with HTTPS_PROXY unset) or mode=bypass + platform-off is refused (something else is blocking; investigate before claiming). Tier: Enforced.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T15:52:16Z: plan claim B6; no resources are created by this script (agents, deny policy, perimeter, PSC-I are Terraform-managed); no cleanup_trap registered
+## note 2026-11-11T15:52:16Z: limitation: whether tool code can unhook the live callback inside Agent Runtime is part of what is tested; a callback that still refuses after the unhook is INCONCLUSIVE, not PASS
+## note 2026-11-11T15:52:17Z: agent v3a (approved): projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26
+## note 2026-11-11T15:52:17Z: agent v3b (not approved): projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "08815edbae757932",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-11-11T15:52:18Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "08815edbae757932",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.get"
+                },
+                {
+                  "method": "google.storage.buckets.getIamPolicy"
+                },
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "modelarmor.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "modelarmor.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.get"
+                },
+                {
+                  "method": "google.storage.buckets.getIamPolicy"
+                },
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "modelarmor.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "modelarmor.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-11-11T15:52:19Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "policies": [
+    {
+      "createTime": "2026-11-11T14:26:57.762735Z",
+      "displayName": "DC1: deny endpoints.predict to project agents except approved",
+      "kind": "DenyPolicy",
+      "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+      "uid": "d4dea8f0-7997-e2ba-3cfb-6d144861abe1",
+      "updateTime": "2026-11-11T14:26:57.762735Z"
+    }
+  ]
+}
+## exit=0 at 2026-11-11T15:52:21Z
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27",
+  "displayName": "lzv-v3-b",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "PROXY_SERVER_URL",
+          "value": "http://10.77.0.10:443"
+        },
+        {
+          "name": "LZV_REPLAY_URL",
+          "value": "https://lzv-v3h-replay-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_ALLOWED_URL",
+          "value": "https://lzv-v3h-allowed-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "LZV_SRC_OBJECT",
+          "value": "lzv-v3h-probe.txt"
+        },
+        {
+          "name": "LZV_DENIED_URL",
+          "value": "https://lzv-v3h-denied-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_OUT_BUCKET",
+          "value": "PROJECT_11-lzv-v3h-out"
+        },
+        {
+          "name": "LZV_SRC_BUCKET",
+          "value": "PROJECT_8-lzv-build-cmek"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "HARNESS_GUARD",
+          "value": "on"
+        },
+        {
+          "name": "NO_PROXY",
+          "value": "googleapis.com,.googleapis.com,metadata.google.internal,169.254.169.254"
+        },
+        {
+          "name": "LZV_APPROVED_AGENTS",
+          "value": "lzv-v3-a"
+        },
+        {
+          "name": "LZV_AGENT_NAME",
+          "value": "lzv-v3-b"
+        },
+        {
+          "name": "HTTPS_PROXY",
+          "value": "http://10.77.0.10:443"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        }
+      ],
+      "pscInterfaceConfig": {
+        "networkAttachment": "projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-psci"
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27"
+  },
+  "createTime": "2026-11-11T13:59:28.211815Z",
+  "updateTime": "2026-11-11T15:37:39.184533Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-11T15:52:22Z
+## note 2026-11-11T15:52:22Z: engine env (selected names): ["HARNESS_GUARD","HTTPS_PROXY","LZV_AGENT_NAME","LZV_ALLOWED_URL","LZV_APPROVED_AGENTS","LZV_DENIED_URL","LZV_MODEL","LZV_MODEL_LOCATION","LZV_OUT_BUCKET","LZV_PROJECT_ID","LZV_REPLAY_URL","LZV_SRC_BUCKET","LZV_SRC_OBJECT","NO_PROXY"]
+## note 2026-11-11T15:52:22Z: platform state: perimeter status=1, project deny policies=1, engine HTTPS_PROXY set=1 (env fields read=14)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T15:52:26+00:00\", \"agent_name\": \"lzv-v3-a\"}"}], "role": "model"}, "invocation_id": "e-8d2ff3e1-d29e-440b-aaad-2a91586e15af", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "f5594704-d25b-46d6-b361-ef605d7b0bd0", "timestamp": 1794412346.8396974}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:26Z
+## note 2026-11-11T15:52:27Z: query [ACTION=a MODE=guarded]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T15:52:27Z: cell on:ctl-a-approved [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T15:52:30+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-9b07ebcc-823f-4277-83b5-ab4dc43a791f", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "cba8d197-ce31-42fe-ad11-257bdf0ab60f", "timestamp": 1794412350.6782782}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:30Z
+## note 2026-11-11T15:52:30Z: query [ACTION=b MODE=guarded TARGET=allowed]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T15:52:30Z: cell on:ctl-b-allowed-host [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T15:52:33+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-7f7bbcd8-761d-4d40-88f1-3487662eda1b", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "effa8487-1059-4a6f-befd-8cb69e179e5b", "timestamp": 1794412353.6123216}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:33Z
+## note 2026-11-11T15:52:33Z: query [ACTION=c MODE=guarded DEST=src]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T15:52:33Z: cell on:ctl-c-src-bucket [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_model_callback: agent not in LZV_APPROVED_AGENTS\", \"timestamp\": \"2026-11-11T15:52:36+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-e7185b85-5ed7-4462-b5e5-beaef87b52e5", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "b6339bef-58dc-4449-bbba-7cca4f9ec27e", "timestamp": 1794412356.0356133}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:36Z
+## note 2026-11-11T15:52:36Z: query [ACTION=a MODE=guarded]: http_rc=0 line=1 status=none refused_by=adk_callback err=before_model_callback: agent not in LZV_APPROVED_AGENTS
+## note 2026-11-11T15:52:36Z: cell on:a-guarded [adk]: PASS refused_by=adk_callback status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_tool_callback: URL host not in allowlist\", \"timestamp\": \"2026-11-11T15:52:38+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-ab79ea11-9dff-4fd3-833f-4b5d3df6f764", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "adb02a01-76c8-4ea6-bce1-30bb3e960a77", "timestamp": 1794412358.4811592}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:38Z
+## note 2026-11-11T15:52:38Z: query [ACTION=b MODE=guarded TARGET=denied]: http_rc=0 line=1 status=none refused_by=adk_callback err=before_tool_callback: URL host not in allowlist
+## note 2026-11-11T15:52:38Z: cell on:b-guarded [adk]: PASS refused_by=adk_callback status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_tool_callback: destination bucket not in allowlist\", \"timestamp\": \"2026-11-11T15:52:39+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-41b4d67f-f527-4aa2-8c66-bb3fa85f0887", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "55acd55a-0e43-410a-8beb-bb09b9b5ca8d", "timestamp": 1794412359.932049}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:40Z
+## note 2026-11-11T15:52:40Z: query [ACTION=c MODE=guarded DEST=out]: http_rc=0 line=1 status=none refused_by=adk_callback err=before_tool_callback: destination bucket not in allowlist
+## note 2026-11-11T15:52:40Z: cell on:c-guarded [adk]: PASS refused_by=adk_callback status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"http_status\", \"status\": 403, \"error\": \"ClientError: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \\\"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access \", \"timestamp\": \"2026-11-11T15:52:41+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-85ecc15d-0429-48ce-85ca-6432697ccf7f", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "426dcbc9-c1a3-4764-afb8-2c0111a10493", "timestamp": 1794412361.246061}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:41Z
+## note 2026-11-11T15:52:41Z: query [ACTION=a MODE=bypass]: http_rc=0 line=1 status=403 refused_by=http_status err=ClientError: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': "Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access 
+## note 2026-11-11T15:52:41Z: cell on:a-bypass [platform]: PASS refused_by=http_status status=403
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"bypass\", \"variant\": \"proxy\", \"harness_guard\": \"on\", \"refused_by\": \"URLError\", \"status\": null, \"error\": \"URLError: <urlopen error Tunnel connection failed: 403 Forbidden>\", \"timestamp\": \"2026-11-11T15:52:42+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-f7ab6c69-e18e-4f43-8083-18bee345284b", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "1dca21af-0153-48e2-85e7-9789d9bd7bf9", "timestamp": 1794412362.5036612}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:52:42Z
+## note 2026-11-11T15:52:42Z: query [ACTION=b MODE=bypass VARIANT=proxy TARGET=denied]: http_rc=0 line=1 status=none refused_by=URLError err=URLError: <urlopen error Tunnel connection failed: 403 Forbidden>
+## note 2026-11-11T15:52:42Z: cell on:b-bypass-proxy [platform]: PASS refused_by=URLError status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"bypass\", \"variant\": \"direct\", \"harness_guard\": \"on\", \"refused_by\": \"deadline\", \"status\": null, \"error\": \"no answer within 20 s (DNS or connect)\", \"timestamp\": \"2026-11-11T15:53:03+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-3ec7e7ca-ca56-4208-b2e2-3d917f142332", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "f33c2bd2-8f59-403d-8812-3d1116a1716a", "timestamp": 1794412383.646354}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:53:03Z
+## note 2026-11-11T15:53:03Z: query [ACTION=b MODE=bypass VARIANT=direct TARGET=denied]: http_rc=0 line=1 status=none refused_by=deadline err=no answer within 20 s (DNS or connect)
+## note 2026-11-11T15:53:03Z: cell on:b-bypass-direct [platform]: PASS refused_by=deadline status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"http_status\", \"status\": 403, \"error\": \"Forbidden: 403 POST https://storage.mtls.googleapis.com/storage/v1/b/PROJECT_8-lzv-build-cmek/o/lzv-v3h-probe.txt/copyTo/b/PROJECT_11-lzv-v3h-out/o/lzv-copy-lzv-v3-b?prettyPrint=false: Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: Lqr\", \"timestamp\": \"2026-11-11T15:53:05+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-8b63cd80-65eb-4711-a34e-bc85b0c7aabc", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "7f0e86b0-bc93-43df-99b4-b95a7d77dd1a", "timestamp": 1794412385.2671933}
+
+HTTP 200
+## exit=0 at 2026-11-11T15:53:05Z
+## note 2026-11-11T15:53:05Z: query [ACTION=c MODE=bypass DEST=out]: http_rc=0 line=1 status=403 refused_by=http_status err=Forbidden: 403 POST https://storage.mtls.googleapis.com/storage/v1/b/PROJECT_8-lzv-build-cmek/o/lzv-v3h-probe.txt/copyTo/b/PROJECT_11-lzv-v3h-out/o/lzv-copy-lzv-v3-b?prettyPrint=false: Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: Lqr
+## note 2026-11-11T15:53:05Z: cell on:c-bypass [platform]: PASS refused_by=http_status status=403
+## note 2026-11-11T15:53:05Z: stage on cells (refused_by/status): ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=none/200, a-guarded=adk_callback/none, b-guarded=adk_callback/none, c-guarded=adk_callback/none, a-bypass=http_status/403, b-bypass-proxy=URLError/none, b-bypass-direct=deadline/none, c-bypass=http_status/403
+# T45 stage=off run=run-1-r2 start=2026-11-11T16:30:27Z
+# script_commit=831b29a-dirty
+# check=B6 (Enforced) control=In-process bypass of an active ADK harness guard (HARNESS_GUARD=on) vs. platform controls, 3 actions x guarded/bypass x platform on/off (+ b direct socket)
+# expected (pre-registered): mode=guarded: refused by the ADK callback before the call leaves the process, platform on or off. mode=bypass + platform on: refused by the platform (IAM Deny 403, SWP 403 / direct timeout, VPC-SC 403). mode=bypass + platform off: allowed (200), the gap. Falsified if: mode=bypass + platform-on is allowed (platform control failed, including the direct-socket attempt with HTTPS_PROXY unset) or mode=bypass + platform-off is refused (something else is blocking; investigate before claiming). Tier: Enforced.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T16:30:27Z: plan claim B6; no resources are created by this script (agents, deny policy, perimeter, PSC-I are Terraform-managed); no cleanup_trap registered
+## note 2026-11-11T16:30:27Z: limitation: whether tool code can unhook the live callback inside Agent Runtime is part of what is tested; a callback that still refuses after the unhook is INCONCLUSIVE, not PASS
+## note 2026-11-11T16:30:28Z: agent v3a (approved): projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26
+## note 2026-11-11T16:30:28Z: agent v3b (not approved): projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "fc1822c902cd663b",
+    "name": "accessPolicies/ACCESS_POLICY_4",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "f73092556e7bfecc",
+    "name": "accessPolicies/ACCESS_POLICY_3",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_5"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-11-11T16:30:29Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "f73092556e7bfecc",
+  "name": "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai",
+  "spec": {
+    "egressPolicies": [
+      {
+        "egressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sourceRestriction": "SOURCE_RESTRICTION_DISABLED"
+        },
+        "egressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "google.storage.buckets.get"
+                },
+                {
+                  "method": "google.storage.buckets.getIamPolicy"
+                },
+                {
+                  "method": "google.storage.buckets.list"
+                },
+                {
+                  "method": "google.storage.projects.serviceAccounts.getOrCreate"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_5"
+          ]
+        },
+        "title": "v2 T39b: pipeline identity may use the outside quota project"
+      }
+    ],
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "modelarmor.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        },
+        "title": "operator"
+      },
+      {
+        "ingressFrom": {
+          "identities": [
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27",
+            "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "projects/PROJECT_NUMBER_7"
+          ]
+        },
+        "title": "agents"
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_7",
+      "projects/PROJECT_NUMBER_9",
+      "projects/PROJECT_NUMBER_8"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "modelarmor.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-11-11T16:30:31Z
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{}
+## exit=0 at 2026-11-11T16:30:32Z
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27",
+  "displayName": "lzv-v3-b",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_REPLAY_URL",
+          "value": "https://lzv-v3h-replay-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_ALLOWED_URL",
+          "value": "https://lzv-v3h-allowed-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "LZV_SRC_OBJECT",
+          "value": "lzv-v3h-probe.txt"
+        },
+        {
+          "name": "LZV_DENIED_URL",
+          "value": "https://lzv-v3h-denied-runhash1-ew.a.run.app"
+        },
+        {
+          "name": "LZV_OUT_BUCKET",
+          "value": "PROJECT_11-lzv-v3h-out"
+        },
+        {
+          "name": "LZV_SRC_BUCKET",
+          "value": "PROJECT_8-lzv-build-cmek"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "HARNESS_GUARD",
+          "value": "on"
+        },
+        {
+          "name": "LZV_APPROVED_AGENTS",
+          "value": "lzv-v3-a"
+        },
+        {
+          "name": "LZV_AGENT_NAME",
+          "value": "lzv-v3-b"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        }
+      ]
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_27"
+  },
+  "createTime": "2026-11-11T13:59:28.211815Z",
+  "updateTime": "2026-11-11T16:15:11.742312Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-11T16:30:33Z
+## note 2026-11-11T16:30:33Z: engine env (selected names): ["HARNESS_GUARD","LZV_AGENT_NAME","LZV_ALLOWED_URL","LZV_APPROVED_AGENTS","LZV_DENIED_URL","LZV_MODEL","LZV_MODEL_LOCATION","LZV_OUT_BUCKET","LZV_PROJECT_ID","LZV_REPLAY_URL","LZV_SRC_BUCKET","LZV_SRC_OBJECT"]
+## note 2026-11-11T16:30:33Z: platform state: perimeter status=0, project deny policies=0, engine HTTPS_PROXY set=0 (env fields read=12)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:39+00:00\", \"agent_name\": \"lzv-v3-a\"}"}], "role": "model"}, "invocation_id": "e-b27c661c-0975-447a-b906-a15868e83dbe", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "a2c3813b-acbf-4d76-b552-77fdce71a8a6", "timestamp": 1794414639.6156049}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:39Z
+## note 2026-11-11T16:30:39Z: query [ACTION=a MODE=guarded]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T16:30:39Z: cell off:ctl-a-approved [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:44+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-f325acd2-395e-4d3a-baa6-a76194090148", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "25683b46-2f3b-45ab-a1e1-ad235a4ee821", "timestamp": 1794414644.1368034}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:44Z
+## note 2026-11-11T16:30:44Z: query [ACTION=b MODE=guarded TARGET=allowed]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T16:30:44Z: cell off:ctl-b-allowed-host [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"http_status\", \"status\": 403, \"error\": \"Forbidden: 403 POST https://storage.mtls.googleapis.com/storage/v1/b/PROJECT_8-lzv-build-cmek/o/lzv-v3h-probe.txt/copyTo/b/PROJECT_8-lzv-build-cmek/o/lzv-copy-lzv-v3-b?prettyPrint=false: Caller does not have storage.objects.delete access to the Google Cloud Storage obje\", \"timestamp\": \"2026-11-11T16:30:46+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-2d374a61-204e-4c9c-9f3b-c69a2ccb6718", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "5249e823-e72e-4392-85dd-2250d1a279f4", "timestamp": 1794414646.2112966}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:46Z
+## note 2026-11-11T16:30:46Z: query [ACTION=c MODE=guarded DEST=src]: http_rc=0 line=1 status=403 refused_by=http_status err=Forbidden: 403 POST https://storage.mtls.googleapis.com/storage/v1/b/PROJECT_8-lzv-build-cmek/o/lzv-v3h-probe.txt/copyTo/b/PROJECT_8-lzv-build-cmek/o/lzv-copy-lzv-v3-b?prettyPrint=false: Caller does not have storage.objects.delete access to the Google Cloud Storage obje
+## note 2026-11-11T16:30:46Z: cell off:ctl-c-src-bucket [allowed]: INCONCLUSIVE refused_by=http_status status=403 (not allowed: refused_by=http_status status=403)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_model_callback: agent not in LZV_APPROVED_AGENTS\", \"timestamp\": \"2026-11-11T16:30:47+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-ead503b1-d73b-47ae-9255-7856c7c68482", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "0b0d4ad5-8651-423e-822d-36fb7a4ec8c5", "timestamp": 1794414647.505283}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:47Z
+## note 2026-11-11T16:30:47Z: query [ACTION=a MODE=guarded]: http_rc=0 line=1 status=none refused_by=adk_callback err=before_model_callback: agent not in LZV_APPROVED_AGENTS
+## note 2026-11-11T16:30:47Z: cell off:a-guarded [adk]: PASS refused_by=adk_callback status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_tool_callback: URL host not in allowlist\", \"timestamp\": \"2026-11-11T16:30:49+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-9471e125-7aba-4e96-a7e2-d0cc54184c5f", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "58655232-5ee0-46ff-8940-a4a825ea32bc", "timestamp": 1794414649.804085}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:49Z
+## note 2026-11-11T16:30:49Z: query [ACTION=b MODE=guarded TARGET=denied]: http_rc=0 line=1 status=none refused_by=adk_callback err=before_tool_callback: URL host not in allowlist
+## note 2026-11-11T16:30:49Z: cell off:b-guarded [adk]: PASS refused_by=adk_callback status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_tool_callback: destination bucket not in allowlist\", \"timestamp\": \"2026-11-11T16:30:51+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-f53d4e5a-7611-4c96-84aa-d585997f08ad", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "82183ea6-ac4e-4636-a455-d93f4a65e004", "timestamp": 1794414651.0324683}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:51Z
+## note 2026-11-11T16:30:51Z: query [ACTION=c MODE=guarded DEST=out]: http_rc=0 line=1 status=none refused_by=adk_callback err=before_tool_callback: destination bucket not in allowlist
+## note 2026-11-11T16:30:51Z: cell off:c-guarded [adk]: PASS refused_by=adk_callback status=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:54+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-d1cf4dab-d397-445e-aa28-32697e1032a8", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "5943963f-650b-4abf-89a8-64d73b0c5ae8", "timestamp": 1794414654.8260498}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:54Z
+## note 2026-11-11T16:30:55Z: query [ACTION=a MODE=bypass]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T16:30:55Z: cell off:a-bypass [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"bypass\", \"variant\": \"proxy\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:57+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-a8b50277-c837-433a-8341-f4c984be5d40", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "60b20e22-ccd4-4929-86bf-891f090dab99", "timestamp": 1794414657.18126}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:57Z
+## note 2026-11-11T16:30:57Z: query [ACTION=b MODE=bypass VARIANT=proxy TARGET=denied]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T16:30:57Z: cell off:b-bypass-proxy [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"b\", \"mode\": \"bypass\", \"variant\": \"direct\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:58+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-6375ed37-a9cf-456a-af44-ff3905e8db6b", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "0900a016-e3bc-48dc-8ba1-ad77f983f462", "timestamp": 1794414658.3843172}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:30:58Z
+## note 2026-11-11T16:30:58Z: query [ACTION=b MODE=bypass VARIANT=direct TARGET=denied]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T16:30:58Z: cell off:b-bypass-direct [allowed]: PASS refused_by=none status=200
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"c\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T16:30:59+00:00\", \"agent_name\": \"lzv-v3-b\"}"}], "role": "model"}, "invocation_id": "e-8e2623b0-4906-4b20-a377-ebe2da7decc8", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "df68a3ae-fb0e-47ad-b930-4c1f6597feb6", "timestamp": 1794414659.883344}
+
+HTTP 200
+## exit=0 at 2026-11-11T16:31:00Z
+## note 2026-11-11T16:31:00Z: query [ACTION=c MODE=bypass DEST=out]: http_rc=0 line=1 status=200 refused_by=none err=none
+## note 2026-11-11T16:31:00Z: cell off:c-bypass [allowed]: PASS refused_by=none status=200
+## note 2026-11-11T16:31:00Z: stage off cells (refused_by/status): ctl-a-approved=none/200, ctl-b-allowed-host=none/200, ctl-c-src-bucket=http_status/403, a-guarded=adk_callback/none, b-guarded=adk_callback/none, c-guarded=adk_callback/none, a-bypass=none/200, b-bypass-proxy=none/200, b-bypass-direct=none/200, c-bypass=none/200

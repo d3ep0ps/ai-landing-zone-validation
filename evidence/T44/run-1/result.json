@@ -1,0 +1,26 @@
+{
+  "id": "T44",
+  "check": "B5 (Enforced)",
+  "control": "Identical artifact deployed before (A) and after (B) perimeter enforcement; control: baseline calls in dry-run, then same calls with the agent ingress rule",
+  "scope": "projects/PROJECT_8",
+  "expected": "Expected (from T14R/T23): without the ingress rule, A's own model calls are refused (agent unusable), B has no internet; with the ingress rule, A keeps internet access, B has none. Falsified if: A and B behave the same. Tier: Enforced.",
+  "actual": "artifact sha256 db27c21b0b79...; noingress: noingress: A model=none/none, A tool=none/none; B tool=200/none, B model=200/none; no clear result for A's model call (status=none by=none); B reached the non-allowed host (expected: no internet); ingress: A tool=200, A model=200; B tool=200, B model=200",
+  "verdict": "FAIL",
+  "tier": "Enforced",
+  "reason": "stage noingress: FAIL (noingress: A model=none/none, A tool=none/none; B tool=200/none, B model=200/none; no clear result for A's model call (status=none by=none); B reached the non-allowed host (expected: no internet)); stage ingress: B reached the non-allowed host (A and B behave the same); ",
+  "commands_file": "evidence/T44/run-1/command.txt",
+  "output_file": "evidence/T44/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-11T14:24:36Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/ingress-egress-rules",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity"
+  ],
+  "script_commit": "831b29a-dirty"
+}

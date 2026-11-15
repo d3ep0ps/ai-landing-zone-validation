@@ -1,0 +1,6 @@
+{
+  "stage": "dryrun",
+  "verdict": "PASS",
+  "note": "plan exit 2, read exit 0; dry-run violations old=4 tooling=0",
+  "timestamp_utc": "2026-10-28T04:50:57Z"
+}

@@ -1,0 +1,3 @@
+{"content": {"parts": [{"text": "{\"action\": \"a\", \"mode\": \"guarded\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": \"adk_callback\", \"status\": null, \"error\": \"before_model_callback: agent not in LZV_APPROVED_AGENTS\", \"timestamp\": \"2026-11-14T16:58:32+00:00\", \"agent_name\": \"lzv-v3-b-dep\"}"}], "role": "model"}, "invocation_id": "e-5616fb01-db6d-4c7e-aebf-3ac76c7be72e", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "410fa769-56f3-4075-9f16-908c41028062", "timestamp": 1794675512.7946858}
+
+HTTP 200

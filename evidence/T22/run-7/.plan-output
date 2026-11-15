@@ -1,0 +1,202 @@
+[0m[1mgoogle_project_service.tooling_quota["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_10/aiplatform.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["logging.googleapis.com"]: Refreshing state... [id=PROJECT_10/logging.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["accesscontextmanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/accesscontextmanager.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["binaryauthorization.googleapis.com"]: Refreshing state... [id=PROJECT_10/binaryauthorization.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["cloudbilling.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudbilling.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["containeranalysis.googleapis.com"]: Refreshing state... [id=PROJECT_10/containeranalysis.googleapis.com][0m
+[0m[1mmodule.folder_root.google_folder.folder[0]: Refreshing state... [id=folders/FOLDER_ID_5][0m
+[0m[1mmodule.vpc_sc_org_policy.google_access_context_manager_access_policy.default[0]: Refreshing state... [id=ACCESS_POLICY_4][0m
+[0m[1mgoogle_project_service.tooling_quota["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudresourcemanager.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["iam.googleapis.com"]: Refreshing state... [id=PROJECT_10/iam.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_10/serviceusage.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["orgpolicy.googleapis.com"]: Refreshing state... [id=PROJECT_10/orgpolicy.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["cloudkms.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudkms.googleapis.com][0m
+[0m[1mgoogle_project_service.tooling_quota["storage.googleapis.com"]: Refreshing state... [id=PROJECT_10/storage.googleapis.com][0m
+[0m[1mmodule.folder_root.google_org_policy_policy.default["gcp.resourceLocations"]: Refreshing state... [id=folders/FOLDER_ID_5/policies/gcp.resourceLocations][0m
+[0m[1mmodule.folder_root.google_org_policy_policy.default["run.managed.requireInvokerIam"]: Refreshing state... [id=folders/FOLDER_ID_5/policies/run.managed.requireInvokerIam][0m
+[0m[1mmodule.folder_root.google_org_policy_policy.default["iam.managed.disableServiceAccountKeyCreation"]: Refreshing state... [id=folders/FOLDER_ID_5/policies/iam.managed.disableServiceAccountKeyCreation][0m
+[0m[1mmodule.folder_root.google_org_policy_policy.default["run.allowedBinaryAuthorizationPolicies"]: Refreshing state... [id=folders/FOLDER_ID_5/policies/run.allowedBinaryAuthorizationPolicies][0m
+[0m[1mmodule.folder_root.google_org_policy_policy.default["storage.publicAccessPrevention"]: Refreshing state... [id=folders/FOLDER_ID_5/policies/storage.publicAccessPrevention][0m
+[0m[1mmodule.folder_root.google_org_policy_policy.default["run.allowedIngress"]: Refreshing state... [id=folders/FOLDER_ID_5/policies/run.allowedIngress][0m
+[0m[1mmodule.folder_ai_prod.google_folder.folder[0]: Refreshing state... [id=folders/FOLDER_ID_6][0m
+[0m[1mmodule.vpc_sc.google_access_context_manager_access_policy.default[0]: Refreshing state... [id=ACCESS_POLICY_3][0m
+[0m[1mmodule.prj_data.google_project.project[0]: Refreshing state... [id=projects/PROJECT_10][0m
+[0m[1mmodule.prj_mcp.google_project.project[0]: Refreshing state... [id=projects/PROJECT_9][0m
+[0m[1mmodule.prj_outside.google_project.project[0]: Refreshing state... [id=projects/PROJECT_11][0m
+[0m[1mmodule.folder_ai_prod.google_org_policy_policy.default["vertexai.allowedModels"]: Refreshing state... [id=folders/FOLDER_ID_6/policies/vertexai.allowedModels][0m
+[0m[1mmodule.prj_runtime.google_project.project[0]: Refreshing state... [id=projects/PROJECT_8][0m
+[0m[1mmodule.prj_data.google_project_service.project_services["iam.googleapis.com"]: Refreshing state... [id=PROJECT_10/iam.googleapis.com][0m
+[0m[1mmodule.prj_data.google_project_service.project_services["logging.googleapis.com"]: Refreshing state... [id=PROJECT_10/logging.googleapis.com][0m
+[0m[1mmodule.prj_data.google_project_service.project_services["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_10/serviceusage.googleapis.com][0m
+[0m[1mmodule.prj_data.google_project_service.project_services["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudresourcemanager.googleapis.com][0m
+[0m[1mmodule.prj_data.google_project_service.project_services["cloudkms.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudkms.googleapis.com][0m
+[0m[1mmodule.prj_data.google_project_service.project_services["storage.googleapis.com"]: Refreshing state... [id=PROJECT_10/storage.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["logging.googleapis.com"]: Refreshing state... [id=PROJECT_9/logging.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["storage.googleapis.com"]: Refreshing state... [id=PROJECT_9/storage.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudbuild.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["run.googleapis.com"]: Refreshing state... [id=PROJECT_9/run.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["artifactregistry.googleapis.com"]: Refreshing state... [id=PROJECT_9/artifactregistry.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_9/cloudresourcemanager.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["iam.googleapis.com"]: Refreshing state... [id=PROJECT_9/iam.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_9/serviceusage.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service.project_services["binaryauthorization.googleapis.com"]: Refreshing state... [id=PROJECT_9/binaryauthorization.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["binaryauthorization.googleapis.com"]: Refreshing state... [id=PROJECT_8/binaryauthorization.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["logging.googleapis.com"]: Refreshing state... [id=PROJECT_8/logging.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_8/aiplatform.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["iamcredentials.googleapis.com"]: Refreshing state... [id=PROJECT_8/iamcredentials.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["run.googleapis.com"]: Refreshing state... [id=PROJECT_8/run.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_8/cloudresourcemanager.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["iam.googleapis.com"]: Refreshing state... [id=PROJECT_8/iam.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_8/serviceusage.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_8/cloudbuild.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["storage.googleapis.com"]: Refreshing state... [id=PROJECT_8/storage.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["cloudasset.googleapis.com"]: Refreshing state... [id=PROJECT_8/cloudasset.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service.project_services["artifactregistry.googleapis.com"]: Refreshing state... [id=PROJECT_8/artifactregistry.googleapis.com][0m
+[0m[1mmodule.prj_data.data.google_storage_project_service_account.gcs_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_data.data.google_logging_project_settings.logging_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_mcp.data.google_storage_project_service_account.gcs_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_mcp.data.google_logging_project_settings.logging_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_outside.google_project_service.project_services["iam.googleapis.com"]: Refreshing state... [id=PROJECT_11/iam.googleapis.com][0m
+[0m[1mmodule.prj_outside.google_project_service.project_services["storage.googleapis.com"]: Refreshing state... [id=PROJECT_11/storage.googleapis.com][0m
+[0m[1mmodule.prj_outside.google_project_service.project_services["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_11/cloudresourcemanager.googleapis.com][0m
+[0m[1mmodule.prj_data.google_project_service_identity.default["cloudkms.googleapis.com"]: Refreshing state... [id=projects/PROJECT_10/services/cloudkms.googleapis.com][0m
+[0m[1mmodule.prj_outside.google_project_service.project_services["logging.googleapis.com"]: Refreshing state... [id=PROJECT_11/logging.googleapis.com][0m
+[0m[1mmodule.prj_data.data.google_logging_project_settings.logging_sa[0]: Read complete after 1s [id=projects/PROJECT_10/settings][0m
+[0m[1mmodule.prj_outside.google_project_service.project_services["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_11/serviceusage.googleapis.com][0m
+[0m[1mmodule.prj_mcp.data.google_logging_project_settings.logging_sa[0]: Read complete after 1s [id=projects/PROJECT_9/settings][0m
+[0m[1mmodule.prj_data.google_project_iam_member.service_agents["cloudkms"]: Refreshing state... [id=PROJECT_10/roles/cloudkms.serviceAgent/serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.data.google_storage_project_service_account.gcs_sa[0]: Read complete after 1s [id=service-PROJECT_NUMBER_9@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.google_project_service_identity.default["run.googleapis.com"]: Refreshing state... [id=projects/PROJECT_9/services/run.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_service_identity.default["binaryauthorization.googleapis.com"]: Refreshing state... [id=projects/PROJECT_9/services/binaryauthorization.googleapis.com][0m
+[0m[1mmodule.prj_data.data.google_storage_project_service_account.gcs_sa[0]: Read complete after 1s [id=service-PROJECT_NUMBER_8@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.google_project_service_identity.default["artifactregistry.googleapis.com"]: Refreshing state... [id=projects/PROJECT_9/services/artifactregistry.googleapis.com][0m
+[0m[1mmodule.prj_mcp.google_project_iam_member.service_agents["cloudbuild-sa"]: Refreshing state... [id=PROJECT_9/roles/cloudbuild.builds.builder/serviceAccount:PROJECT_NUMBER_9@cloudbuild.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.google_project_iam_member.service_agents["artifactregistry"]: Refreshing state... [id=PROJECT_9/roles/artifactregistry.serviceAgent/serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-artifactregistry.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.google_project_iam_member.service_agents["serverless-robot-prod"]: Refreshing state... [id=PROJECT_9/roles/run.serviceAgent/serviceAccount:service-PROJECT_NUMBER_9@serverless-robot-prod.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.google_project_iam_member.service_agents["binaryauthorization"]: Refreshing state... [id=PROJECT_9/roles/binaryauthorization.serviceAgent/serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-binaryauthorization.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_mcp.google_project_iam_member.service_agents["cloudbuild"]: Refreshing state... [id=PROJECT_9/roles/cloudbuild.serviceAgent/serviceAccount:service-PROJECT_NUMBER_9@gcp-sa-cloudbuild.iam.gserviceaccount.com][0m
+[0m[1mmodule.log_bucket.google_logging_project_bucket_config.bucket[0]: Refreshing state... [id=projects/PROJECT_10/locations/europe-west1/buckets/lzv-locked-logs][0m
+[0m[1mmodule.prj_runtime.google_project_service_identity.default["run.googleapis.com"]: Refreshing state... [id=projects/PROJECT_8/services/run.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service_identity.default["binaryauthorization.googleapis.com"]: Refreshing state... [id=projects/PROJECT_8/services/binaryauthorization.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service_identity.default["aiplatform.googleapis.com"]: Refreshing state... [id=projects/PROJECT_8/services/aiplatform.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service_identity.default["artifactregistry.googleapis.com"]: Refreshing state... [id=projects/PROJECT_8/services/artifactregistry.googleapis.com][0m
+[0m[1mmodule.prj_runtime.google_project_service_identity.default["cloudasset.googleapis.com"]: Refreshing state... [id=projects/PROJECT_8/services/cloudasset.googleapis.com][0m
+[0m[1mmodule.prj_runtime.data.google_logging_project_settings.logging_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_runtime.data.google_storage_project_service_account.gcs_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-nb"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.colabServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-nb.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-moss-ft"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.tuningServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-moss-ft.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["aiplatform-ft"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-ft.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.data.google_logging_project_settings.logging_sa[0]: Read complete after 1s [id=projects/PROJECT_8/settings][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-sandbox"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.agentSandboxServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-sandbox.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["aiplatform-cc"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.customCodeServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-cc.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["cloudasset"]: Refreshing state... [id=PROJECT_8/roles/cloudasset.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudasset.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["aiplatform-vm"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.notebookServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-vm.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-rag"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.ragServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-rag.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["aiplatform"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-ex"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.extensionServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.data.google_storage_project_service_account.gcs_sa[0]: Read complete after 1s [id=service-PROJECT_NUMBER_7@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["cloudbuild-sa"]: Refreshing state... [id=PROJECT_8/roles/cloudbuild.builds.builder/serviceAccount:PROJECT_NUMBER_7@cloudbuild.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["aiplatform-re"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.reasoningEngineServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-re.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["artifactregistry"]: Refreshing state... [id=PROJECT_8/roles/artifactregistry.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-artifactregistry.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-mm"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.modelMonitoringServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-mm.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["cloudbuild"]: Refreshing state... [id=PROJECT_8/roles/cloudbuild.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudbuild.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-tune"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.tuningServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-tune.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-ex-cc"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.extensionCustomCodeServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex-cc.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["aiplatform-pie"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-pie.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-shtune"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.user/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-shtune.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["binaryauthorization"]: Refreshing state... [id=PROJECT_8/roles/binaryauthorization.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-binaryauthorization.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-op"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.onlinePredictionServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-op.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-eval"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.rapidevalServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-eval.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-bp"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.batchPredictionServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-bp.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["vertex-telemetry"]: Refreshing state... [id=PROJECT_8/roles/aiplatform.telemetryServiceAgent/serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-telemetry.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_runtime.google_project_iam_member.service_agents["serverless-robot-prod"]: Refreshing state... [id=PROJECT_8/roles/run.serviceAgent/serviceAccount:service-PROJECT_NUMBER_7@serverless-robot-prod.iam.gserviceaccount.com][0m
+[0m[1mmodule.prj_outside.data.google_logging_project_settings.logging_sa[0]: Reading...[0m[0m
+[0m[1mmodule.prj_outside.data.google_logging_project_settings.logging_sa[0]: Read complete after 0s [id=projects/PROJECT_11/settings][0m
+[0m[1mmodule.prj_outside.data.google_storage_project_service_account.gcs_sa[0]: Reading...[0m[0m
+[0m[1mmodule.vpc_sc.google_access_context_manager_service_perimeter.regular["lzv_ai"]: Refreshing state... [id=accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [33m~[0m update in-place[0m
+
+Terraform planned the following actions, but then encountered a problem:
+
+[1m  # module.vpc_sc.google_access_context_manager_service_perimeter.regular["lzv_ai"][0m will be updated in-place
+[0m  [33m~[0m[0m resource "google_access_context_manager_service_perimeter" "regular" {
+        id                        = "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        name                      = "accessPolicies/ACCESS_POLICY_3/servicePerimeters/lzv_ai"
+        [90m# (9 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m spec {
+            [90m# (3 unchanged attributes hidden)[0m[0m
+
+          [33m~[0m[0m ingress_policies {
+                [90m# (1 unchanged attribute hidden)[0m[0m
+
+              [33m~[0m[0m ingress_to {
+                    [90m# (2 unchanged attributes hidden)[0m[0m
+
+                  [33m~[0m[0m operations {
+                      [33m~[0m[0m service_name = "storage.googleapis.com" [33m->[0m[0m "aiplatform.googleapis.com"
+
+                        [90m# (1 unchanged block hidden)[0m[0m
+                    }
+                  [33m~[0m[0m operations {
+                      [33m~[0m[0m service_name = "aiplatform.googleapis.com" [33m->[0m[0m "storage.googleapis.com"
+
+                        [90m# (1 unchanged block hidden)[0m[0m
+                    }
+                }
+
+                [90m# (1 unchanged block hidden)[0m[0m
+            }
+
+            [90m# (2 unchanged blocks hidden)[0m[0m
+        }
+
+      [33m~[0m[0m status {
+            [90m# (3 unchanged attributes hidden)[0m[0m
+
+          [33m~[0m[0m ingress_policies {
+                [90m# (1 unchanged attribute hidden)[0m[0m
+
+              [33m~[0m[0m ingress_to {
+                    [90m# (2 unchanged attributes hidden)[0m[0m
+
+                  [33m~[0m[0m operations {
+                      [33m~[0m[0m service_name = "storage.googleapis.com" [33m->[0m[0m "aiplatform.googleapis.com"
+
+                        [90m# (1 unchanged block hidden)[0m[0m
+                    }
+                  [33m~[0m[0m operations {
+                      [33m~[0m[0m service_name = "aiplatform.googleapis.com" [33m->[0m[0m "storage.googleapis.com"
+
+                        [90m# (1 unchanged block hidden)[0m[0m
+                    }
+                }
+
+                [90m# (1 unchanged block hidden)[0m[0m
+            }
+
+            [90m# (2 unchanged blocks hidden)[0m[0m
+        }
+    }
+
+[1mPlan:[0m [0m0 to add, 1 to change, 0 to destroy.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mArgument is deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  with google_network_services_agent_gateway.v2,
+[33m│[0m [0m  on v2-gateway.tf line 213, in resource "google_network_services_agent_gateway" "v2":
+[33m│[0m [0m 213:   protocols  = [4m["MCP"][0m[0m
+[33m│[0m [0m
+[33m│[0m [0m`protocols` is deprecated and will be removed in a future major release.
+[33m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mError when reading or editing GCS service account not found: googleapi: Error 403: Request is prohibited by organization's policy. vpcServiceControlsUniqueIdentifier: ra1GPhecaNSUIbLgTYimjP5hKAJVRN8b55oIKhFK-bxk8Yt5YXO2CQjo50aNsljg8QXrtQlK93TCMiaM, vpcServiceControls[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with module.prj_outside.data.google_storage_project_service_account.gcs_sa[0],
+[31m│[0m [0m  on ../vendor/fabric/modules/project/service-agents.tf line 150, in data "google_storage_project_service_account" "gcs_sa":
+[31m│[0m [0m 150: data "google_storage_project_service_account" "gcs_sa" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m

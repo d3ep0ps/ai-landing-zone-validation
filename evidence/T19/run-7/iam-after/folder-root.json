@@ -1,0 +1,24 @@
+{
+  "bindings": [
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderAdmin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.folderEditor"
+    }
+  ],
+  "etag": "BwZe0NGtlVQ=",
+  "version": 1
+}

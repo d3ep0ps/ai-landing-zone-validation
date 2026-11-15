@@ -1,0 +1,26 @@
+{
+  "id": "T55",
+  "check": "B15 (Enforced)",
+  "control": "With every T45 platform control on, the approved PSC-I agent reads the synthetic probe object inside the perimeter and POSTs it to the allowed host through SWP; evidence: the allowed host's Cloud Run request log",
+  "scope": "projects/PROJECT_8",
+  "expected": "Allowed: POST 200, and the allowed host's request log shows the POST to /lzv-t55 with the object's SHA-256 prefix and a request size that includes the object. Falsified if: refused. Recorded as an allowed action (the platform caps damage at what the identity may do, not below it). Tier: Enforced. 2+ runs. Synthetic data only.",
+  "actual": "read=200 size=52 sha12=e01167711404; post=200; allowed-host log entries=1 (POST 200 size=402); allowed action recorded",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T55/run-7/command.txt",
+  "output_file": "evidence/T55/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-11-13T12:57:23Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/overview",
+    "https://docs.cloud.google.com/secure-web-proxy/docs/overview",
+    "https://docs.cloud.google.com/run/docs/logging"
+  ],
+  "script_commit": "5c3808a"
+}

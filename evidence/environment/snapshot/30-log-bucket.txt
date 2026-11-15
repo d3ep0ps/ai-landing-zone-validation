@@ -1,0 +1,9 @@
+$ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_4 --format=json
+{
+  "createTime": "2026-10-23T13:09:22.021844924Z",
+  "lifecycleState": "ACTIVE",
+  "locked": true,
+  "name": "projects/PROJECT_4/locations/europe-west1/buckets/lzv-locked-logs",
+  "retentionDays": 1,
+  "updateTime": "2026-10-23T13:15:22.117058051Z"
+}

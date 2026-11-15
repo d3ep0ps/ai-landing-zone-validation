@@ -1,0 +1,49 @@
+# T01 run=run-1 start=2026-10-23T13:38:46Z
+# check=I2 control=`iam.managed.disableServiceAccountKeyCreation` (managed constraint, not the legacy `iam.disableServiceAccountKeyCreation`) (folder)
+# expected (pre-registered): Denied with `FAILED_PRECONDITION`; error names the managed constraint or says "Key creation is not allowed"
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## $ gcloud org-policies describe constraints/iam.managed.disableServiceAccountKeyCreation --effective --project=PROJECT_1 --format=json
+API [orgpolicy.googleapis.com] not enabled on project [PROJECT_1].
+ Would you like to enable and retry (this will take a few minutes)? (y/N)?  
+ERROR: (gcloud.org-policies.describe) PERMISSION_DENIED: Organization Policy API has not been used in project PROJECT_1 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/orgpolicy.googleapis.com/overview?project=PROJECT_1 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property.
+Organization Policy API has not been used in project PROJECT_1 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/orgpolicy.googleapis.com/overview?project=PROJECT_1 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.
+Google developers console API activation
+https://console.developers.google.com/apis/api/orgpolicy.googleapis.com/overview?project=PROJECT_1
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: googleapis.com
+  metadata:
+    activationUrl: https://console.developers.google.com/apis/api/orgpolicy.googleapis.com/overview?project=PROJECT_1
+    consumer: projects/PROJECT_1
+    containerInfo: PROJECT_1
+    service: orgpolicy.googleapis.com
+    serviceTitle: Organization Policy API
+  reason: SERVICE_DISABLED
+## exit=1 at 2026-10-23T13:38:47Z
+## note 2026-10-23T13:38:47Z: effective constraints/iam.managed.disableServiceAccountKeyCreation on PROJECT_1: enforce=unreadable
+## $ gcloud iam service-accounts create lzv-t01-run1-1j7kys --project=PROJECT_1 --display-name=lzv\ T01\ test\ SA
+Created service account [lzv-t01-run1-1j7kys].
+Service account email: SA_2@PROJECT.iam.gserviceaccount.com
+## exit=0 at 2026-10-23T13:38:49Z
+## $ gcloud iam service-accounts keys create /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.ie21kL/key.json --iam-account=SA_2@PROJECT.iam.gserviceaccount.com --project=PROJECT_1
+ERROR: (gcloud.iam.service-accounts.keys.create) FAILED_PRECONDITION: Operation denied by org policy on resource 'projects/-/serviceAccounts/SA_UNIQUE_ID_2': ["constraints/iam.managed.disableServiceAccountKeyCreation": "This constraint, when enforced, blocks service account key creation."].
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: iam.googleapis.com
+  metadata:
+    customConstraints: constraints/iam.managed.disableServiceAccountKeyCreation
+    resource: projects/-/serviceAccounts/SA_UNIQUE_ID_2
+  reason: CUSTOM_ORG_POLICY_VIOLATION
+## exit=1 at 2026-10-23T13:39:06Z
+## cleanup start 2026-10-23T13:39:06Z
+## $ gcloud iam service-accounts delete SA_2@PROJECT.iam.gserviceaccount.com --project=PROJECT_1
+You are about to delete service account 
+[SA_2@PROJECT.iam.gserviceaccount.com]
+
+Do you want to continue (Y/n)?  
+deleted service account [SA_2@PROJECT.iam.gserviceaccount.com]
+## exit=0 at 2026-10-23T13:39:08Z
+## $ gcloud iam service-accounts describe SA_2@PROJECT.iam.gserviceaccount.com --project=PROJECT_1
+ERROR: (gcloud.iam.service-accounts.describe) NOT_FOUND: Service account projects/-/serviceAccounts/SA_2@PROJECT.iam.gserviceaccount.com does not exist. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property.
+## exit=1 at 2026-10-23T13:39:09Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t01.ie21kL
+## exit=0 at 2026-10-23T13:39:09Z
+## cleanup end 2026-10-23T13:39:09Z

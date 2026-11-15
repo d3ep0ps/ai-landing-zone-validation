@@ -1,0 +1,40 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          {
+            "text": "OK",
+            "thoughtSignature": "AY89a1+IRyk3fbLFgshbjQFDNglrK+ylTjEfKvClX0xK6klbAfDDSqzf0jfZJU2plQA9rzSpUOXzqwXoCRxh9e/gDU8JM0Q4staG9sUEMfnBy4x2I+7OZg+eN+e6wwEjP2jKKtWQpWv+XF9KxRj1YqZuznyaZd4kBu65sNc1PS2QNPqcwpl5N2JNzv6RRRQwkEeB1pftMDKIjknuZE80iHPPcQl/jq/zm2n+rOHK5Q8UItOuJn9M7IdeulkwRjixFEWiwGHuux9EZqZQNhZLDEI6nvPxh6FzA7Obgg=="
+          }
+        ]
+      },
+      "finishReason": "MAX_TOKENS"
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 9,
+    "candidatesTokenCount": 1,
+    "totalTokenCount": 45,
+    "trafficType": "ON_DEMAND",
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 9
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1
+      }
+    ],
+    "thoughtsTokenCount": 35
+  },
+  "modelVersion": "gemini-3.5-flash",
+  "createTime": "2026-10-28T16:09:04.431377Z",
+  "responseId": "IB7iapGqGrCJstMPo9O_kQY"
+}
+
+HTTP 200

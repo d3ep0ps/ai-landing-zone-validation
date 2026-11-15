@@ -1,0 +1,138 @@
+# v3h run 3 (2026-11-13), orchestrated (tests/run-v3h.sh)
+
+Project: outside (label r3). Plan: plans/v3h-automation.md. Expected results: script headers (pre-registered).
+
+## Log
+- 04:00Z step preflight
+- 04:00Z preflight OK: PROJECT_8 empty, step 0a bindings present in PROJECT_11, canary OK
+- 04:00Z step build
+- 04:00Z artifacts: agent_v3 sha256 3237c1dc5fb4510a..., agent_g sha256 b8d524168a5f1428...
+- 04:00Z step v3h-s0
+- 04:00Z plan v3h-s0: 10 changes (10 create )
+- 04:00Z apply v3h-s0: Apply complete! Resources: 10 added, 0 changed, 0 destroyed.
+- 04:00Z step t40-before
+- 04:01Z T40 before (run-3): PASS 
+- 04:01Z step t42-before
+- 04:01Z T42 before (run-3): PASS 
+- 04:01Z step agent1
+- 04:01Z plan v3h-agent1: 1 changes (1 create )
+- 04:05Z apply v3h-agent1: Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+- 04:05Z step b2-infra
+- 04:06Z plan b2-infra: 75 changes (74 create 1 delete )
+- 04:07Z apply b2-infra failed with a known propagation error; retry 1 of 2 in 180 s (Error: Error waiting to create AgentGateway: Error waiting for Creating AgentGateway: Error code 3, message: Config validation failed)
+- 04:11Z plan b2-infra-retry: 3 changes (3 create )
+- 04:16Z apply b2-infra-retry failed with a known propagation error; retry 2 of 2 in 180 s (Error: Error waiting to create AuthzPolicy: Error waiting for Creating AuthzPolicy: Error code 10, message: There is another ongoing operation for the same Agen)
+- 04:20Z plan b2-infra-retry-retry: 1 changes (1 create )
+- 04:24Z apply b2-infra-retry-retry: Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+- 04:24Z step t40-after
+- 04:24Z T40 after (run-3): PASS RESULT T40: PASS
+- 04:24Z step t42-after
+- 04:24Z T42 after (run-3): PASS RESULT T42: PASS
+- 04:24Z step t41-before
+- 04:24Z T41 before (run-3): PASS 
+- 04:24Z step agent2
+- 04:24Z plan v3h-agent2: 1 changes (1 create )
+- 04:27Z apply v3h-agent2: Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+- 04:27Z step b2-fixtures
+- 04:27Z replay image sha256:c45c1ac4b0376d05993eaf51f9f5cc55b7fef23504da174dded39e3626ec4881; gateway MCP fixtures rebuilt and deployed
+- 04:28Z plan b2-replay: 4 changes (4 create )
+- 04:29Z apply b2-replay: Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+- 04:29Z waiting 3 min: 5 min after agent 2 (T41 pre-registered wait)
+- 04:32Z step t41-after
+- 04:32Z T41 after (run-3): PASS RESULT T41: PASS
+- 04:32Z step agents12-off
+- 04:32Z plan v3h-agents12-off: 2 changes (2 delete )
+- 04:32Z apply v3h-agents12-off: Apply complete! Resources: 0 added, 0 changed, 2 destroyed.
+- 04:32Z step t43-t0
+- 04:32Z T43 t0 (run-3): PASS 
+- 04:32Z step b2-agents
+- 04:32Z plan b2-agents: 5 changes (5 create )
+- 04:44Z apply b2-agents: Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+- 04:44Z ready: v3a after 2 s
+- 04:44Z ready: v3o after 2 s
+- 04:44Z ready: g after 3 s
+- 04:44Z ready: g-optout after 2 s
+- 04:44Z step t47
+- 04:44Z T47 s1 (run-3): PASS 
+- 04:45Z T47 s2 (run-3): FAIL 
+- 04:46Z T47 s3 (run-3): PASS 
+- 04:48Z T47 s4 (run-3): FAIL RESULT T47: FAIL
+- 04:48Z step t48
+- 04:48Z T48 bound (run-3): PASS 
+- 04:48Z T48 optout (run-3): PASS RESULT T48: PASS
+- 04:48Z step t49
+- 04:50Z T49 bound (run-3): PASS 
+- 04:52Z T49 optout (run-3): PASS RESULT T49: PASS
+- 04:52Z step t46
+- 04:52Z T46  (run-3): NOT_TESTED RESULT T46: NOT_TESTED
+- 04:52Z step t44-pre
+- 04:52Z T44 pre (run-3): PASS 
+- 04:52Z step t43-p15
+- 04:52Z T43 p15 (run-3): PASS 
+- 04:52Z step b3-enforce
+- 04:53Z plan b3-enforce: 1 changes (1 update )
+- 04:53Z apply b3-enforce: Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+- 04:53Z canary: perimeter 'enforced' live after 33 s
+- 04:53Z step b3-agents
+- 04:53Z plan b3-agents: 4 changes (4 create )
+- 05:02Z apply b3-agents: Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+- 05:02Z ready: v3-b after 2 s
+- 05:02Z ready: v3-a_psci after 2 s
+- 05:02Z ready: v3-b_psci after 2 s
+- 05:02Z step t44-noingress
+- 05:02Z T44 noingress (run-3): PASS 
+- 05:02Z step t44b-noingress
+- 05:03Z T44b noingress (run-3): INCONCLUSIVE 
+- 05:03Z step b3-ingress-deny
+- 05:03Z plan b3-ingress-deny: 2 changes (1 create 1 update )
+- 05:03Z apply b3-ingress-deny: Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
+- 05:04Z canary: perimeter 'ingress' live after 34 s
+- 05:04Z step t44b-ingress1
+- 05:04Z T44b ingress1 (run-3): PASS 
+- 05:04Z waiting 15 min: T44 v2 / T44b: 15 min after the ingress apply (pre-registered)
+- 05:18Z step t44-ingress
+- 05:19Z T44 ingress (run-3): PASS RESULT T44: PASS
+- 05:19Z step t44b-ingress15
+- 05:19Z T44b ingress15 (run-3): INCONCLUSIVE RESULT T44b: INCONCLUSIVE
+- 05:19Z step t45-on
+- 05:21Z T45 on (run-3): PASS 
+- 05:21Z step b3-off
+- 05:21Z plan b3-off: 2 changes (1 delete 1 update )
+- 05:21Z apply b3-off: Apply complete! Resources: 0 added, 1 changed, 1 destroyed.
+- 05:22Z canary: perimeter 'open' live after 65 s
+- 05:22Z waiting 9 min: IAM deny removal propagation (fixed)
+- 05:31Z step t45-off
+- 05:32Z T45 off (run-3): PASS RESULT T45: PASS
+- 05:32Z step teardown
+- 05:32Z teardown: agents
+- 05:32Z plan td-agents: 9 changes (9 delete )
+- 05:35Z apply td-agents: Apply complete! Resources: 0 added, 0 changed, 9 destroyed.
+- 05:35Z teardown: perimeter dry-run, ingress cleared, deny removed (targeted; full refresh fails while enforced)
+- 05:35Z plan td-perim: 1 changes (1 update )
+- 05:35Z apply td-perim: Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+- 05:35Z teardown: infra/ back to lz-5 + v3h-baseline
+- 05:36Z plan td-infra: 87 changes (1 create 86 delete )
+- 05:56Z apply td-infra failed with a known propagation error; retry 1 of 2 in 180 s (Error: Error when reading or editing NetworkAttachment: googleapi: Error 412: Network Attachment with connected endpoints cannot be deleted., conditionNotMet)
+- 06:00Z plan td-infra-retry: 35 changes (35 delete )
+- 06:20Z STOP: apply td-infra-retry failed: Error: Error when reading or editing NetworkAttachment: googleapi: Error 412: Network Attachment with connected endpoints cannot be deleted., conditionNotMet
+- 06:20Z teardown: PSC-I attachment still has endpoints from deleted agents; background poll will finish it (free resources)
+- 06:20Z run 3 finished. Open: T43 p24h/agent3 via 'tests/run-v3h.sh close 3' at >= 2026-11-14T04:32Z
+- 06:20Z step redact
+- 06:20Z redaction: redacted 45/77 files; check: checked 77 files, 0 with findings (T43 run-3 redacted at close)
+- 04:41Z step close-preflight
+- 04:41Z step close-init
+- 04:41Z step close-t43-p24h
+- 04:41Z T43 p24h (run-3): PASS 
+- 04:41Z step close-agent3
+- 04:56Z plan v3h-agent3: 1 changes (1 create )
+- 05:01Z apply v3h-agent3: Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+- 05:01Z ready: v3h-agent3 after 2 s
+- 05:01Z waiting 5 min: 5 min after agent 3 (T43 pre-registered wait)
+- 05:18Z step close-t43-agent3
+- 05:18Z T43 agent3 (run-3): PASS RESULT T43: PASS
+- 05:18Z step close-agent3-off
+- 05:18Z plan v3h-agent3-off: 1 changes (1 delete )
+- 05:18Z apply v3h-agent3-off: Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
+- 05:18Z close 3 finished
+- 05:18Z step close-redact
+- 05:18Z close redaction: redacted 8/14 files; check: checked 14 files, 0 with findings

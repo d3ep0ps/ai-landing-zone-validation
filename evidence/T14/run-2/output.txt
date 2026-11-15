@@ -1,0 +1,192 @@
+# T14 stage=a run=run-2 start=2026-10-25T04:43:37Z
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T04:43:37Z: no resources are created by this script (agents are Terraform-managed); no cleanup_trap registered
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "9d307bceffdde49e",
+    "name": "accessPolicies/ACCESS_POLICY_1",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "3b765352c069b7a9",
+    "name": "accessPolicies/ACCESS_POLICY_2",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_2"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-25T04:43:39Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_2 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "3b765352c069b7a9",
+  "name": "accessPolicies/ACCESS_POLICY_2/servicePerimeters/lzv_ai",
+  "spec": {
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2",
+      "projects/PROJECT_NUMBER_4"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {},
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-25T04:43:40Z
+## note 2026-10-25T04:43:40Z: perimeter lzv_ai: status resources=0, status ingressPolicies=0 (want dryrun-only)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_2:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_371444", "args": {}, "name": "fetch_url"}, "thought_signature": "AY89a1-dKxWRNYbsbnc1JFAD-Uvrppo1cSWa5xm4qx0dkzCpSc8seMgV8vPPM7mK5ZgwpEAOxlPbfdDEcmNvk8AJdBLkBMAByrldsLZEGe_Rb36mS5cX-8-iaCHe4IjYjre45sm7gcXhpKaBuBW6oENjNzIhW8SAMV6X9XB0GfRH1zKp7e8ti2cUuaJvn-EvLm0YWOa7YN6X0TXV5gMPsEJXJ70DtbRmidq0GxcF1O85Zsp9SWbyTOR65JqC_fUA4YfOdoFGBqmjkq-9bpemoIPKl9IM8Ddyjod6JpDxzc96lEnWKDNhSff36yyVLqtysEqjg5qKWtC4GAo9PRm5r4Y_BoXrD__8MfQUJIosKnvXpylohlJZdr3hzJ8hxn36CYSw1qeX2P1MWRRr40A8Fp9W8tONZvhytempVAV4Flqqt3ii2VBplur615RsWHNeUWNOUj03KOqpA6QKvsU3twmPUqttBpH7FvdStV0VAWXH-0XskdbxjN51-0SrniXDrMWj308qbCK-k2vJmwX71vd215Pgfxrti-Gc5h6QoXPBcTOHU4HPDX-_w45do1eHVHLP5robxBCRqJTvFyiTka5d-Xhty2J0OboHOoIRN-EQ6x6Ah3JMSAS7B5TND2g2QNuiiV2fOfeFN680HSaSqOSjVL3pQWat6J2YYstd0Y-JyqQ9ksL8cKapK8l7grtosi0-GaghXCKkG1st__y2WM_0xmdjVdlGf71sIErEfNzKLnHR1BptU18Y9DJtTwwZ4XBuDQTORfIung4jE1ygaAOBYSQs8MqCaFSCZyt4f4uJP2UCl_t_-46EaQo4jqhvapLWZJD31PrLhO1tpb5-hTWTnNnU58JCGeCiqsI5-Zov56mrNcZHJc29RCy_OOXxcBtlqMa0UuxyymZP0l8dwSuFUA3fPsFGfltisRT44ddQDTRjeYJaxyTG3XkuDA=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 10, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 10}], "prompt_token_count": 107, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 107}], "thoughts_token_count": 165, "total_token_count": 282, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-b721d00b-e78c-4607-ba90-08ce39b36cfd", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "long_running_tool_ids": [], "id": "fcfd18b3-8c94-4b31-941d-94348aae78cf", "timestamp": 1792903423.4680076}
+{"content": {"parts": [{"function_response": {"id": "call_371444", "name": "fetch_url", "response": {"status": 200, "error": null, "url": "https://example.com"}}}], "role": "user"}, "invocation_id": "e-b721d00b-e78c-4607-ba90-08ce39b36cfd", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "a1afccab-a15b-405f-b524-4d023bf02510", "timestamp": 1792903425.66464}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"status\": 200,\n  \"error\": null,\n  \"url\": \"https://example.com\"\n}", "thought_signature": "AY89a18DntJRz9M5Eptm_Gxx6WykdeAEJfxFMkLpeLodVPgoUFqmFb4BekA5kSN_jc1SySehISHVaFg-tv4HNKaBvLVm7PmeUjzTBimqOwUE9DNhzC4whpT9acl9cFSo3e7O3O3FzFoAf2Vk3BYtjxwHQT1Ql7EFOYxQNIcqPls_bv9v4CvRFjz1vjqyNAQWXskLCN3dmYwlnQiGKOiMkSchtxlYlCd2IAI0mEGwOCTFQQjLjNWJi9gFjJMYpaCBoHICkpdp6ULRRtd34FqVrUM2bU8MKgy0sx_cdAXXg9Z7SKmA0Wk_k0lXHiIKLRkoWg7CjypxqkPBaY5k9JPcHRPWw4UpXI4-16hrJNzAjoGGI6MlsvEO-jrGqWKyZfPZqwmoigNYAXH1E58OREr5TtF-iQJz5jyz8sIzgiIt8ls2PspLBEKF4pDMLouRRz7N88fSYWaSXaJ6jA6bEL1HXlvs9a2Gwn9pSp8cWjZPiKcmaC8Q79R_1r1M3v48or5M3nrPosAbuvMRYUvTeXewIYj1jRMUaUzq6WVfIZ9gJvuvoTnQUw=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 32, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 32}], "prompt_token_count": 298, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 298}], "thoughts_token_count": 85, "total_token_count": 415, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-b721d00b-e78c-4607-ba90-08ce39b36cfd", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "70653db2-45b8-43e5-8755-87c80b3d3b6c", "timestamp": 1792903425.769666}
+
+HTTP 200
+## exit=0 at 2026-10-25T04:43:47Z
+## note 2026-10-25T04:43:47Z: http_rc=0 function_responses=1 status=200 err=none
+# T14 stage=b run=run-2 start=2026-10-25T05:40:25Z
+# check=Reach control=Managed runtime egress
+# expected (pre-registered): A succeeds; B fails (proves article trap #7). No VPC-SC log entry required for B's egress failure
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T05:40:25Z: no resources are created by this script (agents are Terraform-managed); no cleanup_trap registered
+## $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "9d307bceffdde49e",
+    "name": "accessPolicies/ACCESS_POLICY_1",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "2a39b4684f8c3fa8",
+    "name": "accessPolicies/ACCESS_POLICY_2",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_2"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]
+## exit=0 at 2026-10-25T05:40:26Z
+## $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_2 --format=json
+{
+  "description": "LZ validation perimeter: runtime, mcp, data",
+  "etag": "2a39b4684f8c3fa8",
+  "name": "accessPolicies/ACCESS_POLICY_2/servicePerimeters/lzv_ai",
+  "spec": {
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        }
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2",
+      "projects/PROJECT_NUMBER_4"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "status": {
+    "ingressPolicies": [
+      {
+        "ingressFrom": {
+          "identities": [
+            "user:USER_1@example.com"
+          ],
+          "sources": [
+            {
+              "accessLevel": "*"
+            }
+          ]
+        },
+        "ingressTo": {
+          "operations": [
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "storage.googleapis.com"
+            },
+            {
+              "methodSelectors": [
+                {
+                  "method": "*"
+                }
+              ],
+              "serviceName": "aiplatform.googleapis.com"
+            }
+          ],
+          "resources": [
+            "*"
+          ]
+        }
+      }
+    ],
+    "resources": [
+      "projects/PROJECT_NUMBER_1",
+      "projects/PROJECT_NUMBER_2",
+      "projects/PROJECT_NUMBER_4"
+    ],
+    "restrictedServices": [
+      "aiplatform.googleapis.com",
+      "storage.googleapis.com"
+    ]
+  },
+  "title": "lzv_ai",
+  "useExplicitDryRunSpec": true
+}
+## exit=0 at 2026-10-25T05:40:28Z
+## note 2026-10-25T05:40:28Z: perimeter lzv_ai: status resources=3, status ingressPolicies=1 (want enforced-ingress)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_NUMBER_4/locations/europe-west1/reasoningEngines/AGENT_ID_4:streamQuery?alt=sse" -d '{"class_method":"async_stream_query","input":{"user_id":"lzv-t14","message":"Fetch https://example.com"}}' -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_40741", "args": {}, "name": "fetch_url"}, "thought_signature": "AY89a1_llnj_grJ22HMw3lq3z7uh6jFeLXvC6LpbdDMZ-zZeouyKvaGyKc9SQsiUpBkoX0Nid3tj5mSW9E4f3CVuWZrxdPD5HDEZOK8swSv-afW-ik2R3Nu8muZHq1Fw1G_fTYK_FJ2ekXqU7tARWqSqiIUGn52XA92b50tTCuZQXYBLlnqE1zRkkCUIaY8OpHsyer_pQGNjjlVrMZ4hdiWuC7pwj8oo1qLnnVLjGFYdegi_KpovKiHGOWQvbmXnwW9eBNk97X0qFnwHXfNZTgrsAVSYNahnfWtYHTNKJiud1ypOZ8Wk_Tm8-0aLteKvgkoBqq9cRs48IC5T7ZNxUOgiL_KNO4BaxFUMGPXOwc75pGcEs_r9pV9RCGslKWkXbGWW1pXmdO0X9WlbwNUihU205uX1niMcdIHqsIYoCrmgZsIXL2_tWR7jraxulb0RIzLTInyvkvWquldAW_itJF_uFeIW_Ps8KBXEgFjPuTNHy9Lt0lhMwAH7e3nAaZ0JtIUpjr4W5Wq0ILUhW5ipBYXynrVg0xmhuQ6yb8sJ3KnUtNFgyqKrXWapUVSmEaJPv4Kx7PpKyrE-jBYBAaWN8xiGnRT7hZdWsb0Vg61ls4qlZje1SXt_8qt1KoNCnO-5zUleKrinJZSAMD8fgTho9HuTYG1xekCqRgUejMoPwiNtQPoxN1_pi1Caw2j0RuiO16VFetUhLe_A7a_ZmZLRI7oohDvwty6BuksqaPfl4sFfHPrrx_5aIEr0gKPBtgkaT8zlHqIh5htKwvy4RMaL0izxTQw8eg5uHAeEoJD1nocKrQY5qKg6vufcjRc7jZNQhct58juLYF9zS0q6AcN8sx5V1_vysyz-okGEklQcrTuSbED_GdQC9tPP-Q1uOv5ZVv-dztK9LpoqSqWfsiQ_bgzrgoS2lYrd2m97vW0zB5LR_ArJoHaNW2dUSZbcJxS_GapJKOZT35JUdhmm-9HSnN6iBKCO6BXtC-N6jrRjZ1WhvFn6-Rh0gEQ8Wv-8"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 10, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 10}], "prompt_token_count": 107, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 107}], "thoughts_token_count": 169, "total_token_count": 286, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d6ff6e96-3207-4c97-84a1-794bf6be093d", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "long_running_tool_ids": [], "id": "b0e1f25e-cd1c-4f75-8a6b-c8aebaacd35e", "timestamp": 1792906831.1010554}
+{"content": {"parts": [{"function_response": {"id": "call_40741", "name": "fetch_url", "response": {"status": null, "error": "URLError: <urlopen error [Errno 101] Network is unreachable>", "url": "https://example.com"}}}], "role": "user"}, "invocation_id": "e-d6ff6e96-3207-4c97-84a1-794bf6be093d", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "ebe823f8-d9af-495f-9bcb-896a9afd7213", "timestamp": 1792906853.296325}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"error\": \"URLError: <urlopen error [Errno 101] Network is unreachable>\",\n  \"status\": null,\n  \"url\": \"https://example.com\"\n}\n```", "thought_signature": "AY89a198yF6NEjB_lIrmplKwg2CxuUbSkVNNavNPQk2btAULdDsG_AxUvMskDHUKcKBHHhWviBl_DEHrwj0iiNiToWMX041nBTg8FSQKU7DLH6IqfwSxJ-4GTlTgNBvIZmQbwuB6pHXHJdE662lEJ8z70_9IUdxNJHphxJ8Md8sY--vfiNlzGZE6FZpvBRhLYnVIHJae9KbYuwPPwKFkxJu0PBjrZyLyj8N-FbO1-YtxBwYQj1swTkhI2A3jfFTCpATfgCPnBVdO2Ag2scxt8Il6o94RaPsRiKP5bbBam3cZaSywbMi5OXdfhKIaBU0HoaNhZ4AK1hXtE7pRVeGgxvWJXDdfpIvqgIn-gLNanYEaXN8OgjXLztReJPbJVZ_Z_BlXBrcYo4M="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 51, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 51}], "prompt_token_count": 317, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 317}], "thoughts_token_count": 59, "total_token_count": 427, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d6ff6e96-3207-4c97-84a1-794bf6be093d", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "91f08946-8e63-4e6f-816b-7efb735fe6ed", "timestamp": 1792906853.3939965}
+
+HTTP 200
+## exit=0 at 2026-10-25T05:40:55Z
+## note 2026-10-25T05:40:55Z: http_rc=0 function_responses=1 status=none err=status= error=URLError: <urlopen error [Errno 101] Network is unreachable>

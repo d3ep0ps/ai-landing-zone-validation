@@ -1,0 +1,9 @@
+# T10 run=run-1 start=2026-10-24T05:44:28Z
+# check=Baseline control=`gcp.restrictNonCmekServices` side effect
+# expected (pre-registered): Fails; record exact error (proves article trap #4)
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-24T05:44:28Z $ gcloud version
+2026-10-24T05:44:29Z $ gcloud storage buckets describe gs://PROJECT_5_cloudbuild
+2026-10-24T05:44:30Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.jl26R2 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.jl26R2/cloudbuild.yaml --project=PROJECT_5 --region=europe-west1
+2026-10-24T05:44:31Z $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.jl26R2
+2026-10-24T05:44:31Z $ if gcloud storage buckets describe gs://PROJECT_5_cloudbuild >/dev/null 2>&1; then gcloud storage rm --recursive gs://PROJECT_5_cloudbuild; fi; if gcloud storage buckets describe gs://PROJECT_5_cloudbuild >/dev/null 2>&1; then echo 'CLEANUP CHECK: staging bucket still exists'; else echo 'CLEANUP CHECK: staging bucket gone'; fi; gcloud storage buckets list --project=PROJECT_5 --format='value(name)' | grep cloudbuild || echo 'CLEANUP CHECK: no cloudbuild buckets listed'

@@ -1,0 +1,35 @@
+$ gcloud projects list --filter=parent.id=FOLDER_ID_2 OR parent.id=FOLDER_ID_1 --format=json(projectId,parent,lifecycleState)
+[
+  {
+    "lifecycleState": "ACTIVE",
+    "parent": {
+      "id": "FOLDER_ID_1",
+      "type": "folder"
+    },
+    "projectId": "PROJECT_7"
+  },
+  {
+    "lifecycleState": "ACTIVE",
+    "parent": {
+      "id": "FOLDER_ID_2",
+      "type": "folder"
+    },
+    "projectId": "PROJECT_2"
+  },
+  {
+    "lifecycleState": "ACTIVE",
+    "parent": {
+      "id": "FOLDER_ID_2",
+      "type": "folder"
+    },
+    "projectId": "PROJECT_5"
+  },
+  {
+    "lifecycleState": "ACTIVE",
+    "parent": {
+      "id": "FOLDER_ID_2",
+      "type": "folder"
+    },
+    "projectId": "PROJECT_4"
+  }
+]

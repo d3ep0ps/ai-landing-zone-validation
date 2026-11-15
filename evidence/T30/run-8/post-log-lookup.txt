@@ -1,0 +1,20 @@
+# POST-RUN LOOKUP (not part of the test script). Read-only, made by Opus on 2026-10-30 right after the 8-1 tests.
+# Cloud Run logs for lzv-mcp-reg, 06:42:00Z-06:45:00Z (the T30 script read the request log once right after the control call and found 0: log lag). Columns: time logName status remoteIp
+06:42:13.74	run.googleapis.com%2Frequests	200	0.0.0.0
+06:42:13.84	run.googleapis.com%2Fvarlog%2Fsystem	-	-
+06:42:14.55	run.googleapis.com%2Fvarlog%2Fsystem	-	-
+06:43:07.12	run.googleapis.com%2Frequests	200	0.0.0.0
+06:43:12.98	run.googleapis.com%2Frequests	200	0.0.0.0
+#
+# POST-RUN LOOKUP (not part of the test script). Read-only, made by Opus on 2026-10-30 right after the 8-1 tests.
+# gateway_requests 06:42:00Z-06:45:00Z, entries that are non-200 or to run.app. Columns: time status url mcp_tool policy_results
+06:42:12.20	404	https://iamcredentials.mtls.googleapis.com/v1/projects/-/serviceAccounts/REDACTED	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+06:42:22.50	403	https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app/mcp	unregistered_echo	lzv-gw-iap-policy=DENIED
+06:43:06.65	403	https://telemetry.mtls.googleapis.com/v1/traces	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+06:43:09.22	403	https://telemetry.mtls.googleapis.com/v1/traces	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+06:43:12.81	403	https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp	inject_response	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=DENIED
+06:43:15.86	403	https://telemetry.mtls.googleapis.com/v1/traces	-	lzv-gw-iap-policy=ALLOWED,lzv-gw-ma-policy=ALLOWED
+06:44:09.21	403	https://europe-west1-aiplatform.googleapis.com/v1/projects/PROJECT_8	-	lzv-gw-iap-policy=DENIED
+# total gateway_requests entries in window: 65
+#
+# POST-RUN LOOKUP 2 (read-only, Opus, 2026-10-30, during the report review): Cloud Run logs for the UNREGISTERED service, 06:42:00Z-06:56:00Z (all log names): 0 entries. Same query for the registered service, requests log, same window: 3 entries (logs still retained).

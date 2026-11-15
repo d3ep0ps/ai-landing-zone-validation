@@ -1,0 +1,6 @@
+{
+  "stage": "bound",
+  "verdict": "INCONCLUSIVE",
+  "note": "bound: own=none control2=200 replay=none sha12=none; no result line from the agent (http_rc=1)",
+  "timestamp_utc": "2026-11-11T11:26:16Z"
+}

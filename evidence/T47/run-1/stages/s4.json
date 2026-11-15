@@ -1,0 +1,6 @@
+{
+  "stage": "s4",
+  "verdict": "FAIL",
+  "note": "s4: bound token through the gateway succeeded (200): the 401 is not caused by binding alone",
+  "timestamp_utc": "2026-11-11T12:58:33Z"
+}

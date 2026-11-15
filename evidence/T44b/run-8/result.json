@@ -1,0 +1,25 @@
+{
+  "id": "T44b",
+  "check": "B5 (Enforced)",
+  "control": "Session creation on an agent deployed before (A) vs after (B) perimeter enforcement, without and with the agent ingress rule; control: operator reasoningEngines.list 200",
+  "scope": "projects/PROJECT_8",
+  "expected": "noingress: A refused with HTTP 403 carrying a VPC-SC unique identifier, B 200. ingress +15 min: A 200, B 200. The +1 min cell is recorded only. Falsified if: A and B behave the same without the ingress rule, or A is still refused at +15 min with its identity in the ingress rule. Tier: Enforced. 3 runs.",
+  "actual": "noingress: noingress: A=400 (vpcsc=1) B=200 (vpcsc=0) control=200; unexpected pair (A=400 vpcsc=1, B=200); ingress +1 min (observation): ingress1: A=200 (vpcsc=0) B=200 (vpcsc=0) control=200; observation only; ingress +15 min: A=200 B=200",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "noingress: INCONCLUSIVE (noingress: A=400 (vpcsc=1) B=200 (vpcsc=0) control=200; unexpected pair (A=400 vpcsc=1, B=200)); ",
+  "commands_file": "evidence/T44b/run-8/command.txt",
+  "output_file": "evidence/T44b/run-8/output.txt",
+  "run_id": "run-8",
+  "timestamp_utc": "2026-11-14T16:44:34Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vpc-service-controls/docs/supported-identities",
+    "https://docs.cloud.google.com/vpc-service-controls/docs/ingress-egress-rules"
+  ],
+  "script_commit": "daebf53"
+}

@@ -1,0 +1,26 @@
+[0m[1mdata.terraform_remote_state.main: Reading...[0m[0m
+[0m[1mdata.terraform_remote_state.main: Read complete after 0s[0m
+[0m[1mdata.google_folder.hierarchy["root"]: Reading...[0m[0m
+[0m[1mdata.google_folder.hierarchy["ai_prod"]: Reading...[0m[0m
+[0m[1mdata.google_project.outside: Reading...[0m[0m
+[0m[1mdata.google_storage_project_service_account.outside: Reading...[0m[0m
+[0m[1mdata.google_storage_project_service_account.outside: Read complete after 1s [id=service-PROJECT_NUMBER_10@gs-project-accounts.iam.gserviceaccount.com][0m
+[0m[1mdata.google_folder.hierarchy["root"]: Read complete after 2s [id=folders/FOLDER_ID_5][0m
+[0m[1mdata.google_folder.hierarchy["ai_prod"]: Read complete after 2s [id=folders/FOLDER_ID_6][0m
+[0m[1mdata.google_project.outside: Read complete after 2s [id=projects/PROJECT_11][0m
+
+Changes to Outputs:
+  [32m+[0m[0m folder_display_names        = {
+      [32m+[0m[0m ai_prod = "fldr-ai-prod"
+      [32m+[0m[0m root    = "fldr-lz-validation"
+    }
+  [32m+[0m[0m outside_gcs_service_account = "service-PROJECT_NUMBER_10@gs-project-accounts.iam.gserviceaccount.com"
+  [32m+[0m[0m outside_project_number      = "PROJECT_NUMBER_10"
+
+You can apply this plan to save these new output values to the Terraform
+state, without changing any real infrastructure.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

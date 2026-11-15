@@ -1,0 +1,6 @@
+{
+  "stage": "call",
+  "verdict": "PASS",
+  "note": "call: binding removed, agent 1 model call 403 (ClientError: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_9/locations/global/publishers/google/models/gemini-3.5-flash' (or it may not exist). Remediate access with this)",
+  "timestamp_utc": "2026-11-12T17:06:25Z"
+}

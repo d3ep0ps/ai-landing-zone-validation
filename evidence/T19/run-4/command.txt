@@ -1,0 +1,26 @@
+# T19 stage=before run=run-4 start=2026-10-25T18:55:52Z
+# script_commit=c6a5c51-dirty
+# check=TS1 control=IAM bindings added by the platform when one agent is deployed
+# expected (pre-registered): The only added bindings are those on the pre-registered list (from v1: `roles/aiplatform.agentDefaultAccess` on the project principalSet). Any other added binding = finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-25T18:55:52Z $ gcloud projects get-iam-policy PROJECT_8 --format=json --billing-project=PROJECT_6
+2026-10-25T18:55:54Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-25T18:55:56Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+2026-10-25T18:55:57Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_9 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-25T18:55:59Z $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+2026-10-25T18:56:01Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_10 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-25T18:56:02Z $ gcloud resource-manager folders get-iam-policy FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-25T18:56:04Z $ gcloud resource-manager folders get-iam-policy FOLDER_ID_6 --format=json --billing-project=PROJECT_6
+# T19 stage=after run=run-4 start=2026-10-25T19:08:25Z
+# script_commit=dd86980
+# check=TS1 control=IAM bindings added by the platform when one agent is deployed
+# expected (pre-registered): The only added bindings are those on the pre-registered list (from v1: `roles/aiplatform.agentDefaultAccess` on the project principalSet). Any other added binding = finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-25T19:08:26Z $ gcloud projects get-iam-policy PROJECT_8 --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:27Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:28Z $ gcloud projects get-iam-policy PROJECT_9 --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:30Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_9 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:32Z $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:33Z $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_10 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:34Z $ gcloud resource-manager folders get-iam-policy FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-25T19:08:37Z $ gcloud resource-manager folders get-iam-policy FOLDER_ID_6 --format=json --billing-project=PROJECT_6

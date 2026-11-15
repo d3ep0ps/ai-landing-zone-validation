@@ -1,0 +1,6 @@
+{
+  "stage": "noingress",
+  "verdict": "PASS",
+  "note": "noingress: A model=403/vpc_sc_runtime, A run.app=403/vpc_sc_runtime; B internet=none/URLError, B run.app=200/none, B model=200/none",
+  "timestamp_utc": "2026-11-11T21:40:15Z"
+}

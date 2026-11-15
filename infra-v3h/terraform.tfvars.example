@@ -1,0 +1,12 @@
+run                = "r1"
+org_id             = "000000000000"
+billing_account    = "000000-000000-000000"
+prefix             = "CHANGEME"
+quota_project      = "CHANGEME-seed-project"
+operator_member    = "user:operator@example.com"
+region             = "europe-west1"
+model              = "gemini-3.5-flash"
+t40b_authoritative = false
+deploy_agent_1     = false
+deploy_agent_2     = false
+deploy_agent_3     = false

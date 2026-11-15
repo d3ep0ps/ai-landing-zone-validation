@@ -1,0 +1,6 @@
+{
+  "stage": "noingress",
+  "verdict": "FAIL",
+  "note": "noingress: A model=none/none, A tool=none/none; B tool=200/none, B model=200/none; no clear result for A's model call (status=none by=none); B reached the non-allowed host (expected: no internet)",
+  "timestamp_utc": "2026-11-11T14:06:26Z"
+}

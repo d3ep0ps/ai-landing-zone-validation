@@ -1,0 +1,634 @@
+# T47 stage=s1 run=run-1 start=2026-11-11T11:22:48Z
+# script_commit=831b29a
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T11:22:48Z: plan claim B8; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T11:22:48Z: agent G requirements: google-auth==2.62.1  # pinned 2026-11-10 for v3h T47: >= 2.59 reads GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN (runs 7-9 resolved an unrecorded version) (opt-out env var semantics: GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN takes precedence from google-auth 2.59)
+## note 2026-11-11T11:22:48Z: agent G tarball sha256: 22f2726f25e3bf98...
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/d69cb15844016ebcap-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxTCCAq2gAwIBAgITcFscda699W0PbfK9oACDQvu36jANBgkqhkiG9w0BAQsF
+    ADBgMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTcwNQYD
+    VQQDEy5BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBIChldXJvcGUtd2Vz
+    dDEpMB4XDTI2MTEwMTA4NTA0OFoXDTM2MTAyOTA4NTA0N1owYDElMCMGA1UEChMc
+    R29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUGA1UEAxMuQWdlbnQgR2F0
+    ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdlc3QxKTCCASIwDQYJKoZI
+    hvcNAQEBBQADggEPADCCAQoCggEBAIsM5IH+TYOyUHCihKBw8zNfMbSFyTeOe+MS
+    Na/98DdUuUdNc9jrd9zaH4S52/mLtuf5dlbqOAaFDAssy6QaWszbqdTVc6lFHGmK
+    rhC25gb4E9yerSvzrNfEVxDKDDvOMsX7g+TYia/JSa1GgWOOJqTMWKcL4QjZkmpe
+    5kN89dACHzbxwO5lPYk/XoBKDauNsJOpihHe7zZTbez81t98v4pdFsUfGef72GqE
+    XFVA01KpSpx1XFHJ8fce/ug8//Mgz/Y58nK2/SByFcez996QrKHnMyI9qSMc92Es
+    fbnq85oHJSrzG00mktQRlYrSWC34X6KyJxMj7mAzZlVZilKPYQUCAwEAAaN4MHYw
+    DgYDVR0PAQH/BAQDAgEmMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdEwEB/wQF
+    MAMBAf8wHQYDVR0OBBYEFK1MsZhGfwyGhAAHVcearjhm0x/LMB8GA1UdIwQYMBaA
+    FK1MsZhGfwyGhAAHVcearjhm0x/LMA0GCSqGSIb3DQEBCwUAA4IBAQBSXosDWQea
+    LAP22sd1wt0OpDVNZcZUCEVol8fuFmj210KaGySAhruGzBzludOFeWt6Dqjn0dFK
+    9kpUlJ+PyGJSXxkLnV6UJTXft9Dmk8/bHy95x+frF7j+aZ/JNp3KB2uxevNSyr/S
+    pF+z3FX0uez0HFxox61+13CbKR8CFfdQV8dmAsbN+d++oNt9PHXk+sZlJV4UgVJ7
+    Ol/O8wALzGe3slewVpp5aL9Ef6hKPmolP2xXXmwhOtBAIfNf1cItYNDMxkZBZ5gQ
+    NprmfJDkKZv9hfGYw6pE49K3vU0atQuMgBmCOVHCOSaQHrYaP9HBkY2iNjdDUx+3
+    oegTmaaI0Auv
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_18@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-11T10:07:48.031886322Z'
+etag: bC1wFZkPLTr4NCvSWpCS3Ua4qOvfeKGI17GYAAdkRE4
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-11T10:10:23.984940118Z'
+## exit=0 at 2026-11-11T11:22:50Z
+## note 2026-11-11T11:22:50Z: agent G: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28; direct control agent v3a: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28",
+  "displayName": "lzv-probe-g",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "MCP_UNREG_URL",
+          "value": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "MCP_REG_URL",
+          "value": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ],
+      "agentGatewayConfig": {
+        "agentToAnywhereConfig": {
+          "agentGateway": "projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw"
+        }
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28"
+  },
+  "createTime": "2026-11-11T11:15:07.131862Z",
+  "updateTime": "2026-11-11T11:18:26.331859Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-11T11:22:50Z
+## note 2026-11-11T11:22:50Z: engine env (selected names): ["LZV_MODEL","LZV_MODEL_LOCATION","LZV_PROJECT_ID"]
+## note 2026-11-11T11:22:50Z: agent G opt-out env set=0 (env fields read=3)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"content": {"parts": [{"text": "{\"action\": \"model\", \"mode\": \"bypass\", \"variant\": \"\", \"harness_guard\": \"on\", \"refused_by\": null, \"status\": 200, \"error\": \"\", \"timestamp\": \"2026-11-11T11:22:55+00:00\", \"agent_name\": \"lzv-v3-a\"}"}], "role": "model"}, "invocation_id": "e-f9422a36-80e7-4f7e-9324-5be9bc7c7b98", "author": "lzv_probe_v3", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": ""}, "id": "240f0eed-294e-4e2a-8dfe-dea448ae981b", "timestamp": 1794396175.6976779}
+
+HTTP 200
+## exit=0 at 2026-11-11T11:22:56Z
+## note 2026-11-11T11:22:56Z: query [ACTION=model MODE=bypass]: http_rc=0 line=1 status=200 refused_by=none err=none
+# T47 stage=s2 run=run-1 start=2026-11-11T11:22:59Z
+# script_commit=831b29a
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T11:22:59Z: plan claim B8; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T11:22:59Z: agent G requirements: google-auth==2.62.1  # pinned 2026-11-10 for v3h T47: >= 2.59 reads GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN (runs 7-9 resolved an unrecorded version) (opt-out env var semantics: GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN takes precedence from google-auth 2.59)
+## note 2026-11-11T11:22:59Z: agent G tarball sha256: 22f2726f25e3bf98...
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/d69cb15844016ebcap-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxTCCAq2gAwIBAgITcFscda699W0PbfK9oACDQvu36jANBgkqhkiG9w0BAQsF
+    ADBgMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTcwNQYD
+    VQQDEy5BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBIChldXJvcGUtd2Vz
+    dDEpMB4XDTI2MTEwMTA4NTA0OFoXDTM2MTAyOTA4NTA0N1owYDElMCMGA1UEChMc
+    R29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUGA1UEAxMuQWdlbnQgR2F0
+    ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdlc3QxKTCCASIwDQYJKoZI
+    hvcNAQEBBQADggEPADCCAQoCggEBAIsM5IH+TYOyUHCihKBw8zNfMbSFyTeOe+MS
+    Na/98DdUuUdNc9jrd9zaH4S52/mLtuf5dlbqOAaFDAssy6QaWszbqdTVc6lFHGmK
+    rhC25gb4E9yerSvzrNfEVxDKDDvOMsX7g+TYia/JSa1GgWOOJqTMWKcL4QjZkmpe
+    5kN89dACHzbxwO5lPYk/XoBKDauNsJOpihHe7zZTbez81t98v4pdFsUfGef72GqE
+    XFVA01KpSpx1XFHJ8fce/ug8//Mgz/Y58nK2/SByFcez996QrKHnMyI9qSMc92Es
+    fbnq85oHJSrzG00mktQRlYrSWC34X6KyJxMj7mAzZlVZilKPYQUCAwEAAaN4MHYw
+    DgYDVR0PAQH/BAQDAgEmMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdEwEB/wQF
+    MAMBAf8wHQYDVR0OBBYEFK1MsZhGfwyGhAAHVcearjhm0x/LMB8GA1UdIwQYMBaA
+    FK1MsZhGfwyGhAAHVcearjhm0x/LMA0GCSqGSIb3DQEBCwUAA4IBAQBSXosDWQea
+    LAP22sd1wt0OpDVNZcZUCEVol8fuFmj210KaGySAhruGzBzludOFeWt6Dqjn0dFK
+    9kpUlJ+PyGJSXxkLnV6UJTXft9Dmk8/bHy95x+frF7j+aZ/JNp3KB2uxevNSyr/S
+    pF+z3FX0uez0HFxox61+13CbKR8CFfdQV8dmAsbN+d++oNt9PHXk+sZlJV4UgVJ7
+    Ol/O8wALzGe3slewVpp5aL9Ef6hKPmolP2xXXmwhOtBAIfNf1cItYNDMxkZBZ5gQ
+    NprmfJDkKZv9hfGYw6pE49K3vU0atQuMgBmCOVHCOSaQHrYaP9HBkY2iNjdDUx+3
+    oegTmaaI0Auv
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_18@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-11T10:07:48.031886322Z'
+etag: bC1wFZkPLTr4NCvSWpCS3Ua4qOvfeKGI17GYAAdkRE4
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-11T10:10:23.984940118Z'
+## exit=0 at 2026-11-11T11:23:00Z
+## note 2026-11-11T11:23:00Z: agent G: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28; direct control agent v3a: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28",
+  "displayName": "lzv-probe-g",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "MCP_UNREG_URL",
+          "value": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "MCP_REG_URL",
+          "value": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ],
+      "agentGatewayConfig": {
+        "agentToAnywhereConfig": {
+          "agentGateway": "projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw"
+        }
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28"
+  },
+  "createTime": "2026-11-11T11:15:07.131862Z",
+  "updateTime": "2026-11-11T11:18:26.331859Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-11T11:23:00Z
+## note 2026-11-11T11:23:00Z: engine env (selected names): ["LZV_MODEL","LZV_MODEL_LOCATION","LZV_PROJECT_ID"]
+## note 2026-11-11T11:23:00Z: agent G opt-out env set=0 (env fields read=3)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_13135031416094770011", "args": {"endpoint": "allowed"}, "name": "call_model"}, "thought_signature": "AY89a18YPsHx-N1aLqTB0eZ611fPRqUvSatWzqV5FrCVpyZ22d7azeqvn0oJzbvOqV0cUE0gLWu1AFt1o0NSiwiQ1r4ZdV-B5f4azDojUYNzlVCK8woRN8Rf8Dwi3KfoXwnTp5Com3YUOSTRFlXJtzmDoiFJkt6RWTSmJbphqOTaFsTP0qS3Z6pvMsgkdupc8X3fINXK_DIk7K5ih0Aow2-ro0VIGjxcsPrYumxwe3userdhpyDdK9rxvTZU1IjPmByXDn2YWoAScGFv4bzrAQW40UW7-iPWeqJxHslYQTb6qt4aOC1kL1IyJp7hbtULlkKadhbcQYA0UVKGyhFTaDwwbGE8jgMUTmoYSKTiQdCbrvF9tDzjESDjPH8NmXuCPG6h1RwGwxudoZbpjvotWoBK04ErYBTw3lz6quOd9vn7loRfgNFLcpzBIt3Y0_FACZeKzmzUVq9LOODWKTKlpOJ2yDsBnVq35LCRir9uV9h2NJSmT6-cQQcLcHfJMAM7cMd_GZ6jooe0JbWMYd-ciw=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 338, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 338}], "thoughts_token_count": 85, "total_token_count": 439, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-4438070b-16d8-4575-bd23-09bf6366dea2", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "40fbfba3-6269-4e40-bc7b-8437be25739d", "timestamp": 1794396184.7839518}
+{"content": {"parts": [{"function_response": {"id": "call_13135031416094770011", "name": "call_model", "response": {"endpoint": "allowed", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a1/G3bISjM2Zc5eth1dxdg2FGKjlQoLD3V/omMiWngJguy8ZIUSGhxbzaGPaF4Jx0mWH/GraIj/MlfLMbEIEVgzjrRoyUy1UtQ2Ktv1j96QWhQ8TtU3c+1mSCE28NskRPNUO6m7vx2wdkeKWNgw6ta5f2MUwUQOMk8pPOEnwHPAhz5HYFwcdZpxVr6SvUX7DHo4Z1Idt+Nx/CjgAcXySfpIWH/ljY8TSHsisWa4w4IuwNMyv4q7mXR8PNtAwxrlJlzBhtpB0QaEtdT7v3Q467YbgEFyRQQFEDm7bG1awoRNmz33Vtb1AAHTTLPCnN+n1wNkbdIvtw+CDx08Qi89I5JAmRv+gQyGzkdWXMGu6j2Ld1TUrRMPflvl7mE2tl+zSyZY5haaK/+N1W0R0kXzSIKMQVozNjkrk/qadGgNKHTbqc3B25S+I", "error": null}}}], "role": "user"}, "invocation_id": "e-4438070b-16d8-4575-bd23-09bf6366dea2", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "7024540c-9b5b-4d46-9306-72933741f51f", "timestamp": 1794396189.1932075}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"endpoint\": \"allowed\",\n  \"status\": 200,\n  \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a1/G3bISjM2Zc5eth1dxdg2FGKjlQoLD3V/omMiWngJguy8ZIUSGhxbzaGPaF4Jx0mWH/GraIj/MlfLMbEIEVgzjrRoyUy1UtQ2Ktv1j96QWhQ8TtU3c+1mSCE28NskRPNUO6m7vx2wdkeKWNgw6ta5f2MUwUQOMk8pPOEnwHPAhz5HYFwcdZpxVr6SvUX7DHo4Z1Idt+Nx/CjgAcXySfpIWH/ljY8TSHsisWa4w4IuwNMyv4q7mXR8PNtAwxrlJlzBhtpB0QaEtdT7v3Q467YbgEFyRQQFEDm7bG1awoRNmz33Vtb1AAHTTLPCnN+n1wNkbdIvtw+CDx08Qi89I5JAmRv+gQyGzkdWXMGu6j2Ld1TUrRMPflvl7mE2tl+zSyZY5haaK/+N1W0R0kXzSIKMQVozNjkrk/qadGgNKHTbqc3B25S+I\",\n  \"error\": null\n}\n```", "thought_signature": "AY89a1-5eKSdbhAn63vjuHkm6FvkdyylDLGuVM6xSSciCQrIT9DYKHgmliKoiSjhQA9zmtZLfmmSKPeuDbIcNIZ32maR8ChV6lmG4tSFSLX1o_W0DdlQganrsNwS4UWEg5bkU5MHJJYqCKuGpXM-C5DnQOnvZMaO4nDJ94AoLkoRz02URqhPwJaEWq1lClX2zkRoZDBnKxBONgHdmRgBi9lSwGyLqzKStFxhpv1pu6lKF4ZLOXl__fXPn_dCz7M0WZkmM68z8fCTJFkbvCm06Yj5A8RM7UDXAVp6jcsHRKmegL98FZW1uTcNQ1I55nzsibp6nVhdeCqkocqHulKCf8tcOXY2IK-Gktphp1_UYgmdLKfHRDABfVUFKrJXGrELKTeIqTR4irKngNweQU0V5pSeE3iLj1ahjcNkzLMZ2lSQDj8RhJh81mjYdxbLZd67d0HuZxTVDzF8wAj-3FYLCiZgyyd9IzwRJGbgvrG2g0BUey818mrN4XNiogqjzOn4QTTZQBmsmagZ6cJpcSrFWqHyrE-ImGUER_IEwntGTEtWHasdZrJQwdzLr2c19RiRTM0rxq6PMXvbRiRTARPJNuEVyGszTuv3RMvGAK3ywbiO2gy_lrsW8fbOBEIOt5u7M6mIGGnGKRG4zx5Xz4QfaXwpPTZcJ3YwkPfOAgiJPd8OgUEG_gz3-Y9lBM9uhM-xPXMguAvRuTF8mQKkqbSpkFnlgxsTisiVH5Qa43t-jlznlyvlq4qfdYgJF-1o5RRX6oPO4L_GqqE7siVq1lDANWAZN5fEQkgrVpFr5s3Zx6OW4-UxtOtGcN3PhCYnmY3fs_jRqwrFrmwLjT5Wp19QiFDUH0EMePdTg8Y6iasYBLMPAdBvd0p2O_zWV6aBcP24EfYFuI05VWjhLnI3lj-9jA72HIyu878Op8UgXi5EOocrP1hpmwKD_PEelEmJW9sDWarld_0hHoFVqN9sY870ZRaa8797TqqqBuc6Fc-JIZCxnAH0hznULZZGGMQLt7IKacVlXE8Frk6BCr4RNROWcjtvEFimbYivZbwAmnJz2grN1xuhI0moi-UVg5PB1Vmd0IRXb5rl5ETYJd4ZoMxDr7pgiioIXIs9RT2aLy0ZVG5-BYnFGMQEGCbnzd1SRFw-UEvt6yIj4LFVLwLLxLtprUIOGTbK9NWjfA=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 398, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 398}], "prompt_token_count": 805, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 805}], "thoughts_token_count": 411, "total_token_count": 1614, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-4438070b-16d8-4575-bd23-09bf6366dea2", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "4e538547-f7a4-4a03-ae7e-1623a6dcef51", "timestamp": 1794396189.385252}
+
+HTTP 200
+## exit=0 at 2026-11-11T11:23:16Z
+## note 2026-11-11T11:23:16Z: agent G call: class=200 where=tool detail={"status":200,"error":""}
+# T47 stage=s3 run=run-1 start=2026-11-11T11:55:21Z
+# script_commit=831b29a-dirty
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T11:55:21Z: plan claim B8; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T11:55:21Z: agent G requirements: google-auth==2.62.1  # pinned 2026-11-10 for v3h T47: >= 2.59 reads GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN (runs 7-9 resolved an unrecorded version) (opt-out env var semantics: GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN takes precedence from google-auth 2.59)
+## note 2026-11-11T11:55:21Z: agent G tarball sha256: 22f2726f25e3bf98...
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/d69cb15844016ebcap-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxTCCAq2gAwIBAgITcFscda699W0PbfK9oACDQvu36jANBgkqhkiG9w0BAQsF
+    ADBgMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTcwNQYD
+    VQQDEy5BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBIChldXJvcGUtd2Vz
+    dDEpMB4XDTI2MTEwMTA4NTA0OFoXDTM2MTAyOTA4NTA0N1owYDElMCMGA1UEChMc
+    R29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUGA1UEAxMuQWdlbnQgR2F0
+    ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdlc3QxKTCCASIwDQYJKoZI
+    hvcNAQEBBQADggEPADCCAQoCggEBAIsM5IH+TYOyUHCihKBw8zNfMbSFyTeOe+MS
+    Na/98DdUuUdNc9jrd9zaH4S52/mLtuf5dlbqOAaFDAssy6QaWszbqdTVc6lFHGmK
+    rhC25gb4E9yerSvzrNfEVxDKDDvOMsX7g+TYia/JSa1GgWOOJqTMWKcL4QjZkmpe
+    5kN89dACHzbxwO5lPYk/XoBKDauNsJOpihHe7zZTbez81t98v4pdFsUfGef72GqE
+    XFVA01KpSpx1XFHJ8fce/ug8//Mgz/Y58nK2/SByFcez996QrKHnMyI9qSMc92Es
+    fbnq85oHJSrzG00mktQRlYrSWC34X6KyJxMj7mAzZlVZilKPYQUCAwEAAaN4MHYw
+    DgYDVR0PAQH/BAQDAgEmMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdEwEB/wQF
+    MAMBAf8wHQYDVR0OBBYEFK1MsZhGfwyGhAAHVcearjhm0x/LMB8GA1UdIwQYMBaA
+    FK1MsZhGfwyGhAAHVcearjhm0x/LMA0GCSqGSIb3DQEBCwUAA4IBAQBSXosDWQea
+    LAP22sd1wt0OpDVNZcZUCEVol8fuFmj210KaGySAhruGzBzludOFeWt6Dqjn0dFK
+    9kpUlJ+PyGJSXxkLnV6UJTXft9Dmk8/bHy95x+frF7j+aZ/JNp3KB2uxevNSyr/S
+    pF+z3FX0uez0HFxox61+13CbKR8CFfdQV8dmAsbN+d++oNt9PHXk+sZlJV4UgVJ7
+    Ol/O8wALzGe3slewVpp5aL9Ef6hKPmolP2xXXmwhOtBAIfNf1cItYNDMxkZBZ5gQ
+    NprmfJDkKZv9hfGYw6pE49K3vU0atQuMgBmCOVHCOSaQHrYaP9HBkY2iNjdDUx+3
+    oegTmaaI0Auv
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_18@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-11T10:07:48.031886322Z'
+etag: bC1wFZkPLTr4NCvSWpCS3Ua4qOvfeKGI17GYAAdkRE4
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-11T10:10:23.984940118Z'
+## exit=0 at 2026-11-11T11:55:22Z
+## note 2026-11-11T11:55:22Z: agent G: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28; direct control agent v3a: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28",
+  "displayName": "lzv-probe-g",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN",
+          "value": "false"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "MCP_UNREG_URL",
+          "value": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "MCP_REG_URL",
+          "value": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES",
+          "value": "False"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        }
+      ],
+      "agentGatewayConfig": {
+        "agentToAnywhereConfig": {
+          "agentGateway": "projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw"
+        }
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28"
+  },
+  "createTime": "2026-11-11T11:15:07.131862Z",
+  "updateTime": "2026-11-11T11:50:59.000222Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-11T11:55:23Z
+## note 2026-11-11T11:55:23Z: engine env (selected names): ["GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN","GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES","LZV_MODEL","LZV_MODEL_LOCATION","LZV_PROJECT_ID"]
+## note 2026-11-11T11:55:23Z: agent G opt-out env set=1 (env fields read=5)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_10556328241254959119", "args": {"endpoint": "allowed"}, "name": "call_model"}, "thought_signature": "AY89a1_eZDG-WR_5mamhTzFxK5QSFa8zgc2M9bsoBvSOX7X4vOr-nLejQuAyz82E9TO6Ro7tCM32fcyOFPomLea-M6z3E8_akQIAWQ_U4LUSDDkEUMkQXKFmxEkDBbjJ90-mLDy1CW1fp6liiSq9ejxlOJtNqzghbRfz1gUwKTIK_oBVvBmftkCT9wu8-3Jt6bpcjaLe92P0h-V9iAdt4fFUX64-E6BrjiDPWmlVmT19H9oBLajzgpzaZcvHxbrbAoZNJY6nSpxTKf3lpBxWwOwggwzMKeHKqabSzKPOcfv2LGkYtI9QQUfKgAtOiM4-GTkW-AUP--tRR2aiRAb7npCZHIA8toU9nmNd3iIxq5sNdp82pvjzdyqYXxfjv4Fd1e7C1R5hLmJUZSpS2hEXV4vMEgmI55Zl1L773IY="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 338, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 338}], "thoughts_token_count": 59, "total_token_count": 413, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-0e8a4d27-0d60-4b29-8dce-3ae0ecc47ba9", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "ee14ce50-e666-4288-a5a6-a03b2188c62a", "timestamp": 1794398126.6180227}
+{"content": {"parts": [{"function_response": {"id": "call_10556328241254959119", "name": "call_model", "response": {"endpoint": "allowed", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a18qO+lA5ltRkhl14Z/8zRZx04wqmt3sAk/VxKgxvF/17akgUKyjiRZuajQtGkaQReyZTPVHRU9XX4gDrO0a+LYRcECdy2POMHpmoRaTezl8ppu+3NosGvOZDGe1dIM0dkgxD34xTkPzX5rwcRI4KOOqO06NgoGIJZZngaPCdZdEPIIE1P/j+//6em67rlUhPLfnGXpojMr3CMqgXxTgaG6A5NneO73oqm29Cq5dKEezp5l3q5pYUrodfBH3m1h6+L8ltzjAhO+W8Dwit1Emu1t2yJDoFL10jBkzEHKyn3GY5TvNvk5mfTi4sp7BWRp0oSHwR/HzRtRAT/oPuvGaYH4WWq6iNZBOhDqtSVxnf3dgaqfhxgQxg50YXPrEN+9DA5AcZGoeF+V4qkwNiM6TvEnCOzDlx5jL7f396o9QIuNQk5Vyf9J5", "error": null}}}], "role": "user"}, "invocation_id": "e-0e8a4d27-0d60-4b29-8dce-3ae0ecc47ba9", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "ed2f679b-e7e6-4060-95bf-dac50c1ff2cc", "timestamp": 1794398130.4346952}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"endpoint\": \"allowed\",\n  \"status\": 200,\n  \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a18qO+lA5ltRkhl14Z/8zRZx04wqmt3sAk/VxKgxvF/17akgUKyjiRZuajQtGkaQReyZTPVHRU9XX4gDrO0a+LYRcECdy2POMHpmoRaTezl8ppu+3NosGvOZDGe1dIM0dkgxD34xTkPzX5rwcRI4KOOqO06NgoGIJZZngaPCdZdEPIIE1P/j+//6em67rlUhPLfnGXpojMr3CMqgXxTgaG6A5NneO73oqm29Cq5dKEezp5l3q5pYUrodfBH3m1h6+L8ltzjAhO+W8Dwit1Emu1t2yJDoFL10jBkzEHKyn3GY5TvNvk5mfTi4sp7BWRp0oSHwR/HzRtRAT/oPuvGaYH4WWq6iNZBOhDqtSVxnf3dgaqfhxgQxg50YXPrEN+9DA5AcZGoeF+V4qkwNiM6TvEnCOzDlx5jL7f396o9QIuNQk5Vyf9J5\",\n  \"error\": null\n}\n```", "thought_signature": "AY89a1-Yn1V-T9Z7Wl71hbf3axDb5T09LzJza6i-t9cKwu5nwROXjg505E3ylkxviKAoc_d9mLkNOCc74PjfOjA-VYB5dFpq6wst4Ywd5atoqSxfL5wwd025sksk0kBAkbk6MsGs1oc023sQb57hxf2YBeFTlooEZz9eUAjpn_DYEBJ7_m_EZ9Jr8gM6MycyTv0bUc3dNn1yqLWivEkjdIE82MznCAHRSvV9sjer0y7mvWJmEBhoJeh-z9EdVWBwVAy1dV-a11o="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 399, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 399}], "prompt_token_count": 780, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 780}], "thoughts_token_count": 27, "total_token_count": 1206, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-0e8a4d27-0d60-4b29-8dce-3ae0ecc47ba9", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "7ffe6bc2-e12f-4add-8b76-3e52e60f3d91", "timestamp": 1794398130.6658342}
+
+HTTP 200
+## exit=0 at 2026-11-11T11:55:33Z
+## note 2026-11-11T11:55:33Z: agent G call: class=200 where=tool detail={"status":200,"error":""}
+# T47 stage=s4 run=run-1 start=2026-11-11T12:58:19Z
+# script_commit=831b29a-dirty
+# check=B8 (Enforced) control=Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table
+# expected (pre-registered): Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T12:58:19Z: plan claim B8; no resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T12:58:19Z: agent G requirements: google-auth==2.62.1  # pinned 2026-11-10 for v3h T47: >= 2.59 reads GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN (runs 7-9 resolved an unrecorded version) (opt-out env var semantics: GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN takes precedence from google-auth 2.59)
+## note 2026-11-11T12:58:19Z: agent G tarball sha256: 22f2726f25e3bf98...
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/d69cb15844016ebcap-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxTCCAq2gAwIBAgITcFscda699W0PbfK9oACDQvu36jANBgkqhkiG9w0BAQsF
+    ADBgMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTcwNQYD
+    VQQDEy5BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBIChldXJvcGUtd2Vz
+    dDEpMB4XDTI2MTEwMTA4NTA0OFoXDTM2MTAyOTA4NTA0N1owYDElMCMGA1UEChMc
+    R29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUGA1UEAxMuQWdlbnQgR2F0
+    ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdlc3QxKTCCASIwDQYJKoZI
+    hvcNAQEBBQADggEPADCCAQoCggEBAIsM5IH+TYOyUHCihKBw8zNfMbSFyTeOe+MS
+    Na/98DdUuUdNc9jrd9zaH4S52/mLtuf5dlbqOAaFDAssy6QaWszbqdTVc6lFHGmK
+    rhC25gb4E9yerSvzrNfEVxDKDDvOMsX7g+TYia/JSa1GgWOOJqTMWKcL4QjZkmpe
+    5kN89dACHzbxwO5lPYk/XoBKDauNsJOpihHe7zZTbez81t98v4pdFsUfGef72GqE
+    XFVA01KpSpx1XFHJ8fce/ug8//Mgz/Y58nK2/SByFcez996QrKHnMyI9qSMc92Es
+    fbnq85oHJSrzG00mktQRlYrSWC34X6KyJxMj7mAzZlVZilKPYQUCAwEAAaN4MHYw
+    DgYDVR0PAQH/BAQDAgEmMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA8GA1UdEwEB/wQF
+    MAMBAf8wHQYDVR0OBBYEFK1MsZhGfwyGhAAHVcearjhm0x/LMB8GA1UdIwQYMBaA
+    FK1MsZhGfwyGhAAHVcearjhm0x/LMA0GCSqGSIb3DQEBCwUAA4IBAQBSXosDWQea
+    LAP22sd1wt0OpDVNZcZUCEVol8fuFmj210KaGySAhruGzBzludOFeWt6Dqjn0dFK
+    9kpUlJ+PyGJSXxkLnV6UJTXft9Dmk8/bHy95x+frF7j+aZ/JNp3KB2uxevNSyr/S
+    pF+z3FX0uez0HFxox61+13CbKR8CFfdQV8dmAsbN+d++oNt9PHXk+sZlJV4UgVJ7
+    Ol/O8wALzGe3slewVpp5aL9Ef6hKPmolP2xXXmwhOtBAIfNf1cItYNDMxkZBZ5gQ
+    NprmfJDkKZv9hfGYw6pE49K3vU0atQuMgBmCOVHCOSaQHrYaP9HBkY2iNjdDUx+3
+    oegTmaaI0Auv
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_18@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-11T10:07:48.031886322Z'
+etag: bC1wFZkPLTr4NCvSWpCS3Ua4qOvfeKGI17GYAAdkRE4
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-11T10:10:23.984940118Z'
+## exit=0 at 2026-11-11T12:58:20Z
+## note 2026-11-11T12:58:20Z: agent G: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28; direct control agent v3a: projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_26
+## $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+{
+  "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28",
+  "displayName": "lzv-probe-g",
+  "spec": {
+    "classMethods": [
+      {
+        "api_mode": "",
+        "name": "create_session"
+      },
+      {
+        "api_mode": "",
+        "name": "get_session"
+      },
+      {
+        "api_mode": "async",
+        "name": "async_create_session"
+      },
+      {
+        "api_mode": "stream",
+        "name": "stream_query"
+      },
+      {
+        "api_mode": "async_stream",
+        "name": "async_stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "GOOGLE_GENAI_USE_VERTEXAI",
+          "value": "True"
+        },
+        {
+          "name": "LZV_MODEL_LOCATION",
+          "value": "global"
+        },
+        {
+          "name": "MCP_UNREG_URL",
+          "value": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_PROJECT_ID",
+          "value": "PROJECT_8"
+        },
+        {
+          "name": "MCP_REG_URL",
+          "value": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+        },
+        {
+          "name": "LZV_MODEL",
+          "value": "gemini-3.5-flash"
+        }
+      ],
+      "agentGatewayConfig": {
+        "agentToAnywhereConfig": {
+          "agentGateway": "projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw"
+        }
+      }
+    },
+    "agentFramework": "google-adk",
+    "sourceCodeSpec": {
+      "inlineSource": {},
+      "pythonSpec": {
+        "version": "3.13",
+        "entrypointModule": "agent",
+        "entrypointObject": "app",
+        "requirementsFile": "requirements.txt"
+      }
+    },
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_28"
+  },
+  "createTime": "2026-11-11T11:15:07.131862Z",
+  "updateTime": "2026-11-11T12:54:43.805685Z",
+  "description": "Terraform managed.",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  }
+}
+## exit=0 at 2026-11-11T12:58:21Z
+## note 2026-11-11T12:58:21Z: engine env (selected names): ["LZV_MODEL","LZV_MODEL_LOCATION","LZV_PROJECT_ID"]
+## note 2026-11-11T12:58:21Z: agent G opt-out env set=0 (env fields read=3)
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_9938783833399344830", "args": {"endpoint": "allowed"}, "name": "call_model"}, "thought_signature": "AY89a1-QhIQhM6MqZ0u3Q4owpnqylZlvbgiADuf3w6hgizpVYHcjW0X-zPL2MJfp2P5JiO7UQo1T4kBrMMzWI5-yUk2c2k_GVb5MF9WNk_tIqS4LVt5qui8nrkpc-yFBbXE_UhNeu53x7MlCxqu16engi8ZqVswYQhOmDs8XIQtfipB8zzVik4MBY4lxEFjz9o5GRNWRX1A3WV-iMV3ggz3JUE2mFTBIqZTLocAKvEvEKGF7lRRXAoeqJb69Av_lpAYgYt_G-nRcWLnbaqeGBGgYCN6xjXB152cAu32JHFNIIiTbW7jLSzTCf7ZUVit2zLl1gtcwX4RT_53IRSVmpvFQnR6atbVXpiRJHyzhWcK5VAY2Gg3bq9YVZXVQpe5ruTWORwj8QXBFZjY7dVWJU2ejuO9IiWGkdk9ZLvjxFGmtIuGV8trTp4nyUL8PdivdhZLHBocGDxXp5GTGFaTGzS71XIInLBpeUSH1p-WusyxTXEuihcPgz50BAdTsziCAm_Q2SLgp00es_iTfXxSILv4wHbdwww7Q7lSIDQfSkMTof-RjWTl3Q0j43HfBc0NGNGxvTnaPsjRndpRR92zZqvo="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 338, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 338}], "thoughts_token_count": 101, "total_token_count": 455, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-025a258c-7396-4dd9-8332-50475d7f0d35", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "b733f3e1-ff0c-428d-9208-a79bff117a1c", "timestamp": 1794401905.3864808}
+{"content": {"parts": [{"function_response": {"id": "call_9938783833399344830", "name": "call_model", "response": {"endpoint": "allowed", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a1/LQTpJZ7/3z6eVtjbAvDLMR1fUyQOVno6gmjEaHxzUYJb2VXWZzVDNZDatTiaZ8xJ5UwOmpOhblJsKPzi/Zo0w+djmNoxtfdbNWfwZ3t7oW8nPhataSSLYHVs+oPJn2JFW3GBJcew+TnAsSGjEBgvkHq+MHBKWi7uVUMsbaVnUK4yXqMy1qt0kg8BIV5F48s8VMIPwXa9I4tZHiKrtDL8aXRZTnQyUbtxDmi077zQr0jfoWSEYIQU0H88MLVNTdAxJOJ+H4Y2leIA2gttrS25XuXbzYboCBVsog7KOH+6anH/Vztg/QoRJSHYREo5e2CJAqCk8ZEl0Qz7ZnxibdqXQDE7yHiZL1TarYXZb5R5PPHXi9wxjio6qHcK85Pvbr+YlXtVhU00+1x6YQDzJ5EoqtpxZwt3j2V16vay4Z9Xz9t/uc2DT", "error": null}}}], "role": "user"}, "invocation_id": "e-025a258c-7396-4dd9-8332-50475d7f0d35", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "ca76a5d0-647d-449f-8d39-a07d3a144f1b", "timestamp": 1794401910.667169}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"endpoint\": \"allowed\",\n  \"status\": 200,\n  \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a1/LQTpJZ7/3z6eVtjbAvDLMR1fUyQOVno6gmjEaHxzUYJb2VXWZzVDNZDatTiaZ8xJ5UwOmpOhblJsKPzi/Zo0w+djmNoxtfdbNWfwZ3t7oW8nPhataSSLYHVs+oPJn2JFW3GBJcew+TnAsSGjEBgvkHq+MHBKWi7uVUMsbaVnUK4yXqMy1qt0kg8BIV5F48s8VMIPwXa9I4tZHiKrtDL8aXRZTnQyUbtxDmi077zQr0jfoWSEYIQU0H88MLVNTdAxJOJ+H4Y2leIA2gttrS25XuXbzYboCBVsog7KOH+6anH/Vztg/QoRJSHYREo5e2CJAqCk8ZEl0Qz7ZnxibdqXQDE7yHiZL1TarYXZb5R5PPHXi9wxjio6qHcK85Pvbr+YlXtVhU00+1x6YQDzJ5EoqtpxZwt3j2V16vay4Z9Xz9t/uc2DT\"\n}", "thought_signature": "AY89a1-nrIYIgd4jAU8pbHoQQIBa19khed0HnSH5hpHFJfTqAbb41ShE2jdMFOXaxATR6FAYKOSU76d2G98kg-I4iJW9JhhtqoM5sMF8Nqjojt0V"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 392, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 392}], "prompt_token_count": 826, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 826}], "total_token_count": 1218, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-025a258c-7396-4dd9-8332-50475d7f0d35", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "fc2ede22-8c2d-445e-8fdd-717d819a5080", "timestamp": 1794401910.9119852}
+
+HTTP 200
+## exit=0 at 2026-11-11T12:58:33Z
+## note 2026-11-11T12:58:33Z: agent G call: class=200 where=tool detail={"status":200,"error":""}

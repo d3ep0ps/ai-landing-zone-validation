@@ -1,0 +1,161 @@
+# T38 run=run-7 start=2026-10-28T16:35:25Z
+# script_commit=eb3fbc9
+# check=A/D control=Org-level floor setting (human applies, E4.2); create a weak template in a test project with no project floor
+# expected (pre-registered): Weak template refused, as T27
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T16:35:25Z: paired control: a template at the org floor (filter enabled, MEDIUM_AND_ABOVE) is created. Weak variants: filter disabled, and HIGH only. Control cell of the plan also names a separate observation (a project-level floor that relaxes the org floor): NOT done here, it needs a project floor setting to be created; only the read-only state of the data project floor is recorded
+## note 2026-10-28T16:35:25Z: limitation: the error text is undocumented; the verdict rests on exit codes and a describe NOT_FOUND check, not on a message. Client-side usage errors are excluded from a PASS
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=organizations/ORG_ID/locations/global/floorSetting --format=json
+{
+  "createTime": "2026-10-27T14:03:34.649149003Z",
+  "enableFloorSettingEnforcement": true,
+  "filterConfig": {
+    "piAndJailbreakFilterSettings": {
+      "confidenceLevel": "MEDIUM_AND_ABOVE",
+      "filterEnforcement": "ENABLED"
+    }
+  },
+  "name": "organizations/ORG_ID/locations/global/floorSetting",
+  "updateTime": "2026-10-28T16:18:36.704131913Z"
+}
+## exit=0 at 2026-10-28T16:35:26Z
+## note 2026-10-28T16:35:26Z: org floor setting present, enforcement=true
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=folders/FOLDER_ID_5/locations/global/floorSetting --format=json
+{
+  "createTime": "2026-10-27T13:21:34.665874261Z",
+  "enableFloorSettingEnforcement": false,
+  "filterConfig": {
+    "piAndJailbreakFilterSettings": {
+      "confidenceLevel": "MEDIUM_AND_ABOVE",
+      "filterEnforcement": "ENABLED"
+    }
+  },
+  "name": "folders/FOLDER_ID_5/locations/global/floorSetting",
+  "updateTime": "2026-10-28T16:16:12.165668349Z"
+}
+## exit=0 at 2026-10-28T16:35:28Z
+## note 2026-10-28T16:35:28Z: folder floor setting readable, enforcement=false
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_10/locations/global/floorSetting --format=json
+{
+  "createTime": "2026-10-28T16:35:30.620908043Z",
+  "name": "projects/PROJECT_10/locations/global/floorSetting",
+  "updateTime": "2026-10-28T16:35:30.620908043Z"
+}
+## exit=0 at 2026-10-28T16:35:31Z
+## note 2026-10-28T16:35:31Z: observation (read-only): data project floor setting readable, enforcement=false, integrated services/filters: {"integratedServices":null,"filterConfig":null}
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.europe-west1.rep.googleapis.com/ gcloud model-armor templates create lzv-t27ok-run7-9k6esl --project=PROJECT_10 --location=europe-west1 --pi-and-jailbreak-filter-settings-enforcement=enabled --malicious-uri-filter-settings-enforcement=enabled --pi-and-jailbreak-filter-settings-confidence-level=MEDIUM_AND_ABOVE
+Created template [lzv-t27ok-run7-9k6esl].
+## exit=0 at 2026-10-28T16:35:32Z
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.europe-west1.rep.googleapis.com/ gcloud model-armor templates create lzv-t27off-run7-uxh242 --project=PROJECT_10 --location=europe-west1 --pi-and-jailbreak-filter-settings-enforcement=disabled --malicious-uri-filter-settings-enforcement=enabled
+ERROR: (gcloud.model-armor.templates.create) INVALID_ARGUMENT: The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27off-run7-uxh242' is not conformant with the effective floor setting. Violations: '{
+  "piAndJailbreakFilterSettings": {
+    "floorSettings": "ENABLED",
+    "templateSettings": "DISABLED"
+  }
+}'
+The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27off-run7-uxh242' is not conformant with the effective floor setting. Violations: '{
+  "piAndJailbreakFilterSettings": {
+    "floorSettings": "ENABLED",
+    "templateSettings": "DISABLED"
+  }
+}'
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: modelarmor.googleapis.com
+  metadata:
+    template_name: projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27off-run7-uxh242
+    violations: |-
+      {
+        "piAndJailbreakFilterSettings": {
+          "floorSettings": "ENABLED",
+          "templateSettings": "DISABLED"
+        }
+      }
+  reason: TEMPLATE_NOT_CONFORMANT
+## exit=1 at 2026-10-28T16:35:34Z
+## note 2026-10-28T16:35:34Z: weak template (off) create exit=1 class=refused error (as observed): ERROR: (gcloud.model-armor.templates.create) INVALID_ARGUMENT: The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27off-run7-uxh242' is not conformant with the effective floor setting. Violations: '{   "piAndJailbreakFilterSettings": {     "floorSettings": "ENABLED",     "templateSettings": "DISABLED"   } }' The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/template
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.europe-west1.rep.googleapis.com/ gcloud model-armor templates describe lzv-t27off-run7-uxh242 --project=PROJECT_10 --location=europe-west1 --format=value\(name\)
+ERROR: (gcloud.model-armor.templates.describe) NOT_FOUND: Resource 'projects/PROJECT_10/locations/europe-west1/templates/lzv-t27off-run7-uxh242' was not found. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property
+- '@type': type.googleapis.com/google.rpc.ResourceInfo
+  resourceName: projects/PROJECT_10/locations/europe-west1/templates/lzv-t27off-run7-uxh242
+## exit=1 at 2026-10-28T16:35:34Z
+## note 2026-10-28T16:35:34Z: weak template (off) exists afterwards: no
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.europe-west1.rep.googleapis.com/ gcloud model-armor templates create lzv-t27hi-run7-lkbjaa --project=PROJECT_10 --location=europe-west1 --pi-and-jailbreak-filter-settings-enforcement=enabled --malicious-uri-filter-settings-enforcement=enabled --pi-and-jailbreak-filter-settings-confidence-level=HIGH
+ERROR: (gcloud.model-armor.templates.create) INVALID_ARGUMENT: The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa' is not conformant with the effective floor setting. Violations: '{
+  "piAndJailbreakFilterSettings": {
+    "confidenceLevel": {
+      "floorSettings": "MEDIUM_AND_ABOVE",
+      "templateSettings": "HIGH"
+    }
+  }
+}'
+The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa' is not conformant with the effective floor setting. Violations: '{
+  "piAndJailbreakFilterSettings": {
+    "confidenceLevel": {
+      "floorSettings": "MEDIUM_AND_ABOVE",
+      "templateSettings": "HIGH"
+    }
+  }
+}'
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: modelarmor.googleapis.com
+  metadata:
+    template_name: projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa
+    violations: |-
+      {
+        "piAndJailbreakFilterSettings": {
+          "confidenceLevel": {
+            "floorSettings": "MEDIUM_AND_ABOVE",
+            "templateSettings": "HIGH"
+          }
+        }
+      }
+  reason: TEMPLATE_NOT_CONFORMANT
+## exit=1 at 2026-10-28T16:35:36Z
+## note 2026-10-28T16:35:36Z: weak template (high) create exit=1 class=refused error (as observed): ERROR: (gcloud.model-armor.templates.create) INVALID_ARGUMENT: The template 'projects/PROJECT_NUMBER_8/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa' is not conformant with the effective floor setting. Violations: '{   "piAndJailbreakFilterSettings": {     "confidenceLevel": {       "floorSettings": "MEDIUM_AND_ABOVE",       "templateSettings": "HIGH"     }   } }' The template 'projects/PROJECT_NUMBER_13
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.europe-west1.rep.googleapis.com/ gcloud model-armor templates describe lzv-t27hi-run7-lkbjaa --project=PROJECT_10 --location=europe-west1 --format=value\(name\)
+ERROR: (gcloud.model-armor.templates.describe) NOT_FOUND: Resource 'projects/PROJECT_10/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa' was not found. This command is authenticated as USER_1@example.com which is the active account specified by the [core/account] property
+- '@type': type.googleapis.com/google.rpc.ResourceInfo
+  resourceName: projects/PROJECT_10/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa
+## exit=1 at 2026-10-28T16:35:37Z
+## note 2026-10-28T16:35:37Z: weak template (high) exists afterwards: no
+## cleanup start 2026-10-28T16:35:37Z
+## $ printf 'Authorization: Bearer %s\nx-goog-user-project: %s\n' "$(gcloud auth print-access-token)" 'PROJECT_10' | curl -sS --max-time 60 -H @- -X DELETE 'https://modelarmor.europe-west1.rep.googleapis.com/v1/projects/PROJECT_10/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa' -w '\nHTTP %{http_code}\n' || echo 'template not present (expected when the create was refused)'
+{
+  "error": {
+    "code": 404,
+    "message": "Resource 'projects/PROJECT_10/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa' was not found",
+    "status": "NOT_FOUND",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ResourceInfo",
+        "resourceName": "projects/PROJECT_10/locations/europe-west1/templates/lzv-t27hi-run7-lkbjaa"
+      }
+    ]
+  }
+}
+
+HTTP 404
+## exit=0 at 2026-10-28T16:35:38Z
+## $ printf 'Authorization: Bearer %s\nx-goog-user-project: %s\n' "$(gcloud auth print-access-token)" 'PROJECT_10' | curl -sS --max-time 60 -H @- -X DELETE 'https://modelarmor.europe-west1.rep.googleapis.com/v1/projects/PROJECT_10/locations/europe-west1/templates/lzv-t27off-run7-uxh242' -w '\nHTTP %{http_code}\n' || echo 'template not present (expected when the create was refused)'
+{
+  "error": {
+    "code": 404,
+    "message": "Resource 'projects/PROJECT_10/locations/europe-west1/templates/lzv-t27off-run7-uxh242' was not found",
+    "status": "NOT_FOUND",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ResourceInfo",
+        "resourceName": "projects/PROJECT_10/locations/europe-west1/templates/lzv-t27off-run7-uxh242"
+      }
+    ]
+  }
+}
+
+HTTP 404
+## exit=0 at 2026-10-28T16:35:38Z
+## $ printf 'Authorization: Bearer %s\nx-goog-user-project: %s\n' "$(gcloud auth print-access-token)" 'PROJECT_10' | curl -sS --max-time 60 -H @- -X DELETE 'https://modelarmor.europe-west1.rep.googleapis.com/v1/projects/PROJECT_10/locations/europe-west1/templates/lzv-t27ok-run7-9k6esl' -w '\nHTTP %{http_code}\n' || echo 'template not present (expected when the create was refused)'
+{}
+
+HTTP 200
+## exit=0 at 2026-10-28T16:35:39Z
+## cleanup end 2026-10-28T16:35:39Z

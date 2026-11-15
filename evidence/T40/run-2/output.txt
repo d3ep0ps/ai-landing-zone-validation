@@ -1,0 +1,755 @@
+# T40 stage=before run=run-2 start=2026-11-11T20:16:16Z
+# script_commit=54f8c34
+# check=B1 (Configured, read-back) control=Deploy-time IAM change is invisible to additive Terraform; control: before/after IAM snapshot and two plans
+# expected (pre-registered): T40 (additive IAM, 3 runs): `after.json` contains one new binding, `roles/aiplatform.agentDefaultAccess` on `principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/N`; `terraform plan` returns exit code **0** (no changes) both before and after deploy; the audit log shows the change was made out-of-band by a Google-managed service identity, not the operator. Falsified if: no binding is added, or `terraform plan` reports the change under `google_project_iam_member`. Tier: Configured (read-back).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T20:16:16Z: plan claim B1; no resources are created by this script (the per-run project and agent are infra-v3h); no cleanup_trap registered
+## note 2026-11-11T20:16:16Z: limitation: the audit-log sub-check depends on an unverified methodName/actor; see header
+## note 2026-11-11T20:16:17Z: per-run project: PROJECT_10 (label r2); expected principalSet: principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8
+## note 2026-11-11T20:16:17Z: how agent 1 is deployed: infra-v3h Terraform module (geap-agent-runtime, source tarball infra-v3h/build/source.tar.gz); keep identical across runs
+## $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudkms.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.bucketWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.logWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.bucketViewer"
+    }
+  ],
+  "etag": "BwZgBd0upf4=",
+  "version": 1
+}
+## exit=0 at 2026-11-11T20:16:18Z
+## note 2026-11-11T20:16:18Z: snapshot before written to evidence/T40/run-2/iam-before
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r2 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r2.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T40-run-2-before.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_10/logging.googleapis.com]
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_10/aiplatform.googleapis.com]
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudbuild.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudresourcemanager.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_10/storage.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_10/iam.googleapis.com]
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_10/serviceusage.googleapis.com]
+data.google_project.existing[0]: Read complete after 2s [id=projects/PROJECT_10]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_10/roles/editor/user:USER_1@example.com]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_10/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_10/roles/iam.serviceAccountUser/user:USER_1@example.com]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+## exit=0 at 2026-11-11T20:16:25Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T40-run-2-before.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40/run-2/plan-before.json'
+## exit=0 at 2026-11-11T20:16:25Z
+## note 2026-11-11T20:16:25Z: plan before: exit=0 changes=[]
+# T40 stage=after run=run-2 start=2026-11-11T21:07:13Z
+# script_commit=54f8c34-dirty
+# check=B1 (Configured, read-back) control=Deploy-time IAM change is invisible to additive Terraform; control: before/after IAM snapshot and two plans
+# expected (pre-registered): T40 (additive IAM, 3 runs): `after.json` contains one new binding, `roles/aiplatform.agentDefaultAccess` on `principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/N`; `terraform plan` returns exit code **0** (no changes) both before and after deploy; the audit log shows the change was made out-of-band by a Google-managed service identity, not the operator. Falsified if: no binding is added, or `terraform plan` reports the change under `google_project_iam_member`. Tier: Configured (read-back).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T21:07:13Z: plan claim B1; no resources are created by this script (the per-run project and agent are infra-v3h); no cleanup_trap registered
+## note 2026-11-11T21:07:13Z: limitation: the audit-log sub-check depends on an unverified methodName/actor; see header
+## note 2026-11-11T21:07:13Z: per-run project: PROJECT_10 (label r2); expected principalSet: principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8
+## note 2026-11-11T21:07:13Z: how agent 1 is deployed: infra-v3h Terraform module (geap-agent-runtime, source tarball infra-v3h/build/source.tar.gz); keep identical across runs
+## $ gcloud projects get-iam-policy PROJECT_10 --format=json --billing-project=PROJECT_6
+{
+  "bindings": [
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudkms.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.bucketWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.logWriter"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/resourcemanager.projectIamAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.bucketViewer"
+    }
+  ],
+  "etag": "BwZgBeCR3LM=",
+  "version": 1
+}
+## exit=0 at 2026-11-11T21:07:15Z
+## note 2026-11-11T21:07:15Z: snapshot after written to evidence/T40/run-2/iam-after
+{"scope":"project-v3h","change":"added","role":"roles/aiplatform.agentDefaultAccess","member":"principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"}
+## note 2026-11-11T21:07:15Z: added=1 expected_binding_added=1 extra=[none] removed=[none]
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r2 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r2.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T40-run-2-after.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_10/serviceusage.googleapis.com]
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_10/aiplatform.googleapis.com]
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_10/logging.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_10/iam.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudresourcemanager.googleapis.com]
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudbuild.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_10/storage.googleapis.com]
+data.google_project.existing[0]: Read complete after 2s [id=projects/PROJECT_10]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_10/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_10/roles/editor/user:USER_1@example.com]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_10/roles/iam.serviceAccountUser/user:USER_1@example.com]
+module.agent["1"].google_vertex_ai_reasoning_engine.managed[0]: Refreshing state... [id=projects/PROJECT_10/locations/europe-west1/reasoningEngines/AGENT_ID_29]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+## exit=0 at 2026-11-11T21:07:22Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T40-run-2-after.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T40/run-2/plan-after.json'
+## exit=0 at 2026-11-11T21:07:22Z
+## note 2026-11-11T21:07:22Z: plan after: exit=0 changes=[]
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/activity\"\)\ AND\ protoPayload.methodName=\~\"\(\?i\)setiampolicy\"\ AND\ timestamp\>=\"2026-11-11T20:16:25Z\" --project=PROJECT_10 --limit=100 --format=json
+[
+  {
+    "insertId": "a9s6b5dk8c8",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "principalEmail": "USER_5@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "resourcemanager.projects.setIamPolicy",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "projects/PROJECT_10",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_10",
+            "service": "cloudresourcemanager.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "resourcemanager.projects.setIamPolicy",
+          "permissionType": "ADMIN_WRITE",
+          "resource": "projects/PROJECT_10",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_10",
+            "service": "cloudresourcemanager.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "SetIamPolicy",
+      "request": {
+        "@type": "type.googleapis.com/google.iam.v1.SetIamPolicyRequest",
+        "policy": {
+          "bindings": [
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+              ],
+              "role": "roles/aiplatform.reasoningEngineServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+              ],
+              "role": "roles/aiplatform.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+              ],
+              "role": "roles/binaryauthorization.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+              ],
+              "role": "roles/cloudbuild.builds.builder"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+              ],
+              "role": "roles/cloudbuild.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+              ],
+              "role": "roles/cloudkms.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+              ],
+              "role": "roles/compute.instanceGroupManagerServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+              ],
+              "role": "roles/compute.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+              ],
+              "role": "roles/container.serviceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+              ],
+              "role": "roles/containeranalysis.ServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+              ],
+              "role": "roles/containerregistry.ServiceAgent"
+            },
+            {
+              "members": [
+                "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/editor"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+              ],
+              "role": "roles/file.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/iam.serviceAccountUser"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.bucketWriter"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.logWriter"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+              ],
+              "role": "roles/logging.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/modelarmor.admin"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+              ],
+              "role": "roles/modelarmor.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/owner"
+            },
+            {
+              "members": [
+                "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+              ],
+              "role": "roles/pubsub.serviceAgent"
+            },
+            {
+              "members": [
+                "user:USER_1@example.com"
+              ],
+              "role": "roles/resourcemanager.projectIamAdmin"
+            },
+            {
+              "members": [
+                "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+              ],
+              "role": "roles/storage.bucketViewer"
+            },
+            {
+              "members": [
+                "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"
+              ],
+              "role": "roles/aiplatform.agentDefaultAccess"
+            }
+          ],
+          "etag": "BwZgBd0upf4="
+        },
+        "resource": "PROJECT_NUMBER_8"
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "destinationAttributes": {},
+        "requestAttributes": {}
+      },
+      "resourceName": "projects/PROJECT_10",
+      "response": {
+        "@type": "type.googleapis.com/google.iam.v1.Policy",
+        "bindings": [
+          {
+            "members": [
+              "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8"
+            ],
+            "role": "roles/aiplatform.agentDefaultAccess"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+            ],
+            "role": "roles/aiplatform.reasoningEngineServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-aiplatform.iam.gserviceaccount.com"
+            ],
+            "role": "roles/aiplatform.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+            ],
+            "role": "roles/binaryauthorization.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:PROJECT_NUMBER_8@cloudbuild.gserviceaccount.com"
+            ],
+            "role": "roles/cloudbuild.builds.builder"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+            ],
+            "role": "roles/cloudbuild.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-cloudkms.iam.gserviceaccount.com"
+            ],
+            "role": "roles/cloudkms.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:PROJECT_NUMBER_8@cloudservices.gserviceaccount.com"
+            ],
+            "role": "roles/compute.instanceGroupManagerServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@compute-system.iam.gserviceaccount.com"
+            ],
+            "role": "roles/compute.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@container-engine-robot.iam.gserviceaccount.com"
+            ],
+            "role": "roles/container.serviceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@container-analysis.iam.gserviceaccount.com"
+            ],
+            "role": "roles/containeranalysis.ServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@containerregistry.iam.gserviceaccount.com"
+            ],
+            "role": "roles/containerregistry.ServiceAgent"
+          },
+          {
+            "members": [
+              "serviceAccount:PROJECT_NUMBER_8-compute@developer.gserviceaccount.com",
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/editor"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@cloud-filer.iam.gserviceaccount.com"
+            ],
+            "role": "roles/file.serviceAgent"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/iam.serviceAccountUser"
+          },
+          {
+            "members": [
+              "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+            ],
+            "role": "roles/logging.bucketWriter"
+          },
+          {
+            "members": [
+              "serviceAccount:SA_8@PROJECT.iam.gserviceaccount.com"
+            ],
+            "role": "roles/logging.logWriter"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-logging.iam.gserviceaccount.com"
+            ],
+            "role": "roles/logging.serviceAgent"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/modelarmor.admin"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-modelarmor.iam.gserviceaccount.com"
+            ],
+            "role": "roles/modelarmor.serviceAgent"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/owner"
+          },
+          {
+            "members": [
+              "serviceAccount:service-PROJECT_NUMBER_8@gcp-sa-pubsub.iam.gserviceaccount.com"
+            ],
+            "role": "roles/pubsub.serviceAgent"
+          },
+          {
+            "members": [
+              "user:USER_1@example.com"
+            ],
+            "role": "roles/resourcemanager.projectIamAdmin"
+          },
+          {
+            "members": [
+              "serviceAccount:SA_11@PROJECT.iam.gserviceaccount.com"
+            ],
+            "role": "roles/storage.bucketViewer"
+          }
+        ],
+        "etag": "BwZgBeCR3LM="
+      },
+      "serviceData": {
+        "@type": "type.googleapis.com/google.iam.v1.logging.AuditData",
+        "policyDelta": {
+          "bindingDeltas": [
+            {
+              "action": "ADD",
+              "member": "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_8",
+              "role": "roles/aiplatform.agentDefaultAccess"
+            }
+          ]
+        }
+      },
+      "serviceName": "cloudresourcemanager.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-11T20:16:59.141122193Z",
+    "resource": {
+      "labels": {
+        "project_id": "PROJECT_10"
+      },
+      "type": "project"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-11-11T20:16:58.217115Z"
+  }
+]
+## exit=0 at 2026-11-11T21:07:25Z
+## note 2026-11-11T21:07:25Z: audit: SetIamPolicy entries since 2026-11-11T20:16:25Z: 1; entries mentioning agentDefaultAccess: 1; first: {"t":"2026-11-11T20:16:58.217115Z","m":"SetIamPolicy","s":"cloudresourcemanager.googleapis.com","email":"USER_5@example.com","subject":""}

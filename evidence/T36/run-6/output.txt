@@ -1,0 +1,197 @@
+# T36 stage=dryrun run=run-6 start=2026-10-27T13:12:33Z
+# script_commit=9ef9617
+# check=V2-D control=Organization-level policy: dry-run staging, inheritance to projects, a scoped exception project
+# expected (pre-registered): Dry run: create allowed, audit entry `dryRunResult=DENIED`, `liveResult=ALLOWED` (poll up to 30 min, else INCONCLUSIVE). Enforced: create refused in an inheriting test project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-27T13:12:33Z: paired control (enforce stage): the same unlabeled create in the exception project succeeds
+## note 2026-10-27T13:12:33Z: ORG-SCOPE test: the org policy is applied and removed by the human (infra t36_mode); this script never applies it
+## note 2026-10-27T13:12:35Z: inheriting project: PROJECT_10; exception project: PROJECT_11; location: europe-west1
+## $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --organization=ORG_ID --format=json --billing-project=PROJECT_6
+{
+  "dryRunSpec": {
+    "etag": "CLO/gtcGEPiUgkw=",
+    "rules": [
+      {
+        "enforce": true
+      }
+    ],
+    "updateTime": "2026-10-27T12:57:23.159419Z"
+  },
+  "etag": "-CLO/gtcGEPiUgkw=",
+  "name": "organizations/ORG_ID/policies/custom.lzvOrgTestBucketLabel"
+}
+## exit=0 at 2026-10-27T13:12:35Z
+## $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --project=PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "dryRunSpec": {
+    "etag": "CLS/gtcGEOCiu2I=",
+    "rules": [
+      {
+        "enforce": false
+      }
+    ],
+    "updateTime": "2026-10-27T12:57:24.206492Z"
+  },
+  "etag": "-CLS/gtcGEOCiu2I=",
+  "name": "projects/PROJECT_NUMBER_10/policies/custom.lzvOrgTestBucketLabel"
+}
+## exit=0 at 2026-10-27T13:12:36Z
+## ABORT 2026-10-27T13:12:36Z: exception project policy has no enforce:false in dryRunSpec
+# T36 stage=dryrun run=run-6 start=2026-10-27T13:13:41Z
+# script_commit=dcbf74f
+# check=V2-D control=Organization-level policy: dry-run staging, inheritance to projects, a scoped exception project
+# expected (pre-registered): Dry run: create allowed, audit entry `dryRunResult=DENIED`, `liveResult=ALLOWED` (poll up to 30 min, else INCONCLUSIVE). Enforced: create refused in an inheriting test project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-27T13:13:41Z: paired control (enforce stage): the same unlabeled create in the exception project succeeds
+## note 2026-10-27T13:13:41Z: ORG-SCOPE test: the org policy is applied and removed by the human (infra t36_mode); this script never applies it
+## note 2026-10-27T13:13:42Z: inheriting project: PROJECT_10; exception project: PROJECT_11; location: europe-west1
+## $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --organization=ORG_ID --format=json --billing-project=PROJECT_6
+{
+  "dryRunSpec": {
+    "etag": "CLO/gtcGEPiUgkw=",
+    "rules": [
+      {
+        "enforce": true
+      }
+    ],
+    "updateTime": "2026-10-27T12:57:23.159419Z"
+  },
+  "etag": "-CLO/gtcGEPiUgkw=",
+  "name": "organizations/ORG_ID/policies/custom.lzvOrgTestBucketLabel"
+}
+## exit=0 at 2026-10-27T13:13:43Z
+## $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --project=PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "dryRunSpec": {
+    "etag": "CLS/gtcGEOCiu2I=",
+    "rules": [
+      {
+        "enforce": false
+      }
+    ],
+    "updateTime": "2026-10-27T12:57:24.206492Z"
+  },
+  "etag": "-CLS/gtcGEOCiu2I=",
+  "name": "projects/PROJECT_NUMBER_10/policies/custom.lzvOrgTestBucketLabel"
+}
+## exit=0 at 2026-10-27T13:13:44Z
+## note 2026-10-27T13:13:44Z: org policy dryRunSpec age 981s
+## $ gcloud storage buckets create gs://lzv-t36-run6-r2fgf2 --location=europe-west1 --project=PROJECT_10
+Creating gs://lzv-t36-run6-r2fgf2/...
+## exit=0 at 2026-10-27T13:13:47Z
+## note 2026-10-27T13:13:47Z: unlabeled create in PROJECT_10 succeeded (dry run does not block)
+## $ gcloud storage buckets delete gs://lzv-t36-run6-r2fgf2
+  
+Removing gs://lzv-t36-run6-r2fgf2/...
+.............
+## exit=0 at 2026-10-27T13:13:50Z
+## note 2026-10-27T13:13:52Z: bucket lzv-t36-run6-r2fgf2 deleted
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ AND\ protoPayload.metadata.dryRunResult=\"DENIED\"\ AND\ timestamp\>=\"2026-10-27T13:13:44Z\" --project=PROJECT_10 --limit=20 --format=json
+[]
+## exit=0 at 2026-10-27T13:13:53Z
+## $ gcloud logging read log_id\(\"cloudaudit.googleapis.com/policy\"\)\ AND\ protoPayload.metadata.dryRunResult=\"DENIED\"\ AND\ timestamp\>=\"2026-10-27T13:13:44Z\" --project=PROJECT_10 --limit=20 --format=json
+[
+  {
+    "insertId": "jqmuckd2teg",
+    "logName": "projects/PROJECT_10/logs/cloudaudit.googleapis.com%2Fpolicy",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "metadata": {
+        "@type": "type.googleapis.com/google.cloud.audit.OrgPolicyDryRunAuditMetadata",
+        "constraint": "customConstraints/custom.lzvOrgTestBucketLabel",
+        "dryRunResult": "DENIED",
+        "liveResult": "ALLOWED",
+        "resourceType": "storage.googleapis.com/Bucket"
+      },
+      "methodName": "storage.buckets.create",
+      "resourceName": "projects/_/buckets/lzv-t36-run6-r2fgf2",
+      "serviceName": "storage.googleapis.com",
+      "status": {
+        "code": 7,
+        "message": "POLICY_VIOLATED"
+      }
+    },
+    "receiveTimestamp": "2026-10-27T13:13:46.738445689Z",
+    "resource": {
+      "labels": {
+        "method": "storage.buckets.create",
+        "project_id": "PROJECT_10",
+        "service": "storage.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-10-27T13:13:46.212155938Z"
+  }
+]
+## exit=0 at 2026-10-27T13:15:56Z
+## cleanup start 2026-10-27T13:15:56Z
+## $ if gcloud storage buckets describe gs://lzv-t36-run6-r2fgf2 --project=PROJECT_10 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t36-run6-r2fgf2; fi; if gcloud storage buckets describe gs://lzv-t36-run6-r2fgf2 --project=PROJECT_10 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket lzv-t36-run6-r2fgf2 still exists'; else echo 'CLEANUP CHECK: bucket lzv-t36-run6-r2fgf2 gone'; fi
+CLEANUP CHECK: bucket lzv-t36-run6-r2fgf2 gone
+## exit=0 at 2026-10-27T13:15:59Z
+## cleanup end 2026-10-27T13:15:59Z
+# T36 stage=enforce run=run-6 start=2026-10-27T14:19:34Z
+# script_commit=ed0d789
+# check=V2-D control=Organization-level policy: dry-run staging, inheritance to projects, a scoped exception project
+# expected (pre-registered): Dry run: create allowed, audit entry `dryRunResult=DENIED`, `liveResult=ALLOWED` (poll up to 30 min, else INCONCLUSIVE). Enforced: create refused in an inheriting test project
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-27T14:19:34Z: paired control (enforce stage): the same unlabeled create in the exception project succeeds
+## note 2026-10-27T14:19:34Z: ORG-SCOPE test: the org policy is applied and removed by the human (infra t36_mode); this script never applies it
+## note 2026-10-27T14:19:36Z: inheriting project: PROJECT_10; exception project: PROJECT_11; location: europe-west1
+## $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --organization=ORG_ID --format=json --billing-project=PROJECT_6
+{
+  "etag": "COPdgtcGEMj28RA=-",
+  "name": "organizations/ORG_ID/policies/custom.lzvOrgTestBucketLabel",
+  "spec": {
+    "etag": "COPdgtcGEMj28RA=",
+    "rules": [
+      {
+        "enforce": true
+      }
+    ],
+    "updateTime": "2026-10-27T14:02:11.035421Z"
+  }
+}
+## exit=0 at 2026-10-27T14:19:37Z
+## $ gcloud org-policies describe custom.lzvOrgTestBucketLabel --project=PROJECT_11 --format=json --billing-project=PROJECT_6
+{
+  "etag": "COXdgtcGEIje8JED-",
+  "name": "projects/PROJECT_NUMBER_10/policies/custom.lzvOrgTestBucketLabel",
+  "spec": {
+    "etag": "COXdgtcGEIje8JED",
+    "rules": [
+      {
+        "enforce": false
+      }
+    ],
+    "updateTime": "2026-10-27T14:02:13.842805Z"
+  }
+}
+## exit=0 at 2026-10-27T14:19:38Z
+## note 2026-10-27T14:19:38Z: org policy spec age 1047s
+## $ gcloud storage buckets create gs://lzv-t36-run6-rhefnl --location=europe-west1 --project=PROJECT_10
+Creating gs://lzv-t36-run6-rhefnl/...
+ERROR: (gcloud.storage.buckets.create) HTTPError 412: orgpolicy:projects/_/buckets/lzv-t36-run6-rhefnl violates customConstraints/custom.lzvOrgTestBucketLabel. Details: Validation test T36. Remove after the test.
+- '@type': type.googleapis.com/google.rpc.PreconditionFailure
+  violations:
+  - description: Validation test T36. Remove after the test.
+    subject: orgpolicy:projects/_/buckets/lzv-t36-run6-rhefnl
+    type: customConstraints/custom.lzvOrgTestBucketLabel
+## exit=1 at 2026-10-27T14:19:39Z
+## $ gcloud storage buckets create gs://lzv-t36-run6-v62e5q --location=europe-west1 --project=PROJECT_11
+Creating gs://lzv-t36-run6-v62e5q/...
+## exit=0 at 2026-10-27T14:19:42Z
+## $ gcloud storage buckets delete gs://lzv-t36-run6-v62e5q
+  
+Removing gs://lzv-t36-run6-v62e5q/...
+..........
+## exit=0 at 2026-10-27T14:19:45Z
+## note 2026-10-27T14:19:46Z: bucket lzv-t36-run6-v62e5q deleted
+## cleanup start 2026-10-27T14:19:46Z
+## $ if gcloud storage buckets describe gs://lzv-t36-run6-v62e5q --project=PROJECT_11 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t36-run6-v62e5q; fi; if gcloud storage buckets describe gs://lzv-t36-run6-v62e5q --project=PROJECT_11 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket lzv-t36-run6-v62e5q still exists'; else echo 'CLEANUP CHECK: bucket lzv-t36-run6-v62e5q gone'; fi
+CLEANUP CHECK: bucket lzv-t36-run6-v62e5q gone
+## exit=0 at 2026-10-27T14:19:48Z
+## $ if gcloud storage buckets describe gs://lzv-t36-run6-rhefnl --project=PROJECT_10 >/dev/null 2>&1; then gcloud storage buckets delete gs://lzv-t36-run6-rhefnl; fi; if gcloud storage buckets describe gs://lzv-t36-run6-rhefnl --project=PROJECT_10 >/dev/null 2>&1; then echo 'CLEANUP CHECK: bucket lzv-t36-run6-rhefnl still exists'; else echo 'CLEANUP CHECK: bucket lzv-t36-run6-rhefnl gone'; fi
+CLEANUP CHECK: bucket lzv-t36-run6-rhefnl gone
+## exit=0 at 2026-10-27T14:19:50Z
+## cleanup end 2026-10-27T14:19:51Z

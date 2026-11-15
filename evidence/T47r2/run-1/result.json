@@ -1,0 +1,25 @@
+{
+  "id": "T47r2",
+  "check": "B8 regression (Enforced, 1 attempt, conditional)",
+  "control": "T47r with agent G pinned to the run-6 package set; gate: T49 shows G's token bound behind the gateway",
+  "scope": "projects/PROJECT_8",
+  "expected": "No prediction (discriminating test). 401 on the session call or the query: the run-6 401 reproduces with the run-6 packages; cause client-side (H3), first candidate google-auth 2.62.0 vs 2.62.1. 200 with the session POST 200 in the gateway log: the run-6 401 does not reproduce even with the run-6 packages; cause Google-side (H1). PASS = clean outcome either way; INCONCLUSIVE otherwise. Limitation: agent G code is the current fixture, not run 6's. Tier: Enforced (1 attempt). Paid: gateway hours; same-day teardown.",
+  "actual": "query=200 (where=tool); session POST=200x3; iamcredentials=none; iapPolicyVersion=not shown; versions: google-adk=2.13.0 google-auth=2.62.0 google-cloud-aiplatform=2.6.0 requests=2.34.2; reading: the run-6 401 does not reproduce with the run-6 package set either: Google-side cause (H1), no longer reproducible",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T47r2/run-1/command.txt",
+  "output_file": "evidence/T47r2/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-13T06:41:25Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-gateway-runtime-deploy"
+  ],
+  "script_commit": "986fcb9"
+}

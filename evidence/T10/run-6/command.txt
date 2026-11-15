@@ -1,0 +1,12 @@
+# T10 run=run-6 start=2026-10-27T13:37:57Z
+# script_commit=d6c4610
+# check=Baseline control=`gcp.restrictNonCmekServices` side effect
+# expected (pre-registered): Fails; record exact error (proves article trap #4)
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T13:37:57Z $ gcloud version
+2026-10-27T13:37:58Z $ gcloud storage buckets describe gs://PROJECT_9_cloudbuild
+2026-10-27T13:38:00Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1
+2026-10-27T13:38:02Z $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1 --default-buckets-behavior=regional-user-owned-bucket
+2026-10-27T13:38:03Z $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10.eYErv2
+2026-10-27T13:38:03Z $ for b in $(gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10-pre.J59qIa); do echo "CLEANUP: deleting new bucket $b"; gcloud storage rm --recursive gs://$b; done; gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10-pre.J59qIa && echo 'CLEANUP CHECK: new cloudbuild bucket still exists' || echo 'CLEANUP CHECK: no new cloudbuild buckets'
+2026-10-27T13:38:05Z $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t10-pre.J59qIa

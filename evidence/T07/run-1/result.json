@@ -1,0 +1,24 @@
+{
+  "id": "T07",
+  "check": "Baseline",
+  "control": "`gcp.restrictNonCmekServices` deny `storage.googleapis.com` (folder)",
+  "scope": "folders/FOLDER_ID_2",
+  "expected": "Denied; error names `gcp.restrictNonCmekServices`",
+  "actual": "bucket create without CMEK in europe-west1 exited 1; constraints named: none",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "command failed (exit 1) without the verified signature: gcp\\.restrictNonCmekServices",
+  "commands_file": "evidence/T07/run-1/command.txt",
+  "output_file": "evidence/T07/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-23T21:27:20Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/kms/docs/cmek-org-policy",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ]
+}

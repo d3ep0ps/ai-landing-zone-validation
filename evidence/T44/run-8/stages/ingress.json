@@ -1,0 +1,6 @@
+{
+  "stage": "ingress",
+  "verdict": "PASS",
+  "note": "ingress: A internet=200/none, A run.app=200/none, A model=200/none; B internet=none/URLError, B run.app=200/none, B model=200/none",
+  "timestamp_utc": "2026-11-14T16:44:24Z"
+}

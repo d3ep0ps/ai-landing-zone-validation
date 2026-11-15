@@ -1,0 +1,26 @@
+{
+  "id": "T11",
+  "check": "I1",
+  "control": "Per-agent identity (module default `AGENT_IDENTITY`; platform default is a service account)",
+  "scope": "folders/FOLDER_ID_5",
+  "expected": "Unique `principal://agents.global.org-…/…/reasoningEngines/ID`; no SA email",
+  "actual": "terraform identity: principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12 ; REST effectiveIdentity: principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_12",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "observation of the module default for one deployed agent; says nothing about other agents or the platform default",
+  "commands_file": "evidence/T11/run-6/command.txt",
+  "output_file": "evidence/T11/run-6/output.txt",
+  "run_id": "run-6",
+  "timestamp_utc": "2026-10-28T04:29:27Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+    "https://docs.cloud.google.com/agent-builder/agent-engine/agent-identity",
+    "https://docs.cloud.google.com/iam/docs/principal-identifiers"
+  ],
+  "script_commit": "f33f041"
+}

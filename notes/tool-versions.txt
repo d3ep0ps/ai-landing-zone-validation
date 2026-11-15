@@ -1,0 +1,26 @@
+# Tool versions recorded 2026-10-23T12:00:50Z
+## gcloud --version
+Google Cloud SDK 583.0.0
+alpha 2026.08.31
+beta 2026.08.31
+bq 2.1.38
+bundled-python3-unix 3.14.5
+core 2026.08.31
+gke-gcloud-auth-plugin 0.5.19
+gsutil 5.37
+kubectl 1.35.3
+Updates are available for some Google Cloud CLI components.  To install them,
+please run:
+  $ gcloud components update
+## terraform version
+Terraform v1.16.6
+on darwin_arm64
+## python3 --version
+Python 3.14.4
+## jq --version
+jq-1.8.2
+## shellcheck --version
+ShellCheck version: 0.11.0 (installed by human 2026-10-23)
+
+## vendor/fabric
+be0d4b10e4f8c6969d2f7a4faee086504b334fd0 2026-10-22 Add Vertex AI and Gemini Enterprise controls to FAST hardened dataset (#4288)

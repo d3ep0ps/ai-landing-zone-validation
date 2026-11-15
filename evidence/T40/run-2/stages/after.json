@@ -1,0 +1,6 @@
+{
+  "stage": "after",
+  "verdict": "PASS",
+  "note": "after: IAM diff added=1 expected=1",
+  "timestamp_utc": "2026-11-11T21:07:25Z"
+}

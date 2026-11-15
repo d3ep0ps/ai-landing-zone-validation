@@ -1,0 +1,27 @@
+{
+  "id": "T47",
+  "check": "B8 (Enforced)",
+  "control": "Gateway 401 caused by certificate-bound tokens alone; control: one variable changed per step (token binding), gateway on/off as in the table",
+  "scope": "projects/PROJECT_8",
+  "expected": "Step 1: default (bound), no gateway (direct): 200 (control). Step 2: default (bound), through gateway: 401. Step 3: opt-out, through gateway: 200. Step 4: back to default, through gateway: 401. Falsified if: step 2 succeeds or step 4 succeeds (then the 401 wasn't caused by binding alone, and the article must say so). Tier: Enforced. 3 runs.",
+  "actual": "s1=PASS s2=FAIL s3=PASS s4=FAIL; google-auth==2.62.1  # pinned 2026-11-10 for v3h T47: >= 2.59 reads GOOGLE_API_ENABLE_RUNTIME_BOUND_TOKEN (runs 7-9 resolved an unrecorded version)",
+  "verdict": "FAIL",
+  "tier": "Enforced",
+  "reason": "s2: FAIL (s2: bound token through the gateway succeeded (200): the 401 is not caused by binding alone); s4: FAIL (s4: bound token through the gateway succeeded (200): the 401 is not caused by binding alone); ",
+  "commands_file": "evidence/T47/run-1/command.txt",
+  "output_file": "evidence/T47/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-11T12:58:33Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/troubleshooting/runtime-setup",
+    "https://docs.cloud.google.com/access-context-manager/docs/caa-agent-security",
+    "https://github.com/googleapis/python-aiplatform/issues/7209"
+  ],
+  "script_commit": "831b29a-dirty"
+}

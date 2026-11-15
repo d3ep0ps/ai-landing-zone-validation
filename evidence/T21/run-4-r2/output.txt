@@ -1,0 +1,37 @@
+# T21 run=run-4-r2 start=2026-10-25T17:56:04Z
+# script_commit=8ce113f
+# check=Baseline control=DC3
+# expected (pre-registered): Build with the CMEK staging bucket succeeds; plain build refused (as in v1 T10)
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-25T17:56:04Z: guard ok: folder policy deniedValues = ["storage.googleapis.com"]; CMEK bucket in use (name recorded in command.txt)
+## $ gcloud storage buckets describe gs://PROJECT_9_cloudbuild
+ERROR: (gcloud.storage.buckets.describe) gs://PROJECT_9_cloudbuild not found: 404.
+## exit=1 at 2026-10-25T17:56:05Z
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.0sqhS1 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.0sqhS1/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1 --gcs-source-staging-dir=gs://PROJECT_8-lzv-build-cmek/source --gcs-log-dir=gs://PROJECT_8-lzv-build-cmek/logs
+Creating temporary archive of 1 file(s) totalling 54 bytes before compression.
+Uploading tarball of [/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.0sqhS1] to [gs://PROJECT_8-lzv-build-cmek/source/1792950967.892082-35789351ca2a413583228385140c8eb0.tgz]
+ERROR: (gcloud.builds.submit) FAILED_PRECONDITION: invalid bucket "PROJECT_8-lzv-build-cmek"; service account PROJECT_NUMBER_9-compute@developer.gserviceaccount.com does not have access to the bucket
+## exit=1 at 2026-10-25T17:56:10Z
+## note 2026-10-25T17:56:10Z: build 1 (CMEK bucket): exit 1, verdict INCONCLUSIVE
+## $ gcloud builds submit /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.0sqhS1 --config=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.0sqhS1/cloudbuild.yaml --project=PROJECT_9 --region=europe-west1
+ERROR: (gcloud.builds.submit) HTTPError 412: 'us' violates constraint 'constraints/gcp.resourceLocations'
+## exit=1 at 2026-10-25T17:56:12Z
+## note 2026-10-25T17:56:12Z: build 2 (plain): exit 1, blocked by: gcp.resourceLocations
+## cleanup start 2026-10-25T17:56:12Z
+## $ rm -rf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21.0sqhS1
+## exit=0 at 2026-10-25T17:56:12Z
+## $ for b in $(gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.V3CsIz); do echo "CLEANUP: deleting new bucket $b"; gcloud storage rm --recursive gs://$b; done; gcloud storage buckets list --project=PROJECT_9 --format='value(name)' | grep cloudbuild | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.V3CsIz && echo 'CLEANUP CHECK: new cloudbuild bucket still exists' || echo 'CLEANUP CHECK: no new cloudbuild buckets'
+CLEANUP CHECK: no new cloudbuild buckets
+## exit=0 at 2026-10-25T17:56:14Z
+## $ for o in $(gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.1TsQQ9); do echo "CLEANUP: deleting new object $o"; gcloud storage rm $o; done; gcloud storage ls --recursive 'gs://PROJECT_8-lzv-build-cmek/**' | grep -vxFf /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.1TsQQ9 && echo 'CLEANUP CHECK: new objects remain' || echo 'CLEANUP CHECK: no new objects'
+CLEANUP: deleting new object gs://PROJECT_8-lzv-build-cmek/source/1792950967.892082-35789351ca2a413583228385140c8eb0.tgz
+Removing objects:
+  
+Removing gs://PROJECT_8-lzv-build-cmek/source/1792950967.892082-35789351ca2a413583228385140c8eb0.tgz...
+.....
+ERROR: (gcloud.storage.ls) One or more URLs matched no objects.
+CLEANUP CHECK: no new objects
+## exit=0 at 2026-10-25T17:56:18Z
+## $ rm -f /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-pre.V3CsIz /Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/lzv-t21-obj.1TsQQ9
+## exit=0 at 2026-10-25T17:56:18Z
+## cleanup end 2026-10-25T17:56:18Z

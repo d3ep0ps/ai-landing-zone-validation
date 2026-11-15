@@ -1,0 +1,37 @@
+[
+  {
+    "httpRequest": {
+      "latency": "0.003178750s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "0.0.0.0",
+      "requestMethod": "POST",
+      "requestSize": "403",
+      "requestUrl": "https://lzv-v3h-allowed-runhash1-ew.a.run.app/lzv-t55?sha=e01167711404",
+      "responseSize": "5047",
+      "serverIp": "IP_24",
+      "status": 200,
+      "userAgent": "Python-urllib/3.13"
+    },
+    "insertId": "6af8904700057c57a81f23e1",
+    "labels": {
+      "instanceId": "00e8a408bd77fafaacec96ced67facc51984dd22113db204ad7f438ebbdcc95fbb919d3e72ed39e15c04e044ef153c41927a53eca007cecc617be2af2cd8f21449efc2964c499f9e319d8fc861364fd6c1976d553f0634b599"
+    },
+    "logName": "projects/PROJECT_6/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-11-14T16:45:59.375288289Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "lzv-v3h-allowed",
+        "location": "europe-west1",
+        "project_id": "PROJECT_6",
+        "revision_name": "lzv-v3h-allowed-00001-srw",
+        "service_name": "lzv-v3h-allowed"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "spanId": "6470fc931594257a",
+    "timestamp": "2026-11-14T16:45:59.354015Z",
+    "trace": "projects/PROJECT_6/traces/16fa2affe63f0c1ef1fe683fb29c7985",
+    "traceSampled": true
+  }
+]

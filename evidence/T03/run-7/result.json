@@ -1,0 +1,25 @@
+{
+  "id": "T03",
+  "check": "Baseline",
+  "control": "`run.allowedIngress` = internal (folder)",
+  "scope": "projects/PROJECT_9",
+  "expected": "`--ingress=all` denied, error names `run.allowedIngress`; control succeeds",
+  "actual": "control(--ingress=internal)=PASS; attempt(--ingress=all)=PASS",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T03/run-7/command.txt",
+  "output_file": "evidence/T03/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-10-28T15:28:33Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/run/docs/securing/ingress",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+  ],
+  "script_commit": "eb3fbc9"
+}

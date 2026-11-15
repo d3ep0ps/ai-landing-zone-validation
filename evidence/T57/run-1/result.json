@@ -1,0 +1,25 @@
+{
+  "id": "T57",
+  "check": "Findings 24 / F20 re-check (Configured)",
+  "control": "Targeted Terraform destroy (provider 8.8.0) of the runtime project Model Armor floor setting with enforcement on; raw floor describe before, +1 min and +5 min after, and after the restore",
+  "scope": "projects/PROJECT_8",
+  "expected": "After the destroy the address is gone from Terraform state and the floor describe still shows the before content: same filterConfig (pi_and_jailbreak, MEDIUM_AND_ABOVE), integratedServices with AI_PLATFORM, updateTime unchanged. Falsified if: the describe fails with 404/NOT_FOUND, shows a reset floor (no pi_and_jailbreak filter or no integratedServices), or updateTime changed. Recorded without prediction: enableFloorSettingEnforcement after the destroy. INCONCLUSIVE if: the before describe does not match the baseline. Tier: Configured. 1 run.",
+  "actual": "provider 8.8.0; before: {\"rc\":0,\"notfound\":false,\"enforce\":true,\"pi\":\"ENABLED\",\"conf\":\"MEDIUM_AND_ABOVE\",\"integrated\":\"AI_PLATFORM\",\"update\":\"2026-11-03T07:20:45.015250328Z\",\"create\":\"2026-10-27T13:21:35.443837109Z\"}; after: not in state; floor +5 min: {\"rc\":0,\"notfound\":false,\"enforce\":true,\"pi\":\"ENABLED\",\"conf\":\"MEDIUM_AND_ABOVE\",\"integrated\":\"AI_PLATFORM\",\"update\":\"2026-11-03T07:20:45.015250328Z\",\"create\":\"2026-10-27T13:21:35.443837109Z\"}; enforcement after destroy=true; restored: {\"rc\":0,\"notfound\":false,\"enforce\":true,\"pi\":\"ENABLED\",\"conf\":\"MEDIUM_AND_ABOVE\",\"integrated\":\"AI_PLATFORM\",\"update\":\"2026-11-12T15:49:42.809868299Z\",\"create\":\"2026-10-27T13:21:35.443837109Z\"}, restore ok=1",
+  "verdict": "PASS",
+  "tier": "Configured",
+  "reason": "",
+  "commands_file": "evidence/T57/run-1/command.txt",
+  "output_file": "evidence/T57/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-12T15:50:49Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/model-armor/configure-floor-settings",
+    "https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/model_armor_floorsetting"
+  ],
+  "script_commit": "b6c4b19"
+}

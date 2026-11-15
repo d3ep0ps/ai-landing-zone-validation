@@ -1,0 +1,8 @@
+# T05 run=run-6 start=2026-10-27T13:37:35Z
+# script_commit=d6c4610
+# check=New (R) control=`vertexai.configurableComputerUseToolSafetyPolicies` deny all (folder); not in the official constraint reference
+# expected (pre-registered): Policy effective = deny all. If the API does not know the constraint: NOT_TESTED + finding
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-27T13:37:35Z $ gcloud org-policies describe constraints/vertexai.configurableComputerUseToolSafetyPolicies --effective --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-27T13:37:36Z $ gcloud org-policies describe constraints/vertexai.configurableComputerUseToolSafetyPolicies --folder=FOLDER_ID_5 --format=json --billing-project=PROJECT_6
+2026-10-27T13:37:37Z $ gcloud org-policies describe constraints/vertexai.configurableComputerUseToolSafetyPolicies --effective --project=PROJECT_8 --format=json --billing-project=PROJECT_6

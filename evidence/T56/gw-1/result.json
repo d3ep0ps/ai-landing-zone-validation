@@ -1,0 +1,24 @@
+{
+  "id": "T56",
+  "check": "Findings 29 / claims F24 re-check (Configured)",
+  "control": "Agent G makes 13 MCP tool calls through the gateway (5 allowed, 5 IAP-refused, 3 Model Armor-refused); each call is matched to gateway_requests records, read early (+3 min) and late (>= +15 min)",
+  "scope": "projects/PROJECT_8",
+  "expected": "At the late read, every call with a tool result has at least one gateway_requests record to its host inside its time window, and every 403 call's record shows DENIED. Falsified (F24 reproduces) if: any such call has no record, or a 403 call's record lacks DENIED. INCONCLUSIVE if: fewer than 3 usable calls of any kind. Observation: records present late but not early = delivery lag. Tier: Configured. 2 runs (subsets 4, 5).",
+  "actual": "inject_response: 401/n=1,401/n=0,401/n=0; registered_echo: 401/n=1,401/n=1,401/n=1,401/n=1,401/n=0; unregistered_echo: 403/n=1/D,403/n=0,403/n=1/D,403/n=1/D,403/n=1/D; missing=1; 403 without DENIED=0; late-only (lag)=0; >1 record=0; excluded=8",
+  "verdict": "FAIL",
+  "tier": "Configured",
+  "reason": "F24 reproduces: 1 usable calls without a gateway_requests record, 0 403 calls without DENIED (late read, >= 15 min)",
+  "commands_file": "evidence/T56/gw-1/command.txt",
+  "output_file": "evidence/T56/gw-1/output.txt",
+  "run_id": "gw-1",
+  "timestamp_utc": "2026-11-13T15:07:17Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-gateway-runtime-deploy"
+  ],
+  "script_commit": "5faaf36"
+}

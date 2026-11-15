@@ -1,0 +1,6 @@
+{
+  "stage": "bound",
+  "verdict": "PASS",
+  "note": "bound: own=200 control2=200 replay=401 sha12=e46ad4476648",
+  "timestamp_utc": "2026-11-11T12:28:35Z"
+}

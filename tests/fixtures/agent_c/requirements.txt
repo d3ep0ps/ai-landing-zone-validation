@@ -1,0 +1,3 @@
+# Versions intentionally unpinned, as for agent A/B (see tests/fixtures/agent/requirements.txt).
+google-cloud-aiplatform[agent_engines,adk]
+requests

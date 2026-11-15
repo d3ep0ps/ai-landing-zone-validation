@@ -1,0 +1,18 @@
+# Copy to terraform.tfvars (git-ignored). Use the same quota_project as infra/.
+quota_project  = "REPLACE_WITH_SEED_PROJECT_ID"
+model          = "REPLACE_WITH_ALLOWED_MODEL_ID" # T04 allowlist entry, without :predict
+region         = "europe-west1"
+deploy_agent_a = false
+deploy_agent_b = false
+deploy_agent_c = false # v2 C (T33, T34): needs infra/ swp_enabled + enable_v2_psci and tests/fixtures/agent_c/build.sh
+deploy_agent_g = false # v2 B (T30, T31b, T32): needs infra/ enable_v2_gateway + tests/fixtures/gateway/{setup.sh,agent_g/build.sh}
+# agent_c_short_attachment_name = false # set true if the deploy rejects the attachment path
+
+# v3 harness-boundary (T44, T45, T47, T48). Default off; needs tests/fixtures/agent_v3/build.sh.
+deploy_agent_v3a               = false
+deploy_agent_v3b               = false
+agent_v3_approved_agents       = "lzv-v3-a"
+agent_v3_use_psci              = false # T45b: needs infra/ swp_enabled + enable_v2_psci
+agent_v3_token_binding_opt_out = false # T48 only
+# agent_v3_allowed_url / agent_v3_denied_url: only if infra/ has no v3h_targets output
+# agent_v3_src_bucket, agent_v3_src_object, agent_v3_out_bucket, agent_v3_replay_url: set by the T45c/T48 scripts

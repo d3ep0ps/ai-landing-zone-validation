@@ -1,0 +1,63 @@
+# T30 stage=Unregistered: HTTP 403 and a gateway log entry with verdict `DENIED`; registered: answered run=run-6-r3 start=2026-10-28T10:46:05Z
+# script_commit=1bc9da1
+# check=B control=Agent behind Agent Gateway calls a registered and an unregistered MCP tool
+# expected (pre-registered): Registered tool
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+## note 2026-10-28T10:46:05Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-10-28T10:46:05Z: unverified: the log that carries the gateway verdict and its field name (broad free-text search is used); the 403 body text is not asserted
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/r71d151e28518e1a2p-tp/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxjCCAq6gAwIBAgIUAMMkryhFS3cklmDl/ZPiKDrrtZ4wDQYJKoZIhvcNAQEL
+    BQAwYDElMCMGA1UEChMcR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUG
+    A1UEAxMuQWdlbnQgR2F0ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdl
+    c3QxKTAeFw0yNjEwMjcyMDUwNTVaFw0zNjEwMjQyMDUwNTRaMGAxJTAjBgNVBAoT
+    HEdvb2dsZSBDbG91ZCBNYW5hZ2VkIFNlcnZpY2UxNzA1BgNVBAMTLkFnZW50IEdh
+    dGV3YXkgVExTIEluc3BlY3Rpb24gQ0EgKGV1cm9wZS13ZXN0MSkwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCfVR2pJClQN952mRaXVs+60Pjuv5Ba2S4B
+    SIdpyTPwoL6TGBUhuzsuD5X2WKbjeovm1JwTNBQevf3BvckjAJEZQKQ17UJgNiyy
+    gqAeJsCW9iHS8Kb47IRYGaVl2SrlC1a4wOdpYOD4x300Q2Mnba9y/WecwHGNMdNi
+    MJLFY1uF0yhDnug2u9UKEh7ZfGpJBR+0Of33J9oaB8h970vuvOFpoubhk9h5Ne8W
+    FKNLy36QKJuDhWy0jahLryEtjBAUDz1/TcHpfVwirVOPnSxxf4636/8/S91UICsK
+    O3t0IwuG13RcRCiKlsqMUC8tBvoaAnqYyHHcLPVPw5XHFkBW5tjfAgMBAAGjeDB2
+    MA4GA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8E
+    BTADAQH/MB0GA1UdDgQWBBSXSignbSM2tXJIwutWVLMCuAcAwjAfBgNVHSMEGDAW
+    gBSXSignbSM2tXJIwutWVLMCuAcAwjANBgkqhkiG9w0BAQsFAAOCAQEASn4noKlH
+    GO5W/sSQtHLTKQc6iaSKhrl69y1u7E1ZVJsDyLPjIGIwUqoDQcKMufZj8QAaxAbM
+    KHgZJOXyWEJn3odSPW46Vmr+6nuW5aJD1IuKcRtEMhOxV+rLI3p4e0xzFg9ojbwY
+    NC6b5fisQ1lpO299mDzGa85AYF9DcjdZ7AKw3fHH59OROHtfDCu4JmySG/rhK5Fc
+    GN8FQOf0qedOrZC+8RBxO+dDfMSwVz1KCDulHQAkmimFYpQ3bp9eok7bTu4toGzP
+    oqdmvZNgdUYcbW5YtIfPyDlC2X4wAEw52EbPJuzfo5b/0B6CvSjpgkejIyilaLkR
+    GF0D3zOPaPLYKA==
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_12@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-10-28T09:32:57.485371074Z'
+etag: rbZXuegozZSDC0UlbQkRZzPZMYpxgYXKMZwlj0EI0RU
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-10-28T09:35:13.384944072Z'
+## exit=0 at 2026-10-28T10:46:06Z
+## note 2026-10-28T10:46:06Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_15; identity principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_15
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"code": 401, "message": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}", "errorCode": "401", "errorMessage": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}"}
+
+HTTP 200
+## exit=0 at 2026-10-28T10:46:09Z
+## note 2026-10-28T10:46:09Z: agent G: http_rc=0 tool_result=0 status=none auth=none err=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"code": 401, "message": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}", "errorCode": "401", "errorMessage": "401 UNAUTHENTICATED. {'error': {'code': 401, 'message': 'Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.', 'status': 'UNAUTHENTICATED'}}"}
+
+HTTP 200
+## exit=0 at 2026-10-28T10:46:10Z
+## note 2026-10-28T10:46:10Z: agent G: http_rc=0 tool_result=0 status=none auth=none err=none
+## note 2026-10-28T10:46:10Z: token type used by the agent: registered call=none, unregistered call=none

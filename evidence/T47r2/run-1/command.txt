@@ -1,0 +1,10 @@
+# T47r2 run=run-1 start=2026-11-13T06:40:09Z
+# script_commit=986fcb9
+# check=B8 regression (Enforced, 1 attempt, conditional) control=T47r with agent G pinned to the run-6 package set; gate: T49 shows G's token bound behind the gateway
+# expected (pre-registered): No prediction (discriminating test). 401 on the session call or the query: the run-6 401 reproduces with the run-6 packages; cause client-side (H3), first candidate google-auth 2.62.0 vs 2.62.1. 200 with the session POST 200 in the gateway log: the run-6 401 does not reproduce even with the run-6 packages; cause Google-side (H1). PASS = clean outcome either way; INCONCLUSIVE otherwise. Limitation: agent G code is the current fixture, not run 6's. Tier: Enforced (1 attempt). Paid: gateway hours; same-day teardown.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-13T06:40:09Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8 --format=json
+2026-11-13T06:40:10Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-13T06:40:11Z $ gcloud logging read timestamp\>=\"2026-11-13T06:32:38.953623Z\"\ AND\ \"lzv_versions\" --project=PROJECT_8 --limit=20 --format=json
+2026-11-13T06:40:13Z $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+2026-11-13T06:41:24Z $ gcloud logging read timestamp\>=\"2026-11-13T06:40:13Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" --project=PROJECT_8 --limit=200 --format=json

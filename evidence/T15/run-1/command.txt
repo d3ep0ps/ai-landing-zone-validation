@@ -1,0 +1,7 @@
+# T15 run=run-1 start=2026-10-23T13:55:16Z
+# check=I6 control=Locked log bucket
+# expected (pre-registered): `locked: true`; change denied
+# tools: {"gcloud":"583.0.0","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-23T13:55:16Z $ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_4 --format=json
+2026-10-23T13:55:17Z $ gcloud logging buckets update lzv-locked-logs --location=europe-west1 --project=PROJECT_4 --retention-days=2
+2026-10-23T13:55:18Z $ gcloud logging buckets describe lzv-locked-logs --location=europe-west1 --project=PROJECT_4 --format=json

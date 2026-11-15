@@ -1,0 +1,299 @@
+# T50c run=run-1 start=2026-11-13T09:35:06Z
+# script_commit=efd02aa
+# check=B11 b1 control (Enforced) control=A principal matched to the agent (projects.get, no getIamPolicy/setIamPolicy) sends the agent's b1 request (project setIamPolicy, stale etag, auditConfigs only)
+# expected (pre-registered): c1 precondition: the canary holds resourcemanager.projects.get only (of get, getIamPolicy, setIamPolicy), else INCONCLUSIVE. c2: 409 ABORTED, i.e. the stale-etag attempt does not discriminate and T50 b1 is reported with that limitation. Falsified if: c2 = 403 PERMISSION_DENIED. Other answers: INCONCLUSIVE. Tier: Enforced. 1 attempt.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-13T09:35:06Z: pre-registered in 820b9b4; nothing is created; the request cannot write (stale etag, no-op body); no cleanup_trap registered
+## note 2026-11-13T09:35:07Z: principal: canary service account (outside project), impersonated by the operator
+## $ gcloud projects get-iam-policy PROJECT_8 --format=json
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "role": "roles/agentgateway.serviceAgent"
+    },
+    {
+      "members": [
+        "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+      ],
+      "role": "roles/aiplatform.agentDefaultAccess"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-sandbox.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.agentSandboxServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-bp.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.batchPredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-nb.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.colabServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.customCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex-cc.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionCustomCodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-ex.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.extensionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-mm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.modelMonitoringServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-vm.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.notebookServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-op.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.onlinePredictionServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-rag.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.ragServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-eval.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.rapidevalServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-re.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.reasoningEngineServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform-pie.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-telemetry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.telemetryServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-moss-ft.iam.gserviceaccount.com",
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-tune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.tuningServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-vertex-shtune.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.user"
+    },
+    {
+      "members": [
+        "serviceAccount:SA_16@PROJECT.iam.gserviceaccount.com"
+      ],
+      "role": "roles/aiplatform.viewer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+      ],
+      "role": "roles/binaryauthorization.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudasset.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudasset.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7@cloudservices.gserviceaccount.com"
+      ],
+      "role": "roles/compute.instanceGroupManagerServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:PROJECT_NUMBER_7-compute@developer.gserviceaccount.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@cloud-filer.iam.gserviceaccount.com"
+      ],
+      "role": "roles/file.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/iam.accessPolicyAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-logging.iam.gserviceaccount.com"
+      ],
+      "role": "roles/logging.serviceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.admin"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/modelarmor.floorSettingsAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-modelarmor.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-aiplatform.iam.gserviceaccount.com"
+      ],
+      "role": "roles/modelarmor.user"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-networkactions.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkactions.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-ns-authz.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networksecurity.authzServiceAgent"
+    },
+    {
+      "members": [
+        "user:USER_1@example.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-PROJECT_NUMBER_7@gcp-sa-dep.iam.gserviceaccount.com"
+      ],
+      "role": "roles/serviceextensions.serviceAgent"
+    }
+  ],
+  "etag": "BwZgJEmYZO0=",
+  "version": 1
+}
+## exit=0 at 2026-11-13T09:35:08Z
+## note 2026-11-13T09:35:08Z: canary roles on the runtime project: roles/aiplatform.viewer
+## $ curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token --impersonate-service-account="$LZV_EMAIL" 2>/dev/null)" -H "Content-Type: application/json" "$LZV_URL" --data-binary @"$LZV_BF" -w "\nHTTP %{http_code}\n"
+{
+  "permissions": [
+    "resourcemanager.projects.get"
+  ]
+}
+
+HTTP 200
+## exit=0 at 2026-11-13T09:35:10Z
+## note 2026-11-13T09:35:10Z: c1) testIamPermissions=200; held: resourcemanager.projects.get
+## $ curl -sS --max-time 60 -X "$LZV_M" -H "Authorization: Bearer $(gcloud auth print-access-token --impersonate-service-account="$LZV_EMAIL" 2>/dev/null)" -H "Content-Type: application/json" "$LZV_URL" --data-binary @"$LZV_BF" -w "\nHTTP %{http_code}\n"
+{
+  "error": {
+    "code": 409,
+    "message": "There were concurrent policy changes. Please retry the whole read-modify-write with exponential backoff. The request's ETag '\\007\\006\\000\\000\\000\\000\\000\\000' did not match the current policy's ETag '\\007\\006`$I\\230d\\355'.",
+    "status": "ABORTED"
+  }
+}
+
+HTTP 409
+## exit=0 at 2026-11-13T09:35:12Z
+## note 2026-11-13T09:35:12Z: c2) canary setIamPolicy (stale etag, auditConfigs only)=409 ABORTED (There were concurrent policy changes. Please retry the whole read-modify-write with exponential backoff. The request's ETag '\007\006\000\000\000\000\000\000' d)

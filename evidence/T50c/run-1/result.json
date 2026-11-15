@@ -1,0 +1,25 @@
+{
+  "id": "T50c",
+  "check": "B11 b1 control (Enforced)",
+  "control": "A principal matched to the agent (projects.get, no getIamPolicy/setIamPolicy) sends the agent's b1 request (project setIamPolicy, stale etag, auditConfigs only)",
+  "scope": "projects/PROJECT_8",
+  "expected": "c1 precondition: the canary holds resourcemanager.projects.get only (of get, getIamPolicy, setIamPolicy), else INCONCLUSIVE. c2: 409 ABORTED, i.e. the stale-etag attempt does not discriminate and T50 b1 is reported with that limitation. Falsified if: c2 = 403 PERMISSION_DENIED. Other answers: INCONCLUSIVE. Tier: Enforced. 1 attempt.",
+  "actual": "c1 held=resourcemanager.projects.get; c2=409 ABORTED; canary roles=roles/aiplatform.viewer",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "the stale-etag setIamPolicy returns 409 for a principal without setIamPolicy: T50 b1 does not discriminate",
+  "commands_file": "evidence/T50c/run-1/command.txt",
+  "output_file": "evidence/T50c/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-11-13T09:35:12Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/resource-manager/reference/rest/v1/projects/setIamPolicy",
+    "https://docs.cloud.google.com/resource-manager/reference/rest/v1/projects/testIamPermissions"
+  ],
+  "script_commit": "efd02aa"
+}

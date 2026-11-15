@@ -1,0 +1,2 @@
+$ gcloud access-context-manager perimeters list --policy=ACCESS_POLICY_1 --format=json
+[]

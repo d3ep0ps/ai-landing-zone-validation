@@ -1,0 +1,6 @@
+{
+  "stage": "after",
+  "verdict": "PASS",
+  "note": "not in state; floor +5 min: {\"rc\":0,\"notfound\":false,\"enforce\":true,\"pi\":\"ENABLED\",\"conf\":\"MEDIUM_AND_ABOVE\",\"integrated\":\"AI_PLATFORM\",\"update\":\"2026-11-03T07:20:45.015250328Z\",\"create\":\"2026-10-27T13:21:35.443837109Z\"}; enforcement after destroy=true",
+  "timestamp_utc": "2026-11-12T15:49:03Z"
+}

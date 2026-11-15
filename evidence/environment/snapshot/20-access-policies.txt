@@ -1,0 +1,18 @@
+$ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+[
+  {
+    "etag": "9d307bceffdde49e",
+    "name": "accessPolicies/ACCESS_POLICY_1",
+    "parent": "organizations/ORG_ID",
+    "title": "lzv-org-access-policy-empty"
+  },
+  {
+    "etag": "95b2d8448f2cc8f2",
+    "name": "accessPolicies/ACCESS_POLICY_2",
+    "parent": "organizations/ORG_ID",
+    "scopes": [
+      "folders/FOLDER_ID_2"
+    ],
+    "title": "lzv-folder-scoped-policy"
+  }
+]

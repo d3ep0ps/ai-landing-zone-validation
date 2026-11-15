@@ -1,0 +1,103 @@
+# T42 stage=before run=run-2 start=2026-11-11T20:16:28Z
+# script_commit=54f8c34
+# check=B3 (Configured) control=Conftest/OPA gate on tfplan.json before and after the deploy; control: synthetic plan with a roles/aiplatform.user grant must fail the gate
+# expected (pre-registered): the gate passes with 0 violations both times, because pre-deploy static analysis only sees declared Terraform resources, not out-of-band `SetIamPolicy` side effects executed by Google's control plane during runtime provisioning. Falsified if: the gate flags the grant. Tier: Configured. Keep the Rego rule in the repo so readers can rerun it.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T20:16:28Z: plan claim B3; no cloud resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T20:16:28Z: by construction: a plan only lists declared resources; a gate pass is expected and says nothing about the live policy (see T40 for the live read-back)
+## $ conftest --version
+Conftest: 0.71.1
+OPA: 1.21.1
+## exit=0 at 2026-11-11T20:16:28Z
+## note 2026-11-11T20:16:28Z: rego rule sha256: 1a24a36e2af9253e...; conftest version output in output.txt
+## $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t42/tfplan-grant.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+FAIL - /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t42/tfplan-grant.json - main - google_project_iam_member.synthetic_grant grants roles/aiplatform.user
+
+3 tests, 2 passed, 0 warnings, 1 failure, 0 exceptions
+## exit=1 at 2026-11-11T20:16:29Z
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r2 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r2.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-before.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_10/serviceusage.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudresourcemanager.googleapis.com]
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudbuild.googleapis.com]
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_10/logging.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_10/storage.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_10/iam.googleapis.com]
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_10/aiplatform.googleapis.com]
+data.google_project.existing[0]: Read complete after 2s [id=projects/PROJECT_10]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_10/roles/editor/user:USER_1@example.com]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_10/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_10/roles/iam.serviceAccountUser/user:USER_1@example.com]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+## exit=0 at 2026-11-11T20:16:35Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-before.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-before.json'
+## exit=0 at 2026-11-11T20:16:36Z
+## note 2026-11-11T20:16:36Z: plan before: exit=0 changes=[]
+## $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-before.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+
+3 tests, 3 passed, 0 warnings, 0 failures, 0 exceptions
+## exit=0 at 2026-11-11T20:16:36Z
+## note 2026-11-11T20:16:36Z: real plan (before): terraform plan exit 0; conftest exit 0
+# T42 stage=after run=run-2 start=2026-11-11T21:07:28Z
+# script_commit=54f8c34-dirty
+# check=B3 (Configured) control=Conftest/OPA gate on tfplan.json before and after the deploy; control: synthetic plan with a roles/aiplatform.user grant must fail the gate
+# expected (pre-registered): the gate passes with 0 violations both times, because pre-deploy static analysis only sees declared Terraform resources, not out-of-band `SetIamPolicy` side effects executed by Google's control plane during runtime provisioning. Falsified if: the gate flags the grant. Tier: Configured. Keep the Rego rule in the repo so readers can rerun it.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+## note 2026-11-11T21:07:28Z: plan claim B3; no cloud resources are created by this script; no cleanup_trap registered
+## note 2026-11-11T21:07:28Z: by construction: a plan only lists declared resources; a gate pass is expected and says nothing about the live policy (see T40 for the live read-back)
+## $ conftest --version
+Conftest: 0.71.1
+OPA: 1.21.1
+## exit=0 at 2026-11-11T21:07:28Z
+## note 2026-11-11T21:07:28Z: rego rule sha256: 1a24a36e2af9253e...; conftest version output in output.txt
+## $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t42/tfplan-grant.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+FAIL - /Users/USER/Projects/ai_ml/ai-landing-zone-validation/tests/fixtures/t42/tfplan-grant.json - main - google_project_iam_member.synthetic_grant grants roles/aiplatform.user
+
+3 tests, 2 passed, 0 warnings, 1 failure, 0 exceptions
+## exit=1 at 2026-11-11T21:07:29Z
+## $ terraform -chdir=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h plan -detailed-exitcode -input=false -no-color -lock=false -var run=r2 -state=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/state/r2.tfstate -out=/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-after.tfplan
+
+Warning: Deprecated flag: -state
+
+Use the "path" attribute within the "local" backend to specify a file for
+state storage
+data.terraform_remote_state.base: Reading...
+data.terraform_remote_state.base: Read complete after 0s
+data.google_project.existing[0]: Reading...
+google_project_service.existing["serviceusage.googleapis.com"]: Refreshing state... [id=PROJECT_10/serviceusage.googleapis.com]
+google_project_service.existing["storage.googleapis.com"]: Refreshing state... [id=PROJECT_10/storage.googleapis.com]
+google_project_service.existing["logging.googleapis.com"]: Refreshing state... [id=PROJECT_10/logging.googleapis.com]
+google_project_service.existing["cloudbuild.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudbuild.googleapis.com]
+google_project_service.existing["cloudresourcemanager.googleapis.com"]: Refreshing state... [id=PROJECT_10/cloudresourcemanager.googleapis.com]
+google_project_service.existing["aiplatform.googleapis.com"]: Refreshing state... [id=PROJECT_10/aiplatform.googleapis.com]
+google_project_service.existing["iam.googleapis.com"]: Refreshing state... [id=PROJECT_10/iam.googleapis.com]
+data.google_project.existing[0]: Read complete after 2s [id=projects/PROJECT_10]
+google_project_iam_member.operator["roles/resourcemanager.projectIamAdmin"]: Refreshing state... [id=PROJECT_10/roles/resourcemanager.projectIamAdmin/user:USER_1@example.com]
+google_project_iam_member.operator["roles/iam.serviceAccountUser"]: Refreshing state... [id=PROJECT_10/roles/iam.serviceAccountUser/user:USER_1@example.com]
+google_project_iam_member.operator["roles/editor"]: Refreshing state... [id=PROJECT_10/roles/editor/user:USER_1@example.com]
+module.agent["1"].google_vertex_ai_reasoning_engine.managed[0]: Refreshing state... [id=projects/PROJECT_10/locations/europe-west1/reasoningEngines/AGENT_ID_29]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+## exit=0 at 2026-11-11T21:07:36Z
+## $ terraform -chdir='/Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h' show -json -no-color '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/scratch/v3h/r2-T42-run-2-after.tfplan' > '/Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-after.json'
+## exit=0 at 2026-11-11T21:07:36Z
+## note 2026-11-11T21:07:36Z: plan after: exit=0 changes=[]
+## $ conftest test /Users/USER/Projects/ai_ml/ai-landing-zone-validation/evidence/T42/run-2/plan-after.json --policy /Users/USER/Projects/ai_ml/ai-landing-zone-validation/infra-v3h/policy --no-color
+
+3 tests, 3 passed, 0 warnings, 0 failures, 0 exceptions
+## exit=0 at 2026-11-11T21:07:36Z
+## note 2026-11-11T21:07:36Z: real plan (after): terraform plan exit 0; conftest exit 0

@@ -1,0 +1,10 @@
+# T48 stage=bound run=run-1-r2 start=2026-11-11T11:26:57Z
+# script_commit=831b29a
+# check=B9 (Enforced) control=Replay of an agent bearer token from a different workload against the same Vertex AI endpoint and payload; control: agent's own call 200, replay service with operator credentials 200
+# expected (pre-registered): With default token binding (GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES unset/true): expected refused (401 UNAUTHENTICATED) when replayed from the second workload, even though IAM allows the principal. With the gateway opt-out (GOOGLE_API_PREVENT_AGENT_TOKEN_SHARING_FOR_GCP_SERVICES=False): expected accepted (200 OK) when replayed from the second workload. Falsified if: the bound token returns 200 OK from the second workload (which would prove binding isn't enforced on Vertex AI calls), or the opt-out token returns 401, or either returns 403 (fixture IAM error). Tier: Enforced.
+# tools: {"gcloud":"590.0.1","terraform":"1.17.1","google_provider":"8.8.0"}
+2026-11-11T11:26:57Z $ curl -sS --max-time 60 -H "Authorization: Bearer $(gcloud auth print-access-token)" "$LZV_URL"
+2026-11-11T11:26:58Z $ gcloud access-context-manager policies list --organization=ORG_ID --format=json
+2026-11-11T11:26:59Z $ gcloud access-context-manager perimeters describe lzv_ai --policy=ACCESS_POLICY_3 --format=json
+2026-11-11T11:27:01Z $ jq -cn --arg t "$(gcloud auth print-access-token)" --arg p "$LZV_PROJECT" --arg m "$LZV_MODEL_NAME" --arg l "$LZV_LOC" "{token:\$t,project:\$p,model:\$m,location:\$l}" | curl -sS --max-time 90 -H "Authorization: Bearer $(gcloud auth print-identity-token)" -H "Content-Type: application/json" -X POST "$LZV_REPLAY_URL/replay" -d @- -w "\nHTTP %{http_code}\n"
+2026-11-11T11:27:03Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *$'\n'HTTP\ 200) exit 0 ;; esac; exit 1

@@ -1,0 +1,25 @@
+{
+  "id": "T02",
+  "check": "Baseline",
+  "control": "`run.managed.requireInvokerIam` (folder)",
+  "scope": "projects/PROJECT_5",
+  "expected": "Both denied; error names `run.managed.requireInvokerIam`",
+  "actual": "control=PASS; create(--no-invoker-iam-check)=PASS; update(--no-invoker-iam-check)=PASS",
+  "verdict": "PASS",
+  "tier": "Enforced",
+  "reason": "",
+  "commands_file": "evidence/T02/run-1/command.txt",
+  "output_file": "evidence/T02/run-1/output.txt",
+  "run_id": "run-1",
+  "timestamp_utc": "2026-10-23T13:40:50Z",
+  "tool_versions": {
+    "gcloud": "583.0.0",
+    "terraform": "1.17.0",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/run/docs/securing/managing-access",
+    "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints",
+    "https://blog.g-gen.co.jp/entry/cloudrun-disable-invoker-iam-check"
+  ]
+}

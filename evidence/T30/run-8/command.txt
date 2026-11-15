@@ -1,0 +1,12 @@
+# T30 stage=Unregistered: HTTP 403 and a gateway log entry with verdict `DENIED`; registered: answered run=run-8 start=2026-10-30T06:42:04Z
+# script_commit=beb7c58
+# check=B control=Agent behind Agent Gateway calls a registered and an unregistered MCP tool
+# expected (pre-registered): Registered tool
+# tools: {"gcloud":"590.0.1","terraform":"1.17.0","google_provider":"8.8.0"}
+2026-10-30T06:42:04Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-10-30T06:42:05Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-30T06:42:17Z $ gcloud logging read resource.type=\"cloud_run_revision\"\ AND\ resource.labels.service_name=\"lzv-mcp-reg\"\ AND\ timestamp\>=\"2026-10-30T06:42:05Z\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-30T06:42:18Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-10-30T06:42:24Z $ gcloud logging read timestamp\>=\"2026-10-30T06:42:18Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-30T06:42:56Z $ gcloud logging read timestamp\>=\"2026-10-30T06:42:18Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+2026-10-30T06:42:57Z $ gcloud logging read resource.type=\"cloud_run_revision\"\ AND\ resource.labels.service_name=\"lzv-mcp-unreg\"\ AND\ timestamp\>=\"2026-10-30T06:42:18Z\" --project=PROJECT_8 --limit=5 --format=json

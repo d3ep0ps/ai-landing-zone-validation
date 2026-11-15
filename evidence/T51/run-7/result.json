@@ -1,0 +1,26 @@
+{
+  "id": "T51",
+  "check": "B12 (Enforced)",
+  "control": "Model-access routes from the non-approved agent with the DC1 deny on; control: the approved agent on the same routes; Policy Troubleshooter attribution",
+  "scope": "projects/PROJECT_8",
+  "expected": "No route allowed: predict-family routes (generateContent global/regional, streamGenerateContent, countTokens) refused by the deny; batch create refused because the role never granted it; chat completions refused (by deny or role, recorded). Falsified if: any route returns 200 or creates a job. Control: the approved agent gets 200 on the predict family; batch create refused for both (role). A route the approved agent cannot use (404) is NOT_TESTED for that route. Tier: Enforced. 2+ runs.",
+  "actual": "generateContent_global: non-approved=403 approved=200 -> deny; generateContent_regional: non-approved=403 approved=404 -> not_tested (approved got 404); streamGenerateContent_global: non-approved=403 approved=200 -> deny; countTokens_global: non-approved=403 approved=200 -> deny; chatCompletions_global: non-approved=none approved=200 -> unclear (none); batchPredictionJobs_create: non-approved=403 approved=403 -> deny;  troubleshooter predict deny=DENY_ACCESS_STATE_DENIED, batch allow=ALLOW_ACCESS_STATE_NOT_GRANTED",
+  "verdict": "INCONCLUSIVE",
+  "tier": "Enforced",
+  "reason": "chatCompletions_global: non-approved got none",
+  "commands_file": "evidence/T51/run-7/command.txt",
+  "output_file": "evidence/T51/run-7/output.txt",
+  "run_id": "run-7",
+  "timestamp_utc": "2026-11-13T12:56:11Z",
+  "tool_versions": {
+    "gcloud": "590.0.1",
+    "terraform": "1.17.1",
+    "google_provider": "8.8.0"
+  },
+  "doc_refs": [
+    "https://docs.cloud.google.com/vertex-ai/docs/general/access-control",
+    "https://docs.cloud.google.com/iam/docs/deny-access",
+    "https://docs.cloud.google.com/policy-intelligence/docs/troubleshoot-access"
+  ],
+  "script_commit": "5c3808a"
+}

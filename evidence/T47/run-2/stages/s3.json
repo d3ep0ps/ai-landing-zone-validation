@@ -1,0 +1,6 @@
+{
+  "stage": "s3",
+  "verdict": "PASS",
+  "note": "s3: opt-out through the gateway: 200 (where=tool)",
+  "timestamp_utc": "2026-11-11T21:29:28Z"
+}

@@ -1,0 +1,16 @@
+# Provider pins copied from vendor/fabric/default-versions.tf (Fabric v59.2.0, commit be0d4b1); same as infra/.
+terraform {
+  required_version = ">= 1.12.2"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 8.6.0, < 9.0.0"
+    }
+  }
+}
+
+provider "google" {
+  region                = var.region
+  user_project_override = true
+  billing_project       = var.quota_project
+}

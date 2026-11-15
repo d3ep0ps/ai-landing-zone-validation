@@ -1,0 +1,6 @@
+{
+  "stage": "noingress",
+  "verdict": "INCONCLUSIVE",
+  "note": "noingress: A=400 (vpcsc=1) B=200 (vpcsc=0) control=200; unexpected pair (A=400 vpcsc=1, B=200)",
+  "timestamp_utc": "2026-11-13T12:38:32Z"
+}
