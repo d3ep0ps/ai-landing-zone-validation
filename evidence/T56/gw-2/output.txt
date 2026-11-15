@@ -1,0 +1,1422 @@
+# T56 stage=calls run=gw-2 start=2026-11-15T08:24:22Z
+# script_commit=f85b659
+# check=Findings 29 / claims F24 re-check (Configured) control=Agent G makes 13 MCP tool calls through the gateway (5 allowed, 5 IAP-refused, 3 Model Armor-refused); each call is matched to gateway_requests records, read early (+3 min) and late (>= +15 min)
+# expected (pre-registered): At the late read, every call with a tool result has at least one gateway_requests record to its host inside its time window, and every 403 call's record shows DENIED. Falsified (F24 reproduces) if: any such call has no record, or a 403 call's record lacks DENIED. INCONCLUSIVE if: fewer than 3 usable calls of any kind. Observation: records present late but not early = delivery lag. Tier: Configured. 2 runs (subsets 4, 5).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.8.0"}
+## note 2026-11-15T08:24:22Z: results.md Findings 29 = claims-register F24 (run 8); no resources are created by this script; no cleanup_trap registered
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_17114080839176720650", "args": {"server": "registered", "tool": "registered_echo"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1_ZxR2XpNzwX8A9St-lJJXFJZvgiCmGStqlnMbGoChq6QhYVi7chFkgLc0ktomkxZwwvZAenlMiWgA1tD348F-whRUE_d-jhgZBTQTD-r7u7BNG28V2sp3ndm1XLfsW5yWDqgFgMPTW-F5Npb8cJZNMmBPfT4e_v5jcz9uv1duQIlVGtTz_dD6swXMI3RpsamHJ90x06rRWopEPmt0W4kjboKKDFTiM6LBjr80-TgSFOE7GOqxXdCTPJlh0do2-vsVymnvLaNFkvP1mCdCoEnpGpbF37RNuXELseDqw8SwpAU6OnVHU7if6Zjpou9QaK-VRj2n96TRYc9PGAQl0AqppYJ1pejb0Am_A0BSfTpFfHB0QsJOzLzqVKSoI8XZcDpX7NJDQRosVxDHNe-XrJJ9kaRCf6RuIcgcRbN7d3_LhSQePmMGgFOPZj2_FgrNuW8rklGpvXCGybDL6Ui4VLbMgdF3sTZOiPJdsbBtiBiaLRGuIPgBUK9CqRSug66xW97W2PQ6dwSC9l5XdZK55N4AskWjIQwTQvIqwocZ6_d62CoZS9XpI8DEodWvnuZqnQcad-dKkMcFcr8kFe9lbj7UaSlpYu15uSTfpBE9ofI90JaTvclAb0ShE3nfVcuH54gA_V2elJVpgm0fpzsDkCBjiYZ2TdOOYHUsr3KvfCfZTxdHkLP0GtHoHCs7UGgAuN7QOpMAqRoJJMu5rEjAH_lcAaXZ1wJjwuHJepDmtzBCRJJt08HvUt4zLqOsihT3tAQ-ERUkxoB-rOXWGkEk0qg=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 147, "total_token_count": 762, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-afa2ec04-a71a-411e-97a4-daba10ca63b3", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "f9d64c85-a2c5-4d83-bc12-0f1bfe1f6112", "timestamp": 1794731064.2419236}
+{"content": {"parts": [{"function_response": {"id": "call_17114080839176720650", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 200, "body": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"registered_echo: OK\"}], \"isError\": false}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-afa2ec04-a71a-411e-97a4-daba10ca63b3", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "f1767802-fc35-4567-961b-e416b00af018", "timestamp": 1794731066.8625956}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"{\\\"jsonrpc\\\": \\\"2.0\\\", \\\"id\\\": 1, \\\"result\\\": {\\\"content\\\": [{\\\"type\\\": \\\"text\\\", \\\"text\\\": \\\"registered_echo: OK\\\"}], \\\"isError\\\": false}}\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 200,\n  \"tool\": \"registered_echo\"\n}\n```", "thought_signature": "AY89a1-t0cL2PH5lNjEeGY0EykzqbFXQmVQMEoEod13YhhkUdlmeuEklARuEZb65WgEH_qx2QkI9HaflhtpIrkSlvr4NklsyM916Vq7dPCXGNwEjRBAFD8ADGimVU4AGHQ0dOuyVjGVbbF4u-wOtFzJfTqAQbgIeyX6EpLrbckDRDCBC6HL-4u59zOV6DfmGlad7Hv2fPgdU7P1Muvm-hWly95E23mGPQrbUyksOCQ=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 118, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 118}], "prompt_token_count": 829, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 829}], "thoughts_token_count": 20, "total_token_count": 967, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-afa2ec04-a71a-411e-97a4-daba10ca63b3", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "c3f751f6-a93d-4aa5-881d-a4d3e9c188c8", "timestamp": 1794731067.0851464}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:24:42Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_12731328295524742894", "args": {"tool": "registered_echo", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a19xfnk0iTWgvb5COWEP01lTL9uwFO-H45mOmC6mH4PnWbZFEkOqTWqJBPS9cH4KNTFrE1BtFcnSYrImZ6C7HIfP9CjssQE3wIywKaT6Xmw49Wou8pK6RPF7_Jc6FOM9aLWJ2T_O5SdemaSN1nQ_YmcjpsMT0hbBTqJilU3bbp2n9lx1C9-84cxZRTwoPsJ9VnxKijwFGvSAXXxVb-pDiadwsfhfzahRgRKhO_q343_SS8qCFVHCEd_oHuzLjXuAAbP4iWZNh7y-yP2P1nrqaJw9K-PJRZnztJfIy0hlGkuQTBpElcCrUgOWHbwZwgkT1PwZQnHb-XJwrhXLINcEszjkcy9JNolrJOpWLhqjV-bBTlaXFu0KRoxeY4HQxqqx5RsCm6c="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 60, "total_token_count": 675, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-f97e2cff-0489-4a15-8c2e-396bcd76b7a8", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "4d1bfdc8-e3c0-4971-b79b-1918fba62f21", "timestamp": 1794731084.0953894}
+{"content": {"parts": [{"function_response": {"id": "call_12731328295524742894", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 200, "body": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"registered_echo: OK\"}], \"isError\": false}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-f97e2cff-0489-4a15-8c2e-396bcd76b7a8", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "5351d7c7-1819-42db-a5f6-6342b76a7a05", "timestamp": 1794731119.4519892}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"{\\\"jsonrpc\\\": \\\"2.0\\\", \\\"id\\\": 1, \\\"result\\\": {\\\"content\\\": [{\\\"type\\\": \\\"text\\\", \\\"text\\\": \\\"registered_echo: OK\\\"}], \\\"isError\\\": false}}\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 200,\n  \"tool\": \"registered_echo\"\n}\n```", "thought_signature": "AY89a19LoYw6QlH1Euo5NjgbvDJmh5s35JnA2yxE0UftyxGcSME300XL6BaZsd9wIp2_7rzGcON_VyhUcscW3AEGQEvKsZzNOzrB-Bt6uLcxUuBBc8Tl3_kCmdqXSW3-J_hvdzgOutC6Xni79-qHdlxbujrsraZE9lGSlHXs0-jvMwPhSoHbBhcn87cMJ8KZYLV77o358ctwnXPeEUtlCXJQcwWEyYISJ-D4y0ZJaV4="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 118, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 118}], "prompt_token_count": 742, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 742}], "thoughts_token_count": 19, "total_token_count": 879, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-f97e2cff-0489-4a15-8c2e-396bcd76b7a8", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "507f3964-3fe3-4be2-9beb-b23f88735b98", "timestamp": 1794731119.6784472}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:25:22Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_16546058083707856616", "args": {"server": "registered", "tool": "registered_echo"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a19WKFsoSWcTuw56kXvHKHhXM_yb9YwQwhCHv6S8jQ4zXy45nnDKgN72A3hocB91LFbZTiS0iIWYX7JBBfC3l7k6hAiOKwjR0pChHhVbZkn9ns47Xccq6d8lQVzsnzM7Hvii-WpBOolLiqZQYD3za7O0vzH8SI1HnfdwlyUJTDHwz_c3SX4BhBATn2rgEWbWcBySreFbs18I6i_FsoJjqgGgmPH7b_FpavaiLChnwebShrxdK0vCR1LzQqikjwg_4tpcyh2wzwE95RxsIDyjq_j_VIVrQaKNPeaJoPl3rNiFFzQL1i85Wr2MwGlqkRqeSlcU10lcAaIeqk-EuiLm1nrVAxC_eOmbFDK7J-l2CnNW_2rJlvM="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 55, "total_token_count": 670, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-5f5684e5-70bd-4356-82b1-1d54d9359d63", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "0fe38ee7-f1fd-4514-bd83-1c1aac44e4bd", "timestamp": 1794731124.1601963}
+{"content": {"parts": [{"function_response": {"id": "call_16546058083707856616", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 200, "body": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"registered_echo: OK\"}], \"isError\": false}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-5f5684e5-70bd-4356-82b1-1d54d9359d63", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "57de9da6-33ea-4a9f-8ca8-17a69f43ab28", "timestamp": 1794731126.475165}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"{\\\"jsonrpc\\\": \\\"2.0\\\", \\\"id\\\": 1, \\\"result\\\": {\\\"content\\\": [{\\\"type\\\": \\\"text\\\", \\\"text\\\": \\\"registered_echo: OK\\\"}], \\\"isError\\\": false}}\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 200,\n  \"tool\": \"registered_echo\"\n}\n```", "thought_signature": "AY89a1_5xYIBdlxiKVXcXLIr_xHJclHrUDI5RfJhA-wnzN1ZWSjY7CHR0dd2TdzbfGm6_3EaPB8ejCEdhoOlkJWSLkyuQvm_W8Tg75JBfrtJYyev7Ls6yJBDfMoWVkU1djRw3P6q72tsVXKgTJG-C08SDob9UpgldMkSxyZT4nUjTiXTBwj_2ryKWcaZh2Clgkhy0TdMeOQ="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 118, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 118}], "prompt_token_count": 737, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 737}], "thoughts_token_count": 15, "total_token_count": 870, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-5f5684e5-70bd-4356-82b1-1d54d9359d63", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "6e6b07cd-8ac1-4bff-b50f-4c0adbd76de6", "timestamp": 1794731126.6663597}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:25:28Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_2427033988948538709", "args": {"tool": "registered_echo", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1-29vJOtOoSrrwJGq3M0YD8rqJ2d-wIgsSGHhP6mPl74hebNCD1JQdlp8YqksVtTriJEIFvGVZ6O3jxTCH_-6EFS0N35F831Ng3vF-Ei7H-l2rZ9QYhGyovxvAee4pbRW26Fv8yfUV1kdzS6aFLx-k1ohmGpux_wNmrT71soRVfv8Ab0SX0nWZJA5lUFSKRIqkNiulYmiCZ_3EDzl3rT3AciSilWsgxGdPonqiyXtaqiuVS1xhTkU4X9BrZiCmYIQOOKkwFXMRsOvL6nRm47ZLYOd8sPxKpwW8BAznlYqA7gFwZnezG2gGBWTpKweqjp6-OiBhSGf3z4gJJ7DV_Gjn-eZomUWbOHcs65lyN4xirSQO4uiBAAzX8XjnkW7S6F8FQCl1jdAeC1Auj7bfp-zkRVuAT0-5EZQ4EureWkU5bOUtsqXlpX7EpWm6iX3vkiCNO6Na4PaZmgk74RyCFmmoNCzBCQ3SYW8ZNapJSK462rPpF_yZiT6tadIgE-8nVJHZI7jUMcQ4Yaaa9xjLsHUpQSm-NRyuhompp0v3eBn7z9EcL-aVt5ZfOOQqmMWj2oQP9tcIn"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 100, "total_token_count": 715, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-37647779-7381-4331-880c-d7ccc93df33a", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "9c0995e1-df61-4e56-8a52-c3d7903811eb", "timestamp": 1794731130.3395872}
+{"content": {"parts": [{"function_response": {"id": "call_2427033988948538709", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 200, "body": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"registered_echo: OK\"}], \"isError\": false}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-37647779-7381-4331-880c-d7ccc93df33a", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "5ad02759-d7c6-488d-bb71-fb30ddddc419", "timestamp": 1794731132.6584427}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"{\\\"jsonrpc\\\": \\\"2.0\\\", \\\"id\\\": 1, \\\"result\\\": {\\\"content\\\": [{\\\"type\\\": \\\"text\\\", \\\"text\\\": \\\"registered_echo: OK\\\"}], \\\"isError\\\": false}}\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 200,\n  \"tool\": \"registered_echo\"\n}\n```", "thought_signature": "AY89a1-xTnJ6ZE4Mt4y3FzIJRe91_u-VY34crveEt0eFY-RsGTD7KBTNJlXUGEGwMPDOFsjELTk9b6NnAUMh83KrawO1-YjslYrfJs6cUQvcCbRBNwGmcoHearp6HyCZEKbT2S5zL-MY3nKvGu1clGBeOhtMlNxAwMVGo2rJtwmwLIYMbIacBmV8rS15SqkC5u99MHX27lKrASHmROr_04-rmBN5ZjJhcEAxVD7Sn2Zpxeho15xnu2kwjFEAcdAOnRkalSsTdywCudDCVKWSw9_8QMROdh8-1UdmaClM8rHQiQoHfMVGnS0kHWpTsFPhbRelbXA="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 117, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 117}], "prompt_token_count": 782, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 782}], "thoughts_token_count": 40, "total_token_count": 939, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-37647779-7381-4331-880c-d7ccc93df33a", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "f69376a0-47c1-4b50-8fd7-dcb336d8d894", "timestamp": 1794731132.8295965}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:25:35Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_13179288373604707727", "args": {"tool": "registered_echo", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a183kfYJlvCz_CmFt2eqq7GevJk8x9eg74p7Cf9XZEmP4CDQdXkheE6mnF4grLA3TGpdas9ZcAjBeXZVdd6faQujofx6l0Itx9Se2HuSz5XodvDcE8Ju3lWtygKPF2DE9tHCbMApX9KgD4miInUBwKNUoFYpV16qL6bFlpSoHXx2_MBOWFd4KphBrarYxCopAONIEdh9oLe3y0O6BnESqLtrG6vwCv48hvM3Bdd7eESCa308st-tB8IS9g8hw8Z3-SDhc-lph9wamMNuP6cSoo1Y3CtSkfGy1NQ6SilhXXaEhCuUOBFMNPy5bdkxOVgidtjj8eq3Bv-bmFaRhMBDnbvaYQ0ljbTL5qViPOLQWI2OePL1tDbQ1kHHXpXTauPagd26fVA="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 60, "total_token_count": 675, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-3a749512-0278-4f26-b098-524e09f0b2f8", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "b54a59c7-30fa-4093-8ff2-29fede2f442b", "timestamp": 1794731137.8339245}
+{"content": {"parts": [{"function_response": {"id": "call_13179288373604707727", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 200, "body": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"registered_echo: OK\"}], \"isError\": false}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-3a749512-0278-4f26-b098-524e09f0b2f8", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "64bd5d87-2030-4d3d-a7cd-7c0c91f706e7", "timestamp": 1794731147.3451066}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"server\": \"registered\",\n  \"tool\": \"registered_echo\",\n  \"status\": 200,\n  \"body\": \"{\\\"jsonrpc\\\": \\\"2.0\\\", \\\"id\\\": 1, \\\"result\\\": {\\\"content\\\": [{\\\"type\\\": \\\"text\\\", \\\"text\\\": \\\"registered_echo: OK\\\"}], \\\"isError\\\": false}}\",\n  \"auth\": \"id_token_unbound\",\n  \"cnf_present\": false,\n  \"error\": null\n}", "thought_signature": "AY89a1-qRgXHX9i18aIyPz3H96ySFF771BF26H8OWqtpA460ma2w_iFU2mcgQc8Hp7DFjIa4CmrSzaQj2KrF_vRaaudICg5gS3iYWF4-Fb_ExOKxxncadW6A3n_uPHsVtZuKUh-s--Va_XPXqECisGodq7ZBFg6a3k1qm2Ywge7VtDs3vzZMrXs410hOOm2IpW8UlMlx8F05Xc7348BnD6x_P1yOVNDBtOf_GkP5-lBhT8UinrVh7yr4C6u8omfy1I3d"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 112, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 112}], "prompt_token_count": 742, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 742}], "thoughts_token_count": 23, "total_token_count": 877, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-3a749512-0278-4f26-b098-524e09f0b2f8", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "44b0d679-ea79-41c1-b987-7f8053cbeb0a", "timestamp": 1794731147.5151842}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:25:50Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_8154733778739080480", "args": {"server": "unregistered", "tool": "unregistered_echo"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1--x0eB9ej6WkYnl2Vrjc3ZFOVA4Q4bt7GOr6XE2tlCxfAZAk4N11rIngaeS055LnAlpQZn26mUq6GXzXFMcefPL_0YDAV0LBOOHCOSf3On4zy4bai-BjoYOCpGxf2Y_NPDjjNLqjKZ8Go-4J8WTCM6GJ-BhNIYhAqY2bhTkdqC8wyjc_X_7r7-nWZ0UXctvf14Hk5YlYZUW-vNjv3RC4jTI4UFZ-35C4GQl09aUbbuJyMIFM_0BZ0RQO2kZa2SO-rpDG_8MeTwGzCxzJnVZo-MRaGoTPP6z8oIK8kMEU1G8cfgkU5bd_KiyO4aOeikAoAmC5-pBGfjb0wbYfsPuFCsdgEhgAQ1P-pNGSfvY4-ltBoDxikzG6ietLI11DigwtEKF7TA-ZJKgQM3RtLzbVNh7eqUQk8xsP6_dD5kkK9NzPyyYyk="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 29, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 29}], "prompt_token_count": 590, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 590}], "thoughts_token_count": 76, "total_token_count": 695, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-f763089d-2323-48cb-bc1d-678cb1727101", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "eec19a59-88f0-4d1b-a4dd-3eabcae64d47", "timestamp": 1794731151.59669}
+{"content": {"parts": [{"function_response": {"id": "call_8154733778739080480", "name": "call_mcp_tool", "response": {"server": "unregistered", "tool": "unregistered_echo", "status": 403, "body": "Egress request is not authorized.", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-f763089d-2323-48cb-bc1d-678cb1727101", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "99bde712-ba02-43e7-bb17-b46dfd43af52", "timestamp": 1794731153.480315}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"server\": \"unregistered\",\n  \"tool\": \"unregistered_echo\",\n  \"status\": 403,\n  \"body\": \"Egress request is not authorized.\",\n  \"auth\": \"id_token_unbound\",\n  \"error\": null,\n  \"cnf_present\": false\n}\n```", "thought_signature": "AY89a18Drs0wGFPFt5OlzVe5MEpBDfJmjg2kMwmN_H29hA0yhsw9HpIIRFyrA47BK51gDp1s2PKKNLygdbbqNzK_ugjuMkB1su1gsU-yqMKPwl8pVAALyc-El1ELnYDOo_5tvaAZFv-ZYrmoxF8v1xxqiOGJdi5qLIGS9TdzQS6W2Aj7FUhtX5MBzTv4xtGin_DVV_KiQmCq7rRm8xVupqj9gUu6LYxeQST_0hpekeb4slB4dday"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 79, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 79}], "prompt_token_count": 727, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 727}], "thoughts_token_count": 22, "total_token_count": 828, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-f763089d-2323-48cb-bc1d-678cb1727101", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "5ad5174f-eb4a-4ba2-8947-405385ae629c", "timestamp": 1794731153.6453655}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:25:56Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_7683445506048361357", "args": {"tool": "unregistered_echo", "server": "unregistered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a186wXGc2f9CG0dEw34TD80vN0MrRFcOYlyMD2TgTs186a57rnJYVPlj2pVrQg7jfPh1ZzbElm_VtK0mjy87xhaTTS_62FYWwW5SrSfAOz7d66kLU8n47RxiXe4dKxHViQ4xFqWOpQJH5FpvIZ2eD1kk1xqnmZgJKREylVTDLoalygKbVVpHIaghFVZr5cyP_wV58aZtzVUrMrCQzAHFhT0PvTwgQwk28qEWfCTcy9wrYRIi0mj7eHnUFihoCPCClKeXL2b-EuJOiEms60ZFn-s5XbjITeE4BfOb5K3J9p9VwTC7qW5eKXR_b1-9BEMsNWc68xkdTmkuQuFx43KBY6BoOuegL-iK08CP1xZ7ywZ-1NHiHgeH0I6SOuya-BvvmnoJebKJxfTzxpYCbinKH1fj_ffsWBQPEZvMIHR4JeBTcuw6GE6fxCB12Q45RWIrq0quX6SoDWQueWh-WaCppqMReb-l29gJqr_CTtHO4UVvVSsmpZkDtgnjFseRnSYkbYsGCYReT5JKbbIFUSABCp7tVQ=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 29, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 29}], "prompt_token_count": 590, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 590}], "thoughts_token_count": 96, "total_token_count": 715, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-16c333c9-ea1f-494e-9c89-33e38e9f35cd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "f599f90d-ad0c-418a-ad91-c95c2c0bfdb9", "timestamp": 1794731157.6508405}
+{"content": {"parts": [{"function_response": {"id": "call_7683445506048361357", "name": "call_mcp_tool", "response": {"server": "unregistered", "tool": "unregistered_echo", "status": 403, "body": "Egress request is not authorized.", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-16c333c9-ea1f-494e-9c89-33e38e9f35cd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "ef069812-3b9f-4f57-bbbc-811e12cc3bd5", "timestamp": 1794731182.2412145}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"Egress request is not authorized.\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"unregistered\",\n  \"status\": 403,\n  \"tool\": \"unregistered_echo\"\n}\n```", "thought_signature": "AY89a18PtNhDYdr16VO_lX4hngziQk_G8hs4zjex6Fvxn-09iSNOPhw1Gk27-Zu5XaWt6TnhInyZh6phkBCXCuc59gDFIMLH26s9b5MxK0O1PvBXoPlyf0JuBjCM8EFCcuoY5JKXD1vJ20F5dsgEmfm-nvWaRCgh7nJkyRzC5gHl7I4db8PymsfkX88cxcTS2LwHUX75kkxebN9q"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 80, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 80}], "prompt_token_count": 747, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 747}], "thoughts_token_count": 16, "total_token_count": 843, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-16c333c9-ea1f-494e-9c89-33e38e9f35cd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "bf248c24-ffc7-474a-863d-1054c439fd7b", "timestamp": 1794731182.4416003}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:26:24Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_10466838920319249019", "args": {"tool": "unregistered_echo", "server": "unregistered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1-Hwyn8F89r6JGvfKvwU26csRtMeI2JvrHR40bnF1zbfY6Ut-LMyEDgoFrr7kC7yeyhbMUpNv4T5t7JFkYyHj9CKEw97xxD3UZCk2riWxJg0u5AUeVkDAVaIMr8YD2MD_UHFnG9IeyR8YcpLQq0sj-qXdAMP6baeNeAoHrAJ8-8PxXRS7vMI9-r90lLkN8keKACMevWtp8J_tw83YVOIoMyozYAntBccsHYwWsEf7bAyZBqJYO1gcMEn6O7KB_HDe0hY3b-BMvCrdf1xOqzBTY3AwTaBRtVP5k7pEw9ns5EmXELzchIeJZY9SdN0Lg-N-DLvzueYg6r9NS9nCVKA18rgCV1e-OP--EZU6hRvOVaYLTnd_BZF9Phmazy6VQuvzO8WOv_yTRGaCVQw15ytHzrbhSHljB9n-w4i9cO7uslRfIZP8DgEPgu0Z2mLrev96tBuRRTDwB0CASYK6DcSCDKPPNm8_AZpifd9aQe0m-Ndhw_WX8ClA7SkfCprPs09GaM-4IbI0bfXteC"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 29, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 29}], "prompt_token_count": 590, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 590}], "thoughts_token_count": 95, "total_token_count": 714, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-b3b7e735-c07a-4192-b0c8-b249af04c833", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "a3daa5d8-9cd0-4367-8137-df5aa3c213d0", "timestamp": 1794731186.5842266}
+{"content": {"parts": [{"function_response": {"id": "call_10466838920319249019", "name": "call_mcp_tool", "response": {"server": "unregistered", "tool": "unregistered_echo", "status": 403, "body": "Egress request is not authorized.", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-b3b7e735-c07a-4192-b0c8-b249af04c833", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "b381e781-65ab-4127-a31f-2b579b8a6dfb", "timestamp": 1794731188.5703366}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"server\": \"unregistered\",\n  \"tool\": \"unregistered_echo\",\n  \"status\": 403,\n  \"body\": \"Egress request is not authorized.\",\n  \"auth\": \"id_token_unbound\",\n  \"cnf_present\": false,\n  \"error\": null\n}", "thought_signature": "AY89a1_2YkVE8SSEKN6gG13EL5Py77RM9wsyzl8HCqN3mbT036kG5Nt7re0hlxYfzu-eUtAS5Nq8tvVN5TbGMzpXamzmPWCBLxwXn2d424bhU5sEkVZWAFBIHLqXTDiXlO_3P2nDnDw0Fmjb1hX9LQKqflWaRN2ha7JDYEwVHTxFrX8DNXusRPYeEXJPbbkCo74MSWT4aLa6MmNScCFKrtaeDnbxWZLQLgbhvsqQj8YHqCh2"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 74, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 74}], "prompt_token_count": 746, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 746}], "thoughts_token_count": 20, "total_token_count": 840, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-b3b7e735-c07a-4192-b0c8-b249af04c833", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "6f59f22c-37f3-4cff-b16c-5eadcff68e9a", "timestamp": 1794731188.755017}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:26:31Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"error_code": "RESOURCE_EXHAUSTED", "error_message": "\nOn how to mitigate this issue, please refer to:\n\nhttps://google.github.io/adk-docs/agents/models/google-gemini/#error-code-429-resource_exhausted\n\n\n429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}", "invocation_id": "e-b8c1f570-ca7e-4274-af34-c480b9c687a2", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "a4a5f877-b047-45b3-8dbe-4307ff154348", "timestamp": 1794731193.3343685}
+{"code": 429, "message": "\nOn how to mitigate this issue, please refer to:\n\nhttps://google.github.io/adk-docs/agents/models/google-gemini/#error-code-429-resource_exhausted\n\n\n429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}", "errorCode": "429", "errorMessage": "\nOn how to mitigate this issue, please refer to:\n\nhttps://google.github.io/adk-docs/agents/models/google-gemini/#error-code-429-resource_exhausted\n\n\n429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.', 'status': 'RESOURCE_EXHAUSTED'}}"}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:26:34Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_1776017728671999012", "args": {"tool": "unregistered_echo", "server": "unregistered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a19iwaiOTg4htbt0azniN0cAKuSRoG0scKAii6H2wFtNKtoAxcuyIFhiGZd0tIkwveZvMWmwKNEInH00NnTnv3DZmvtsa_wtrYSo-XHYRGz2pu4MIBie6BYe_V8J1DQLeTXVwgaC9WAhELNP5ZXS71o-idzWaeUNOClIKzvcPTLm6gWbjlIsca2s3LFDrOTfSgkW36LAVyidb0Xuax5DX3_ECtAWBQgppgGJJDYJcL0UNk-F9B4y5PS3vWRt8RcVZauGD4JMHft5z4cOFFf2-g0sGzHUzRsu_b6Sa6YeJXrgMlPaEyExFppjh7lR8wxEnwOmOjM_m_RmsaIadgnIEUxU3-A93PNFvxxQCIiIPPN4SfSj7_Wt20o8wnxfKJhN7OX11GDNVp4wOPx5PMiS2TvMS5-bvdwDYfE352NNqwd63lmGv65iR7cDpTIY5jp6jmsgby0KpiaE1YUdOa2LsM8TJJFVwL8NG7QK1ZhyPH7o09_lyepqgzMsapvMLSCUaJo81MjFdPsN3CX9xKUrvuwsehY_INuxH7bmx1N5yApv_v_MObSVkrZvEZ7KkfcTanR41QlLo4Rvddk7QPdDPyya8_vYAUGSI1VJXZPIX1TFX6yeoeVaC_Giiqxjp0en-z5XIX7i3QuJ0Vla70t57Bo4pmxgHA7s0Eykp53i4Dube_l35HFdnrJEsdBfAyZ5xlHEOJPPp2JISEcbMNPsQOTM6z6EgPNsLJVx7iF-HVONqMlrmDAKtwCdSN9TUuNaJqT1801kN6qc_ikUbL6zi5O6K5FW0Bx8xBiKk_SCXWfGH2idcZfzC_OHXeSHouuO7Q=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 29, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 29}], "prompt_token_count": 590, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 590}], "thoughts_token_count": 170, "total_token_count": 789, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-6b530b72-7385-49d6-9afd-c34b9c269cd4", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "015206ed-f657-4d5f-9910-24db6a7fe06e", "timestamp": 1794731195.5856657}
+{"content": {"parts": [{"function_response": {"id": "call_1776017728671999012", "name": "call_mcp_tool", "response": {"server": "unregistered", "tool": "unregistered_echo", "status": 403, "body": "Egress request is not authorized.", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-6b530b72-7385-49d6-9afd-c34b9c269cd4", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "fd1be6fe-2a50-4fd3-b6ce-5fd23909b8d0", "timestamp": 1794731200.8207126}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"Egress request is not authorized.\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"unregistered\",\n  \"status\": 403,\n  \"tool\": \"unregistered_echo\"\n}\n```", "thought_signature": "AY89a19eKnMkL8TCa7yM741FLtAtyNXrpnSa8ThGpqFUuasXM5szn-tyD36qFbuxfv3XkDDP1rwoGC-3RYsfNmzTIuGKHu4d1R9oDmgLPjzTJs_C_tijkQIPxh4NwmKGNQUGUlM067YwP9Rn8tkUqcDFwnoLyMJwtc9Qy4rz6ZS5t6CMbA=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 80, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 80}], "prompt_token_count": 821, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 821}], "thoughts_token_count": 12, "total_token_count": 913, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-6b530b72-7385-49d6-9afd-c34b9c269cd4", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "6e048c42-ac0b-4267-84ce-8e73e22f9ea1", "timestamp": 1794731200.9978547}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:26:43Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_8229839994635190795", "args": {"tool": "inject_response", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1-ienRHTXpWNGn3odd1hwp6AIK5AAFDa5AhFfMxzCmHcKraf2oLpQXqSEI1xViHISoVAXz6XK3EaStwswE1esCQt1dNtcUEvKZxYVtEs8isvq8yrVBKeIQP2wweg0Z8pRMhDi6wDg6WEYLzNFPjmwW0k7VdNWHYWC1UTQznzsjn3tU6Abp3Q-K11zc0bRQns6ww48F4yDvNXc7zyZEbASPVhfoslb8S28SdOsnFImQP7yPl4u6TRYjY5VFwTBRiHYXh_eIqfXpVb3EHb45gaWh5htFJCd8GfKt3kXKCmNbmDRh9MDUQzCqSliYhkuGj0Xq3LlxAFYLkzBNsbHAk11nTNEVbe0sVjFY9ihTnb0cl67cRDtATnHwBzyY76b2NPgl6aOdpcMRYyZd6Q_EpeY6Up-hTaZfC-HnAyd5yLtETONkaL_ur6CtDNLx5H0UpKgSQ9AlNbGJSq_gdhvjUWMHXtWcT9Uzn5bmPjK4a2j4Y6EpC-wgawiHQZcOgL5RKggn6J1derRkuHaMiFbnWWLD0UBYdgn4FU41YY-ku0Y6w"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 97, "total_token_count": 712, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-6ca60882-b378-44ab-a992-230276383072", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "7a0e9d95-a17d-4ea9-8572-bdb9f4ab8908", "timestamp": 1794731204.9905853}
+{"content": {"parts": [{"function_response": {"id": "call_8229839994635190795", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "inject_response", "status": 403, "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Error: Security Policy Violation\"}],\"isError\":true}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-6ca60882-b378-44ab-a992-230276383072", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "30aacc89-9176-4e2a-8eb7-43521192da7c", "timestamp": 1794731207.2891207}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"server\": \"registered\",\n  \"tool\": \"inject_response\",\n  \"status\": 403,\n  \"body\": \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":1,\\\"result\\\":{\\\"content\\\":[{\\\"type\\\":\\\"text\\\",\\\"text\\\":\\\"Error: Security Policy Violation\\\"}],\\\"isError\\\":true}}\",\n  \"auth\": \"id_token_unbound\",\n  \"cnf_present\": false,\n  \"error\": null\n}\n```", "thought_signature": "AY89a1-NW9kb-Kzb8t_X0Il_94vl_Mfs8Hy_kjmAlMQIdJ2b_SguT6G4b0QzB10YV-9m9rXKNnSVK6Hs6zYcLMtl6lMQAN2Zo7tXgCaw-LreaXyypkqWSWMUgJZEmJAKl_rzk8o_v8hZ1RNeSqYAzKu3_hqbgDJWoJ3PR4QHGayJUk_E6NjGY7MnL4m_-sRhqFYltMESh353qxFNwOfladNW1eXZGYGk8rIqLkEqe_3uZw=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 109, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 109}], "prompt_token_count": 769, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 769}], "thoughts_token_count": 20, "total_token_count": 898, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-6ca60882-b378-44ab-a992-230276383072", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "a09fa05d-498e-49ce-a436-f9152aeee994", "timestamp": 1794731207.448565}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:26:50Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_9486588141194129980", "args": {"tool": "inject_response", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1-Og9Zr7wBNKzF0w1JBZPKn_5sUpxR_4dPip7RdqU3tRF64OiqOKoWiydgCWTB9Tiv4lRp3U3EWiUIyRrieZnw8MljvNHrY8Fw4cFcK43dIoczWWCU-T-eX45hmnokvXjylqeDs1aPaEjwyzJh0Zr-cPzN4aIKyPQEangMuDUV7ydQvZQTOGKqnRtAewgYrgnOyznN2VdyXq5XNxiTWfhB8KxDa2NEEIShhDG9NDe1nXIGKHFvALaFbuBban4rQAK8kU3Yen__F6VBBNLU4lIsVDLCFRbrfmfuMhl1_EYJUKlqhH-OlvVQ6adNxyiwWB-47UcB5Vw86_N6x5dBh7dMLloazqoXMrNm0VLn5UMDq_tv0SQXEl2p9rs4r9ZRvid12-ZaJc9llPPpnnAktkBs="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 61, "total_token_count": 676, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-1c042f6b-7fe6-4e46-bb9d-b65840aa762a", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "c6f246a3-f802-423e-8823-777fd70cc926", "timestamp": 1794731211.4992282}
+{"content": {"parts": [{"function_response": {"id": "call_9486588141194129980", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "inject_response", "status": 403, "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Error: Security Policy Violation\"}],\"isError\":true}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-1c042f6b-7fe6-4e46-bb9d-b65840aa762a", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "6dce6f22-13cf-4ca0-b07f-06dd5c52f20a", "timestamp": 1794731214.5387235}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"server\": \"registered\",\n  \"tool\": \"inject_response\",\n  \"status\": 403,\n  \"body\": \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":1,\\\"result\\\":{\\\"content\\\":[{\\\"type\\\":\\\"text\\\",\\\"text\\\":\\\"Error: Security Policy Violation\\\"}],\\\"isError\\\":true}}\",\n  \"auth\": \"id_token_unbound\",\n  \"cnf_present\": false,\n  \"error\": null\n}", "thought_signature": "AY89a1_fAQqVefyhJdH6hNNKMVHtVtgzMw9DTqLlotZ92_wnvpHPHL5ZbbK5ITlOi89vWYxzDgbEoyBE-3Kmq2XUB2E8rmNWEM1_SBR2hpYjQDSvQNS52Jg_b3ADbIu5yQbBbcqC2Ys8BgOkUa81AYtrVVyEVvX1jggEy0QltlWcivBxYz_L_4ugATZ9xEyt9z6HD4N9YNuWCmt8860AI0ZTSy2WmaqX_U_kZ64925Sf"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 104, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 104}], "prompt_token_count": 733, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 733}], "thoughts_token_count": 20, "total_token_count": 857, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-1c042f6b-7fe6-4e46-bb9d-b65840aa762a", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "88b8d099-2dee-4417-bc32-b181e2ae150c", "timestamp": 1794731214.6810143}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:27:03Z
+## $ printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_13224410532277272256", "args": {"server": "registered", "tool": "inject_response"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1_CrbxZcg_XCoJzmsw7AANlwIbXB2vWZIsBb-8opxP3b6Z-iuBVk15Vbwxrsj74yn1clPagw5FCghIaZ3LxUgq7WT7UyEmeYSPqZS2ijAXA14HOBzZFGvBHmHcBm7xqG4TpAQv2gBEGNV147tRNZA4SbBHYngr1WFHda10USeRy8SOkA1qQV5qhcojYI-CNrffw0rdcGqbQp0ZNJCcWet4MWN3-iiQePZyjFjQXn-12k8UISPGPaWxs_1YCrVhziJyFMwEbd9yEJmf-JVeljgi0juixpbNI6oZ4LLIzDaWTXQ7kQ74xyx75b_leCemcKwSwZVe0m43TRwR2UPhiF74z6wZ6QDyvv8IPSPox3fjPnSdFEe1AQ215EIdiMyaCQnUU4qL852B4ZO9NF9lS"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 588, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 588}], "thoughts_token_count": 54, "total_token_count": 669, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-1becbd49-4d92-4cba-bbba-8235fc2ec643", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "b8387a28-a32f-45ff-89c1-acb1e5bb6f26", "timestamp": 1794731224.7065458}
+{"content": {"parts": [{"function_response": {"id": "call_13224410532277272256", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "inject_response", "status": 403, "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"Error: Security Policy Violation\"}],\"isError\":true}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-1becbd49-4d92-4cba-bbba-8235fc2ec643", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "17ce0bde-ad15-440a-87ec-fc17c4ae4f09", "timestamp": 1794731226.6096416}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"server\": \"registered\",\n  \"tool\": \"inject_response\",\n  \"status\": 403,\n  \"body\": \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":1,\\\"result\\\":{\\\"content\\\":[{\\\"type\\\":\\\"text\\\",\\\"text\\\":\\\"Error: Security Policy Violation\\\"}],\\\"isError\\\":true}}\",\n  \"auth\": \"id_token_unbound\",\n  \"error\": null,\n  \"cnf_present\": false\n}\n```", "thought_signature": "AY89a1_5v7i2WFB6AoKlCAxMqdlxCbVmGa2dU2JXrltkgdah1f8X8Up8NNJ3C1PbMFytlHiogmYi_Pyhp_ZQRKm95678gDe9bUxOv6F10WI8KI-RCSYIZ7QJEREG5BNqBcQOnMS6KJeDmYFKTsi645ifS7Xr3WCeRD2daDfuc4Kk3CO58g=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 109, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 109}], "prompt_token_count": 726, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 726}], "thoughts_token_count": 12, "total_token_count": 847, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-1becbd49-4d92-4cba-bbba-8235fc2ec643", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "7a582220-d6ac-4bc2-9201-c6f05052c21f", "timestamp": 1794731226.7910666}
+
+HTTP 200
+## exit=0 at 2026-11-15T08:27:17Z
+## note 2026-11-15T08:27:18Z: calls (tool status): inject_response: 403,403,403; registered_echo: 200,200,200,200,200; unregistered_echo: 403,403,403,none,403
+## $ gcloud logging read timestamp\>=\"2026-11-15T08:24:17Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ httpRequest.requestMethod=\"POST\"\ AND\ httpRequest.requestUrl:\"/mcp\" --project=PROJECT_8 --limit=500 --format=json
+[
+  {
+    "httpRequest": {
+      "latency": "0.350149s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "230",
+      "serverIp": "10.77.6.10:443",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "m7ru1xf4yg5lh",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "inject_response"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.109784s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.109901s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.131673s",
+              "processingEffect": "IMMEDIATE_RESPONSE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:27:15.744868446Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:27:06.256348Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.247283s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "230",
+      "serverIp": "10.77.6.10:443",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "lng70bf380fov",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "inject_response"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.069100s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.069212s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.074223s",
+              "processingEffect": "IMMEDIATE_RESPONSE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:26:55.472090734Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:26:54.288540Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.328324s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1033",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "230",
+      "serverIp": "10.77.6.10:443",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "1udkpnze7n3xu",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "inject_response"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.107524s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.107669s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.086717s",
+              "processingEffect": "IMMEDIATE_RESPONSE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:26:52.271531562Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:26:46.957481Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.058041s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3138",
+      "requestUrl": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "193",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "103nul4eyxz9t",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "unregistered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:26:35.544770308Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:26:28.509601Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.325156s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "332",
+      "serverIp": "10.77.6.10:443",
+      "status": 200,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "6zla06egvo17",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "registered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.100293s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.100415s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.089242s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:25:50.269059347Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-15T08:25:47.014527Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.366508s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "328",
+      "serverIp": "10.77.6.10:443",
+      "status": 200,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "qorr1ieakauk",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "registered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.110849s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.110884s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.103192s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:25:32.158545798Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-15T08:25:26.105279Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.386221s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "332",
+      "serverIp": "10.77.6.10:443",
+      "status": 200,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "1yiow7ff1wxauc",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "registered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.116905s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.116938s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.118591s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:24:30.672287152Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-15T08:24:26.472600Z"
+  }
+]
+## exit=0 at 2026-11-15T08:30:20Z
+## note 2026-11-15T08:30:20Z: early read (+3 min, observation): 8/12 usable calls have a record
+# T56 stage=late run=gw-2 start=2026-11-15T08:46:24Z
+# script_commit=f85b659
+# check=Findings 29 / claims F24 re-check (Configured) control=Agent G makes 13 MCP tool calls through the gateway (5 allowed, 5 IAP-refused, 3 Model Armor-refused); each call is matched to gateway_requests records, read early (+3 min) and late (>= +15 min)
+# expected (pre-registered): At the late read, every call with a tool result has at least one gateway_requests record to its host inside its time window, and every 403 call's record shows DENIED. Falsified (F24 reproduces) if: any such call has no record, or a 403 call's record lacks DENIED. INCONCLUSIVE if: fewer than 3 usable calls of any kind. Observation: records present late but not early = delivery lag. Tier: Configured. 2 runs (subsets 4, 5).
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.8.0"}
+## note 2026-11-15T08:46:24Z: results.md Findings 29 = claims-register F24 (run 8); no resources are created by this script; no cleanup_trap registered
+## $ gcloud logging read timestamp\>=\"2026-11-15T08:24:17Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ httpRequest.requestMethod=\"POST\"\ AND\ httpRequest.requestUrl:\"/mcp\" --project=PROJECT_8 --limit=500 --format=json
+[
+  {
+    "httpRequest": {
+      "latency": "0.350149s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "230",
+      "serverIp": "10.77.6.10:443",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "m7ru1xf4yg5lh",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "inject_response"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.109784s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.109901s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.131673s",
+              "processingEffect": "IMMEDIATE_RESPONSE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:27:15.744868446Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:27:06.256348Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.247283s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "230",
+      "serverIp": "10.77.6.10:443",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "lng70bf380fov",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "inject_response"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.069100s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.069212s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.074223s",
+              "processingEffect": "IMMEDIATE_RESPONSE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:26:55.472090734Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:26:54.288540Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.328324s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1033",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "230",
+      "serverIp": "10.77.6.10:443",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "1udkpnze7n3xu",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "inject_response"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.107524s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.107669s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.086717s",
+              "processingEffect": "IMMEDIATE_RESPONSE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:26:52.271531562Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:26:46.957481Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.058041s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3138",
+      "requestUrl": "https://lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "193",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "103nul4eyxz9t",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "unregistered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "lzv-mcp-unreg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:26:35.544770308Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-15T08:26:28.509601Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.325156s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "332",
+      "serverIp": "10.77.6.10:443",
+      "status": 200,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "6zla06egvo17",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "registered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.100293s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.100415s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.089242s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:25:50.269059347Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-15T08:25:47.014527Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.366508s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1026",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "328",
+      "serverIp": "10.77.6.10:443",
+      "status": 200,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "qorr1ieakauk",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "registered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.110849s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.110884s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.103192s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:25:32.158545798Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-15T08:25:26.105279Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.386221s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1025",
+      "requestMethod": "POST",
+      "requestSize": "3132",
+      "requestUrl": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp",
+      "responseSize": "332",
+      "serverIp": "10.77.6.10:443",
+      "status": 200,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "1yiow7ff1wxauc",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-04c1-1059c2040508",
+        "destinationUrn": "urn:mcp:projects-PROJECT_NUMBER_7:projects:PROJECT_NUMBER_7:locations:europe-west1:agentregistry:services:lzv-mcp-reg",
+        "mcpInfo": {
+          "method": "tools/call",
+          "parameter": "registered_echo"
+        }
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "ALLOWED"
+          },
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-ma-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "MaZMpOqKQ/995QIWXSzuQE1cPxiigyX+PIvFM1scgEo",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "serviceExtensionInfo": [
+        {
+          "backendTargetName": "modelarmor.europe-west1.rep.googleapis.com",
+          "backendTargetType": "BACKEND_SERVICE",
+          "grpcStatus": "OK",
+          "perProcessingRequestInfo": [
+            {
+              "eventType": "REQUEST_HEADERS",
+              "latency": "0.116905s",
+              "processingEffect": "NONE"
+            },
+            {
+              "eventType": "REQUEST_BODY",
+              "latency": "0.116938s",
+              "processingEffect": "CONTENT_MODIFIED"
+            },
+            {
+              "eventType": "RESPONSE_HEADERS",
+              "latency": "0.118591s",
+              "processingEffect": "NONE"
+            }
+          ],
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzExtensions/lzv-gw-ma"
+        }
+      ],
+      "tlsSniHostname": "lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-15T08:24:30.672287152Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/h0c3b82de9a8f7a78p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-15T08:24:26.472600Z"
+  }
+]
+## exit=0 at 2026-11-15T08:46:26Z
+## note 2026-11-15T08:46:26Z: late read: inject_response: 403/n=1/D,403/n=1/D,403/n=1/D; registered_echo: 200/n=1,200/n=0,200/n=1,200/n=1,200/n=1; unregistered_echo: 403/n=0,403/n=0,403/n=1/D,none/n=0,403/n=0 (n = records in window, D = DENIED)
+## note 2026-11-15T08:46:26Z: missing=4, 403 without DENIED=0, late-only (lag)=0, calls with >1 record=0, excluded (no tool result)=1

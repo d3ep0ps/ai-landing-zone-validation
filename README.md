@@ -27,13 +27,13 @@ Run 9 (2026-10-30) repeated run 8 with the same setup: T30 PASS and T32 PASS aga
 
 See the v2 section of [results.md](results.md).
 
-v3h (2026-11-11..14; `plans/v3-harness-boundary-tests.md`) tested what stays outside an agent's control when its code, tools or dependencies are not trusted. 24 tests in the same environment: three full runs, two complete subset runs (7, 8), one gateway-only run (gw 1) and single attempts. Final versions: 54 per-run results, 35 PASS, 9 FAIL, 7 INCONCLUSIVE, 3 NOT_TESTED; without the three diagnostic verdicts (T47r, T47r2, T50c), 51 results, 33 PASS, 8 FAIL.
+v3h (2026-11-11..15; `plans/v3-harness-boundary-tests.md`) tested what stays outside an agent's control when its code, tools or dependencies are not trusted. 24 tests in the same environment: three full runs, two complete subset runs (7, 8), two gateway-only runs (gw 1, gw 2) and single attempts. Final versions: 56 per-run results, 36 PASS, 10 FAIL, 7 INCONCLUSIVE, 3 NOT_TESTED; without the three diagnostic verdicts (T47r, T47r2, T50c), 53 results, 34 PASS, 9 FAIL.
 
-- Calls that bypassed the agent's own guard were refused by the platform controls (deny policy, Secure Web Proxy, VPC-SC); with those controls off the same calls returned 200 (T45, T45d).
+- Calls that bypassed the agent's own guard were refused by the platform controls (deny policy, Secure Web Proxy, VPC-SC); with those controls off the same calls returned 200 (T45, T45d). Three direct attempts to reach destinations around the Agent Gateway were refused by the gateway in two runs (T53 v3).
 - A certificate-bound agent token used from somewhere other than the agent was refused (401; T48, T48b v2, T49). In November a bound token was accepted through the Agent Gateway (T47 FAIL in three runs), so token binding alone does not explain the October 401.
 - The first agent deploy adds `roles/aiplatform.agentDefaultAccess` on the agents principal set outside Terraform; it was still present at +24 h, and a pre-deploy policy gate did not see it (T40 to T43).
 - One agent got 403 on another agent's sessions under default roles (T52); a project-level `agentContextEditor` grant opened them to every agent in the project.
-- Not shown: that the agent cannot change its own IAM in general (T50 FAIL; the `setIamPolicy` attempt cannot decide, T50c); model-route deny completeness (T51 INCONCLUSIVE); a complete gateway request log (T56 v2 FAIL: records missing in both runs). An agent could POST data to the allowed egress host (T55, allowed action).
+- Not shown: that the agent cannot change its own IAM in general (T50 FAIL; the `setIamPolicy` attempt cannot decide, T50c); model-route deny completeness (T51 INCONCLUSIVE); a complete gateway request log (T56 v2 FAIL: records missing in all three runs). An agent could POST data to the allowed egress host (T55, allowed action).
 
 See the v3h section of [results.md](results.md) and the qualifications in [claims-register.md](claims-register.md).
 
@@ -92,7 +92,7 @@ Safety rules:
 - Results are point-in-time (October and November 2026). Platform behaviour, error messages and constraint support can change.
 - Repeated runs on one environment (v1: runs 1, 2, 6, 7; plus one re-test) show repeatability there, not in other organizations. The v1.1 tests ran twice (run 4 and run 5) on the same environment, with the second run in a different order and with script fixes between them.
 - v2 results rest on two runs (6 and 7) on the same environment. Agent Gateway controls (T30, T31, T32) were not shown in runs 6 and 7: INCONCLUSIVE in run 6 (401 from Vertex AI) and in run 7 (registered MCP server unreachable from the gateway; changed setup). In runs 8 and 9, with the agent's token-binding opt-out, IAP V2 and gateway VPC egress, T30 and T32 passed twice; T31 passed once (run 9); T31R was INCONCLUSIVE (fixture fault). T34 does not show that the firewall rule blocks the agent's direct traffic.
-- v3h results rest on one environment; several tests have one or two runs (T53 v3: one run of the planned two). INCONCLUSIVE and NOT_TESTED items, single-run versions and the runs with token binding turned off are in the v3h section of [limitations.md](limitations.md).
+- v3h results rest on one environment; several tests have two runs and some single attempts. INCONCLUSIVE and NOT_TESTED items, single-run versions and the runs with token binding turned off are in the v3h section of [limitations.md](limitations.md).
 - The operator keeps two organization-level roles and one test service account after runs 6 and 7 (human decision 2026-10-28; pending review), plus `roles/iam.accessPolicyAdmin` on the runtime project for IAP V2, which departs from the plan's teardown step.
 - Items marked FAIL, INCONCLUSIVE or NOT_TESTED, and everything in "Not tested in v1", are listed in [limitations.md](limitations.md).
 - A PASS shows that a specific attempt had the stated outcome. It does not show that no other path exists.

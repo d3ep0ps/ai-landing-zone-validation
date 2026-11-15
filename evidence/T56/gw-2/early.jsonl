@@ -1,0 +1,13 @@
+{"tool":"registered_echo","host":"reg","expected":"200","status":"200","start":1794731062,"end":1794731082,"usable":true,"n":1,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"200","start":1794731082,"end":1794731122,"usable":true,"n":0,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"200","start":1794731122,"end":1794731128,"usable":true,"n":1,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"200","start":1794731128,"end":1794731135,"usable":true,"n":1,"denied":false}
+{"tool":"registered_echo","host":"reg","expected":"200","status":"200","start":1794731135,"end":1794731150,"usable":true,"n":1,"denied":false}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794731150,"end":1794731156,"usable":true,"n":0,"denied":false}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794731156,"end":1794731184,"usable":true,"n":0,"denied":false}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794731185,"end":1794731191,"usable":true,"n":1,"denied":true}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"none","start":1794731191,"end":1794731194,"usable":false,"n":0,"denied":false}
+{"tool":"unregistered_echo","host":"unreg","expected":"403","status":"403","start":1794731194,"end":1794731203,"usable":true,"n":0,"denied":false}
+{"tool":"inject_response","host":"reg","expected":"403","status":"403","start":1794731203,"end":1794731210,"usable":true,"n":1,"denied":true}
+{"tool":"inject_response","host":"reg","expected":"403","status":"403","start":1794731210,"end":1794731223,"usable":true,"n":1,"denied":true}
+{"tool":"inject_response","host":"reg","expected":"403","status":"403","start":1794731223,"end":1794731237,"usable":true,"n":1,"denied":true}

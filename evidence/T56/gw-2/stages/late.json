@@ -1,0 +1,6 @@
+{
+  "stage": "late",
+  "verdict": "FAIL",
+  "note": "late: missing=4 nodeny=0 lag=0",
+  "timestamp_utc": "2026-11-15T08:46:26Z"
+}

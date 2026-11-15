@@ -29,6 +29,7 @@ All times are UTC. "≥" means not before. Each row starts only after the previo
 | 6e | 11-13 14:01-15:58 (human decision 11-13) | `gw 1` | Done (resumed 3 times: login expiry, tooling). T53 v2 INCONCLUSIVE (fixture 401), T56 v2 FAIL (1 of 5 denied calls without a record). No paid resources left | gateway, agents | 2 h |
 | 7 | 11-14 ≥04:34 (in practice when the laptop is open), after run 7 has finished and a valid login (queued automatically) | `close 3` | T43 p24h + agent3 for run 3 | agent | 30 min |
 | 7a | 11-14 15:04-17:47 (done; human decision 11-14) | `subset 8` (run 8) | Run 2 of T45d, T48b v2, T51, T52, T55, T56 v2 (first with usable allowed calls); run 1 of T53 v3 (pre-registered f4beb25); run 3 of T50; run 3 of T44 v2, T44b, T49 | all blocks | 6 h |
+| 7b | 11-15 (human decision 11-15, recorded before the run) | `gw 2` | Run 2 of T53 v3, run 3 of T56 v2. Scripts and fixtures unchanged since run 8 (6b0d1bb; no diff in tests/, infra/, infra-v3h/) | gateway, agents | 2 h |
 | 8 | 11-15 (11-16 spare for a pre-registered repeat if needed; article 11-17) | reports | results, limitations, claims register, article checks; evidence-reviewer and redaction-checker | none | |
 
 **If a day slips:** shift the later rows by the same amount. The only fixed anchors are the closes: each needs at least 24 h after its run's T43 t0, and it may run later. `subset 5` needs at least 24 h after `subset 4`.
@@ -49,8 +50,8 @@ All times are UTC. "≥" means not before. Each row starts only after the previo
 | T48b | v1: 1 (run 4, INCONCLUSIVE, fixture); v2: 3 (runs 5, 7, 8) | 2 |
 | T50 | 4 (runs 4, 5, 7, 8; deny stage in runs 7, 8) | 2+ |
 | T50c (T50 b1 control) | 1 | 1 |
-| T56 (Findings 29 re-check) | v1: run 7 (fixture down for allowed calls); v2: 2 (gw 1 with allowed calls 401, run 8) | 2 |
-| T53 | v1: run 7 (misclassified, control 404); v2: 1 (gw 1, fixture 401: bound ID token); v3: 1 (run 8, unbound ID token for the fixture) | 2 |
+| T56 (Findings 29 re-check) | v1: run 7 (fixture down for allowed calls); v2: 2 (gw 1 with allowed calls 401, run 8), 3 with gw 2 | 2 |
+| T53 | v1: run 7 (misclassified, control 404); v2: 1 (gw 1, fixture 401: bound ID token); v3: 1 (run 8, unbound ID token for the fixture), 2 with gw 2 | 2 |
 | T57 (Findings 24 re-check) | 1 (row 1a) | 1 |
 | T40b, T47r, T47r2 | 1 each | 1 |
 | T46 | NOT_TESTED (doc evidence) | |
