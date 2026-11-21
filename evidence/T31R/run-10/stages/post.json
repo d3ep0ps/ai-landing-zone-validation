@@ -1,0 +1,6 @@
+{
+  "stage": "post",
+  "verdict": "PASS",
+  "note": "post: (d) after registering: 200 (registry entry age 317s); IAM identical: 1",
+  "timestamp_utc": "2026-11-21T17:25:10Z"
+}

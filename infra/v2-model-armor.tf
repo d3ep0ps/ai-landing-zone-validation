@@ -17,18 +17,62 @@
 # Floor settings cannot be deleted through the API; set v2_ma_floor_enforce.<level> = false, apply, then
 # switch the toggles off (the provider only removes the resource from state, UNVERIFIED).
 
+# 2026-11-21 (run 10, Track E item 17): the floors, the T28 template and the runtime Model Armor API now
+# come from the Fabric modules merged upstream (vendor/fabric 7efa56dbf):
+#   - folder floor (T27):  modules/folder  model_armor_floor_setting   (#4361)
+#   - project floor (T29): modules/project model_armor_floor_setting   (#4379)
+#   - templates (T28/T32): modules/project model_armor_templates       (#4423)
+# The inputs below are passed to module.folder_root and module.prj_runtime in main.tf. The moved blocks
+# keep the existing GCP objects (no recreate). The org floor (T38) uses modules/organization (#4310)
+# below; T38 is org scope (separate approval).
+
 locals {
-  v2_ma_filter_pi = {
-    filter_enforcement = "ENABLED"
-    confidence_level   = "MEDIUM_AND_ABOVE"
+  v2_ma_filters = {
+    pi_and_jailbreak = { confidence_level = "MEDIUM_AND_ABOVE" }
   }
+  v2_ma_folder_floor = var.enable_v2_ma_folder_floor ? {
+    enforce = var.v2_ma_floor_enforce["folder"]
+    filters = local.v2_ma_filters
+  } : null
+  # Same strictness as the folder floor, so T27 stays valid in this project.
+  v2_ma_project_floor = var.enable_v2_ma_vertex ? {
+    enforce = var.v2_ma_floor_enforce["project"]
+    filters = local.v2_ma_filters
+    integrated_services = {
+      ai_platform = { mode = "inspect_and_block", cloud_logging = true }
+    }
+  } : null
+  # T28: template used by the screening test.
+  v2_ma_templates = var.enable_v2_model_armor ? {
+    "lzv-ma-pi" = {
+      location = var.region
+      filters  = local.v2_ma_filters
+      metadata = {
+        log_template_operations = true
+        log_sanitize_operations = true
+      }
+    }
+  } : {}
 }
 
-resource "google_project_service" "v2_ma_runtime" {
-  count              = var.enable_v2_model_armor ? 1 : 0
-  project            = module.prj_runtime.project_id
-  service            = "modelarmor.googleapis.com"
-  disable_on_destroy = false
+moved {
+  from = google_project_service.v2_ma_runtime[0]
+  to   = module.prj_runtime.google_project_service.project_services["modelarmor.googleapis.com"]
+}
+
+moved {
+  from = google_model_armor_template.v2_pi[0]
+  to   = module.prj_runtime.google_model_armor_template.default["lzv-ma-pi"]
+}
+
+moved {
+  from = google_model_armor_floorsetting.v2_folder[0]
+  to   = module.folder_root.google_model_armor_floorsetting.default[0]
+}
+
+moved {
+  from = google_model_armor_floorsetting.v2_project[0]
+  to   = module.prj_runtime.google_model_armor_floorsetting.default[0]
 }
 
 # T38 test project: the data project (no project floor, no Vertex use).
@@ -37,68 +81,6 @@ resource "google_project_service" "v2_ma_data" {
   project            = module.prj_data.project_id
   service            = "modelarmor.googleapis.com"
   disable_on_destroy = false
-}
-
-# T28: template used by the screening test.
-resource "google_model_armor_template" "v2_pi" {
-  count       = var.enable_v2_model_armor ? 1 : 0
-  project     = module.prj_runtime.project_id
-  location    = var.region
-  template_id = "lzv-ma-pi"
-
-  filter_config {
-    pi_and_jailbreak_filter_settings {
-      filter_enforcement = local.v2_ma_filter_pi.filter_enforcement
-      confidence_level   = local.v2_ma_filter_pi.confidence_level
-    }
-  }
-
-  template_metadata {
-    log_template_operations = true
-    log_sanitize_operations = true
-  }
-
-  depends_on = [google_project_service.v2_ma_runtime]
-}
-
-# T27: folder floor setting.
-resource "google_model_armor_floorsetting" "v2_folder" {
-  count                            = var.enable_v2_ma_folder_floor ? 1 : 0
-  parent                           = module.folder_root.id # folders/NUMBER
-  location                         = "global"
-  enable_floor_setting_enforcement = var.v2_ma_floor_enforce["folder"]
-
-  filter_config {
-    pi_and_jailbreak_filter_settings {
-      filter_enforcement = local.v2_ma_filter_pi.filter_enforcement
-      confidence_level   = local.v2_ma_filter_pi.confidence_level
-    }
-  }
-}
-
-# T29: project floor setting with the Vertex AI integration (applies to generateContent calls
-# without model_armor_config). Same strictness as the folder floor, so T27 stays valid in this
-# project.
-resource "google_model_armor_floorsetting" "v2_project" {
-  count                            = var.enable_v2_ma_vertex ? 1 : 0
-  parent                           = "projects/${module.prj_runtime.project_id}"
-  location                         = "global"
-  enable_floor_setting_enforcement = var.v2_ma_floor_enforce["project"]
-  integrated_services              = ["AI_PLATFORM"]
-
-  filter_config {
-    pi_and_jailbreak_filter_settings {
-      filter_enforcement = local.v2_ma_filter_pi.filter_enforcement
-      confidence_level   = local.v2_ma_filter_pi.confidence_level
-    }
-  }
-
-  ai_platform_floor_setting {
-    inspect_and_block    = true
-    enable_cloud_logging = true
-  }
-
-  depends_on = [google_project_service.v2_ma_runtime]
 }
 
 # The Vertex AI service agent must exist before it can be granted a role.
@@ -116,22 +98,20 @@ resource "google_project_iam_member" "v2_ma_vertex_user" {
   member  = "serviceAccount:${google_project_service_identity.v2_aiplatform[0].email}"
 }
 
-# T38: ORGANIZATION-LEVEL floor setting. Org scope: the human applies this alone.
-resource "google_model_armor_floorsetting" "v2_org" {
-  count                            = var.enable_v2_ma_org_floor ? 1 : 0
-  parent                           = "organizations/${var.org_id}"
-  location                         = "global"
-  enable_floor_setting_enforcement = var.v2_ma_floor_enforce["org"]
-
-  filter_config {
-    pi_and_jailbreak_filter_settings {
-      filter_enforcement = local.v2_ma_filter_pi.filter_enforcement
-      confidence_level   = local.v2_ma_filter_pi.confidence_level
-    }
+# T38: ORGANIZATION-LEVEL floor setting. Org scope: the human applies this alone. Since run 10 it comes
+# from Fabric modules/organization model_armor_floor_setting (#4310); the module call sets nothing else.
+# Not in state when the code changed (toggle off), so no moved block.
+module "org_ma_floor" {
+  count           = var.enable_v2_ma_org_floor ? 1 : 0
+  source          = "../vendor/fabric/modules/organization"
+  organization_id = "organizations/${var.org_id}"
+  model_armor_floor_setting = {
+    enforce = var.v2_ma_floor_enforce["org"]
+    filters = local.v2_ma_filters
   }
 }
 
 output "v2_ma_template_id" {
   description = "T28 template resource id (null when disabled)."
-  value       = try(google_model_armor_template.v2_pi[0].id, null)
+  value       = try(module.prj_runtime.model_armor_template_ids["lzv-ma-pi"], null)
 }

@@ -5,7 +5,7 @@ Terraform for the reference environment, using pinned Cloud Foundation Fabric mo
 ## Requirements
 
 - Terraform >= 1.12.2; providers pinned to Fabric's `default-versions.tf` (google, google-beta >= 8.6.0, < 9.0.0).
-- `vendor/fabric` checked out at commit be0d4b1 (Fabric v59.2.0). `vendor/` is git-ignored; modules are referenced as `../vendor/fabric/modules/...`.
+- `vendor/fabric` checked out at commit 7efa56dbf (upstream master, 2026-11-21; run 10, providers 8.12.0). Runs 1 to 9 and v3h used be0d4b1 (Fabric v59.2.0) with providers 8.8.0. `vendor/` is git-ignored; modules are referenced as `../vendor/fabric/modules/...`.
 - Local state (git-ignored). No service account keys, no secrets.
 - Copy `terraform.tfvars.example` to `terraform.tfvars` and fill in `ORG_ID`, `BILLING_ACCOUNT`, `PREFIX`.
 

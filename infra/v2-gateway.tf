@@ -19,12 +19,10 @@ locals {
   gw_on          = var.enable_v2_gateway
   gw_project     = module.prj_runtime.project_id
   gw_number      = module.prj_runtime.number
-  gw_registry    = "//agentregistry.googleapis.com/projects/${local.gw_project}/locations/${var.region}" # codelab form; provider doc shows a {version} segment, UNVERIFIED
   gw_reg_url     = "https://${var.v2_gateway_mcp_reg_service}-${local.gw_number}.${var.region}.run.app"
   gw_unreg_url   = "https://${var.v2_gateway_mcp_unreg_service}-${local.gw_number}.${var.region}.run.app"
   gw_agent_set   = "principalSet://agents.global.org-${var.org_id}.system.id.goog/attribute.platformContainer/aiplatform/projects/${local.gw_number}"
   gw_agent_grant = coalesce(var.v2_gateway_agent_member, local.gw_agent_set)
-  gw_ma_tpl      = "projects/${local.gw_project}/locations/${var.region}/templates/lzv-ma-gw"
   gw_dep_agent   = "serviceAccount:service-${local.gw_number}@gcp-sa-dep.iam.gserviceaccount.com"
   gw_iap_v1      = local.gw_on && var.v2_gateway_iap_policy_version == "V1"
   gw_iap_v2      = local.gw_on && var.v2_gateway_iap_policy_version == "V2"
@@ -57,108 +55,27 @@ resource "google_artifact_registry_repository" "v2_gw" {
 }
 
 # --- Agent Registry: one MCP server (registered), the model endpoint, the essential logging endpoint ---
-
-resource "google_agent_registry_service" "v2_mcp_reg" {
-  count        = local.gw_on ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = var.v2_gateway_mcp_reg_service
-  display_name = "LZV registered MCP fixture"
-  mcp_server_spec {
-    type    = "TOOL_SPEC"
-    content = file("${path.module}/../tests/fixtures/gateway/toolspec-registered.json")
-  }
-  interfaces {
-    url              = "${local.gw_reg_url}/mcp"
-    protocol_binding = "JSONRPC"
-  }
-  depends_on = [google_project_service.v2_gw]
-}
-
-# T31b "allowed endpoint": exactly one model endpoint is registered, the global Vertex AI host. The regional
-# host (europe-west1-aiplatform.googleapis.com) is deliberately NOT registered.
-resource "google_agent_registry_service" "v2_ep_aiplatform" {
-  count        = local.gw_on ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-aiplatform"
-  display_name = "LZV allowed model endpoint"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = "https://aiplatform.googleapis.com"
-    protocol_binding = "HTTP_JSON"
-  }
-  depends_on = [google_project_service.v2_gw]
-}
-
-# T31R (run 9) `post` stage only: register T31's blocked host, so the only change between T31R `pre` and
-# `post` is the registry (tests/RUN-ORDER-run9.md, T31R design). Default off; turned off again at 9-1d.
-# No IAP policy change: the V2 rule allows registered destinations (destination.is_registered == true).
-resource "google_agent_registry_service" "v2_ep_t31r_blocked" {
-  count        = local.gw_on && var.v2_gateway_t31r_register_blocked ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-t31r-blocked"
-  display_name = "LZV T31R post: T31 blocked endpoint registered"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = "https://${var.region}-aiplatform.googleapis.com"
-    protocol_binding = "HTTP_JSON"
-  }
-  depends_on = [google_project_service.v2_gw]
-}
-
-# Docs: aiplatform.googleapis.com and logging.googleapis.com must be allowed before an agent is bound, else
-# every invocation fails with 498. Logging is not a model endpoint.
-# Added in run-6 day 3 after T30/T32 were INCONCLUSIVE: the gateway refused (403) agent G's ADK session
-# calls to https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/N/locations/europe-west1/
-# reasoningEngines/G/sessions (gateway_requests log). Hostname matching is exact and the mTLS variant must be
-# registered (docs: scale/runtime/agent-gateway-runtime-deploy, fetched 2026-10-28). Kept narrow so that
-# T31's blocked endpoint (europe-west1-aiplatform.googleapis.com, no mTLS) stays unregistered.
-resource "google_agent_registry_service" "v2_ep_sessions" {
-  count        = local.gw_on ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-sessions"
-  display_name = "LZV agent sessions (mTLS, this project's reasoning engines)"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = "https://${var.region}-aiplatform.mtls.googleapis.com/v1beta1/projects/${local.gw_number}/locations/${var.region}/reasoningEngines"
-    protocol_binding = "HTTP_JSON"
-  }
-  depends_on = [google_project_service.v2_gw]
-}
-
-# mTLS twin of the allowed model host (aiplatform.googleapis.com), same reason.
-resource "google_agent_registry_service" "v2_ep_aiplatform_mtls" {
-  count        = local.gw_on ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-aiplatform-mtls"
-  display_name = "LZV allowed model endpoint (mTLS)"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = "https://aiplatform.mtls.googleapis.com"
-    protocol_binding = "HTTP_JSON"
-  }
-  depends_on = [google_project_service.v2_gw]
-}
-
-# Essential platform endpoints (docs: scale/runtime/agent-gateway-runtime-deploy, step 6, fetched 2026-10-28):
-# exact hostnames, standard and mTLS. Added in run-6 day 3 before the agent G redeploy ("allowlist the
-# essential APIs before performing this binding step"). Deviation: europe-west1-aiplatform.googleapis.com is
-# NOT registered, because it is T31's blocked endpoint. Entries already defined elsewhere are not repeated
-# (aiplatform.googleapis.com, aiplatform.mtls.googleapis.com, logging.googleapis.com).
+# 2026-11-21 (run 10, Track E item 17): the entries now come from Fabric modules/geap-agent-registry (#4434,
+# vendor/fabric 7efa56dbf) instead of raw google_agent_registry_service resources. Same service IDs, URLs,
+# display names and spec types as runs 6-9; the module derives TOOL_SPEC from the MCP content and NO_SPEC for
+# endpoints, and defaults the protocol to JSONRPC (MCP) and HTTP_JSON (endpoints). No moved blocks: the
+# gateway entries were not in state when the code changed (enable_v2_gateway = false).
+#
+# Entry notes (unchanged from runs 6-9):
+# - lzv-ep-aiplatform (T31b "allowed endpoint"): exactly one model endpoint is registered, the global Vertex
+#   AI host. The regional host (europe-west1-aiplatform.googleapis.com) is deliberately NOT registered.
+# - lzv-ep-t31r-blocked (T31R `post` stage only): registers T31's blocked host, so the only change between
+#   T31R `pre` and `post` is the registry. No IAP policy change: the V2 rule allows registered destinations.
+# - lzv-ep-sessions, lzv-ep-aiplatform-mtls: added in run-6 day 3 after T30/T32 were INCONCLUSIVE: the gateway
+#   refused (403) agent G's ADK session calls to the mTLS regional host (gateway_requests log). Hostname
+#   matching is exact and the mTLS variant must be registered (docs: scale/runtime/agent-gateway-runtime-deploy,
+#   fetched 2026-10-28). Kept narrow so that T31's blocked endpoint (no mTLS) stays unregistered.
+# - essential endpoints (same docs, step 6): exact hostnames, standard and mTLS. Deviation:
+#   europe-west1-aiplatform.googleapis.com is NOT registered, because it is T31's blocked endpoint.
+# - lzv-ep-logging: docs say aiplatform and logging must be allowed before an agent is bound, else every
+#   invocation fails with 498.
 locals {
-  gw_essential_endpoints = local.gw_on ? {
+  gw_essential_endpoints = {
     "agentregistry"       = "https://agentregistry.googleapis.com"
     "logging-mtls"        = "https://logging.mtls.googleapis.com"
     "telemetry"           = "https://telemetry.googleapis.com"
@@ -175,38 +92,53 @@ locals {
     "iamcredentials-mtls" = "https://iamcredentials.mtls.googleapis.com"
     "aiplatform-rep"      = "https://aiplatform.${var.region}.rep.googleapis.com"
     "aiplatform-reg-mtls" = "https://${var.region}-aiplatform.mtls.googleapis.com"
-  } : {}
+  }
+  gw_registry_services = local.gw_on ? merge(
+    {
+      (var.v2_gateway_mcp_reg_service) = {
+        type         = "mcp_server"
+        display_name = "LZV registered MCP fixture"
+        content      = "${path.module}/../tests/fixtures/gateway/toolspec-registered.json"
+        url          = "${local.gw_reg_url}/mcp"
+      }
+      "lzv-ep-aiplatform" = {
+        display_name = "LZV allowed model endpoint"
+        url          = "https://aiplatform.googleapis.com"
+      }
+      "lzv-ep-sessions" = {
+        display_name = "LZV agent sessions (mTLS, this project's reasoning engines)"
+        url          = "https://${var.region}-aiplatform.mtls.googleapis.com/v1beta1/projects/${local.gw_number}/locations/${var.region}/reasoningEngines"
+      }
+      "lzv-ep-aiplatform-mtls" = {
+        display_name = "LZV allowed model endpoint (mTLS)"
+        url          = "https://aiplatform.mtls.googleapis.com"
+      }
+      "lzv-ep-logging" = {
+        display_name = "LZV essential logging endpoint"
+        url          = "https://logging.googleapis.com"
+      }
+    },
+    {
+      for k, v in local.gw_essential_endpoints : "lzv-ep-${k}" => {
+        display_name = "LZV essential endpoint ${k}"
+        url          = v
+      }
+    },
+    var.v2_gateway_t31r_register_blocked ? {
+      "lzv-ep-t31r-blocked" = {
+        display_name = "LZV T31R post: blocked global-model host registered (T31R v2)"
+        url          = "https://aiplatform.eu.rep.googleapis.com"
+      }
+    } : {},
+    local.v3h_registry_services,
+  ) : {}
 }
 
-resource "google_agent_registry_service" "v2_ep_essential" {
-  for_each     = local.gw_essential_endpoints
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-${each.key}"
-  display_name = "LZV essential endpoint ${each.key}"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = each.value
-    protocol_binding = "HTTP_JSON"
-  }
-  depends_on = [google_project_service.v2_gw]
-}
-
-resource "google_agent_registry_service" "v2_ep_logging" {
-  count        = local.gw_on ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-logging"
-  display_name = "LZV essential logging endpoint"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = "https://logging.googleapis.com"
-    protocol_binding = "HTTP_JSON"
-  }
+module "v2_agent_registry" {
+  source     = "../vendor/fabric/modules/geap-agent-registry"
+  project_id = local.gw_project
+  location   = var.region
+  services   = local.gw_registry_services
   depends_on = [google_project_service.v2_gw]
 }
 
@@ -230,7 +162,7 @@ resource "google_network_services_agent_gateway" "v2" {
   location   = var.region
   name       = "lzv-gw"
   protocols  = ["MCP"]
-  registries = [local.gw_registry]
+  registries = [module.v2_agent_registry.id]
   google_managed {
     governed_access_path = "AGENT_TO_ANYWHERE"
   }
@@ -255,7 +187,6 @@ resource "google_network_services_agent_gateway" "v2" {
   }
   depends_on = [
     google_project_service.v2_gw,
-    google_agent_registry_service.v2_mcp_reg,
     google_dns_record_set.v2_gw_runapp,
     google_compute_global_forwarding_rule.v2_gw_psc,
     google_project_iam_member.v2_gw_sa_network_viewer,
@@ -345,23 +276,20 @@ resource "google_iam_projects_policy_binding" "v2_egress" {
 
 # --- Model Armor at the gateway (T32) ---
 
-resource "google_model_armor_template" "v2_gw" {
-  count       = local.gw_on && var.v2_gateway_model_armor ? 1 : 0
-  project     = local.gw_project
-  location    = var.region
-  template_id = "lzv-ma-gw"
-  filter_config {
-    pi_and_jailbreak_filter_settings {
-      filter_enforcement = "ENABLED"
-      confidence_level   = "MEDIUM_AND_ABOVE"
+# lzv-ma-gw: created by module.prj_runtime (model_armor_templates, Fabric #4423; main.tf). Same filters
+# and metadata as runs 6-9. Not in state when the code changed, so no moved block.
+locals {
+  v2_gw_ma_templates = local.gw_on && var.v2_gateway_model_armor ? {
+    "lzv-ma-gw" = {
+      location = var.region
+      filters  = { pi_and_jailbreak = { confidence_level = "MEDIUM_AND_ABOVE" } }
+      metadata = {
+        enforcement_type        = "INSPECT_AND_BLOCK"
+        log_template_operations = true
+        log_sanitize_operations = true
+      }
     }
-  }
-  template_metadata {
-    enforcement_type        = "INSPECT_AND_BLOCK"
-    log_template_operations = true
-    log_sanitize_operations = true
-  }
-  depends_on = [google_project_service.v2_gw]
+  } : {}
 }
 
 # Service Extensions service agent (egress): calloutUser + serviceUsageConsumer in the gateway project,
@@ -397,11 +325,11 @@ resource "google_network_services_authz_extension" "v2_ma" {
   timeout   = "10s" # provider range 10 ms to 10 s; codelab value not recorded
   metadata = {
     model_armor_settings = jsonencode([{
-      request_template_id  = local.gw_ma_tpl
-      response_template_id = local.gw_ma_tpl
+      request_template_id  = module.prj_runtime.model_armor_template_ids["lzv-ma-gw"]
+      response_template_id = module.prj_runtime.model_armor_template_ids["lzv-ma-gw"]
     }])
   }
-  depends_on = [google_model_armor_template.v2_gw, google_project_iam_member.v2_gw_dep]
+  depends_on = [google_project_iam_member.v2_gw_dep]
 }
 
 resource "google_network_security_authz_policy" "v2_ma" {

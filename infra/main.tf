@@ -45,6 +45,8 @@ module "folder_root" {
   parent       = "organizations/${var.org_id}"
   name         = "fldr-lz-validation"
   org_policies = merge(local.org_policies_base, local.org_policies_toggled, local.org_policies_v3)
+  # T27 (v2-model-armor.tf): Fabric folder floor setting (#4361), replaces the raw resource.
+  model_armor_floor_setting = local.v2_ma_folder_floor
 }
 
 module "folder_ai_prod" {
@@ -74,7 +76,10 @@ module "prj_runtime" {
     "binaryauthorization.googleapis.com",
     "iamcredentials.googleapis.com",
     "cloudasset.googleapis.com",
-  ])
+  ], var.enable_v2_model_armor ? ["modelarmor.googleapis.com"] : [])
+  # T29 floor (#4379) and T28/T32 templates (#4423), defined in v2-model-armor.tf and v2-gateway.tf.
+  model_armor_floor_setting = local.v2_ma_project_floor
+  model_armor_templates     = merge(local.v2_ma_templates, local.v2_gw_ma_templates)
 }
 
 module "prj_mcp" {

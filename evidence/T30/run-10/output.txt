@@ -1,0 +1,457 @@
+# T30 run=run-10 start=2026-11-21T16:51:33Z
+# script_commit=e367efc
+# check=B control=Agent behind Agent Gateway calls a registered and an unregistered MCP tool; control: Registered tool
+# expected (pre-registered): Unregistered: HTTP 403 and a gateway log entry with verdict `DENIED`; registered: answered
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+## note 2026-11-21T16:51:33Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-11-21T16:51:33Z: unverified: gateway verdict read from gateway_requests jsonPayload.authzPolicyInfo.result (field seen in run-7 logs); the 403 body text is not asserted
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/TENANT_PROJECT_R10/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxjCCAq6gAwIBAgIUAO1rubbXprwXtcOCvPxn4JSLR48wDQYJKoZIhvcNAQEL
+    BQAwYDElMCMGA1UEChMcR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUG
+    A1UEAxMuQWdlbnQgR2F0ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdl
+    c3QxKTAeFw0yNjEwMjExMzE1NDVaFw0zNjEwMTgxMzE1NDRaMGAxJTAjBgNVBAoT
+    HEdvb2dsZSBDbG91ZCBNYW5hZ2VkIFNlcnZpY2UxNzA1BgNVBAMTLkFnZW50IEdh
+    dGV3YXkgVExTIEluc3BlY3Rpb24gQ0EgKGV1cm9wZS13ZXN0MSkwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCMCxVjINmL+6ilfPL538Kd6/4nwqcUqsBk
+    wPe+137/6f2gJONSF8XXHfpufip9nmE4kHDTORKjwYVC2wFgvNZ+e2AvlJjSk4Tu
+    bJZpFnssfRVW1XAbuSEwKm4BX8yPz+KLP5tlevPif9wZKJK3Y2Ep7Nn7/FOT1Zbm
+    HyjOQE7tuAvOOcsBKhEA8ISEKaBCBVmkhPZxhkt3y2LvHF2EjFWJVlHpZQaDHGxZ
+    NrHkKeDpsfmQjP3JW1148cP8KuzBP6md4SSKOnVVHn2UpfeXTKku/y/MBywwYahU
+    zzGX+jJc5v928+XZRvcOP+oOnllDiK2eWyLTC1nmGsiCkrSU8847AgMBAAGjeDB2
+    MA4GA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8E
+    BTADAQH/MB0GA1UdDgQWBBS7zcmgI1kCLpmudDaJNE2hfBoIxzAfBgNVHSMEGDAW
+    gBS7zcmgI1kCLpmudDaJNE2hfBoIxzANBgkqhkiG9w0BAQsFAAOCAQEAM7zJycep
+    sU1SBbg+j/6BaRCExQQrxzcPW/R3VuikUtgnfqSo+9y6QnaFgyjaM+5lAJqv4swz
+    ZMXmmWYx9PSWeQwgedevboPdl+uS7m4BKqTyFUFzIKdykJtsANuW93sltmMW2tFo
+    rGmMk4s+6ILkpNksbmagCTvPuGoPYXe0QY/x6RrAycAyRSaitcZfBOG3fh0f79UJ
+    HugUPooT0MA740fLybz4qP2lcDrKa7PMh3V7lJlU1ZvRzOT6nWuu1LJY9XItke0F
+    B+Kl8puXYM2IEiNW9Os7JwonohdtHtOvqpQcTZPDHRTMxJhMZ0/lu8paUEuvTfeu
+    PSMBZgQEkzYQ+g==
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_24@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-21T15:56:47.132288579Z'
+etag: 1n1dOUhRC5jpPlJQkamgXZV0WmPvQxEAkrWNiS6Wu4g
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-21T16:00:21.380195708Z'
+## exit=0 at 2026-11-21T16:51:35Z
+## note 2026-11-21T16:51:35Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83; identity principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_15189471764249068036", "args": {"tool": "registered_echo", "server": "registered"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1-aJnsqaTmCjJBaUvliePNr_mZW0jziJBk_q7UQrOOCw2Hyvb-HxjE_s-Zo_AsXPFN0Vudbs81bjNdbobrtNpOP9n3jL4s7WhMm_dO8K08SHwYJnX0ijSB5aXxchQlXSUUtMyBnCMPowEECdR96FVWxk4zngWiJ4Ja40DdJ6QF0rhUQHd1-3UgBs306ya-1UhjZwjQi8070__q64nyEVtU0YPPIa8Hsa54gAu_yXPCHnd0aPifPhbxfypTcnVP89U8YzJHT6t1cgEB6bN3p4NpDQz-3DP3Nkk_2k0RsNduYmD4YcRd8uFyDOOscLpQFUGKZFqqfV9vKUls50_kY4dl0CP_dO3_0E5uvN_C7Au-NCTygE1_KuSBIzcdH0o5R2IOmy-s8hghPTVogfAN6qQGvdgzp5bKF1fAumLdncP1GRiQxG6ZNB2d98FIFh6GnRJP2Sh5YLRsYkB3FoBIHJpdgBFQe2oep52GRQB9cYHYfpruAejdmrNUFIpF1QMEn2zvQNeRqaHP0Glo7yxawVmsCTFaNqezzi86_Xj89vVI7V9_IJzYiMxs1ArVZkDM_inPsL8x2aL-AWWEOQL0="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 27, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 27}], "prompt_token_count": 613, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 613}], "thoughts_token_count": 96, "total_token_count": 736, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d6de4a27-2816-4eab-b0c9-c574e3a966ea", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "f3b7b0ce-94ba-4861-8b18-918f658e4f8c", "timestamp": 1795279899.3052576}
+{"content": {"parts": [{"function_response": {"id": "call_15189471764249068036", "name": "call_mcp_tool", "response": {"server": "registered", "tool": "registered_echo", "status": 200, "body": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"content\": [{\"type\": \"text\", \"text\": \"registered_echo: OK\"}], \"isError\": false}}", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-d6de4a27-2816-4eab-b0c9-c574e3a966ea", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "1783325b-e928-4473-ac37-a12ba40ca164", "timestamp": 1795279903.2918205}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"{\\\"jsonrpc\\\": \\\"2.0\\\", \\\"id\\\": 1, \\\"result\\\": {\\\"content\\\": [{\\\"type\\\": \\\"text\\\", \\\"text\\\": \\\"registered_echo: OK\\\"}], \\\"isError\\\": false}}\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"registered\",\n  \"status\": 200,\n  \"tool\": \"registered_echo\"\n}\n```", "thought_signature": "AY89a18sWl0DCSOcd7ixzLlH50A-2kKuKg0eG8W9TXVXxdg8VBmHqqHsaxOPHRMgut1WPFFmzjECIlnShJgmW48VmJfrKvs5vy4TR4RmN7yhOEkCkvOfwFHctyb4vC9ZSasvOYDADVemxk6GSxoPHTeERFufDCxskYK9S2FEZRNGi0lfjp58VAnXYq9RsfR-5Irw7G6V3NEcaeW9SBIV1K-k06Nnzv9_jJnyyliEbne-c7McJJnU5h_K6lTCaNF--ogc5rx5ghYkrajArXGA44yMhnM="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 118, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 118}], "prompt_token_count": 803, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 803}], "thoughts_token_count": 18, "total_token_count": 939, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d6de4a27-2816-4eab-b0c9-c574e3a966ea", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "658716b9-aab2-440b-bb23-92d5666f0a2b", "timestamp": 1795279903.5290978}
+
+HTTP 200
+## exit=0 at 2026-11-21T16:51:46Z
+## note 2026-11-21T16:51:46Z: agent G: http_rc=0 tool_result=1 status=200 auth=id_token_unbound err=none
+## $ gcloud logging read resource.type=\"cloud_run_revision\"\ AND\ resource.labels.service_name=\"lzv-mcp-reg\"\ AND\ timestamp\>=\"2026-11-21T16:51:35Z\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:51:48Z
+## note 2026-11-21T16:51:48Z: origin (Cloud Run) request-log entries for the registered service since the control call: 0
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_17908413662706976470", "args": {"server": "unregistered", "tool": "unregistered_echo"}, "name": "call_mcp_tool"}, "thought_signature": "AY89a1_9NBdpFB3LOWegUU2PzKnoAQHz_OqdPgPGLTwF_bW2ZprfoNxc7mSMRtS2wOJ4DRZh4Rn8OjhPo98iAwMbZPP3RpDwRkhy7fyAmwOyuucccAEHj_Bqzvj9yZe3VL76Xn1zAh7vYKTlc7-WPUtZCsChHjhsPu0EQVNQ3T3yqUg0rIn5dgKqDVJSXi3KnX-bOZEUvjE1PirzTdnEEXy6tqekP2VUMvrGF8-OymYMadJn6MLwvhyU5eofXykzhPXQd71ZMOaG6KjynR0gKeAWHf-W9vTphoS-v-5_lu-JNMXW_xN9ARcu_jjIdYsxd8vfrueXJdQ3bsJEO_iqtg-Eh8jqObSQgwA9JIZGKouBTQeY4yjFj9JMXqbGNXI4e38BGYzuDzaPxAMkTF2LArU2EGRb67iwirNt92FPTeK9yzCpXwH6JNQF7jtDO2O5LXrWcQ6qGVRPSWDPAz3a0D0Uo5nxig=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 29, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 29}], "prompt_token_count": 615, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 615}], "thoughts_token_count": 60, "total_token_count": 704, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d7ce5b8a-e684-4464-9f5c-34fa65a8b642", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "6f09b68f-d301-4129-8393-04e279f795ef", "timestamp": 1795279909.9617307}
+{"content": {"parts": [{"function_response": {"id": "call_17908413662706976470", "name": "call_mcp_tool", "response": {"server": "unregistered", "tool": "unregistered_echo", "status": 403, "body": "Egress request is not authorized.", "auth": "id_token_unbound", "cnf_present": false, "error": null}}}], "role": "user"}, "invocation_id": "e-d7ce5b8a-e684-4464-9f5c-34fa65a8b642", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "c7a9004c-24cd-4f94-ad1a-8347737c9919", "timestamp": 1795279912.7902443}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"auth\": \"id_token_unbound\",\n  \"body\": \"Egress request is not authorized.\",\n  \"cnf_present\": false,\n  \"error\": null,\n  \"server\": \"unregistered\",\n  \"status\": 403,\n  \"tool\": \"unregistered_echo\"\n}", "thought_signature": "AY89a1_--8CRCUz8QenwxaDcZ2JJB_q_lnnVh9SY-4Te02KEYJ703FUbjUY58PE-eE7gYjMHpq6-q2hkWqaUx2mgIknQbAfC7ulfRnKgHm-MHfHOe77ZpZgzcG_vhW_P0Qfu5oFaygjIBk3bs3egFYaMIUVbPkA0OwspBQ=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 75, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 75}], "prompt_token_count": 736, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 736}], "total_token_count": 811, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d7ce5b8a-e684-4464-9f5c-34fa65a8b642", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "84505259-abd9-439e-a46a-e6100131bf53", "timestamp": 1795279912.9897609}
+
+HTTP 200
+## exit=0 at 2026-11-21T16:51:55Z
+## note 2026-11-21T16:51:55Z: agent G: http_rc=0 tool_result=1 status=403 auth=id_token_unbound err=none
+## note 2026-11-21T16:51:55Z: token type used by the agent: registered call=id_token_unbound, unregistered call=id_token_unbound
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:51:56Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:52:28Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:53:00Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:53:31Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:54:03Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\"\ AND\ httpRequest.requestUrl:\"lzv-mcp-unreg\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:54:34Z
+## note 2026-11-21T16:54:34Z: gateway_requests entries with authzPolicyInfo.result=DENIED for the unregistered service: 0 
+## $ gcloud logging read timestamp\>=\"2026-11-21T16:51:48Z\"\ AND\ \"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[
+  {
+    "insertId": "z9avwsc3ue",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-11-21T16:51:48Z\" AND logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" AND jsonPayload.authzPolicyInfo.result=\"DENIED\" AND httpRequest.requestUrl:\"lzv-mcp-unreg\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-323_agent command/gcloud.logging.read invocation-id/69958d0281a34d1ea25b272f996ad670 environment/None environment-version/None client-os/MACOSX client-os-ver/27.2.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.2.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-11-21T16:54:02.361756441Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T16:54:03.754428021Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T16:54:02.361125681Z"
+  },
+  {
+    "insertId": "z9avwsc3ua",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-11-21T16:51:48Z\" AND logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" AND jsonPayload.authzPolicyInfo.result=\"DENIED\" AND httpRequest.requestUrl:\"lzv-mcp-unreg\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-323_agent command/gcloud.logging.read invocation-id/f937cb82c7d94ec6b4772448d686e665 environment/None environment-version/None client-os/MACOSX client-os-ver/27.2.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.2.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-11-21T16:53:30.871127744Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T16:53:31.748646750Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T16:53:30.870577264Z"
+  },
+  {
+    "insertId": "z9avwsc3u6",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-11-21T16:51:48Z\" AND logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" AND jsonPayload.authzPolicyInfo.result=\"DENIED\" AND httpRequest.requestUrl:\"lzv-mcp-unreg\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-323_agent command/gcloud.logging.read invocation-id/9c85ae1ded5b487d9ebfd01710edd87a environment/None environment-version/None client-os/MACOSX client-os-ver/27.2.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.2.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-11-21T16:52:59.007977577Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T16:53:00.752151410Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T16:52:59.002094109Z"
+  },
+  {
+    "insertId": "n1duwad5zrk",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-11-21T16:51:48Z\" AND logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" AND jsonPayload.authzPolicyInfo.result=\"DENIED\" AND httpRequest.requestUrl:\"lzv-mcp-unreg\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-323_agent command/gcloud.logging.read invocation-id/9f0130107d20464c8605b99e1db536bc environment/None environment-version/None client-os/MACOSX client-os-ver/27.2.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.2.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-11-21T16:52:27.478118502Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T16:52:28.296424598Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T16:52:27.477487782Z"
+  },
+  {
+    "insertId": "n1duwad5zrg",
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "SA_UNIQUE_ID_4.apps.googleusercontent.com"
+        },
+        "principalEmail": "USER_1@example.com",
+        "principalSubject": "user:USER_1@example.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "logging.logEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        },
+        {
+          "granted": true,
+          "permission": "logging.privateLogEntries.list",
+          "permissionType": "DATA_READ",
+          "resource": "projects/PROJECT_8",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_8",
+            "service": "logging.googleapis.com",
+            "type": "cloudresourcemanager.googleapis.com/Project"
+          }
+        }
+      ],
+      "methodName": "google.logging.v2.LoggingServiceV2.ListLogEntries",
+      "request": {
+        "@type": "type.googleapis.com/google.logging.v2.ListLogEntriesRequest",
+        "filter": "timestamp>=\"2026-11-21T16:51:48Z\" AND logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\" AND jsonPayload.authzPolicyInfo.result=\"DENIED\" AND httpRequest.requestUrl:\"lzv-mcp-unreg\"",
+        "orderBy": "timestamp desc",
+        "pageSize": 5,
+        "resourceNames": [
+          "projects/PROJECT_8"
+        ]
+      },
+      "requestMetadata": {
+        "callerIp": "IP_1",
+        "callerSuppliedUserAgent": "google-cloud-sdk gcloud/590.0.1 agent-name/claude-code_2-1-323_agent command/gcloud.logging.read invocation-id/bcc900d30613474aaf18f3ac1effbc0a environment/None environment-version/None client-os/MACOSX client-os-ver/27.2.0 client-pltf-arch/arm interactive/False from-script/False python/3.14.5 term/xterm-256color  (Macintosh; Intel Mac OS X 27.2.0),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-11-21T16:51:56.054715242Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_8",
+      "serviceName": "logging.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T16:51:57.291450752Z",
+    "resource": {
+      "labels": {
+        "name": "",
+        "project_id": "PROJECT_8"
+      },
+      "type": "logging_log"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T16:51:56.048099323Z"
+  }
+]
+## exit=0 at 2026-11-21T16:54:36Z
+## note 2026-11-21T16:54:36Z: broad filter (DENIED only, no gateway name): 5 entries; not used for the verdict
+## $ gcloud logging read resource.type=\"cloud_run_revision\"\ AND\ resource.labels.service_name=\"lzv-mcp-unreg\"\ AND\ timestamp\>=\"2026-11-21T16:51:48Z\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T16:54:37Z
+## note 2026-11-21T16:54:37Z: origin (Cloud Run) request-log entries for the unregistered service since the call: 0

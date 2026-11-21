@@ -31,6 +31,9 @@ MODEL = os.environ.get("LZV_MODEL", "")
 MODEL_HOSTS = {
     "allowed": ("https://aiplatform.googleapis.com", "global"),
     "blocked": ("https://europe-west1-aiplatform.googleapis.com", "europe-west1"),
+    # T31R v2 (run 10): an unregistered host that serves the global model (EU multi-region REP host,
+    # locations/global; read-only check 2026-11-21: countTokens and generateContent 200 from the operator).
+    "blocked_global": ("https://aiplatform.eu.rep.googleapis.com", "global"),
 }
 
 
@@ -90,14 +93,15 @@ def call_model(endpoint: str) -> dict:
     """Call generateContent directly (REST, fixed prompt) on one fixed Vertex AI host.
 
     Args:
-        endpoint: "allowed" (aiplatform.googleapis.com, global) or "blocked" (europe-west1-aiplatform.googleapis.com).
+        endpoint: "allowed" (aiplatform.googleapis.com, global), "blocked" (europe-west1-aiplatform.googleapis.com)
+            or "blocked_global" (aiplatform.eu.rep.googleapis.com, global).
 
     Returns:
         dict with endpoint, status (int or None), body (first 600 chars), error.
     """
     host = MODEL_HOSTS.get(endpoint)
     if host is None:
-        return {"endpoint": endpoint, "status": None, "body": None, "error": "use allowed or blocked"}
+        return {"endpoint": endpoint, "status": None, "body": None, "error": "use allowed, blocked or blocked_global"}
     base, loc = host
     url = (f"{base}/v1/projects/{PROJECT}/locations/{loc}/publishers/google/models/{MODEL}:generateContent")
     try:
@@ -278,7 +282,7 @@ root_agent = Agent(
     name="lzv_probe_g",
     model=os.environ["LZV_MODEL"],
     instruction=(
-        "The user names either an MCP call (server and tool), a model call (allowed or blocked), a replay check or a "
+        "The user names either an MCP call (server and tool), a model call (allowed, blocked or blocked_global), a replay check or a "
         "direct probe. Call exactly one tool exactly once with exactly those arguments (call_mcp_tool, call_model, "
         "replay_check or direct_probe), "
         "then reply with the tool result as JSON. Never answer without calling the tool."

@@ -1,0 +1,96 @@
+# T29 run=run-10 start=2026-11-21T15:42:55Z
+# script_commit=76c94c5
+# check=A control=Project floor setting with Vertex AI integration in `INSPECT_AND_BLOCK`; `generateContent` with the T28 sample
+# expected (pre-registered): Response blocked: `blockReason: "MODEL_ARMOR"`, message starts "Blocked by Floor Setting"; HTTP status recorded
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+## note 2026-11-21T15:42:55Z: paired control: a benign prompt is answered (HTTP 200 with model text and no MODEL_ARMOR block)
+## note 2026-11-21T15:42:55Z: limitation: HTTP status and GA status of the integration are undocumented; coverage of Agent Runtime calls is not tested here. The block signature is searched anywhere in the response body
+## note 2026-11-21T15:42:55Z: no resources are created by this script; no cleanup_trap registered
+## $ env CLOUDSDK_API_ENDPOINT_OVERRIDES_MODELARMOR=https://modelarmor.googleapis.com/ gcloud model-armor floorsettings describe --full-uri=projects/PROJECT_8/locations/global/floorSetting --format=json
+{
+  "aiPlatformFloorSetting": {
+    "enableCloudLogging": true,
+    "inspectAndBlock": true
+  },
+  "createTime": "2026-10-27T13:21:35.443837109Z",
+  "enableFloorSettingEnforcement": true,
+  "filterConfig": {
+    "piAndJailbreakFilterSettings": {
+      "confidenceLevel": "MEDIUM_AND_ABOVE",
+      "filterEnforcement": "ENABLED"
+    }
+  },
+  "floorSettingMetadata": {
+    "multiLanguageDetection": {}
+  },
+  "integratedServices": [
+    "AI_PLATFORM"
+  ],
+  "name": "projects/PROJECT_8/locations/global/floorSetting",
+  "updateTime": "2026-11-21T13:53:27.454419725Z"
+}
+## exit=0 at 2026-11-21T15:42:57Z
+## note 2026-11-21T15:42:57Z: project floor setting: enforcement=true, AI_PLATFORM, inspectAndBlock present
+## $ gcloud org-policies describe constraints/vertexai.allowedModels --effective --project=PROJECT_8 --format=json --billing-project=PROJECT_6
+{
+  "name": "projects/PROJECT_NUMBER_7/policies/vertexai.allowedModels",
+  "spec": {
+    "rules": [
+      {
+        "values": {
+          "allowedValues": [
+            "is:publishers/google/models/gemini-3.5-flash:predict"
+          ]
+        }
+      }
+    ]
+  }
+}
+## exit=0 at 2026-11-21T15:42:58Z
+## note 2026-11-21T15:42:58Z: allowlisted model: gemini-3.5-flash; endpoint: global (aiplatform.googleapis.com); billed to PROJECT_8 via x-goog-user-project
+## $ out="$(printf "Authorization: Bearer %s\nx-goog-user-project: %s\n" "$(gcloud auth print-access-token)" "$LZV_P" | curl -sS --max-time 90 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; rc=$?; printf "%s\n" "$out"; exit $rc
+{
+  "promptFeedback": {
+    "blockReason": "MODEL_ARMOR",
+    "blockReasonMessage": "Blocked by Model Armor Floor Setting: The prompt violated Prompt Injection and Jailbreak filters."
+  },
+  "usageMetadata": {
+    "trafficType": "ON_DEMAND"
+  },
+  "modelVersion": "gemini-3.5-flash",
+  "createTime": "2026-11-21T15:42:58.912068Z",
+  "responseId": "ArwBa8TVN8W-usEPnf_10Ag"
+}
+
+HTTP 200
+## exit=0 at 2026-11-21T15:42:59Z
+## note 2026-11-21T15:42:59Z: generateContent: curl_rc=0 http=200 model_armor_block=1 floor_message=0 model_text_parts=0
+## note 2026-11-21T15:42:59Z: response head: {"promptFeedback":{"blockReason":"MODEL_ARMOR","blockReasonMessage":"Blocked by Model Armor Floor Setting: The prompt violated Prompt Injection and Jailbreak filters."},"finishReason":[]}
+## $ out="$(printf "Authorization: Bearer %s\nx-goog-user-project: %s\n" "$(gcloud auth print-access-token)" "$LZV_P" | curl -sS --max-time 90 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; rc=$?; printf "%s\n" "$out"; exit $rc
+{
+  "candidates": [
+    {
+      "finishReason": "MAX_TOKENS"
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 9,
+    "totalTokenCount": 46,
+    "trafficType": "ON_DEMAND",
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 9
+      }
+    ],
+    "thoughtsTokenCount": 37
+  },
+  "modelVersion": "gemini-3.5-flash",
+  "createTime": "2026-11-21T15:42:59.952567Z",
+  "responseId": "A7wBa_eROsW-usEPnf_10Ag"
+}
+
+HTTP 200
+## exit=0 at 2026-11-21T15:43:00Z
+## note 2026-11-21T15:43:00Z: generateContent: curl_rc=0 http=200 model_armor_block=0 floor_message=0 model_text_parts=0
+## note 2026-11-21T15:43:00Z: response head: {"promptFeedback":null,"finishReason":["MAX_TOKENS"]}

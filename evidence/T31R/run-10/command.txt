@@ -1,0 +1,23 @@
+# T31R stage=pre run=run-10 start=2026-11-21T17:18:23Z
+# script_commit=e367efc
+# check=B control=Re-test of T31 part 1 (registry differential). Control: Allowed endpoint answered in `pre`; IAM state identical in `pre` and `post`
+# expected (pre-registered): `pre`: G's call to the unregistered model endpoint is refused (403) although IAM allows G; `post`: after only the registry changes, the same call is answered (200); B is refused by the IAM deny policy ("due to an IAM deny policy")
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+2026-11-21T17:18:24Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-11-21T17:18:25Z $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-11-21T17:18:26Z $ gcloud alpha agent-registry services list --location=europe-west1 --project=PROJECT_8 --format=json
+2026-11-21T17:18:27Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-21T17:18:37Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-21T17:19:43Z $ gcloud logging read timestamp\>=\"2026-11-21T17:18:37Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+2026-11-21T17:19:45Z $ gcloud logging read timestamp\>=\"2026-11-21T17:18:37Z\"\ AND\ protoPayload.serviceName=\"iap.googleapis.com\" --project=PROJECT_8 --limit=5 --format=json
+2026-11-21T17:19:46Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+# T31R stage=post run=run-10 start=2026-11-21T17:24:55Z
+# script_commit=e367efc
+# check=B control=Re-test of T31 part 1 (registry differential). Control: Allowed endpoint answered in `pre`; IAM state identical in `pre` and `post`
+# expected (pre-registered): `pre`: G's call to the unregistered model endpoint is refused (403) although IAM allows G; `post`: after only the registry changes, the same call is answered (200); B is refused by the IAM deny policy ("due to an IAM deny policy")
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+2026-11-21T17:24:56Z $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+2026-11-21T17:24:57Z $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+2026-11-21T17:24:58Z $ gcloud alpha agent-registry services list --location=europe-west1 --project=PROJECT_8 --format=json
+2026-11-21T17:24:59Z $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+2026-11-21T17:25:08Z $ gcloud logging read timestamp\>=\"2026-11-21T17:24:59Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ httpRequest.requestUrl:\"aiplatform.eu.rep.googleapis.com\" --project=PROJECT_8 --limit=5 --format=json

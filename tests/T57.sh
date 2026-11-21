@@ -2,6 +2,8 @@
 # T57 (results.md Findings 24 / claims-register F20 re-check): does a Terraform destroy of a Model Armor floor setting
 # leave the floor in place? Plan: plans/v3-harness-boundary-tests.md section 3b (pre-registered 2026-11-12, commit 31baf11,
 # before this script). Target: the runtime project floor, google_model_armor_floorsetting.v2_project[0], provider 8.8.0.
+# Run 10 (2026-11-21): the floor is now module.prj_runtime.google_model_armor_floorsetting.default[0] (Fabric modules/project, provider 8.12.0);
+# addresses below updated, expected text unchanged. Past results refer to the old address.
 # The orchestrator (tests/run-v3h.sh t57 1) runs the Terraform steps; this script only reads.
 #   before    raw describe + state entry; checks the floor matches the baseline
 #   after     (orchestrator: targeted destroy, enforcement left on) state list; raw describe at +1 min and +5 min
@@ -27,7 +29,7 @@ header T57 "Findings 24 / F20 re-check (Configured)" "Targeted Terraform destroy
   "After the destroy the address is gone from Terraform state and the floor describe still shows the before content: same filterConfig (pi_and_jailbreak, MEDIUM_AND_ABOVE), integratedServices with AI_PLATFORM, updateTime unchanged. Falsified if: the describe fails with 404/NOT_FOUND, shows a reset floor (no pi_and_jailbreak filter or no integratedServices), or updateTime changed. Recorded without prediction: enableFloorSettingEnforcement after the destroy. INCONCLUSIVE if: the before describe does not match the baseline. Tier: Configured. 1 run." \
   "$STAGE"
 note "Findings 24 (run 6, run-7 log); this script only reads; the orchestrator destroys and restores the floor"
-ADDR='google_model_armor_floorsetting.v2_project[0]'
+ADDR='module.prj_runtime.google_model_armor_floorsetting.default[0]'
 PROV="$(grep -A2 'registry.terraform.io/hashicorp/google"' "$LZV_ROOT/infra/.terraform.lock.hcl" | sed -nE 's/.*version *= *"([^"]+)".*/\1/p' | head -1)"
 
 # fs_read TAG -> writes $LZV_DIR/fs-TAG.json {rc, notfound, enforce, pi, conf, integrated, update, create}
@@ -83,7 +85,7 @@ after)
 restored)
   fs_read restored; in_state
   run_capture terraform -chdir="$LZV_ROOT/infra" plan -no-color -input=false -detailed-exitcode -var-file=terraform.tfvars -var-file=profiles/lz-5-reference.tfvars -var-file=profiles/v3h-baseline.tfvars \
-    -target='google_model_armor_floorsetting.v2_project[0]' -target='google_model_armor_floorsetting.v2_folder[0]'
+    -target='module.prj_runtime.google_model_armor_floorsetting.default[0]' -target='module.folder_root.google_model_armor_floorsetting.default[0]'
   PLAN_RC="$LZV_LAST_RC"
   OK=0
   jq -e -s '.[0] as $b | .[1] as $a | $a.rc == 0 and $a.enforce == true and $a.pi == $b.pi and $a.conf == $b.conf and $a.integrated == $b.integrated' \

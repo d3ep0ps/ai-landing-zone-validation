@@ -1,0 +1,144 @@
+# T31 run=run-10 start=2026-11-21T17:15:14Z
+# script_commit=e367efc
+# check=B control=E3 row T31b: agent behind the gateway, project deny policy (T18 form) with the agent as exception; call a model endpoint the gateway does not allow; control: Allowed endpoint answered
+# expected (pre-registered): Gateway refuses (403, `DENIED`) although IAM allows the agent; then the same call by a non-approved agent is refused by the IAM deny policy ("due to an IAM deny policy")
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+## note 2026-11-21T17:15:14Z: this script implements E3 row T31b under test ID T31
+## note 2026-11-21T17:15:14Z: no resources are created by this script; no cleanup_trap registered
+## note 2026-11-21T17:15:14Z: unverified: gateway default-deny on model endpoints; verdict read from gateway_requests jsonPayload.authzPolicyInfo.result (field seen in run-7 logs); the 403 body text is not asserted
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/TENANT_PROJECT_R10/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxjCCAq6gAwIBAgIUAO1rubbXprwXtcOCvPxn4JSLR48wDQYJKoZIhvcNAQEL
+    BQAwYDElMCMGA1UEChMcR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUG
+    A1UEAxMuQWdlbnQgR2F0ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdl
+    c3QxKTAeFw0yNjEwMjExMzE1NDVaFw0zNjEwMTgxMzE1NDRaMGAxJTAjBgNVBAoT
+    HEdvb2dsZSBDbG91ZCBNYW5hZ2VkIFNlcnZpY2UxNzA1BgNVBAMTLkFnZW50IEdh
+    dGV3YXkgVExTIEluc3BlY3Rpb24gQ0EgKGV1cm9wZS13ZXN0MSkwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCMCxVjINmL+6ilfPL538Kd6/4nwqcUqsBk
+    wPe+137/6f2gJONSF8XXHfpufip9nmE4kHDTORKjwYVC2wFgvNZ+e2AvlJjSk4Tu
+    bJZpFnssfRVW1XAbuSEwKm4BX8yPz+KLP5tlevPif9wZKJK3Y2Ep7Nn7/FOT1Zbm
+    HyjOQE7tuAvOOcsBKhEA8ISEKaBCBVmkhPZxhkt3y2LvHF2EjFWJVlHpZQaDHGxZ
+    NrHkKeDpsfmQjP3JW1148cP8KuzBP6md4SSKOnVVHn2UpfeXTKku/y/MBywwYahU
+    zzGX+jJc5v928+XZRvcOP+oOnllDiK2eWyLTC1nmGsiCkrSU8847AgMBAAGjeDB2
+    MA4GA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8E
+    BTADAQH/MB0GA1UdDgQWBBS7zcmgI1kCLpmudDaJNE2hfBoIxzAfBgNVHSMEGDAW
+    gBS7zcmgI1kCLpmudDaJNE2hfBoIxzANBgkqhkiG9w0BAQsFAAOCAQEAM7zJycep
+    sU1SBbg+j/6BaRCExQQrxzcPW/R3VuikUtgnfqSo+9y6QnaFgyjaM+5lAJqv4swz
+    ZMXmmWYx9PSWeQwgedevboPdl+uS7m4BKqTyFUFzIKdykJtsANuW93sltmMW2tFo
+    rGmMk4s+6ILkpNksbmagCTvPuGoPYXe0QY/x6RrAycAyRSaitcZfBOG3fh0f79UJ
+    HugUPooT0MA740fLybz4qP2lcDrKa7PMh3V7lJlU1ZvRzOT6nWuu1LJY9XItke0F
+    B+Kl8puXYM2IEiNW9Os7JwonohdtHtOvqpQcTZPDHRTMxJhMZ0/lu8paUEuvTfeu
+    PSMBZgQEkzYQ+g==
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_24@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-21T15:56:47.132288579Z'
+etag: 1n1dOUhRC5jpPlJQkamgXZV0WmPvQxEAkrWNiS6Wu4g
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-21T16:00:21.380195708Z'
+## exit=0 at 2026-11-21T17:15:15Z
+## note 2026-11-21T17:15:15Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83; identity principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83
+## $ gcloud iam policies list --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "policies": [
+    {
+      "createTime": "2026-11-21T16:41:11.649247Z",
+      "displayName": "DC1: deny endpoints.predict to project agents except approved",
+      "kind": "DenyPolicy",
+      "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+      "uid": "160a42ee-6846-713c-d0b9-445c1278d8d1",
+      "updateTime": "2026-11-21T16:41:11.649247Z"
+    }
+  ]
+}
+## exit=0 at 2026-11-21T17:15:17Z
+## $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "createTime": "2026-11-21T16:41:11.649247Z",
+  "displayName": "DC1: deny endpoints.predict to project agents except approved",
+  "etag": "MTgxNTY4OTgzNzgzOTM3MzkyNjQ=",
+  "kind": "DenyPolicy",
+  "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+  "rules": [
+    {
+      "denyRule": {
+        "deniedPermissions": [
+          "aiplatform.googleapis.com/endpoints.predict"
+        ],
+        "deniedPrincipals": [
+          "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+        ],
+        "exceptionPrincipals": [
+          "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        ]
+      },
+      "description": "Deny model inference to all agent identities in the runtime project; approved agents are exceptions."
+    }
+  ],
+  "uid": "160a42ee-6846-713c-d0b9-445c1278d8d1",
+  "updateTime": "2026-11-21T16:41:11.649247Z"
+}
+## exit=0 at 2026-11-21T17:15:18Z
+## note 2026-11-21T17:15:18Z: deny policy lzv-dc1-deny-agent-predict present, age 2047s, G is an exception
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_2590981091979460809", "args": {"endpoint": "allowed"}, "name": "call_model"}, "thought_signature": "AY89a18Bfdx8Ip55aBDAmFmoIxn8CoP01HPuhgAgoLhSCbJjJD54c__sCIln_2hjD8rfdr63BCgUrv4DhhRMzv3-gWaSFoeklcC2O6KNbeDIkS7sznavEkH0nkKwXm4fXcPrRdIXL8LfhtYggJuO_byP_cTL15U5V4be-5u-WL2upfzGAYr3Y_BAm0TJEsxiyI-Pdl5bgKVxTYdZbVraf7htfJIS9AUjW0ox7ojV_E6fQDeMsp-2tWQkIGwKpeaDAEI-GqMaRZ5UdZuxLdIJZ-iVp12qBgnQoZPWT9qkkUijVLl9T_oRE54EU9lE4cuJ1HTaNX-GJg15aQ2lDDvZx0P5ewV63DFSJk5bKHLGKEb_j5JDYnFYmqQaXeuqle3PJkfmwDpnGKXVSBGAzvCOKWSs9G_K5Z8wsxuq2EPULg0WlFZTBgTJz7CTvzb8aMHGEi2eOpc-0DA1WR02QC6h"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 603, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 603}], "thoughts_token_count": 53, "total_token_count": 672, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-44a4506d-983c-4a9b-b793-07d8aa85fdfd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "cb02b233-0101-430e-98ed-df7d5b2bc002", "timestamp": 1795281321.0323808}
+{"content": {"parts": [{"function_response": {"id": "call_2590981091979460809", "name": "call_model", "response": {"endpoint": "allowed", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a1+b4pv6SaMDCsbnP0WUu/WJZ/7flS007WmiuKwKZXEV+IIHtu8/sYmyfBZr3eKzZ1lysIyb9fmktRuUSKkdS8yDejtx9/JfppDMG4IAj4juuRXUw4YXVgcgNHFI1u10kGkutDHluyYJUPWHEp4UCoUu9EmHxq27pKN667A448hXucTfaRacotClkCm00/DsHVroyV4oaezfjP0/WkhKBk+7CSp9Nq5LyoQH8wiuWqu89unDRy/lztORdYbloYl6FnXpN4D7X4ieYQES3BxqDcTdupxQoegQ979hDE5mfVSPdCuD6Cp+m1hnTb1kyeP8/Se6vkWROQrsX3Ubq7lgaONGCtzaPiPIjqbCRjN6yw3E81Ff1uGOdmpsIxWL3W+lXMX1vE67f0vihksiWcsVmBm86JbB3BQtrZmsC0jouM5eYYzxyEFq", "error": null}}}], "role": "user"}, "invocation_id": "e-44a4506d-983c-4a9b-b793-07d8aa85fdfd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "9bddf020-f784-4409-9621-cbaf5c0566ad", "timestamp": 1795281324.9988918}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"endpoint\": \"allowed\",\n  \"status\": 200,\n  \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a1+b4pv6SaMDCsbnP0WUu/WJZ/7flS007WmiuKwKZXEV+IIHtu8/sYmyfBZr3eKzZ1lysIyb9fmktRuUSKkdS8yDejtx9/JfppDMG4IAj4juuRXUw4YXVgcgNHFI1u10kGkutDHluyYJUPWHEp4UCoUu9EmHxq27pKN667A448hXucTfaRacotClkCm00/DsHVroyV4oaezfjP0/WkhKBk+7CSp9Nq5LyoQH8wiuWqu89unDRy/lztORdYbloYl6FnXpN4D7X4ieYQES3BxqDcTdupxQoegQ979hDE5mfVSPdCuD6Cp+m1hnTb1kyeP8/Se6vkWROQrsX3Ubq7lgaONGCtzaPiPIjqbCRjN6yw3E81Ff1uGOdmpsIxWL3W+lXMX1vE67f0vihksiWcsVmBm86JbB3BQtrZmsC0jouM5eYYzxyEFq\"\n}", "thought_signature": "AY89a18tIWS-pkvI6s7NY7DJEFxJYUg4VNSt5FsuzzV4C2O6seZFRVmNFxInLs5NVbCAdYnQbkFWQfIirQ3zQS1EfjUezTaRAmn-B_kfDwk04CrnXh2SlVIKZ4DIm8r4_BW-Av2coQBIrHGlJh9aJBy_piIflHkqcFVzZA=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 390, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 390}], "prompt_token_count": 1041, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 1041}], "total_token_count": 1431, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-44a4506d-983c-4a9b-b793-07d8aa85fdfd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "a56301c3-7324-4724-a52f-8252a57efc09", "timestamp": 1795281325.191597}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:15:29Z
+## note 2026-11-21T17:15:29Z: agent G: http_rc=0 tool_result=1 status=200 auth=none err=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_12602921896097253487", "args": {"endpoint": "blocked"}, "name": "call_model"}, "thought_signature": "AY89a1_S7hpiANKliHFp_GMGaiZt2CBpji2bh1ASnmPH02ggD4ycobIHXduj1ZcO5aC9ebdvzWA316fBaMzhq1wMSW4jmRG3btwDZW8s-vS1hB9ZVbARCYU6CnrWZ4jXhO59WpbMxzrUoU1sBHFkrxKr7Fm_ULQ3RsMj07p7GU4sbaLFd6jFsWwg95g8UVts-1NcMosMyAxo_AO7X8_UwinSlOP5dP8GRBkjMsNzOrgzA9AIZ-CA8wSiQ2Y0mhetiOl6QYZzT7LCrRGv7-JCca4Uj_AvcbNR4NnffJCDA5u8zUbl6flbxScnv4DAFqGeAYhyhmFOdFlzgmWHwyOxACLcoel4W1roS34h7hYFlCQXkqtybdEzr1BkX46mCIhfyEoh7lHYUiF43VOu4RiSExJ2SZoX22Dxh5MRj32gqJcYM3cg7r1jy_jxNJZilfc9JU785HscPDszuL-Hot_TvocBtHKU3ptO6CkcyyaSxWOX2RUYpfv8KfvRHCGz_BSlrI7CCWUmEsxoGIID5SZHNSs1J95UuxjmgsPCEPoOEQwNVsmo9hqkJX0SWRLxEdwDwMsiL1jUXAe9"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 603, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 603}], "thoughts_token_count": 90, "total_token_count": 709, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-3e3886ff-ca14-4583-9534-6dc1a7811b74", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "7b0e51d6-ca37-4806-915a-34cbd700174c", "timestamp": 1795281332.4631517}
+{"content": {"parts": [{"function_response": {"id": "call_12602921896097253487", "name": "call_model", "response": {"endpoint": "blocked", "status": 403, "body": "Egress request is not authorized.", "error": null}}}], "role": "user"}, "invocation_id": "e-3e3886ff-ca14-4583-9534-6dc1a7811b74", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "6ad097c7-efa7-4264-b2fe-910523f9e711", "timestamp": 1795281334.4669912}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"endpoint\": \"blocked\",\n  \"status\": 403,\n  \"body\": \"Egress request is not authorized.\",\n  \"error\": null\n}", "thought_signature": "AY89a19dCdZOGcPelHh1u5MySdGV0HXZQdbe7pXZB3sa5jzL8WwGPmTfMwx9_GVYcm8OUurLOro5yykJ1TnUdhBiDPC46pOTGpgdADT51bFOvn9KPpJFs9kgvm1ASStB6Cq8svPIBKcWZmbaDpxx5-yDVznBjTLwvkYxvd5PUizkHqo5lV96cvebYFbar003Xpn1-fojKmIQlGvU3d5Bdixtvw_DQlmTI2FU"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 40, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 40}], "prompt_token_count": 725, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 725}], "thoughts_token_count": 12, "total_token_count": 777, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-3e3886ff-ca14-4583-9534-6dc1a7811b74", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "d0c1fbe5-95fc-47f9-a52b-a0fc1499dcc3", "timestamp": 1795281334.6482208}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:15:37Z
+## note 2026-11-21T17:15:37Z: agent G: http_rc=0 tool_result=1 status=403 auth=none err=none
+## note 2026-11-21T17:15:37Z: blocked-endpoint body (first 160 chars, recorded as observed): Egress request is not authorized.
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:15:29Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:15:38Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:15:29Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:16:09Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:15:29Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:16:41Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:15:29Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:17:12Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:15:29Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:17:44Z
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:15:29Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:18:15Z
+## note 2026-11-21T17:18:15Z: gateway_requests entries with authzPolicyInfo.result=DENIED since the blocked call: 0 
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"error_code": "PERMISSION_DENIED", "error_message": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID .\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'IAM_PERMISSION_DENIED', 'domain': 'aiplatform.googleapis.com', 'metadata': {'troubleshooter_url': 'https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID', 'permission': 'aiplatform.endpoints.predict', 'error_info_id': 'REDACTED_ERROR_ID', 'resource': 'projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash'}}]}}", "invocation_id": "e-59c12957-3dd2-45df-b0e4-d190590f94f6", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "ea062e3c-0641-46ab-9659-9c9b74181a16", "timestamp": 1795281499.0983758}
+{"code": 403, "message": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID .\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'IAM_PERMISSION_DENIED', 'domain': 'aiplatform.googleapis.com', 'metadata': {'troubleshooter_url': 'https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID', 'permission': 'aiplatform.endpoints.predict', 'error_info_id': 'REDACTED_ERROR_ID', 'resource': 'projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash'}}]}}", "errorCode": "403", "errorMessage": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID .\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'IAM_PERMISSION_DENIED', 'domain': 'aiplatform.googleapis.com', 'metadata': {'troubleshooter_url': 'https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID', 'permission': 'aiplatform.endpoints.predict', 'error_info_id': 'REDACTED_ERROR_ID', 'resource': 'projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash'}}]}}"}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:18:20Z
+## note 2026-11-21T17:18:20Z: agent B: http_rc=0 permission_denied=1 phrase 'IAM deny policy'=1 model_text=0

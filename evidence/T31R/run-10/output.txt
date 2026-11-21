@@ -1,0 +1,1431 @@
+# T31R stage=pre run=run-10 start=2026-11-21T17:18:23Z
+# script_commit=e367efc
+# check=B control=Re-test of T31 part 1 (registry differential). Control: Allowed endpoint answered in `pre`; IAM state identical in `pre` and `post`
+# expected (pre-registered): `pre`: G's call to the unregistered model endpoint is refused (403) although IAM allows G; `post`: after only the registry changes, the same call is answered (200); B is refused by the IAM deny policy ("due to an IAM deny policy")
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+## note 2026-11-21T17:18:23Z: no resources are created by this script (agents, gateway, registry, deny policy are Terraform-managed); no cleanup_trap registered
+## note 2026-11-21T17:18:23Z: not asserted: the 403 body text and the log entries (recorded as observed, supporting evidence only)
+## note 2026-11-21T17:18:23Z: limitation: post shows the registry decides this call, not which gateway component (registry check or IAP policy destination.is_registered) refused it
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/TENANT_PROJECT_R10/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxjCCAq6gAwIBAgIUAO1rubbXprwXtcOCvPxn4JSLR48wDQYJKoZIhvcNAQEL
+    BQAwYDElMCMGA1UEChMcR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUG
+    A1UEAxMuQWdlbnQgR2F0ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdl
+    c3QxKTAeFw0yNjEwMjExMzE1NDVaFw0zNjEwMTgxMzE1NDRaMGAxJTAjBgNVBAoT
+    HEdvb2dsZSBDbG91ZCBNYW5hZ2VkIFNlcnZpY2UxNzA1BgNVBAMTLkFnZW50IEdh
+    dGV3YXkgVExTIEluc3BlY3Rpb24gQ0EgKGV1cm9wZS13ZXN0MSkwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCMCxVjINmL+6ilfPL538Kd6/4nwqcUqsBk
+    wPe+137/6f2gJONSF8XXHfpufip9nmE4kHDTORKjwYVC2wFgvNZ+e2AvlJjSk4Tu
+    bJZpFnssfRVW1XAbuSEwKm4BX8yPz+KLP5tlevPif9wZKJK3Y2Ep7Nn7/FOT1Zbm
+    HyjOQE7tuAvOOcsBKhEA8ISEKaBCBVmkhPZxhkt3y2LvHF2EjFWJVlHpZQaDHGxZ
+    NrHkKeDpsfmQjP3JW1148cP8KuzBP6md4SSKOnVVHn2UpfeXTKku/y/MBywwYahU
+    zzGX+jJc5v928+XZRvcOP+oOnllDiK2eWyLTC1nmGsiCkrSU8847AgMBAAGjeDB2
+    MA4GA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8E
+    BTADAQH/MB0GA1UdDgQWBBS7zcmgI1kCLpmudDaJNE2hfBoIxzAfBgNVHSMEGDAW
+    gBS7zcmgI1kCLpmudDaJNE2hfBoIxzANBgkqhkiG9w0BAQsFAAOCAQEAM7zJycep
+    sU1SBbg+j/6BaRCExQQrxzcPW/R3VuikUtgnfqSo+9y6QnaFgyjaM+5lAJqv4swz
+    ZMXmmWYx9PSWeQwgedevboPdl+uS7m4BKqTyFUFzIKdykJtsANuW93sltmMW2tFo
+    rGmMk4s+6ILkpNksbmagCTvPuGoPYXe0QY/x6RrAycAyRSaitcZfBOG3fh0f79UJ
+    HugUPooT0MA740fLybz4qP2lcDrKa7PMh3V7lJlU1ZvRzOT6nWuu1LJY9XItke0F
+    B+Kl8puXYM2IEiNW9Os7JwonohdtHtOvqpQcTZPDHRTMxJhMZ0/lu8paUEuvTfeu
+    PSMBZgQEkzYQ+g==
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_24@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-21T15:56:47.132288579Z'
+etag: 1n1dOUhRC5jpPlJQkamgXZV0WmPvQxEAkrWNiS6Wu4g
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-21T16:00:21.380195708Z'
+## exit=0 at 2026-11-21T17:18:25Z
+## note 2026-11-21T17:18:25Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83; agent B projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_84
+## $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "createTime": "2026-11-21T16:41:11.649247Z",
+  "displayName": "DC1: deny endpoints.predict to project agents except approved",
+  "etag": "MTgxNTY4OTgzNzgzOTM3MzkyNjQ=",
+  "kind": "DenyPolicy",
+  "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+  "rules": [
+    {
+      "denyRule": {
+        "deniedPermissions": [
+          "aiplatform.googleapis.com/endpoints.predict"
+        ],
+        "deniedPrincipals": [
+          "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+        ],
+        "exceptionPrincipals": [
+          "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        ]
+      },
+      "description": "Deny model inference to all agent identities in the runtime project; approved agents are exceptions."
+    }
+  ],
+  "uid": "160a42ee-6846-713c-d0b9-445c1278d8d1",
+  "updateTime": "2026-11-21T16:41:11.649247Z"
+}
+## exit=0 at 2026-11-21T17:18:26Z
+## note 2026-11-21T17:18:26Z: deny policy lzv-dc1-deny-agent-predict: createTime 2026-11-21T16:41:11.649247Z, age 2235s, etag MTgxNTY4OTgzNzgzOTM3MzkyNjQ=, exceptions sha256 7c23a2749dc6acc8 (G an exception, B not)
+## $ gcloud alpha agent-registry services list --location=europe-west1 --project=PROJECT_8 --format=json
+[
+  {
+    "createTime": "2026-11-21T15:56:00.676020615Z",
+    "displayName": "LZV essential logging endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://logging.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-logging",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-b002-65bf247ef3c8",
+    "updateTime": "2026-11-21T15:56:00.792121729Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:35.736246511Z",
+    "displayName": "LZV essential endpoint crm-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudresourcemanager.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-crm-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-b369-58a9a3253a01",
+    "updateTime": "2026-11-21T15:56:35.835346945Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:17.353015657Z",
+    "displayName": "LZV essential endpoint telemetry",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://telemetry.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-telemetry",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-27de-fdc52e4809c4",
+    "updateTime": "2026-11-21T15:55:17.467036806Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:28.452419497Z",
+    "displayName": "LZV allowed model endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-523a-263ec45e74d5",
+    "updateTime": "2026-11-21T15:55:28.573904530Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:16.287838093Z",
+    "displayName": "LZV allowed model endpoint (mTLS)",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-4233-7e34a9b15342",
+    "updateTime": "2026-11-21T15:55:16.413507368Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:39.085567021Z",
+    "displayName": "LZV essential endpoint iamcredentials",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://iamcredentials.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-iamcredentials",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-bfc2-73bc262694c1",
+    "updateTime": "2026-11-21T15:55:39.221390150Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:36.185573226Z",
+    "displayName": "LZV essential endpoint aiplatform-rep",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.europe-west1.rep.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform-rep",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-c78a-26bf68a15652",
+    "updateTime": "2026-11-21T15:56:36.302586704Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:00.210333680Z",
+    "displayName": "LZV essential endpoint secretmanager-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://secretmanager.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-secretmanager-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-aeb3-d35d838949f1",
+    "updateTime": "2026-11-21T15:56:00.323148824Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:15.738050849Z",
+    "displayName": "LZV essential endpoint monitoring-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://monitoring.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-monitoring-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-a191-ba003744cb71",
+    "updateTime": "2026-11-21T15:55:15.856440982Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:12.739982907Z",
+    "displayName": "LZV agent sessions (mTLS, this project's reasoning engines)",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-sessions",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-bbb0-b99edf023412",
+    "updateTime": "2026-11-21T15:56:12.870091390Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:04.959323495Z",
+    "displayName": "LZV essential endpoint iamcredentials-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://iamcredentials.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-iamcredentials-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-983c-b5229f242c9c",
+    "updateTime": "2026-11-21T15:55:05.150480064Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:28.000515456Z",
+    "displayName": "LZV essential endpoint secretmanager",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://secretmanager.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-secretmanager",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-4a9f-40d63020b2f4",
+    "updateTime": "2026-11-21T15:55:28.114378139Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:16.870454354Z",
+    "displayName": "LZV essential endpoint agentregistry",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://agentregistry.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-agentregistry",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-d336-4a9234a72aca",
+    "updateTime": "2026-11-21T15:55:16.986473184Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:23.313613137Z",
+    "displayName": "LZV essential endpoint telemetry-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://telemetry.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-telemetry-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-ec7a-e00285ed0939",
+    "updateTime": "2026-11-21T15:56:23.418033878Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:01.204508318Z",
+    "displayName": "LZV essential endpoint crm",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudresourcemanager.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-crm",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-3508-32f178d776d1",
+    "updateTime": "2026-11-21T15:56:01.307087383Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:24.543621733Z",
+    "displayName": "LZV essential endpoint cloudtrace-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudtrace.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-cloudtrace-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-2035-7c1d7e805678",
+    "updateTime": "2026-11-21T15:56:24.677754916Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:23.791627288Z",
+    "displayName": "LZV essential endpoint monitoring",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://monitoring.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-monitoring",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-8971-ffe94db96450",
+    "updateTime": "2026-11-21T15:56:23.885948593Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:12.236779141Z",
+    "displayName": "LZV essential endpoint aiplatform-reg-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://europe-west1-aiplatform.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform-reg-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-91de-b6e0a1d988e5",
+    "updateTime": "2026-11-21T15:56:12.375426356Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:01.654217945Z",
+    "displayName": "LZV essential endpoint cloudtrace",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudtrace.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-cloudtrace",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-710d-c92e6b12d9cb",
+    "updateTime": "2026-11-21T15:56:01.765594809Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:35.172252501Z",
+    "displayName": "LZV essential endpoint logging-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://logging.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-logging-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-28ec-c5af7a243a29",
+    "updateTime": "2026-11-21T15:56:35.280005249Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:49.661721162Z",
+    "displayName": "LZV registered MCP fixture",
+    "interfaces": [
+      {
+        "protocolBinding": "JSONRPC",
+        "url": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp"
+      }
+    ],
+    "mcpServerSpec": {
+      "content": {
+        "tools": [
+          {
+            "description": "Returns a fixed clean string (registered).",
+            "inputSchema": {
+              "properties": {},
+              "type": "object"
+            },
+            "name": "registered_echo"
+          },
+          {
+            "description": "Returns a fixed prompt-injection sample (registered).",
+            "inputSchema": {
+              "properties": {},
+              "type": "object"
+            },
+            "name": "inject_response"
+          }
+        ]
+      },
+      "type": "TOOL_SPEC"
+    },
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-mcp-reg",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-df54-44c4deb9a66b",
+    "updateTime": "2026-11-21T15:55:49.786436377Z"
+  }
+]
+## exit=0 at 2026-11-21T17:18:27Z
+## note 2026-11-21T17:18:27Z: registry entries for https://aiplatform.eu.rep.googleapis.com: 0
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_3224537410523394627", "args": {"endpoint": "allowed"}, "name": "call_model"}, "thought_signature": "AY89a18q9We6XWLKL57rZLgRRMlYOPCkjoG7B-cX0UqQMHyB5AVzy9b_d9b-VawWqHIVr8KKt87UWgTn1O32gM4QcM_ORRCshIcc0v4WuDisV69ONu2KdSaysSIQpJiXpiODyTUA8eWZdbgDodQfVkjnQ4TE3mn0eGXrrz8h3by3gCWNgADoMvntPvtqwijKZf7LWVH7Malm3ULl_dRbzuK8bxXydVd626ADHHtwyvieRRX3qsp038XtE2oY3ibg8tWWqScrzUwamwx4YPXnesNDPg-cF8p51Nx0JDS7nbTvnMco6aFuzVsSgB0xmAqRP8DXCQR1q9wlerkt85Wm8KN9YSCeuJ9Prc638QHrKqwa67beCmCBMKBQcxteltBnIZC9T3xZjydazU2iRz42p9E6wymT3YiBRPLdFcpmlXUAvSTTHdtdEtAYBiDgX-jEaS_WM-yKwh-yxMkRHKTuoIAfmDog5Xj4cNzJWbj7h3OdojCVoi5yGqI1hlhgTml_7O7DgEZ4Y-2CSh3GGbJ9zM5PMY6adcZVgZuP4TXkmQhtadd4Kw=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 16, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 16}], "prompt_token_count": 603, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 603}], "thoughts_token_count": 80, "total_token_count": 699, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d8204a3e-df71-4696-8107-c9c18fae8106", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "21466e5d-c725-4a1f-9a08-7d55a756d320", "timestamp": 1795281509.5907948}
+{"content": {"parts": [{"function_response": {"id": "call_3224537410523394627", "name": "call_model", "response": {"endpoint": "allowed", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a18T6zetdNiqGTrY04yDoqMV8tR7dfCEJKbO2mxCHOkqIofKIAIMwhqf3jHwMKLfRK1guit0r3jm35kKJ9Fvlu/y53oJyWYpvVBvXPjK5JH8QfK7cCut6gIREAONglUUsmGgMkNRG7S6GfO0YvJr80oKpSNojVhKnAp5CDtA74CKg4q0B63P8Ll+/xiC6w8Xi4DXqLqVbvPIQk5CSuWJ/HeeEa0dq4Vezg6OgOfwdNJ5Ic44L+1TGV5v7Kfb4jAm7/m6XZAs3hxeBMPQdmyQnqIjAwLGbCnox+2OGTGR4PCzIx/2VdmQhHPv4lL22ch2DdXUDyLQKSmguwrz5wQSbzhNTBLY/wEdNbTJfnlAFD1dgg3mE8IPYX5Yt6EyPeYsUPaBJ6tLbdj8UhOx1iXOlyF+bhN1zAP+dSuWTZwisuDbZssOj1nB", "error": null}}}], "role": "user"}, "invocation_id": "e-d8204a3e-df71-4696-8107-c9c18fae8106", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "c612044e-02a1-4a94-97c1-d21e8960ea9d", "timestamp": 1795281514.027695}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"endpoint\": \"allowed\",\n  \"status\": 200,\n  \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"role\\\": \\\"model\\\",\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"AY89a18T6zetdNiqGTrY04yDoqMV8tR7dfCEJKbO2mxCHOkqIofKIAIMwhqf3jHwMKLfRK1guit0r3jm35kKJ9Fvlu/y53oJyWYpvVBvXPjK5JH8QfK7cCut6gIREAONglUUsmGgMkNRG7S6GfO0YvJr80oKpSNojVhKnAp5CDtA74CKg4q0B63P8Ll+/xiC6w8Xi4DXqLqVbvPIQk5CSuWJ/HeeEa0dq4Vezg6OgOfwdNJ5Ic44L+1TGV5v7Kfb4jAm7/m6XZAs3hxeBMPQdmyQnqIjAwLGbCnox+2OGTGR4PCzIx/2VdmQhHPv4lL22ch2DdXUDyLQKSmguwrz5wQSbzhNTBLY/wEdNbTJfnlAFD1dgg3mE8IPYX5Yt6EyPeYsUPaBJ6tLbdj8UhOx1iXOlyF+bhN1zAP+dSuWTZwisuDbZssOj1nB\",\\n            \\\"thoughtData\\\": \\\"\\\"\\n          }\\n        ]\\n      },\\n      \\\"finishReason\\\": \\\"STOP\\\",\\n      \\\"avgLogprob\\\": -0.054238513112068176\\n    }\\n  ],\\n  \\\"usageMetadata\\\": {\\n    \\\"promptTokenCount\\\": 11,\\n    \\\"candidatesTokenCount\\\": 1,\\n    \\\"totalTokenCount\\\": 12\\n  }\\n}\",\n  \"error\": null\n}", "thought_signature": "AY89a1-IjyBGbAbiNp8n0GXNmkjjpkR5QvqloWaVcbjtGhyWLj-MhvrQNXuao86WeNzDejvJ4FrNa_BGcfZ2QjzPNJWfPE3MM_-rJ13H72F7ExmQPF5D9kr9Jc1-Dm0tQzp3EfEWmM2kdS8Q1qI4vJOJ1Kxd8mlB--pfXr7llLr3HccAaaUZ-7hPFO9O771-4H3pls6ZwG_42CxzwjUs5lWLlq7lvEhTlDzRncx8gli9mu3G3OG4Wu01Zg-6RN3A7suKBi_Bl_aWpslZTH5Z1nvg3g=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 502, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 502}], "prompt_token_count": 1067, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 1067}], "thoughts_token_count": 18, "total_token_count": 1587, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-d8204a3e-df71-4696-8107-c9c18fae8106", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "f830af4e-699a-4a87-8a6d-037c04db79a3", "timestamp": 1795281514.2413208}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:18:37Z
+## note 2026-11-21T17:18:37Z: agent G: http_rc=0 tool_result=1 status=200 auth=none err=none
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_12553751829318797944", "args": {"endpoint": "blocked_global"}, "name": "call_model"}, "thought_signature": "AY89a1_HfQIZO-znfAVFsFhjH6fCfg9cSC6K-7l6W9InuBwvSflu1HgYv7t8zswE6Q7AmG_vThtUi7VdeQKnMrGhyR_o349jWuBxHHv_PZ0BmwXp9ATFiu-PPCoi5V5AUBIps4hXu-XAZGRJkm0BJ4fE6LrsDh6fbZlbAn8ISJ6ZFJD7FIJO0cNvtmeGeOWKKPKYihtkN33OKu_4HaNnkOBXMfbwniS8VZ7ncixRS9lRj7cQEgYjly5iawT2LE-rPbDqTsxfRXniDOeh13KAJWnmx5X6RIZCIv6n68VRa1FbRQka5sdMdNfMlCE46WE55DgSSshpum45lcC-ZzUZ9PKOhsHPpswO9Ip_BnSSSdqHcr1sMGadOaGHTMRTKeLGjc5MUpT_VAbEKtTgBFxCBBzcZ7CaPkhujoE7DRYZ2b5lydTwEVteclr-dkWo5PYMrRK_-8wcxsmlUD47eHh3Gg=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 18, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 18}], "prompt_token_count": 605, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 605}], "thoughts_token_count": 62, "total_token_count": 685, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-15b3e15c-67c9-4548-ba18-443aa0b63fdd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "5c786eb1-218c-4b1e-aa1a-9d5b2c2e8e87", "timestamp": 1795281519.5795028}
+{"content": {"parts": [{"function_response": {"id": "call_12553751829318797944", "name": "call_model", "response": {"endpoint": "blocked_global", "status": 403, "body": "Egress request is not authorized.", "error": null}}}], "role": "user"}, "invocation_id": "e-15b3e15c-67c9-4548-ba18-443aa0b63fdd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "fc0aabcf-83b3-4dc2-a634-796a8019f63a", "timestamp": 1795281521.2662802}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "```json\n{\n  \"endpoint\": \"blocked_global\",\n  \"status\": 403,\n  \"body\": \"Egress request is not authorized.\",\n  \"error\": null\n}\n```", "thought_signature": "AY89a19Q7FOhn1eMYT31taPWnV6W_OjmUQxMvd8cx3uSTyXSG9obEnXmHAO51mwAzP_vmAZMoBQrLdMnq3r2hvM6mMAFzrhtLwTmqmihkjEUo9qZTnMjgPw4Nw3OB1q6Ji-utdEY0PtJWqvKnrU7gIpFATzn5McFJ1MXKaN7n8M4izr4hA-xOXu9v95cl6_IZK8WfSArKz_rIi625TwRMgeIyw6vMX2DnBR93w_nAcJ9eb1inoj_P1pPR0-Ee0DzopZerGz_qhvQzi2hjc18ZImr_kOkCyjPMVeZcY-r2CqL_nRYdbN00cNWj_4="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 47, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 47}], "prompt_token_count": 703, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 703}], "thoughts_token_count": 22, "total_token_count": 772, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-15b3e15c-67c9-4548-ba18-443aa0b63fdd", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "3b7bc90e-4948-488a-9426-e11ccd0f2ff0", "timestamp": 1795281521.4558833}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:18:43Z
+## note 2026-11-21T17:18:43Z: agent G: http_rc=0 tool_result=1 status=403 auth=none err=none
+## note 2026-11-21T17:18:43Z: (b) body (first 160 chars, recorded as observed): Egress request is not authorized.
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:18:37Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ jsonPayload.authzPolicyInfo.result=\"DENIED\" --project=PROJECT_8 --limit=5 --format=json
+[
+  {
+    "httpRequest": {
+      "latency": "0.100096s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "IP_5:1024",
+      "requestMethod": "POST",
+      "requestSize": "2063",
+      "requestUrl": "https://aiplatform.eu.rep.googleapis.com/v1/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash:generateContent",
+      "responseSize": "193",
+      "status": 403,
+      "userAgent": "python-requests/2.34.2"
+    },
+    "insertId": "sciykkf1npozx",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/authzPolicies/lzv-gw-iap-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.eu.rep.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.eu.rep.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "He5dPNiH0sRT10mNsXgJvpv2MBICVEw8PaAbnRvjFiU",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.eu.rep.googleapis.com"
+    },
+    "logName": "projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-11-21T17:18:48.008954444Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "lzv-gw",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "europe-west1",
+        "network_name": "projects/TENANT_PROJECT_R10/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "PROJECT_NUMBER_7"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-11-21T17:18:41.163034Z"
+  }
+]
+## exit=0 at 2026-11-21T17:19:45Z
+## note 2026-11-21T17:19:45Z: supporting: gateway_requests DENIED entries since (b): 1
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:18:37Z\"\ AND\ protoPayload.serviceName=\"iap.googleapis.com\" --project=PROJECT_8 --limit=5 --format=json
+[
+  {
+    "insertId": "1rbr71ee3nx7r",
+    "labels": {
+      "gen_ai.agent.name": "aiplatform",
+      "iap.googleapis.com/audited_resource_name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "iap.googleapis.com/audited_resource_type": "networkservices.googleapis.com/AgentGateway"
+    },
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.googleapis.com/resources.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/Resources"
+          }
+        }
+      ],
+      "callerAgent": {},
+      "metadata": {
+        "destination": {
+          "agent_registry": {
+            "region": "europe-west1",
+            "resource_id": "projects/PROJECT_8/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-ec7a-e00285ed0939",
+            "resource_type": "agentregistry.googleapis.com/Endpoint"
+          }
+        },
+        "device_id": "",
+        "device_state": "Unknown",
+        "dryRun": false,
+        "oauth_client_id": "",
+        "policy_version": "POLICY_VERSION_V2",
+        "request_id": "15471245555473124818"
+      },
+      "methodName": "GatekeeperAuthorizer.AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "httpRequest": {
+          "url": "https://telemetry.mtls.googleapis.com/v1/metrics"
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "callerSuppliedUserAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "host": "telemetry.mtls.googleapis.com",
+          "path": "/v1/metrics",
+          "time": "2026-11-21T17:18:43.222702790Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "serviceName": "iap.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T17:18:50.341027979Z",
+    "resource": {
+      "labels": {
+        "method": "GatekeeperAuthorizer.AuthorizeUser",
+        "project_id": "PROJECT_8",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T17:18:43.220437970Z"
+  },
+  {
+    "insertId": "1zkjd9e2ekqm",
+    "labels": {
+      "gen_ai.agent.name": "aiplatform",
+      "iap.googleapis.com/audited_resource_name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "iap.googleapis.com/audited_resource_type": "networkservices.googleapis.com/AgentGateway"
+    },
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.googleapis.com/resources.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/Resources"
+          }
+        }
+      ],
+      "callerAgent": {},
+      "metadata": {
+        "destination": {
+          "agent_registry": {
+            "region": "europe-west1",
+            "resource_id": "projects/PROJECT_8/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-ec7a-e00285ed0939",
+            "resource_type": "agentregistry.googleapis.com/Endpoint"
+          }
+        },
+        "device_id": "",
+        "device_state": "Unknown",
+        "dryRun": false,
+        "oauth_client_id": "",
+        "policy_version": "POLICY_VERSION_V2",
+        "request_id": "17147171457203053187"
+      },
+      "methodName": "GatekeeperAuthorizer.AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "httpRequest": {
+          "url": "https://telemetry.mtls.googleapis.com/v1/traces"
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "callerSuppliedUserAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "host": "telemetry.mtls.googleapis.com",
+          "path": "/v1/traces",
+          "time": "2026-11-21T17:18:43.054207170Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "serviceName": "iap.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T17:18:43.223116020Z",
+    "resource": {
+      "labels": {
+        "method": "GatekeeperAuthorizer.AuthorizeUser",
+        "project_id": "PROJECT_8",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T17:18:43.042024058Z"
+  },
+  {
+    "insertId": "pv1rtje176oo",
+    "labels": {
+      "gen_ai.agent.name": "aiplatform",
+      "iap.googleapis.com/audited_resource_name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "iap.googleapis.com/audited_resource_type": "networkservices.googleapis.com/AgentGateway"
+    },
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.googleapis.com/resources.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/Resources"
+          }
+        }
+      ],
+      "callerAgent": {},
+      "metadata": {
+        "destination": {
+          "agent_registry": {
+            "region": "europe-west1",
+            "resource_id": "projects/PROJECT_8/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-ec7a-e00285ed0939",
+            "resource_type": "agentregistry.googleapis.com/Endpoint"
+          }
+        },
+        "device_id": "",
+        "device_state": "Unknown",
+        "dryRun": false,
+        "oauth_client_id": "",
+        "policy_version": "POLICY_VERSION_V2",
+        "request_id": "9934066598865036068"
+      },
+      "methodName": "GatekeeperAuthorizer.AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "httpRequest": {
+          "url": "https://telemetry.mtls.googleapis.com/v1/logs"
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "callerSuppliedUserAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "host": "telemetry.mtls.googleapis.com",
+          "path": "/v1/logs",
+          "time": "2026-11-21T17:18:42.962971422Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "serviceName": "iap.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T17:18:43.260425599Z",
+    "resource": {
+      "labels": {
+        "method": "GatekeeperAuthorizer.AuthorizeUser",
+        "project_id": "PROJECT_8",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T17:18:42.945055819Z"
+  },
+  {
+    "insertId": "1jiz53lds811",
+    "labels": {
+      "gen_ai.agent.name": "aiplatform",
+      "iap.googleapis.com/audited_resource_name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "iap.googleapis.com/audited_resource_type": "networkservices.googleapis.com/AgentGateway"
+    },
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.googleapis.com/resources.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/Resources"
+          }
+        }
+      ],
+      "callerAgent": {},
+      "metadata": {
+        "destination": {
+          "agent_registry": {
+            "region": "europe-west1",
+            "resource_id": "projects/PROJECT_8/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-bbb0-b99edf023412",
+            "resource_type": "agentregistry.googleapis.com/Endpoint"
+          }
+        },
+        "device_id": "",
+        "device_state": "Unknown",
+        "dryRun": false,
+        "oauth_client_id": "",
+        "policy_version": "POLICY_VERSION_V2",
+        "request_id": "6654731168999750131"
+      },
+      "methodName": "GatekeeperAuthorizer.AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "httpRequest": {
+          "url": "https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83/sessions/8209819953260396544:appendEvent"
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "callerSuppliedUserAgent": "google-genai-sdk/2.34.0+vertex-genai-modules/2.6.0 gl-python/3.13.15",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "host": "europe-west1-aiplatform.mtls.googleapis.com",
+          "path": "/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83/sessions/8209819953260396544:appendEvent",
+          "time": "2026-11-21T17:18:42.865359419Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "serviceName": "iap.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T17:18:43.884746215Z",
+    "resource": {
+      "labels": {
+        "method": "GatekeeperAuthorizer.AuthorizeUser",
+        "project_id": "PROJECT_8",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T17:18:42.863121730Z"
+  },
+  {
+    "insertId": "4qczdpe1vbfp",
+    "labels": {
+      "gen_ai.agent.name": "aiplatform",
+      "iap.googleapis.com/audited_resource_name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "iap.googleapis.com/audited_resource_type": "networkservices.googleapis.com/AgentGateway"
+    },
+    "logName": "projects/PROJECT_8/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "clientidmetadata.googleapis.com/agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        },
+        "principalSubject": "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83",
+        "serviceAccountDelegationInfo": [
+          {}
+        ]
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.googleapis.com/resources.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+          "resourceAttributes": {
+            "name": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/Resources"
+          }
+        }
+      ],
+      "callerAgent": {},
+      "metadata": {
+        "destination": {
+          "agent_registry": {
+            "region": "europe-west1",
+            "resource_id": "projects/PROJECT_8/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-ec7a-e00285ed0939",
+            "resource_type": "agentregistry.googleapis.com/Endpoint"
+          }
+        },
+        "device_id": "",
+        "device_state": "Unknown",
+        "dryRun": false,
+        "oauth_client_id": "",
+        "policy_version": "POLICY_VERSION_V2",
+        "request_id": "3435162486462921129"
+      },
+      "methodName": "GatekeeperAuthorizer.AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "httpRequest": {
+          "url": "https://telemetry.mtls.googleapis.com/v1/logs"
+        }
+      },
+      "requestMetadata": {
+        "callerIp": "private",
+        "callerSuppliedUserAgent": "Vertex-Agent-Engine/2.6.0 OTel-OTLP-Exporter-Python/1.44.0",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "host": "telemetry.mtls.googleapis.com",
+          "path": "/v1/logs",
+          "time": "2026-11-21T17:18:41.680057374Z"
+        }
+      },
+      "resourceName": "projects/PROJECT_NUMBER_7/locations/europe-west1/agentGateways/lzv-gw",
+      "serviceName": "iap.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-11-21T17:18:42.872920053Z",
+    "resource": {
+      "labels": {
+        "method": "GatekeeperAuthorizer.AuthorizeUser",
+        "project_id": "PROJECT_8",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-11-21T17:18:41.661067468Z"
+  }
+]
+## exit=0 at 2026-11-21T17:19:46Z
+## note 2026-11-21T17:19:46Z: supporting: IAP audit entries since (b): 5
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 180 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"error_code": "PERMISSION_DENIED", "error_message": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID .\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'IAM_PERMISSION_DENIED', 'domain': 'aiplatform.googleapis.com', 'metadata': {'troubleshooter_url': 'https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID', 'resource': 'projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash', 'error_info_id': 'REDACTED_ERROR_ID', 'permission': 'aiplatform.endpoints.predict'}}]}}", "invocation_id": "e-ff3abf1f-4942-44b1-bb16-502eef50ae10", "author": "lzv_probe", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe@1"}, "id": "10e00565-4e1d-4a45-8824-1edf9cb56a5a", "timestamp": 1795281588.1026254}
+{"code": 403, "message": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID .\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'IAM_PERMISSION_DENIED', 'domain': 'aiplatform.googleapis.com', 'metadata': {'troubleshooter_url': 'https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID', 'resource': 'projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash', 'error_info_id': 'REDACTED_ERROR_ID', 'permission': 'aiplatform.endpoints.predict'}}]}}", "errorCode": "403", "errorMessage": "403 PERMISSION_DENIED. {'error': {'code': 403, 'message': \"Permission 'aiplatform.endpoints.predict' denied on resource '//aiplatform.googleapis.com/projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash' due to an IAM deny policy. Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID .\", 'status': 'PERMISSION_DENIED', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'IAM_PERMISSION_DENIED', 'domain': 'aiplatform.googleapis.com', 'metadata': {'troubleshooter_url': 'https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=REDACTED_ERROR_ID', 'resource': 'projects/PROJECT_8/locations/global/publishers/google/models/gemini-3.5-flash', 'error_info_id': 'REDACTED_ERROR_ID', 'permission': 'aiplatform.endpoints.predict'}}]}}"}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:19:48Z
+## note 2026-11-21T17:19:48Z: (c) agent B: http_rc=0 permission_denied=1 phrase 'IAM deny policy'=1 model_text=0
+# T31R stage=post run=run-10 start=2026-11-21T17:24:55Z
+# script_commit=e367efc
+# check=B control=Re-test of T31 part 1 (registry differential). Control: Allowed endpoint answered in `pre`; IAM state identical in `pre` and `post`
+# expected (pre-registered): `pre`: G's call to the unregistered model endpoint is refused (403) although IAM allows G; `post`: after only the registry changes, the same call is answered (200); B is refused by the IAM deny policy ("due to an IAM deny policy")
+# tools: {"gcloud":"590.0.1","terraform":"1.17.2","google_provider":"8.12.0"}
+## note 2026-11-21T17:24:55Z: no resources are created by this script (agents, gateway, registry, deny policy are Terraform-managed); no cleanup_trap registered
+## note 2026-11-21T17:24:55Z: not asserted: the 403 body text and the log entries (recorded as observed, supporting evidence only)
+## note 2026-11-21T17:24:55Z: limitation: post shows the registry decides this call, not which gateway component (registry check or IAP policy destination.is_registered) refused it
+## $ gcloud alpha network-services agent-gateways describe lzv-gw --location=europe-west1 --project=PROJECT_8
+agentGatewayCard:
+  mtlsEndpoint: projects/TENANT_PROJECT_R10/regions/europe-west1/serviceAttachments/unitkind1-swp-mtls-psc-sa
+  rootCertificates:
+  - |
+    -----BEGIN CERTIFICATE-----
+    MIIDxjCCAq6gAwIBAgIUAO1rubbXprwXtcOCvPxn4JSLR48wDQYJKoZIhvcNAQEL
+    BQAwYDElMCMGA1UEChMcR29vZ2xlIENsb3VkIE1hbmFnZWQgU2VydmljZTE3MDUG
+    A1UEAxMuQWdlbnQgR2F0ZXdheSBUTFMgSW5zcGVjdGlvbiBDQSAoZXVyb3BlLXdl
+    c3QxKTAeFw0yNjEwMjExMzE1NDVaFw0zNjEwMTgxMzE1NDRaMGAxJTAjBgNVBAoT
+    HEdvb2dsZSBDbG91ZCBNYW5hZ2VkIFNlcnZpY2UxNzA1BgNVBAMTLkFnZW50IEdh
+    dGV3YXkgVExTIEluc3BlY3Rpb24gQ0EgKGV1cm9wZS13ZXN0MSkwggEiMA0GCSqG
+    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCMCxVjINmL+6ilfPL538Kd6/4nwqcUqsBk
+    wPe+137/6f2gJONSF8XXHfpufip9nmE4kHDTORKjwYVC2wFgvNZ+e2AvlJjSk4Tu
+    bJZpFnssfRVW1XAbuSEwKm4BX8yPz+KLP5tlevPif9wZKJK3Y2Ep7Nn7/FOT1Zbm
+    HyjOQE7tuAvOOcsBKhEA8ISEKaBCBVmkhPZxhkt3y2LvHF2EjFWJVlHpZQaDHGxZ
+    NrHkKeDpsfmQjP3JW1148cP8KuzBP6md4SSKOnVVHn2UpfeXTKku/y/MBywwYahU
+    zzGX+jJc5v928+XZRvcOP+oOnllDiK2eWyLTC1nmGsiCkrSU8847AgMBAAGjeDB2
+    MA4GA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8E
+    BTADAQH/MB0GA1UdDgQWBBS7zcmgI1kCLpmudDaJNE2hfBoIxzAfBgNVHSMEGDAW
+    gBS7zcmgI1kCLpmudDaJNE2hfBoIxzANBgkqhkiG9w0BAQsFAAOCAQEAM7zJycep
+    sU1SBbg+j/6BaRCExQQrxzcPW/R3VuikUtgnfqSo+9y6QnaFgyjaM+5lAJqv4swz
+    ZMXmmWYx9PSWeQwgedevboPdl+uS7m4BKqTyFUFzIKdykJtsANuW93sltmMW2tFo
+    rGmMk4s+6ILkpNksbmagCTvPuGoPYXe0QY/x6RrAycAyRSaitcZfBOG3fh0f79UJ
+    HugUPooT0MA740fLybz4qP2lcDrKa7PMh3V7lJlU1ZvRzOT6nWuu1LJY9XItke0F
+    B+Kl8puXYM2IEiNW9Os7JwonohdtHtOvqpQcTZPDHRTMxJhMZ0/lu8paUEuvTfeu
+    PSMBZgQEkzYQ+g==
+    -----END CERTIFICATE-----
+  serviceExtensionsServiceAccount: service-PROJECT_NUMBER_24@gcp-sa-dep.iam.gserviceaccount.com
+createTime: '2026-11-21T15:56:47.132288579Z'
+etag: 1n1dOUhRC5jpPlJQkamgXZV0WmPvQxEAkrWNiS6Wu4g
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+labels:
+  goog-terraform-provisioned: 'true'
+name: projects/PROJECT_8/locations/europe-west1/agentGateways/lzv-gw
+networkConfig:
+  dnsPeeringConfig:
+    domains:
+    - run.app.
+    targetNetwork: projects/PROJECT_8/global/networks/lzv-gw-vpc
+    targetProject: PROJECT_8
+  egress:
+    networkAttachment: projects/PROJECT_8/regions/europe-west1/networkAttachments/lzv-gw-attach
+protocols:
+- MCP
+registries:
+- //agentregistry.googleapis.com/projects/PROJECT_8/locations/europe-west1
+updateTime: '2026-11-21T16:00:21.380195708Z'
+## exit=0 at 2026-11-21T17:24:57Z
+## note 2026-11-21T17:24:57Z: guards ok: gateway lzv-gw exists in europe-west1; agent G projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83; agent B projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_84
+## $ gcloud iam policies get lzv-dc1-deny-agent-predict --attachment-point=cloudresourcemanager.googleapis.com/projects/PROJECT_8 --kind=denypolicies --format=json --billing-project=PROJECT_6
+{
+  "createTime": "2026-11-21T16:41:11.649247Z",
+  "displayName": "DC1: deny endpoints.predict to project agents except approved",
+  "etag": "MTgxNTY4OTgzNzgzOTM3MzkyNjQ=",
+  "kind": "DenyPolicy",
+  "name": "policies/cloudresourcemanager.googleapis.com%2Fprojects%2FPROJECT_NUMBER_7/denypolicies/lzv-dc1-deny-agent-predict",
+  "rules": [
+    {
+      "denyRule": {
+        "deniedPermissions": [
+          "aiplatform.googleapis.com/endpoints.predict"
+        ],
+        "deniedPrincipals": [
+          "principalSet://agents.global.org-ORG_ID.system.id.goog/attribute.platformContainer/aiplatform/projects/PROJECT_NUMBER_7"
+        ],
+        "exceptionPrincipals": [
+          "principal://agents.global.org-ORG_ID.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines/AGENT_ID_83"
+        ]
+      },
+      "description": "Deny model inference to all agent identities in the runtime project; approved agents are exceptions."
+    }
+  ],
+  "uid": "160a42ee-6846-713c-d0b9-445c1278d8d1",
+  "updateTime": "2026-11-21T16:41:11.649247Z"
+}
+## exit=0 at 2026-11-21T17:24:58Z
+## note 2026-11-21T17:24:58Z: deny policy lzv-dc1-deny-agent-predict: createTime 2026-11-21T16:41:11.649247Z, age 2627s, etag MTgxNTY4OTgzNzgzOTM3MzkyNjQ=, exceptions sha256 7c23a2749dc6acc8 (G an exception, B not)
+## $ gcloud alpha agent-registry services list --location=europe-west1 --project=PROJECT_8 --format=json
+[
+  {
+    "createTime": "2026-11-21T15:56:00.676020615Z",
+    "displayName": "LZV essential logging endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://logging.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-logging",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-b002-65bf247ef3c8",
+    "updateTime": "2026-11-21T15:56:00.792121729Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:35.736246511Z",
+    "displayName": "LZV essential endpoint crm-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudresourcemanager.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-crm-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-b369-58a9a3253a01",
+    "updateTime": "2026-11-21T15:56:35.835346945Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:17.353015657Z",
+    "displayName": "LZV essential endpoint telemetry",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://telemetry.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-telemetry",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-27de-fdc52e4809c4",
+    "updateTime": "2026-11-21T15:55:17.467036806Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:28.452419497Z",
+    "displayName": "LZV allowed model endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-523a-263ec45e74d5",
+    "updateTime": "2026-11-21T15:55:28.573904530Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:16.287838093Z",
+    "displayName": "LZV allowed model endpoint (mTLS)",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-4233-7e34a9b15342",
+    "updateTime": "2026-11-21T15:55:16.413507368Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:39.085567021Z",
+    "displayName": "LZV essential endpoint iamcredentials",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://iamcredentials.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-iamcredentials",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-bfc2-73bc262694c1",
+    "updateTime": "2026-11-21T15:55:39.221390150Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:36.185573226Z",
+    "displayName": "LZV essential endpoint aiplatform-rep",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.europe-west1.rep.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform-rep",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-c78a-26bf68a15652",
+    "updateTime": "2026-11-21T15:56:36.302586704Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:00.210333680Z",
+    "displayName": "LZV essential endpoint secretmanager-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://secretmanager.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-secretmanager-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-aeb3-d35d838949f1",
+    "updateTime": "2026-11-21T15:56:00.323148824Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:15.738050849Z",
+    "displayName": "LZV essential endpoint monitoring-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://monitoring.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-monitoring-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-a191-ba003744cb71",
+    "updateTime": "2026-11-21T15:55:15.856440982Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:12.739982907Z",
+    "displayName": "LZV agent sessions (mTLS, this project's reasoning engines)",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://europe-west1-aiplatform.mtls.googleapis.com/v1beta1/projects/PROJECT_NUMBER_7/locations/europe-west1/reasoningEngines"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-sessions",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-bbb0-b99edf023412",
+    "updateTime": "2026-11-21T15:56:12.870091390Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:04.959323495Z",
+    "displayName": "LZV essential endpoint iamcredentials-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://iamcredentials.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-iamcredentials-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-983c-b5229f242c9c",
+    "updateTime": "2026-11-21T15:55:05.150480064Z"
+  },
+  {
+    "createTime": "2026-11-21T17:19:51.470406747Z",
+    "displayName": "LZV T31R post: blocked global-model host registered (T31R v2)",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.eu.rep.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-t31r-blocked",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-0739-9954d27af12c",
+    "updateTime": "2026-11-21T17:19:51.600564025Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:28.000515456Z",
+    "displayName": "LZV essential endpoint secretmanager",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://secretmanager.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-secretmanager",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-4a9f-40d63020b2f4",
+    "updateTime": "2026-11-21T15:55:28.114378139Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:16.870454354Z",
+    "displayName": "LZV essential endpoint agentregistry",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://agentregistry.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-agentregistry",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-d336-4a9234a72aca",
+    "updateTime": "2026-11-21T15:55:16.986473184Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:23.313613137Z",
+    "displayName": "LZV essential endpoint telemetry-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://telemetry.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-telemetry-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-ec7a-e00285ed0939",
+    "updateTime": "2026-11-21T15:56:23.418033878Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:01.204508318Z",
+    "displayName": "LZV essential endpoint crm",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudresourcemanager.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-crm",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-3508-32f178d776d1",
+    "updateTime": "2026-11-21T15:56:01.307087383Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:24.543621733Z",
+    "displayName": "LZV essential endpoint cloudtrace-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudtrace.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-cloudtrace-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-2035-7c1d7e805678",
+    "updateTime": "2026-11-21T15:56:24.677754916Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:23.791627288Z",
+    "displayName": "LZV essential endpoint monitoring",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://monitoring.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-monitoring",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-8971-ffe94db96450",
+    "updateTime": "2026-11-21T15:56:23.885948593Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:12.236779141Z",
+    "displayName": "LZV essential endpoint aiplatform-reg-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://europe-west1-aiplatform.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-aiplatform-reg-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-91de-b6e0a1d988e5",
+    "updateTime": "2026-11-21T15:56:12.375426356Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:01.654217945Z",
+    "displayName": "LZV essential endpoint cloudtrace",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://cloudtrace.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-cloudtrace",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-710d-c92e6b12d9cb",
+    "updateTime": "2026-11-21T15:56:01.765594809Z"
+  },
+  {
+    "createTime": "2026-11-21T15:56:35.172252501Z",
+    "displayName": "LZV essential endpoint logging-mtls",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://logging.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-ep-logging-mtls",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/endpoints/agentregistry-00000000-0000-0000-28ec-c5af7a243a29",
+    "updateTime": "2026-11-21T15:56:35.280005249Z"
+  },
+  {
+    "createTime": "2026-11-21T15:55:49.661721162Z",
+    "displayName": "LZV registered MCP fixture",
+    "interfaces": [
+      {
+        "protocolBinding": "JSONRPC",
+        "url": "https://lzv-mcp-reg-PROJECT_NUMBER_7.europe-west1.run.app/mcp"
+      }
+    ],
+    "mcpServerSpec": {
+      "content": {
+        "tools": [
+          {
+            "description": "Returns a fixed clean string (registered).",
+            "inputSchema": {
+              "properties": {},
+              "type": "object"
+            },
+            "name": "registered_echo"
+          },
+          {
+            "description": "Returns a fixed prompt-injection sample (registered).",
+            "inputSchema": {
+              "properties": {},
+              "type": "object"
+            },
+            "name": "inject_response"
+          }
+        ]
+      },
+      "type": "TOOL_SPEC"
+    },
+    "name": "projects/PROJECT_8/locations/europe-west1/services/lzv-mcp-reg",
+    "registryResource": "projects/PROJECT_NUMBER_7/locations/europe-west1/mcpServers/agentregistry-00000000-0000-0000-df54-44c4deb9a66b",
+    "updateTime": "2026-11-21T15:55:49.786436377Z"
+  }
+]
+## exit=0 at 2026-11-21T17:24:59Z
+## note 2026-11-21T17:24:59Z: registry entries for https://aiplatform.eu.rep.googleapis.com: 1 (createTime epoch 1795281591)
+## note 2026-11-21T17:24:59Z: IAM state identical to pre (deny policy createTime, etag, exceptions): 1
+## $ out="$(printf "Authorization: Bearer %s\n" "$(gcloud auth print-access-token)" | curl -sS -N --max-time 240 -H @- -H "Content-Type: application/json" -X POST "$LZV_URL" -d "$LZV_BODY" -w "\nHTTP %{http_code}\n" 2>&1)"; printf "%s\n" "$out"; case "$out" in *HTTP\ 200) exit 0 ;; esac; exit 1
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"function_call": {"id": "call_10743373580759148493", "args": {"endpoint": "blocked_global"}, "name": "call_model"}, "thought_signature": "AY89a18Pj65hMqBflX9luAs-w63G96Xb0q9iHRpdRO4SCoAlGlRse_v7cHHKZuehO2utUl2fdO2b2A4Kl2AWXBsFoSbM45PafIFzVvhPhb5s_zKhBokmWiE1vfxL_5nYScUSFVuWegqW2XMTd21b0zRWGmXhroR6erugyIhtESoJ7kZJYNeklesqSyZ4K3212wDMFjA7yLD0GsVq-4yrbIegN1NdlNN8IuJNOWuW3JqhLIjsl3-4soSlaLt3ymd31nAbcOGldKIfFpM0Ik4gnYAYsc9a8ZEVX-QBZF22DBSEoqtKyELyqeGcs7lMvCc4vMtlZn7IgLp1D9U_51P_lJmAUf8kFdEWkNL5rPYVS-nI1tzjb_p1PaaEc6icWbrh0eZ6cdXd3ApECWpZqUahCw0Em9-0DhDnJUZjbrqlODhNZ54W5VYMu_L2Cx2hUgbe9aA_FAURRDJDyehw9QaSrzOH2tZzXaONKENU0qFKxculytgVXxzeF3LdLIk2zcyfnnFB-gZWTinIEx0if4IDL1s_O0UdLF_kzbnuVyaBcDY4e9Dve32_IOrH-JWItiYF6P6MAPtt797REZzDjAcNhH978xmyNKdfPTHk4Ltl"}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 18, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 18}], "prompt_token_count": 605, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 605}], "thoughts_token_count": 96, "total_token_count": 719, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-29018cc8-298e-49d0-aa08-f5e118619789", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "long_running_tool_ids": [], "id": "23a97fa5-6e76-4cae-8ee8-127ecd58b77f", "timestamp": 1795281901.8014777}
+{"content": {"parts": [{"function_response": {"id": "call_10743373580759148493", "name": "call_model", "response": {"endpoint": "blocked_global", "status": 200, "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a18Lt4yZuQg1U8iC2f5JVHxeN+Vr6I5PkGM1UxrQnITYIPwedV5JKq3q5bBTsN8fHb3JINijBI02XUfoLkYowysEoTFxEPA8WwbudrwuTW54vefyqkHw1eM81EGyttGy/f13xBO8HiMi9nIkx8kv4NcMbCmkPnQoxeVG+wbKvqsuKIfaS2gLf4D7MHUGWFCwsICpbMJjSHpOMsLVC5IQLzhUULU1STJmJ7weHcMqD4dvMqXIIciX+Ym4jJWZ5bY7QDQTiPH1CYzADe5dZ5go216fkZ1oDvK+XuRdGzzoTWLnMs+8vhb1zO/2mDcUTqsuXDDZR8p2dT0/bj8OiQrJiVQTUri5t9XbwEEzvHncuH52hLf0qk5htfxNfK2APjOeGlSUxkfa02my54MNE7OXC3fy5po82ZkkB8rctejy8UxYrCMklcew", "error": null}}}], "role": "user"}, "invocation_id": "e-29018cc8-298e-49d0-aa08-f5e118619789", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "3f3c4cc0-c8a9-4b64-9217-c6cc86957a05", "timestamp": 1795281905.1131132}
+{"model_version": "gemini-3.5-flash", "content": {"parts": [{"text": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"role\": \"model\",\n        \"parts\": [\n          {\n            \"text\": \"ok\",\n            \"thoughtSignature\": \"AY89a18Lt4yZuQg1U8iC2f5JVHxeN+Vr6I5PkGM1UxrQnITYIPwedV5JKq3q5bBTsN8fHb3JINijBI02XUfoLkYowysEoTFxEPA8WwbudrwuTW54vefyqkHw1eM81EGyttGy/f13xBO8HiMi9nIkx8kv4NcMbCmkPnQoxeVG+wbKvqsuKIfaS2gLf4D7MHUGWFCwsICpbMJjSHpOMsLVC5IQLzhUULU1STJmJ7weHcMqD4dvMqXIIciX+Ym4jJWZ5bY7QDQTiPH1CYzADe5dZ5go216fkZ1oDvK+XuRdGzzoTWLnMs+8vhb1zO/2mDcUTqsuXDDZR8p2dT0/bj8OiQrJiVQTUri5t9XbwEEzvHncuH52hLf0qk5htfxNfK2APjOeGlSUxkfa02my54MNE7OXC3fy5po82ZkkB8rctejy8UxYrCMklcew\"\n          }\n        ]\n      }\n    }\n  ],\n  \"endpoint\": \"blocked_global\",\n  \"error\": null,\n  \"status\": 200\n}", "thought_signature": "AY89a19Em7bmmhmlse3h2jJ2tlR2i8omBXw-LgsSE5YZB7pjRk9dub566u-wl16rapy0NNY5JSthzxLKjByvU5dnDfgijg08fudXs4ZCNP0cB3TZFDqyPbkIq3tXQMadYcQs-Bhuss2G5xMiPiLvSqPjLYzXwE6KtkJKLA=="}], "role": "model"}, "finish_reason": "STOP", "usage_metadata": {"candidates_token_count": 395, "candidates_tokens_details": [{"modality": "TEXT", "token_count": 395}], "prompt_token_count": 1081, "prompt_tokens_details": [{"modality": "TEXT", "token_count": 1081}], "total_token_count": 1476, "traffic_type": "ON_DEMAND"}, "invocation_id": "e-29018cc8-298e-49d0-aa08-f5e118619789", "author": "lzv_probe_g", "actions": {"state_delta": {}, "artifact_delta": {}, "requested_auth_configs": {}, "requested_tool_confirmations": {}}, "node_info": {"path": "lzv_probe_g@1"}, "id": "84c1d86f-4933-4662-9150-a3cf0098c977", "timestamp": 1795281905.3074224}
+
+HTTP 200
+## exit=0 at 2026-11-21T17:25:08Z
+## note 2026-11-21T17:25:08Z: agent G: http_rc=0 tool_result=1 status=200 auth=none err=none
+## note 2026-11-21T17:25:08Z: (d) attempt 1: status=200; body (first 160 chars): {   "candidates": [     {       "content": {         "role": "model",         "parts": [           {             "text": "ok",             "thoughtSignature": "
+## $ gcloud logging read timestamp\>=\"2026-11-21T17:24:59Z\"\ AND\ logName=\"projects/PROJECT_8/logs/networkservices.googleapis.com%2Fgateway_requests\"\ AND\ httpRequest.requestUrl:\"aiplatform.eu.rep.googleapis.com\" --project=PROJECT_8 --limit=5 --format=json
+[]
+## exit=0 at 2026-11-21T17:25:10Z
+## note 2026-11-21T17:25:10Z: supporting: gateway_requests entries for aiplatform.eu.rep.googleapis.com since (d): 0

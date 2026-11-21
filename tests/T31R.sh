@@ -3,8 +3,11 @@
 # allows the agent). Design in tests/RUN-ORDER-run9.md "T31R design", human approved 2026-10-30.
 # T31 and its run-6 to run-8 results are unchanged.
 # Method (differential): between the two stages only the gateway registry changes (Terraform toggle
-# v2_gateway_t31r_register_blocked registers https://europe-west1-aiplatform.googleapis.com). IAM does not
+# v2_gateway_t31r_register_blocked registers the blocked host). IAM does not
 # change: same deny policy (same createTime, etag, exceptions), G still an exception.
+# T31R v2 (run 10, 2026-11-21): the blocked call is agent G's endpoint "blocked_global", the global model
+# (locations/global) on the unregistered EU multi-region host aiplatform.eu.rep.googleapis.com. Run 9 used the
+# europe-west1 host, which does not serve the model to this project (404). Expected text unchanged.
 # Stages: pre | post. The result is written by `post`. Nothing is created by this script.
 # shellcheck disable=SC2016
 set -u
@@ -30,7 +33,8 @@ note "limitation: post shows the registry decides this call, not which gateway c
 
 REGION="$LZV_REGION"
 GWNAME="lzv-gw"
-BLOCKED_URL="https://${REGION}-aiplatform.googleapis.com"
+BLOCKED_HOST="aiplatform.eu.rep.googleapis.com"
+BLOCKED_URL="https://${BLOCKED_HOST}"
 POLICY_ID="lzv-dc1-deny-agent-predict"
 STATE_FILE="$LZV_DIR/stages/pre-state.json"
 json_last() { sed -n '/^[[{]/,$p' "$LZV_LAST_OUT"; }
@@ -105,7 +109,7 @@ log_count() {
   [[ "$LOG_N" =~ ^[0-9]+$ ]] || LOG_N=0
 }
 
-BLOCKED_MSG='Call call_model with endpoint "blocked". Reply with the tool result.'
+BLOCKED_MSG='Call call_model with endpoint "blocked_global". Reply with the tool result.'
 
 case "$STAGE" in
 pre)
@@ -187,8 +191,8 @@ post)
     (( i < 6 )) && sleep 120
   done
   D_STATUS="$G_STATUS"; REG_AGE=$(( $(date -u +%s) - REG_T0 ))
-  log_count "timestamp>=\"$T2\" AND logName=\"projects/$RT/logs/networkservices.googleapis.com%2Fgateway_requests\" AND httpRequest.requestUrl:\"${REGION}-aiplatform.googleapis.com\""
-  note "supporting: gateway_requests entries for the regional host since (d): $LOG_N"
+  log_count "timestamp>=\"$T2\" AND logName=\"projects/$RT/logs/networkservices.googleapis.com%2Fgateway_requests\" AND httpRequest.requestUrl:\"${BLOCKED_HOST}\""
+  note "supporting: gateway_requests entries for $BLOCKED_HOST since (d): $LOG_N"
 
   V=INCONCLUSIVE; WHY=""; OBS="(d) after registering: $D_STATUS (registry entry age ${REG_AGE}s); IAM identical: $SAME"
   if [[ "$SAME" != 1 ]]; then

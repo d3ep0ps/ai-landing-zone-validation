@@ -70,7 +70,7 @@ REPLAY_URL="${REPLAY_URL:-${V3H_REPLAY_URL:-}}"
 note "agent: $AID; replay service: $REPLAY_URL"
 
 # Replay host registered on the gateway (the only way G reaches it). Read-only check of the infra/ output.
-REG="$(terraform -chdir="$LZV_ROOT/infra" state list 2>/dev/null | grep -c 'google_agent_registry_service.v3h_ep_replay')"
+REG="$(terraform -chdir="$LZV_ROOT/infra" state list 2>/dev/null | grep -cF 'module.v2_agent_registry.google_agent_registry_service.default["lzv-ep-v3h-replay"]')"   # run 10: Fabric geap-agent-registry address
 [[ "$REG" == 1 ]] || note "replay host registry entry not in infra/ state (v3h_replay_register_on_gateway): the replay is expected to be refused by the gateway"
 
 # Perimeter: the replay comes from outside the perimeter; enforced status would refuse it before binding (as T48).

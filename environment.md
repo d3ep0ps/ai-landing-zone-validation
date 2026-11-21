@@ -144,13 +144,15 @@ Resources, agents and the log bucket are in `europe-west1`. Model calls (T04 and
 | Tool | Version |
 |---|---|
 | Google Cloud SDK (gcloud) | 583.0.0 (core 2026.08.31); v1.1 run-4 used 583.0.0 (T20, T21, T24, T25) and 590.0.1 (T18, T19, T22, T23); run-5 to run-9 used 590.0.1 |
-| Terraform | v1.17.0 (recorded in every `result.json`, runs 1-6; `notes/tool-versions.txt` lists v1.16.6 from Phase 0, before an upgrade) |
-| Google provider | 8.8.0 |
+| Terraform | v1.17.0 (recorded in every `result.json`, runs 1-6; run 10 used v1.17.2; `notes/tool-versions.txt` lists v1.16.6 from Phase 0, before an upgrade) |
+| Google provider | 8.8.0 (runs 1-9, v3h); 8.12.0 (run 10) |
 | Python | 3.14.4 |
 | jq | 1.8.2 |
 | ShellCheck | 0.11.0 |
 
-Cloud Foundation Fabric: `be0d4b10e4f8c6969d2f7a4faee086504b334fd0` (2026-10-22, "Add Vertex AI and Gemini Enterprise controls to FAST hardened dataset (#4288)"), module release v59.2.0, checked out in `vendor/fabric` (git-ignored).
+Cloud Foundation Fabric (runs 1 to 9 and v3h): `be0d4b10e4f8c6969d2f7a4faee086504b334fd0` (2026-10-22, "Add Vertex AI and Gemini Enterprise controls to FAST hardened dataset (#4288)"), module release v59.2.0, checked out in `vendor/fabric` (git-ignored).
+
+Run 10 (2026-11-21): Cloud Foundation Fabric `7efa56dbff9689070a8db44dc305fdd1d45942f0` (upstream master, 2026-11-21), checked out in `vendor/fabric`. Providers google and google-beta 8.12.0 (runs 1 to 9 and v3h: 8.8.0). gcloud 590.0.1, Terraform 1.17.2. Model Armor floors (folder, project, organization), project templates and the Agent Registry entries come from the Fabric modules (#4361, #4379, #4310, #4423, #4434); the project factory module (#4397) is not used. Run 10 had paid resources from about 15:51Z to 17:58Z; its cost is pending (Billing for 2026-11-21 not yet read). Stack and teardown: [run-10.md](evidence/runs/run-10.md).
 
 ## Stage sequence (per run)
 

@@ -1,0 +1,35 @@
+{
+  "sanitizationResult": {
+    "filterMatchState": "MATCH_FOUND",
+    "filterResults": {
+      "csam": {
+        "csamFilterFilterResult": {
+          "executionState": "EXECUTION_SUCCESS",
+          "matchState": "NO_MATCH_FOUND"
+        }
+      },
+      "pi_and_jailbreak": {
+        "piAndJailbreakFilterResult": {
+          "executionState": "EXECUTION_SUCCESS",
+          "matchState": "MATCH_FOUND",
+          "confidenceLevel": "HIGH"
+        }
+      }
+    },
+    "sanitizationMetadata": {
+      "filterVersionConfig": {
+        "filterVersion": "v3",
+        "filterVersionAlias": "FILTER_VERSION_ALIAS_STABLE",
+        "releaseDate": {
+          "year": 2026,
+          "month": 5,
+          "day": 25
+        },
+        "projectedDeprecationDate": {}
+      }
+    },
+    "invocationResult": "SUCCESS"
+  }
+}
+
+HTTP 200

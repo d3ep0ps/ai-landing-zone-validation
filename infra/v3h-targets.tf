@@ -192,20 +192,14 @@ variable "v3h_replay_register_on_gateway" {
   default     = false
 }
 
-resource "google_agent_registry_service" "v3h_ep_replay" {
-  count        = local.gw_on && var.v3h_replay_register_on_gateway && length(google_cloud_run_v2_service.v3h_replay) > 0 ? 1 : 0
-  project      = local.gw_project
-  location     = var.region
-  service_id   = "lzv-ep-v3h-replay"
-  display_name = "LZV v3h T49 replay service"
-  endpoint_spec {
-    type = "NO_SPEC"
-  }
-  interfaces {
-    url              = google_cloud_run_v2_service.v3h_replay[0].uri
-    protocol_binding = "HTTP_JSON"
-  }
-  depends_on = [google_project_service.v2_gw]
+# Created by module.v2_agent_registry (Fabric modules/geap-agent-registry, v2-gateway.tf) since run 10.
+locals {
+  v3h_registry_services = var.v3h_replay_register_on_gateway && length(google_cloud_run_v2_service.v3h_replay) > 0 ? {
+    "lzv-ep-v3h-replay" = {
+      display_name = "LZV v3h T49 replay service"
+      url          = google_cloud_run_v2_service.v3h_replay[0].uri
+    }
+  } : {}
 }
 
 output "v3h_replay_url" {

@@ -291,7 +291,7 @@ b2_fixtures() {
   jset "$GEN_INFRA" v3h_replay_image "\"$REGION-docker.pkg.dev/$QP/lzv-v3h/replay@$dig\""
   jset "$GEN_INFRA" v3h_replay_auth false
   log "replay image $dig; gateway MCP fixtures rebuilt and deployed"
-  tf_infra_run b2-replay '^create (google_cloud_run_v2_service(_iam_member)?\.v3h_replay|google_agent_registry_service\.v3h_ep_replay)'
+  tf_infra_run b2-replay '^create (google_cloud_run_v2_service(_iam_member)?\.v3h_replay|module\.v2_agent_registry\.google_agent_registry_service\.default\["lzv-ep-v3h-replay"\])'
   mark replay-reg   # T49: registry entry for the replay host (about 4 min to take effect in run 9)
 }
 b2_agents() {
@@ -374,7 +374,7 @@ on_exit() {
   fi
   if [[ "${T57_UP:-0}" == 1 && "$DRY" == 0 ]]; then
     log "T57 stopped (rc=$rc) with the runtime project floor out of Terraform state: restore"
-    ( t57_restore ) || log "T57 restore after stop FAILED: human check needed (google_model_armor_floorsetting.v2_project[0])"
+    ( t57_restore ) || log "T57 restore after stop FAILED: human check needed (module.prj_runtime.google_model_armor_floorsetting.default[0])"
   fi
   if [[ "$PAID_V3H" == 1 && "$DONE" == 0 && "$IN_TEARDOWN" == 0 && "$DRY" == 0 ]]; then
     log "close stopped (rc=$rc) with infra-v3h agents up: teardown"
@@ -669,11 +669,10 @@ t47r2_gate() {   # plan 3b T47r2 gate, checked before anything paid: latest T49 
 # Targeted (added 2026-11-12 before the attempt): run 1 left the PSC-I attachment lzv-psci with 2 endpoints Google has
 # not released (plus its VPC, subnets, SWP APIs; free). A full plan would delete them and fail with 412; T47r touches
 # only the gateway resources and leaves those as they are (deviation recorded in the T47r log).
-T47R_TARGETS=(-target=google_network_services_agent_gateway.v2 -target=google_agent_registry_service.v2_ep_aiplatform_mtls
-  -target=google_agent_registry_service.v2_ep_aiplatform -target=google_agent_registry_service.v2_ep_essential
-  -target=google_agent_registry_service.v2_ep_logging -target=google_agent_registry_service.v2_ep_sessions
-  -target=google_agent_registry_service.v2_mcp_reg -target=google_artifact_registry_repository.v2_gw
-  -target=google_iap_agent_registry_iam_member.v2_egress -target=google_model_armor_template.v2_gw
+# Run 10 (2026-11-21): registry entries and the gateway template now come from Fabric modules (addresses updated).
+T47R_TARGETS=(-target=google_network_services_agent_gateway.v2 -target=module.v2_agent_registry
+  -target=google_artifact_registry_repository.v2_gw
+  -target=google_iap_agent_registry_iam_member.v2_egress -target='module.prj_runtime.google_model_armor_template.default["lzv-ma-gw"]'
   -target=google_network_security_authz_policy.v2_iap -target=google_network_security_authz_policy.v2_ma
   -target=google_network_services_authz_extension.v2_iap -target=google_network_services_authz_extension.v2_ma
   -target=google_project_iam_member.v2_gw_dep -target=google_project_service_identity.v2_gw_dep
@@ -708,7 +707,7 @@ do_t47r() {
 }
 
 # ---------------------------------------------------------------------------------------------- T57 (Findings 24 re-check)
-T57_ADDR='google_model_armor_floorsetting.v2_project[0]'
+T57_ADDR='module.prj_runtime.google_model_armor_floorsetting.default[0]'
 T57_UP=0; grep -qx t57-destroy "$STATE_F" && ! grep -qx t57-restore "$STATE_F" && T57_UP=1   # resume after a stop
 t57_preflight() {
   safety
@@ -717,8 +716,8 @@ t57_preflight() {
   log "preflight OK (T57): $RT has no agents; provider $(grep -A2 'registry.terraform.io/hashicorp/google"' infra/.terraform.lock.hcl | sed -nE 's/.*version *= *"([^"]+)".*/\1/p' | head -1)"
 }
 t57_before() { t_stage T57 before; [[ "$LAST_V" == PASS ]] || die "T57 before: $LAST_V (floor does not match the baseline; nothing changed)"; }
-t57_destroy() { T57_UP=1; tf_infra t57-destroy '^delete google_model_armor_floorsetting\.v2_project\[0\]$' -destroy -target="$T57_ADDR"; }
-t57_restore() { tf_infra t57-restore '^create google_model_armor_floorsetting\.v2_project\[0\]$' -target="$T57_ADDR" && T57_UP=0; }
+t57_destroy() { T57_UP=1; tf_infra t57-destroy '^delete module\.prj_runtime\.google_model_armor_floorsetting\.default\[0\]$' -destroy -target="$T57_ADDR"; }
+t57_restore() { tf_infra t57-restore '^create module\.prj_runtime\.google_model_armor_floorsetting\.default\[0\]$' -target="$T57_ADDR" && T57_UP=0; }
 t57_restored() {
   t_stage T57 restored
   [[ "$(cat "evidence/T57/$RUN_ID/restore-ok" 2>/dev/null)" == 1 ]] || die "T57 restore check failed: the runtime project floor does not match its before state (human check before the next row)"

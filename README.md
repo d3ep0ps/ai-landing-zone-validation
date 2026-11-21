@@ -37,13 +37,15 @@ v3h (2026-11-11..15; `plans/v3-harness-boundary-tests.md`) tested what stays out
 
 See the v3h section of [results.md](results.md) and the qualifications in [claims-register.md](claims-register.md).
 
+Run 10 (2026-11-21) repeated the Model Armor and Agent Gateway tests with the floors, templates and Agent Registry entries created by merged Cloud Foundation Fabric modules (Fabric `7efa56dbf`, providers 8.12.0): 10 results, 6 PASS, 4 INCONCLUSIVE, 0 FAIL. See "Run 10 (Fabric-native modules)" in [results.md](results.md).
+
 ## Repository map
 
 | Path | Content |
 |---|---|
 | `infra/` | Terraform for the reference environment; `infra/agents/` for the paid agent deployments |
 | `infra-v3h/` | Per-run projects for v3h (T40 to T43) |
-| `tests/` | One script per test (`TNN.sh`), `lib.sh`, fixtures, [RUN-ORDER.md](tests/RUN-ORDER.md) (v1), [RUN-ORDER-v11.md](tests/RUN-ORDER-v11.md) (v1.1), [RUN-ORDER-run6.md](tests/RUN-ORDER-run6.md) and [RUN-ORDER-run7.md](tests/RUN-ORDER-run7.md) (all tests, v2), [RUN-ORDER-run8.md](tests/RUN-ORDER-run8.md) and [RUN-ORDER-run9.md](tests/RUN-ORDER-run9.md) (area B), [RUN-ORDER-v3h.md](tests/RUN-ORDER-v3h.md) and `run-v3h.sh` (v3h) |
+| `tests/` | One script per test (`TNN.sh`), `lib.sh`, fixtures, [RUN-ORDER.md](tests/RUN-ORDER.md) (v1), [RUN-ORDER-v11.md](tests/RUN-ORDER-v11.md) (v1.1), [RUN-ORDER-run6.md](tests/RUN-ORDER-run6.md) and [RUN-ORDER-run7.md](tests/RUN-ORDER-run7.md) (all tests, v2), [RUN-ORDER-run8.md](tests/RUN-ORDER-run8.md) and [RUN-ORDER-run9.md](tests/RUN-ORDER-run9.md) (area B), [RUN-ORDER-v3h.md](tests/RUN-ORDER-v3h.md) and `run-v3h.sh` (v3h), [RUN-ORDER-run10.md](tests/RUN-ORDER-run10.md) (run 10) |
 | `evidence/TNN/` | Per test and run: `command.txt`, `output.txt`, `result.json` |
 | `evidence/runs/` | Run summaries (`run-1.md`, `run-2.md`, `run-3.md`, `run-4.md` and `run-5.md` for v1.1, `run-6.md` and `run-7.md` for all tests, `run-8.md` and `run-9.md` for area B, `run-v3h-N.md`, `gw-1.md` and the single-attempt logs for v3h) and [errata.md](evidence/runs/errata.md) |
 | `evidence/environment/` | Redacted environment snapshot and plan summary |

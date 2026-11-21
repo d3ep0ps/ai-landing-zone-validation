@@ -23,4 +23,5 @@ jq-1.8.2
 ShellCheck version: 0.11.0 (installed by human 2026-10-23)
 
 ## vendor/fabric
-be0d4b10e4f8c6969d2f7a4faee086504b334fd0 2026-10-22 Add Vertex AI and Gemini Enterprise controls to FAST hardened dataset (#4288)
+7efa56dbff9689070a8db44dc305fdd1d45942f0 2026-11-21 Add Firebase AI Logic and Contact Center AI Platform to FAST VPC-SC restricted services (#4439) (run 10; providers google/google-beta 8.12.0)
+previous: be0d4b10e4f8c6969d2f7a4faee086504b334fd0 2026-10-22 Add Vertex AI and Gemini Enterprise controls to FAST hardened dataset (#4288) (runs 1-9, v3h; providers 8.8.0)
